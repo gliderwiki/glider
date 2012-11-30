@@ -1,0 +1,75 @@
+<!-- 참조용 소스임 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>DIM 메시지 박스</title>
+<style>
+#mask {
+	position: absolute;
+	z-index: 9000;
+	background-color: #000;
+	display: none;
+	left: 0;
+	top: 0;
+}
+
+.window {
+	display: none;
+	position: absolute;
+	left: 100px;
+	top: 100px;
+	z-index: 10000;
+}
+</style>
+
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/jquery-1.6.4.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	// 배경 마스크 띄우기 
+	$('.openMask').click(function(e) {
+		e.preventDefault();
+		wrapWindowByMask();
+	});
+	
+	$('.window .close').click(function(e){
+		e.preventDefault();
+		$('#mask, .window').fadeOut();
+	});
+
+	$('#mask').click(function() {
+		$(this).fadeOut("slow");
+		$('.window').fadeOut("slow");
+	});
+});
+
+
+function wrapWindowByMask(){
+	var maskHeight = $(document).height()-4 ;
+	var maskWidth = $(window).width();
+	
+	// 마스크의 높이와 너비를 화면으로 만들어 전체 화면을 채운다. 
+	
+	$('#mask').css({'width' : maskWidth, 'height' : maskHeight});
+	
+	
+	// 애니메이션 효과 - 1초동안 까맣게 한 후 80% 불투명도로 처리 
+	//$('#mask').fadeIn(1000);
+	$('#mask').fadeTo("slow", 0.4);
+	
+	// 윈도우를 띄운다
+	$('.window').show();
+}
+
+</script>
+</head>
+
+<body>
+	<div id="mask"></div>
+	<div class="window">
+		<input type="button" href="#" class="close"	value="나는야 닫기 버튼(.window .close)" />
+	</div>
+	<a href="#" class="openMask">검은 막 띄우기</a>
+</body>
+</html>

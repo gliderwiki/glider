@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+<title>Base | jQuery</title>
+<link type="text/css" rel="stylesheet" href="../css/import.css" />
+<!--[if IE]><link type="text/css" rel="stylesheet" href="../css/ie6.css" /><![endif]-->
+<style type="text/css">
+	.buttons{width:100px; float:left; text-align:center; margin:5px; border:2px solid #ff6600; font-weight:bold; }
+	.hover{cursor:crosshair; color:#fff; background-color:#ff0066; }
+</style>
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/jquery-1.6.4.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/base.js"></script>
+ <script type="text/javascript" charset="UTF-8">
+	 jQuery(document).ready(function(){
+		$(".buttons").click(function(){
+			$(this).toggleClass("hover");
+		});
+	});
+</script>
+</head>
+ <body>
+	<h2 class="title">[toggleClass:선택한 엘리먼트에 클래스가 이미 적용되어 있으면 클래스를 제거하고 그렇지 않으면 클래스를 적용함]</h2>
+	<hr />
+	<div class="sample01">
+	<span class="buttons">AAAAA</span>
+	<span class="buttons">BBBBB</span>
+	</div>
+	<hr />
+	<pre>
+ jQuery(document).ready(function(){
+	$(".buttons").click(function(){
+		$(this).toggleClass("hover");
+	});
+ });
+	</pre>
+	<hr />
+ </body>
+</html>

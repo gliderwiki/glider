@@ -1,0 +1,50 @@
+.aa_modal_container { position: fixed; width: 100%; height: 100%; margin: 0; padding: 0; top: 0; left: 0; background: #000; opacity: .5; filter: alpha(opacity=50); z-index: 6500; }
+
+.layer_preview { position: absolute; z-index: 1000; width: 1000px; border: 3px solid #999; background-color: #fff; }
+
+.layer_preview .txt { color: #666; padding: 55px 0; text-align: center; }
+
+.layer_preview .wrap_btn { border-top: 1px solid #dfdfdf; padding: 20px 0; text-align: center; }
+
+/* 공통 alert, confirm 레이어관련 css  */
+.layer_comm { position: absolute; z-index: 1; min-width: 500px; }
+
+.layer_comm .bg { width: 100%; height: 100%; background-color: #929292; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70); opacity: 0.7; }
+
+.layer_comm .box { padding: 10px; border: 6px solid #2283b8; background-color: #fff; }
+
+.layer_comm .btn_close { display: block; position: absolute; right: 10px; top: 19px; width: 28px; height: 28px; font-size: 24px; line-height: 24px; text-align: center; color: #2283b8; text-decoration: none; }
+
+.layer_comm .tit { padding-bottom: 10px; font-size: 18px; border-bottom: 2px solid #5d92af; }
+
+.layer_comm .cont { margin: 40px 0; text-align: center; }
+
+.layer_comm .wrap_btn.center { text-align: center; }
+
+.layer_comm.desc { width: 720px; }
+
+.layer_comm.desc .box { padding: 0; }
+
+.layer_comm.desc .tit { height: 40px; border-bottom: 0 none; background-color: #eee; }
+
+.layer_comm.desc .cont { min-height: 230px; margin: 0; padding: 30px; text-align: left; }
+
+.layer_comm.desc .wrap_btn { padding: 0 10px 10px; }
+
+.layer_comm.desc table { width: 100%; }
+
+.layer_comm.desc table th, .layer.desc table td { border-left: 1px solid #fff; text-align: center; }
+
+.layer_comm.desc table thead { color: #fff; background-color: #68a8d5; }
+
+.layer_comm.desc table thead th { padding: 10px 0; font-size: 24px; }
+
+.layer_comm.desc table tbody td { padding: 10px 0; }
+
+.layer_comm.desc table tbody .account { text-align: left; }
+
+.layer_comm.desc table tr.even td { background-color: #eee; }
+
+.layer_comm.desc table .space { background-color: #FFF !important; }
+
+.layer_comm.desc .note-license { text-align: right; font-weight: bold; color: #666; }

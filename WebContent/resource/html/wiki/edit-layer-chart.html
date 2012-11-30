@@ -1,0 +1,239 @@
+<!doctype html>
+<!--[if lt IE 8]> <html class="lt-ie8" lang="ko"> <![endif]-->
+<!--[if gt IE 7]><!--> <html lang="ko"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width">
+<title>페이지 생성 - GLiDERWiki</title>
+<link rel="stylesheet" href="/resource/glider/front/css/common.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/dashboard.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/space.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/taglist.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/my.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/control.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/main.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/board.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/wiki.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/alimi.css" />
+<link rel="stylesheet" href="/resource/glider/admin/css/admin.css" />
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<!--[if lt IE 8]>
+<p style="padding:1em;border-bottom:10px dashed #fff;background-color:#efefef;">
+	<strong>낡은 브라우저</strong>를 사용하고 계십니다.<br />
+	<a href="http://browsehappy.com/">새로운 브라우저로 업그레이드</a> 하거나 <a href="http://www.google.com/chromeframe/?redirect=true">구글 크롬프레임을 설치</a>해서 더 빠르고 아름다운 웹을 경험해 보세요.
+</p>
+<![endif]-->
+<header class="header" role="banner">
+	
+	<div class="main">
+		<div class="wrap-cont">
+			<h1>
+				<a href="/">GLiDERWiki</a>
+			</h1>
+			<div class="search-global">
+				<h2 class="ir">검색</h2>
+				<form action="/">
+					<fieldset>
+						<legend class="ir">검색폼</legend>
+						<input type="text" />
+						<button type="submit">검색</button>
+					</fieldset>
+				</form>
+			</div>
+			<ul class="navi">
+				<li>
+					<a href="#">공간생성하기</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a class="active" href="#">공간관리</a>
+					<!-- 공간관리메뉴레이어
+					<div class="layer-navi">
+						<ul>
+							<li>
+								<a href="#">전체공간 보기</a>
+							</li>
+							<li class="active">
+								<a href="#">공간정보 보기</a>
+							</li>
+							<li>
+								<a href="#">공간정보 수정</a>
+							</li>
+							<li>
+								<a href="#">이 공간에 동료 초대</a>
+							</li>
+							<li>
+								<a href="#">가입신청/가입신청관리</a>
+							</li>
+							<li>
+								<a href="#">공간내용 Export</a>
+							</li>
+						</ul>
+						<i class="tail">
+							<i class="tail_inner"></i>
+							<i class="tail_outer"></i>
+						</i>
+					</div>
+					-->
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">내정보</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">하나쯤더</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="sub">
+		<div class="wrap-cont">
+			<ul class="navi">
+				<li>
+					<a href="#">편집</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">페이지생성</a>
+					
+					<div class="layer-navi">
+						<ul>
+							<li>
+								<a href="#">페이지 변경내역</a>
+							</li>
+							<li>
+								<a href="#">페이지 관리. 두줄일 경우 이렇게 떨어짐</a>
+							</li>
+							<li>
+								<a href="#">Export PDF</a>
+							</li>
+							<li class="active">
+								<a href="#">Export WORD</a>
+							</li>
+							<li>
+								<a href="#">사용자 관리</a>
+							</li>
+						</ul>
+						<i class="tail">
+							<i class="tail_inner"></i>
+							<i class="tail_outer"></i>
+						</i>
+					</div>
+					
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">관리</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">옵션</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+</header>
+<section class="contents " role="main">
+	<div class="wrap-cont">
+		
+		<h2 class="tit-cont">페이지 생성</h2>
+		
+		
+		
+<div class="wrap_layer">
+	<div class="layer-wiki table" style="left:100px;top:100px">
+		<form action="/">
+			<div class="head">
+				<h3>차트 생성</h3>
+			</div>
+			<div class="body">
+				<h4>차트 선택</h4>
+				<div class="row">
+					<input type="radio" name="chart" value="pie" checked /><label>원형</label> &nbsp;&nbsp;
+					<input type="radio" name="chart" value="bar" /><label>막대</label>
+					<button type="button" class="btn-table add-chart">추가</button>
+				</div>
+				<div class="preview">
+					<div class="row">
+						<textarea name="title" placeholder="title"></textarea>
+						<textarea name="value" placeholder="value"></textarea>
+						<button type="button" class="btn-table">행삭제</button>
+					</div>
+				</div>
+			</div>
+			<div class="foot">
+				<button type="submit" class="btn">확인</button>
+				<button type="button" class="btn">닫기</button>
+			</div>
+		</form>
+	</div>
+	<div class="bg"></div>
+</div>
+
+
+		
+	</div>
+</section>
+<footer class="footer">
+	<div class="wrap-cont">
+		<ul class="navi">
+			<li>
+				<a href="#">Wiki 100% 활용하기</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">GLider Wiki에 대하여</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">버전 확인</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">후원하기</a>
+			</li>
+		</ul>
+		<p class="copyright">Copyright &copy; 2012 GLiDER</p>
+	</div>
+</footer>
+
+<div class="alimi">
+	<div class="bg_alimi left"></div>
+	<div class="bg_alimi right"></div>
+	<a href="#" class="btn_open notificationCountBtn" id="notificationCountBtn">
+		<span class="txt">알림</span>
+		<em class="num" id="notificationCount">0</em>
+	</a>
+	<div class="wrap_toggle">
+		<label for="checkRealTimeNotification">실시간 팝업</label>
+		<input type="checkbox" class="inp_chk" id="checkRealTimeNotification">
+	</div>
+	<div class="layer_alimi" id="realTimeNotification">
+		<ul class="list_alimi" style="display:none;">
+			<li>
+				<a href="#" class="cont">알림</a>
+			</li>
+			<li>
+				<a href="#" class="cont">알림</a>
+			</li>
+			<li>
+				<a href="#" class="cont">알림</a>
+			</li>
+			<!-- 알림 없을때 
+			<li class="empty">
+				<div class="cont">알림이 없습니다</div>
+			</li>
+			-->
+		</ul>
+	</div>
+</div>
+</body>
+</html>

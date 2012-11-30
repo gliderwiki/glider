@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>exceptions.properties</comment>
+	<entry key="exception.default.message">오류가 발생하였습니다. 관리자에게 문의해 주십시오.</entry>
+	<entry key="exception.resource_not_found.message">{0} 자원이 존재하지 않습니다.</entry>
+</properties>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jd="http://www.springframework.org/schema/jdbc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.0.xsd
+						http://www.springframework.org/schema/util 
+						http://www.springframework.org/schema/util/spring-util-3.0.xsd
+						http://www.springframework.org/schema/jdbc
+						http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+
+	
+	<!-- Below configuration has been added to enable in memory DB HSQLDB. don't touch me -->
+	<jd:embedded-database id="hsqlDataSource" type="HSQL">
+		<jd:script location="/WEB-INF/databases/hsql/init/schema.sql"/>
+		<jd:script location="/WEB-INF/databases/hsql/init/test-data.sql"/>
+	</jd:embedded-database>
+	 
+	<context:component-scan base-package="org.gliderwiki.*">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+	<!-- 위의 스키마 설정은 aop, tx 등을 이용하여 테스트를 진행하려고 선언한것이므로 빼도 무방하다. -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/spring/properties/jdbc/jdbc.properties</value>
+				<value>/WEB-INF/spring/properties/jdbc/redis.properties</value>
+			</list>
+		</property>
+	</bean>
+
+ 	<bean id="dataSource-common" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+		<property name="validationQuery" value="select 1"/>
+		<property name="connectionProperties" value="autoReconnect=true;"/>
+		<property name="initialSize" value="20"/>
+        <property name="maxActive" value="50"/>
+        <property name="maxIdle" value="25" />
+        <property name="minIdle" value="5" />
+        <property name="maxWait" value="60000" />
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="60" />
+	</bean>
+
+	<!-- sql spy print console -->
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="dataSource-common" />
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE" />
+				<!-- property name="margin" value="19" /> -->
+				<property name="sqlPrefix" value="[###SQL ::::]  " />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="/WEB-INF/spring/mybatis/mybatis-config.xml"/>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
+
+

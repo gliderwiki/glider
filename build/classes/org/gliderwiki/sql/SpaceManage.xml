@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--
+	공간관련 맵핑파일
+-->
+
+<mapper namespace="SpaceManage">
+
+	<!-- 그룹에 속한 사용자 리스트 조회 -->
+	<select id="SpaceManage.getGroupUserList" parameterType="int" resultType="groupUserVo">
+		select /* AdminManage.getGroupUserList - 그룹에 속한 사용자 리스트 조회 */
+		       a.we_user_idx 	as weUserIdx
+		     , a.we_user_name   AS weUserName
+		from we_user a, we_group_user b
+		where b.we_use_yn = 'Y'
+		and a.we_user_idx = b.we_user_idx
+		and b.we_group_idx = #{groupIdx,jdbcType=NUMERIC}
+		order by a.we_user_idx
+	</select>
+
+	<select id="SpaceManage.getSpaceInfo" parameterType="int" resultType="spaceInfoVo">
+	<![CDATA[
+		SELECT /* SpaceManage.getSpaceInfo - 해당 공간정보 조회 */
+				a.we_space_idx    AS spaceIdx
+		       ,a.we_space_name   AS spaceName
+		       ,REPLACE(a.we_space_desc, '\r\n', '<br />')   AS spaceDesc
+		       ,a.we_space_exposed AS exposed
+		       ,a.we_view_privacy  AS viewPrivacy
+		       ,a.we_edit_privacy  AS editPrivacy
+		       ,CONCAT(b.we_img_path, '/', b.we_img_name)   AS profileImg
+		       ,a.we_ins_user AS adminUserIdx
+		FROM   we_space a, we_space_image b
+		WHERE a.we_space_idx = b.we_space_idx
+		AND a.we_space_idx = #{spaceIdx}
+	]]>
+	</select>
+
+	<select id="SpaceManage.getGroupParticipant" parameterType="int" resultType="java.util.HashMap">
+		SELECT /* SpaceManage.getGroupParticipant -  해당공간의 그룹참여자를 가져온다. */
+				 c.we_group_idx   AS idx
+			   , c.we_group_name  AS name
+		FROM we_space a, we_space_group b, we_group_info c
+		WHERE a.we_space_idx = b.we_space_idx
+		AND b.we_group_idx = c.we_group_idx
+		AND a.we_space_idx = #{spaceIdx,jdbcType=NUMERIC}
+		<choose>
+		<when test="tranType == 'view'">
+		AND b.we_view_permit = 1
+		AND b.we_insert_permit = 0
+		AND b.we_edit_permit = 0
+		</when>
+		<otherwise>
+		AND b.we_view_permit = 0
+		AND b.we_insert_permit = 1
+		AND b.we_edit_permit = 1
+		</otherwise>
+		</choose>
+	</select>
+
+	<select id="SpaceManage.getUserParticipant" parameterType="int" resultType="java.util.HashMap">
+		SELECT /* SpaceManage.getUserParticipant -  해당공간의 구성원참여자를 가져온다. */
+				 c.we_user_idx     AS idx
+			   , c.we_user_name    AS name
+		FROM we_space a, we_space_user b, we_user c
+		WHERE a.we_space_idx = b.we_space_idx
+		AND b.we_user_idx = c.we_user_idx
+		AND a.we_space_idx = #{spaceIdx,jdbcType=NUMERIC}
+		<choose>
+		<when test="tranType == 'view'">
+		AND b.we_view_permit = 1
+		AND b.we_insert_permit = 0
+		AND b.we_edit_permit = 0
+		</when>
+		<otherwise>
+		AND b.we_view_permit = 0
+		AND b.we_insert_permit = 1
+		AND b.we_edit_permit = 1
+		</otherwise>
+		</choose>
+	</select>
+
+	<select id="SpaceManage.getMySpaceList" parameterType="int" resultType="java.util.HashMap">
+		SELECT /* SpaceManage.getMySpaceList -  내가 개설한 공간리스트를 가져온다. */
+				 a.we_space_idx
+			   , a.we_space_name
+			   , a.we_ins_date
+	           , a.we_view_privacy
+	           , IFNULL(c.we_space_idx, 0) AS favorited
+	           , IFNULL(b.cnt,0) AS wikiCnt
+	           , d.we_user_nick
+		FROM we_space a
+		LEFT JOIN (SELECT we_space_idx, COUNT(we_wiki_idx) AS cnt FROM we_wiki GROUP BY we_space_idx) b
+		ON a.we_space_idx = b.we_space_idx
+		LEFT JOIN (SELECT we_space_idx FROM we_favorite WHERE we_user_idx=#{userIdx,jdbcType=NUMERIC} AND we_favorite_type='SPACE' AND we_use_yn='Y') c
+		ON a.we_space_idx = c.we_space_idx
+		INNER JOIN we_user d
+		ON a.we_ins_user=d.we_user_idx
+		WHERE a.we_ins_user = #{userIdx}
+		order by we_ins_date desc
+	</select>
+
+	<select id="SpaceManage.getMyEntryList" parameterType="int" resultType="java.util.HashMap">
+	SELECT /* SpaceManage.getMyEntryList -  내가 가입한 공간리스트를 가져온다. */
+			we_space_idx
+		  , we_space_name
+		  , we_ins_date
+		  , we_view_privacy
+		  , favorited
+          , wikiCnt
+          , we_user_nick
+    FROM (
+			(
+				SELECT g.we_space_idx
+					 , g.we_space_name
+					 , g.we_ins_date
+					 , g.we_view_privacy
+					 , IFNULL(e.we_space_idx, 0) AS favorited
+					 , IFNULL(d.wikiCnt,0) AS wikiCnt
+					 , g.we_user_nick
+			   FROM
+			       (SELECT	a.we_space_idx
+						  , a.we_space_name
+					  	  , a.we_ins_date
+					  	  , a.we_view_privacy
+			      		  , f.we_user_nick
+				 FROM we_space a
+				 INNER JOIN we_user f
+				 ON a.we_ins_user=f.we_user_idx
+				 INNER JOIN we_space_group b
+				 ON a.we_space_idx = b.we_space_idx
+				 INNER JOIN we_group_user c
+				 ON b.we_group_idx = c.we_group_idx
+				 WHERE c.we_user_idx=#{userIdx}
+			     AND b.we_view_permit = 1
+			     AND a.we_ins_user !=#{userIdx}) g
+			     LEFT JOIN (SELECT we_space_idx, COUNT(we_wiki_idx) AS wikiCnt FROM we_wiki WHERE we_use_yn='Y' GROUP BY we_space_idx) d
+				 ON g.we_space_idx = d.we_space_idx
+				 LEFT JOIN (SELECT we_space_idx FROM we_favorite WHERE we_user_idx=#{userIdx}) e
+				 ON g.we_space_idx = e.we_space_idx
+		 	)
+			UNION
+			(
+				SELECT f.we_space_idx
+				 , f.we_space_name
+				 , f.we_ins_date
+				 , f.we_view_privacy
+				 , IFNULL(d.we_space_idx, 0) AS favorited
+				 , IFNULL(c.wikiCnt,0) AS wikiCnt
+				 , f.we_user_nick
+				FROM (
+					SELECT	a.we_space_idx
+						  , a.we_space_name
+						  , a.we_ins_date
+						  , a.we_view_privacy
+						  , e.we_user_nick
+					FROM we_space a INNER JOIN we_space_user b
+					ON a.we_space_idx = b.we_space_idx
+					INNER JOIN we_user e
+					ON a.we_ins_user=e.we_user_idx
+					WHERE a.we_ins_user !=#{userIdx}
+					AND b.we_view_permit = 1
+					AND b.we_user_idx=#{userIdx}
+				)  f
+				LEFT JOIN (SELECT we_space_idx, COUNT(we_wiki_idx) AS wikiCnt FROM we_wiki WHERE we_use_yn='Y' GROUP BY we_space_idx) c
+				ON f.we_space_idx = c.we_space_idx
+				LEFT JOIN (SELECT we_space_idx FROM we_favorite WHERE we_user_idx=#{userIdx}) d
+				ON f.we_space_idx = d.we_space_idx
+			)
+		) A
+	ORDER BY we_ins_date DESC
+	</select>
+
+	<select id="SpaceManage.getMyUserAuthorityList" parameterType="int" resultType="java.util.HashMap">
+	SELECT c.we_user_idx
+         , c.we_group_name
+         , e.we_user_name
+         , CAST(IFNULL(d.we_insert_permit,0) AS CHAR) AS we_insert_permit
+         , CAST(IFNULL(d.we_view_permit,0) AS CHAR) AS we_view_permit
+	FROM  (SELECT a.we_group_idx, a.we_user_idx, b.we_group_name FROM we_group_user a, we_group_info b WHERE  a.we_group_idx = b.we_group_idx)  c
+	LEFT JOIN (SELECT we_user_idx, we_insert_permit, we_edit_permit, we_view_permit FROM we_space_user WHERE we_space_idx = #{userIdx,jdbcType=NUMERIC}) d
+	ON c.we_user_idx = d.we_user_idx
+	INNER JOIN we_user e
+	ON c.we_user_idx = e.we_user_idx
+	</select>
+
+	<select id="SpaceManage.getUserAuthorityList" resultType="java.util.HashMap">
+	SELECT c.we_user_idx
+         , c.we_group_name
+         , e.we_user_name
+    FROM  (SELECT a.we_group_idx, a.we_user_idx, b.we_group_name FROM we_group_user a, we_group_info b WHERE  a.we_group_idx = b.we_group_idx)  c
+	INNER JOIN we_user e
+	ON c.we_user_idx = e.we_user_idx
+	</select>
+
+	<select id="SpaceManage.getGroupAuthorityList" resultType="java.util.HashMap">
+	SELECT we_group_idx
+         , we_group_name
+	FROM we_group_info
+	</select>
+
+	<select id="SpaceManage.getMyGroupAuthorityList" parameterType="int" resultType="java.util.HashMap">
+	SELECT a.we_group_idx
+         , a.we_group_name
+         , CAST(IFNULL(b.we_insert_permit,0) AS CHAR) AS we_insert_permit
+         , CAST(IFNULL(b.we_view_permit,0) AS CHAR) AS we_view_permit
+	FROM we_group_info a LEFT JOIN (SELECT we_group_idx, we_insert_permit, we_edit_permit, we_view_permit FROM we_space_group WHERE we_space_idx=#{userIdx,jdbcType=NUMERIC}) b
+	ON a.we_group_idx = b.we_group_idx
+	</select>
+
+	<select id="SpaceManage.getAllSpaceList" parameterType="int" resultType="java.util.HashMap">
+	SELECT a.we_space_idx
+         , a.we_space_name
+         , a.we_ins_date
+         , a.we_view_privacy
+         , IFNULL(c.we_space_idx, 0) AS favorited
+         , IFNULL(COUNT(b.we_wiki_idx),0) AS wikiCnt
+         , d.we_user_nick
+         , a.we_ins_user
+	FROM we_space a
+	LEFT JOIN we_wiki b
+	ON a.we_space_idx = b.we_space_idx
+	LEFT JOIN (SELECT we_space_idx FROM we_favorite WHERE we_user_idx=#{userIdx,jdbcType=NUMERIC} AND we_favorite_type='SPACE' AND we_use_yn='Y') c
+	ON a.we_space_idx = c.we_space_idx
+	INNER JOIN we_user d
+	ON a.we_admin_idx=d.we_user_idx
+	WHERE a.we_space_exposed = 'Y'
+	AND a.we_use_yn='Y'
+	GROUP BY a.we_space_idx
+           , a.we_space_name
+           , a.we_ins_date
+           , a.we_view_privacy
+           , d.we_user_nick
+    ORDER BY we_ins_date DESC
+    LIMIT 20
+	</select>
+
+	<select id="SpaceManage.getRecentSpaceList" resultType="java.util.HashMap">
+	SELECT a.we_space_idx
+         , a.we_space_name
+         , a.we_ins_date
+         , a.we_view_privacy
+         , IFNULL(c.we_space_idx, 0) AS favorited
+         , d.we_user_nick
+         , a.we_ins_user
+         , DATE_FORMAT(a.we_ins_date,  '%Y-%m-%d') AS insert_date
+	FROM we_space a
+	LEFT JOIN we_wiki b
+	ON a.we_space_idx = b.we_space_idx
+	and b.WE_USE_YN = 'Y'  
+	LEFT JOIN (SELECT we_space_idx FROM we_favorite WHERE we_user_idx=#{userIdx,jdbcType=NUMERIC} AND we_favorite_type='SPACE' AND we_use_yn='Y') c
+	ON a.we_space_idx = c.we_space_idx
+	INNER JOIN we_user d
+	ON a.we_admin_idx=d.we_user_idx
+	WHERE a.we_space_exposed = 'Y'
+	AND a.we_use_yn='Y'
+	GROUP BY a.we_space_idx
+           , a.we_space_name
+           , a.we_ins_date
+           , a.we_view_privacy
+           , d.we_user_nick
+    ORDER BY we_ins_date DESC
+    LIMIT  #{startRow},  #{endRow}
+	</select>
+
+	<!-- 내가 조회그룹에 있는지 검사함 -->
+	<select id="SpaceManage.checkGroupIntoMe" parameterType="java.util.HashMap" resultType="String">
+	SELECT a.we_group_idx
+         , b.we_user_idx
+	FROM we_space_group a
+	INNER JOIN we_group_user b
+	ON a.we_group_idx=b.we_group_idx
+	WHERE a.we_space_idx=#{spaceIdx}
+	and b.we_user_idx =#{userIdx}
+	<choose>
+	<when test="tranType == 'view'">
+		AND a.we_view_permit = 1
+		AND a.we_insert_permit = 0
+		AND a.we_edit_permit = 0
+	</when>
+	<otherwise>
+	AND a.we_view_permit = 0
+	AND a.we_insert_permit = 1
+	AND a.we_edit_permit = 1
+	</otherwise>
+	</choose>
+	</select>
+
+	<!-- 내가 유저그룹에 있는지 검사함 -->
+	<select id="SpaceManage.checkUserIntoMe" parameterType="java.util.HashMap" resultType="int" >
+	SELECT COUNT(we_user_idx)
+	FROM we_space_user
+	WHERE we_space_idx=#{spaceIdx}
+	and we_user_idx =#{userIdx}
+	<choose>
+	<when test="tranType == 'view'">
+		AND we_view_permit = 1
+		AND we_insert_permit = 0
+		AND we_edit_permit = 0
+	</when>
+	<otherwise>
+	AND we_view_permit = 0
+	AND we_insert_permit = 1
+	AND we_edit_permit = 1
+	</otherwise>
+	</choose>
+	</select>
+
+
+	<select id="SpaceManage.getRecentFile" parameterType="int" resultType="java.util.HashMap" >
+	SELECT a.we_file_idx
+	     , a.we_file_real_name
+         , a.we_file_type
+         , b.we_ins_date
+         , a.we_file_down
+         , (select c.we_user_nick FROM we_user c WHERE c.we_user_idx = b.we_ins_user) AS we_user_nick
+	FROM we_wiki_file a
+	INNER JOIN we_wiki b
+	ON a.we_wiki_idx = b.we_wiki_idx
+	WHERE b.we_space_idx=#{spaceIdx}
+	order by we_file_idx desc
+	limit 0, 5;
+	</select>
+
+	<select id="SpaceManage.getMyInviteList" parameterType="int" resultType="java.util.HashMap" >
+	SELECT a.we_user_idx
+        ,  a.we_ins_date
+        ,  a.we_space_idx
+        ,  a.we_join_status
+        ,  b.we_user_nick
+	FROM  we_space_join a
+	inner join we_user b
+	on a.we_user_idx = b.we_user_idx
+	WHERE we_space_idx=#{spaceIdx}
+	AND   we_join_type='INVITE'
+	</select>
+
+
+	<select id="SpaceManage.getMyEntryRequestedList" parameterType="int" resultType="java.util.HashMap" >
+	SELECT a.we_space_join_idx
+		,  a.we_user_idx
+		,  a.we_space_idx
+        ,  a.we_ins_date
+        ,  a.we_join_status
+        ,  b.we_user_nick
+	FROM  we_space_join a
+	inner join we_user b
+	on a.we_user_idx = b.we_user_idx
+	WHERE we_space_idx=#{spaceIdx}
+	AND   we_join_type='REQUEST'
+	AND   we_join_status in ('REQUEST', 'REAPPLICATION')
+	</select>
+
+
+	<update id="SpaceManage.entryReject" parameterType="int">
+		UPDATE we_space_join
+		SET we_join_status = 'REJECT'
+		WHERE we_space_join_idx = #{spaceJoinIdx}
+	</update>
+
+	<update id="SpaceManage.entryApprove" parameterType="int">
+		UPDATE we_space_join
+		SET we_join_status = 'APPROVE'
+		WHERE we_space_join_idx = #{spaceJoinIdx}
+	</update>
+
+	<insert id="SpaceManage.entrySpaceUser" parameterType="org.gliderwiki.web.domain.WeSpaceUser">
+		INSERT INTO we_space_user (
+			we_space_idx,
+			we_user_idx,
+			we_view_permit,
+			we_insert_permit,
+			we_edit_permit,
+			we_ins_date
+		) Values (
+			#{we_space_idx},
+			#{we_user_idx},
+			#{we_view_permit},
+			#{we_insert_permit},
+			#{we_edit_permit},
+			#{we_ins_date}
+		)
+	</insert>
+
+</mapper>

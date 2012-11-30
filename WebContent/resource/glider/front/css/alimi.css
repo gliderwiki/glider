@@ -1,0 +1,50 @@
+/* alimi */
+.alimi { position: fixed; z-index: 15000; right: 0; bottom: 0; width: 100%; height: 34px; color: #fff; }
+
+.alimi strong, .alimi em { font-weight: normal; font-style: normal; color: #496b89; }
+
+.alimi .bg_alimi { position: absolute; top: 0; height: 34px; background-color: #9A9A9A; }
+
+.alimi .bg_alimi.left { left: -337px; width: 100%; }
+
+.alimi .bg_alimi.right { right: 0; width: 160px; }
+
+.alimi .bg_alimi:before { content: '.'; display: block; margin-top: 1px; width: 100%; height: 1px; font-size: 0; line-height: 0; text-indent: -9999px; background-color: #C8C8C8; }
+
+.alimi .wrap { display: block; position: absolute; right: 0; top: 0; z-index: 10; margin: 7px 69px 0 0; color: #eaeaea; text-align: right; }
+
+.alimi .wrap .user { color: #649cb3; }
+
+.alimi .wrap:hover { text-decoration: none; }
+
+.alimi .wrap .num { display: inline-block; padding: 0 4px; margin: 0 3px 0 1px; border-radius: 4px; vertical-align: text-top; font-size: 13px; line-height: 18px; color: #ff6c2b; background-color: #110b09; background-color: rgba(0, 0, 0, 0.7); }
+
+.alimi .btn_open { display: block; position: absolute; right: 159px; top: 0; z-index: 10; width: 178px; height: 34px; font-size: 11px; line-height: 13px; text-decoration: none; cursor: pointer; background: url(/resource/glider/front/images/bg-alimi.gif) no-repeat; }
+
+.alimi .btn_open .txt, .alimi .btn_open .num { position: absolute; z-index: 10; top: 12px; }
+
+.alimi .btn_open .txt { left: 58px; width: 31px; letter-spacing: -1px; color: #fff; }
+
+.alimi .btn_open .num { left: 88px; width: 37px; font-weight: bold; font-family: Tahoma, Dotum ; text-align: center; color: #83c87c; }
+
+.alimi .wrap_toggle { position: absolute; right: 76px; top: 11px; font-size: 11px; line-height: 14px; letter-spacing: -1px; color: #fff; }
+
+.alimi .wrap_toggle .inp_chk { margin: 0 0 0 3px; padding: 0; vertical-align: middle; cursor: pointer; }
+
+.alimi .wrap_toggle label { cursor: pointer; }
+
+.alimi .layer_alimi { position: absolute; right: 0; bottom: 34px; }
+
+.alimi .layer_alimi .wrap_layer { overflow: hidden; }
+
+.alimi .layer_alimi .list_alimi { width: 358px; height: 74px; font-size: 13px; font-weight: bold; margin: 0 9px 0 0; padding: 0; background-color: #fff; border: 1px solid #696969; border-bottom: 0 none; -moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1); box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1); }
+
+.alimi .layer_alimi .list_alimi li { border-top: 1px solid #d1d1d1; }
+
+.alimi .layer_alimi .list_alimi li:first-child { border-top: 0 none; }
+
+.alimi .layer_alimi .list_alimi li.empty { text-align: center; }
+
+.alimi .layer_alimi .cont { display: block; padding: 20px 10px; color: #666; text-decoration: none; letter-spacing: -1px; }
+
+.alimi .layer_alimi a.cont:hover { text-decoration: none; background-color: #f8f8f8; }

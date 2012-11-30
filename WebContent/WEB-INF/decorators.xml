@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE decorators>
+<decorators defaultdir="/WEB-INF/views/decorators">
+	<excludes>
+		<pattern>/admin/*</pattern>
+		<pattern>/resource/*</pattern>
+		<pattern>/authUser/*</pattern>
+		<pattern>/space/*/*/selectList*</pattern>
+		<pattern>/space/*/list*</pattern>
+		<pattern>/wiki/pdf/*</pattern>
+		<pattern>/service/*/*</pattern>
+		<pattern>/service/*</pattern>
+	</excludes>
+
+	<decorator name="guest" page="guest.jsp">
+		<pattern>/</pattern>
+		<pattern>/index</pattern>
+		<pattern>/login</pattern>
+	</decorator>
+
+	<decorator name="default" page="default.jsp">
+		<pattern>/*</pattern>
+	</decorator>
+
+</decorators>

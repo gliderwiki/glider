@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="tempManage">
+
+	<!-- 인자로 받은 아뒤와 비번에 해당하는 사용자 정보를 가져온다 -->
+	<select id="getListUserInfo" parameterType="tempVo" resultType="tempVo">
+		select	id, -- 아이디
+		        name
+		from 	temp
+		where   id = #{id}
+	</select>
+
+	<!-- 인자로 받은 아이디로 사용자 정보를 가져온다 -->
+	<select id="getUserInfoById" parameterType="tempVo" resultType="tempVo">
+		-- getUserInfoById
+		select	id,
+		        name
+		from 	temp
+		where   id = #{id}
+	</select>
+
+	<!-- 리스트를 가져온다.-->
+	<select id="getListTemp" parameterType="tempVo" resultType="tempVo">
+		-- getListTemp
+		select	id,
+		        name
+		from 	temp
+	</select>
+
+	<!-- 인자로 받은 값을 사용자 추가를 한다. -->
+	<!-- selectKey ketproperty값은 tempVo의 id값과 동일하게 하고 resultType은 id의 Type를 동일하게 한다.  -->
+	<insert id="insertUserInfo" parameterType="tempVo">
+		<selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String" >
+			select max(id)+1 as id from temp
+		</selectKey>
+		insert into temp(
+					id,
+					name
+					)
+			 values(
+			 		#{id },
+			 		#{name }
+			 		)
+	</insert>
+	<insert id="errorUser">
+		insert into WE_USER_INFO (USER_IDX, USER_ID, USER_NAME, JOIN_DATE)
+		values (7, 'userid6', '네임1', null)
+	</insert>
+
+	<!-- 인자로 받은 값을 사용자 변경을 한다 -->
+	<update id="updateUserInfo" parameterType="tempVo">
+		update temp
+				set
+					name = #{name }
+				where
+					id = ${id }
+	</update>
+
+	<!-- 인자로 받은 값을 사용자 삭제에 사용을한다. -->
+	<delete id="deleteUserInfo" parameterType="tempVo">
+		delete from temp where id = ${id }
+	</delete>
+
+	
+	<update id="createTable">
+		 CREATE TABLE  WE_USER_JOB ( 
+			WE_USER_POSITION_IDX INT(5) NOT NULL AUTO_INCREMENT COMMENT '직급순번',
+			WE_POSITION_CD VARCHAR(30) COMMENT '직급코드',
+			WE_POSITION_NAME VARCHAR(30) COMMENT '직급명',
+			WE_USE_YN CHAR(1) COMMENT '사용여부 ',
+			WE_USER_IDX INT(13) COMMENT '회원순번',
+			PRIMARY KEY (WE_USER_POSITION_IDX)
+		) COMMENT = '직위코드' DEFAULT CHARACTER SET utf8
+	</update>
+
+</mapper>

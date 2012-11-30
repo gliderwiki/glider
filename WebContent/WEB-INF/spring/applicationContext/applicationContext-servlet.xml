@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+						http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.0.xsd
+						http://www.springframework.org/schema/util
+						http://www.springframework.org/schema/util/spring-util-3.0.xsd
+						http://www.directwebremoting.org/schema/spring-dwr
+						http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+						http://www.springframework.org/schema/task
+						http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<!-- mvc:annotation-driven 대체함. 필요한 빈이 있다면 별도의 빈으로 등록해야 함! -->
+	<beans:bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<beans:property name="customArgumentResolver">
+			<!-- Session 관련 유저 빈 등록 -->
+			<beans:bean class="org.gliderwiki.web.system.argumentresolver.LoginUserWebArgumentResolver" />
+		</beans:property>
+		<beans:property name="messageConverters">
+			<beans:list>
+				<beans:bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+				<beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">
+					<beans:property name="writeAcceptCharset" value="false" />
+				</beans:bean>
+				<beans:bean class="org.springframework.http.converter.ResourceHttpMessageConverter" />
+				<beans:bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+				<beans:bean class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter" />
+				<beans:bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving
+		up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resource/**" location="/resource/" />
+
+	<context:annotation-config />
+
+	<context:component-scan base-package="org.gliderwiki">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+	</context:component-scan>
+
+	<dwr:configuration />
+	<dwr:annotation-config id="top-level" />
+	<dwr:url-mapping />
+	<dwr:controller id="dwrController" debug="true" />
+	<dwr:annotation-scan base-package="org.gliderwiki.*" scanDataTransferObject="true" scanRemoteProxy="true" />
+
+	<!-- DWR interface 설정 -->
+	<beans:bean id="LoginService" class="org.gliderwiki.web.login.service.LoginServiceImpl"></beans:bean>
+	<beans:bean id="UserAlarmService" class="org.gliderwiki.web.user.service.UserAlarmServiceImpl"></beans:bean>
+	<beans:bean id="UserActionService" class="org.gliderwiki.web.user.service.UserActionServiceImpl"></beans:bean>
+	<beans:bean id="CommonService" class="org.gliderwiki.web.wiki.common.service.CommonServiceImpl"></beans:bean>
+	<beans:bean id="WikiFunctionService" class="org.gliderwiki.web.wiki.parser.service.WikiFunctionServiceImpl"></beans:bean>
+	<beans:bean id="AdminGroupService" class="org.gliderwiki.admin.service.AdminGroupServiceImpl"></beans:bean>
+	<beans:bean id="AdminMenuService" class="org.gliderwiki.admin.service.AdminMenuServiceImpl"></beans:bean>
+	<beans:bean id="AdminUserService" class="org.gliderwiki.admin.service.AdminUserServiceImpl"></beans:bean>
+	<beans:bean id="AdminSpaceService" class="org.gliderwiki.admin.service.AdminSpaceServiceImpl"></beans:bean>
+	<beans:bean id="AdminWikiService" class="org.gliderwiki.admin.service.AdminWikiServiceImpl"></beans:bean>
+	<beans:bean id="AdminKeywordService" class="org.gliderwiki.admin.service.AdminKeywordServiceImpl"></beans:bean>
+
+	<beans:bean	class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></beans:bean>
+
+	<!-- Ajax View Resolver -->
+	<beans:bean id="ajaxViewResolver"
+		class="org.gliderwiki.framework.util.ajax.AjaxViewResolver">
+		<beans:property name="ajaxView">
+			<beans:bean class="org.gliderwiki.framework.util.ajax.AjaxView"></beans:bean>
+		</beans:property>
+		<beans:property name="ajaxPrefix" value="ajax_"></beans:property>
+	</beans:bean>
+
+	<!-- JSon View Resolver -->
+	<beans:bean id="jsonViewResolver"
+		class="org.gliderwiki.framework.util.ajax.JsonViewResolver">
+		<beans:property name="jsonView">
+			<beans:bean class="org.gliderwiki.framework.util.ajax.JsonView"></beans:bean>
+		</beans:property>
+		<beans:property name="jsonPrefix" value="json_"></beans:property>
+	</beans:bean>
+
+	<beans:bean
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<beans:property name="order" value="1" />
+		<beans:property name="alwaysUseFullPath" value="true" />
+		<beans:property name="mappings">
+			<beans:props>
+				<beans:prop key="/dwr/**/*">dwrController</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<beans:property name="order" value="2" />
+	</beans:bean>
+		
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="contentType" value="text/html;charset=UTF-8" />
+	</beans:bean>
+
+
+	<!-- Exception Resolver -->
+	<beans:bean id="exceptionResolver"
+		class="org.gliderwiki.framework.exception.GliderwikiHandlerExceptionResolver">
+		<beans:property name="viewList">
+			<beans:list>
+				<beans:bean class="org.gliderwiki.framework.exception.GliderwikiHandlerExceptionView" p:prefix="/error" p:viewName="/space">
+					<beans:property name="uriPatterns">
+						<beans:list>
+							<beans:value>^/space(.*)</beans:value>
+						</beans:list>
+					</beans:property>
+				</beans:bean>
+				<beans:bean class="org.gliderwiki.framework.exception.GliderwikiHandlerExceptionView" p:prefix="/error" p:defaultView="true" />
+			</beans:list>
+		</beans:property>
+		<beans:property name="messageSourceAccessor" ref="messageSourceAccessor" />
+	</beans:bean>
+
+	<!-- 파일업로드 멀티파트리졸버 by choiye -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize">
+			<beans:value>50000000</beans:value>
+		</beans:property>
+		<beans:property name="defaultEncoding">
+			<beans:value>UTF-8</beans:value>
+		</beans:property>
+	</beans:bean>
+
+	<!-- Interceptor 설정 -->
+	<mvc:interceptors>
+		<beans:bean id="globalRequestAttributesInterceptor" class="org.gliderwiki.web.system.interceptor.GlobalRequestAttributesInterceptor">
+			<beans:property name="sessionService" ref="sessionService" />
+			<beans:property name="commonService" ref="commonService" />
+			<beans:property name="notiCipherManager" ref="notiCipherManager" />
+		</beans:bean>
+	</mvc:interceptors>
+		
+	
+		
+</beans:beans>

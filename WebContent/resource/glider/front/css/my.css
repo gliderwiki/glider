@@ -1,0 +1,71 @@
+.body-cont.my .sub { margin-top: 60px; }
+
+.body-cont.my .sub:first-child { margin-top: 0; }
+
+.body-cont.my .tit-sub { margin: 0 0 20px; padding: 0; font-size: 22px; color: #a13853; }
+
+.body-cont.my .box { margin-top: 40px; }
+
+.body-cont.my .box:first-child { margin-top: 0; }
+
+.body-cont.my .list.type1 .title { width: 650px; }
+
+.body-cont.my .list.type1 .time { width: 120px; }
+
+.body-cont.my .wrap_btn { margin: 20px 0; text-align: center; }
+
+.body-cont.my .check-alarm { *zoom: 1; }
+
+.body-cont.my .check-alarm:before, .body-cont.my .check-alarm:after { content: ''; display: table; }
+
+.body-cont.my .check-alarm:after { clear: both; }
+
+.body-cont.my .check-alarm .row { float: left; width: 50%; margin: 4px 0; }
+
+.body-cont.my .check-alarm input[type="checkbox"] { margin-right: 5px; }
+
+.body-cont.my .favorite .list.type1 .title { width: 600px; }
+
+.body-cont.my .favorite .list.type1 .info { width: 60px; }
+
+.body-cont.my .favorite .list.type1 .info .btn-del { display: inline-block; padding: 0 3px; font-size: 11px; border-width: 1px; border-style: solid; border-color: #ff924a #d15d10 #d15d10 #ff924a; color: #fff; background-color: #f60; text-decoration: none; }
+
+.body-cont.my .edit-profile .tit { display: block; height: 21px; margin-bottom: 5px; padding-left: 25px; font-size: 14px; background: url(/resource/glider/front/images/ico-balloon.png) no-repeat; }
+
+.body-cont.my .edit-profile .row { margin-top: 20px; }
+
+.body-cont.my .edit-profile .row input[type="text"] { width: 270px; }
+
+.body-cont.my .edit-profile .row:first-child { margin-top: 0; }
+
+.body-cont.my .edit-profile .row.type1 .tit { display: inline-block; width: 75px; margin-bottom: 0; }
+
+.body-cont.my .edit-profile .profile-img { margin-top: 30px; }
+
+.body-cont.my .edit-profile .profile-img .box-img { display: inline-block; width: 166px; height: 98px; margin-left: 25px; margin-right: 10px; border: 1px solid #c4c4c4; background-color: #fbfbfb; }
+
+.body-cont.my .edit-profile .profile-img .box-img img { max-width: 100%; }
+
+.body-cont.my .edit-profile .change-pw { margin-top: 30px; }
+
+.body-cont.my .edit-profile .change-pw .wrap-row { margin-left: 18px; }
+
+.body-cont.my .edit-profile .change-pw .lab { display: inline-block; width: 100px; }
+
+.body-cont.my .edit-profile .change-pw .lab:before { content: ''; display: inline-block; width: 2px; height: 2px; margin-left: 4px; background: #666; vertical-align: middle; }
+
+.body-cont.my .edit-profile .change-pw .txt { padding-left: 20px; }
+
+.body-cont.my .activity .btn-cancel, .body-cont.my .activity .btn-accept, .body-cont.my .activity .btn-reject { display: inline-block; padding: 0 3px; font-size: 11px; border-width: 1px; border-style: solid; color: #fff; text-decoration: none; }
+
+.body-cont.my .activity .btn-cancel { border-color: #6495E4 #2C60B4 #2C60B4 #6495E4; background-color: #256AD9; }
+
+.body-cont.my .activity .btn-accept { border-color: #388D29 #306C24 #306C24 #388D29; background-color: #388D29; }
+
+.body-cont.my .activity .btn-reject { border-color: #C179CF #8E429D #8E429D #C179CF; background-color: #A742BB; }
+
+.body-cont.my .join .lab { margin: 20px 0 5px; font-weight: bold; color: #666; }
+
+.body-cont.my .join .lab:first-child { margin-top: 0; }
+
+.body-cont.my .join input[type="text"], .body-cont.my .join input[type="password"] { width: 460px; }

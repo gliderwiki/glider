@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>messages.properties</comment>
+	<entry key="duplicate">중복 되었습니다.</entry>
+
+	<!-- 계정 -->
+	<entry key="account.authenticationFailure">아이디 또는 비밀번호가 틀립니다.</entry>
+	<entry key="account.notauthentication">이메일인증을 거치지 않았습니다.</entry>
+	<entry key="account.passwordmismatch">비밀번호가 다릅니다.</entry>
+</properties>

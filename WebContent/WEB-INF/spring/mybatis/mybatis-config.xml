@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!--======= Difinition of myBatis Configuration =======-->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+
+	<!--======= Difinition of MAPPER alias =======-->
+	<typeAliases>
+		<typeAlias type="org.gliderwiki.web.domain.WeUser" alias="weUser" />
+		<typeAlias type="org.gliderwiki.web.domain.WeProfile" alias="weProfile" />
+		<typeAlias type="org.gliderwiki.web.vo.MemberSessionVo" alias="memberSessionVo" />
+		<typeAlias type="org.gliderwiki.web.vo.WikiLogVo" alias="wikiLogVo" />
+		<typeAlias type="org.gliderwiki.web.vo.WikiFavoriteVo" alias="wikiFavoriteVo" />
+		<typeAlias type="org.gliderwiki.web.vo.AddFriendVo" alias="addFriendVo" />
+		<typeAlias type="org.gliderwiki.web.vo.MetaInfoVo" alias="metaInfoVo" />
+		<typeAlias type="org.gliderwiki.web.vo.AlarmInfoVo" alias="alarmInfoVo" />
+		<typeAlias type="org.gliderwiki.web.vo.WikiTagVo" alias="wikiTagVo" />
+		<typeAlias type="org.gliderwiki.web.vo.WikiVo" alias="wikiVo" />
+		<typeAlias type="org.gliderwiki.web.vo.GroupInfoVo" alias="groupInfoVo" />
+		<typeAlias type="org.gliderwiki.web.vo.GroupUserVo" alias="groupUserVo" />
+		<typeAlias type="org.gliderwiki.web.vo.MailSendUserVo" alias="mailSendUserVo" />
+		<typeAlias type="org.gliderwiki.web.domain.WeWiki" alias="weWiki" />
+		<typeAlias type="org.gliderwiki.web.domain.WeSpace" alias="weSpace" />
+		<typeAlias type="org.gliderwiki.web.domain.WeWikiBak" alias="weWikiBak" />
+		<typeAlias type="org.gliderwiki.web.domain.WeMenu" alias="weMenu" />
+		<typeAlias type="org.gliderwiki.web.domain.WeSpaceJoin" alias="weSpaceJoin" />
+		<typeAlias type="org.gliderwiki.web.vo.SpaceInfoVo" alias="spaceInfoVo" />
+		<typeAlias type="org.gliderwiki.web.vo.KeywordVo" alias="keywordVo" />
+		<typeAlias type="org.gliderwiki.web.domain.WeFavorite" alias="weFavorite" />
+		<typeAlias type="org.gliderwiki.web.domain.WeAddFriend" alias="weAddFriend" />
+		<typeAlias type="org.gliderwiki.web.domain.WeGroupInfo" alias="weGroupInfo" />
+		<typeAlias type="org.gliderwiki.web.domain.WeGroupUser" alias="WeGroupUser" />
+		<typeAlias type="org.gliderwiki.web.domain.WeWikiAgree" alias="weWikiAgree" />
+		<typeAlias type="org.gliderwiki.web.domain.WeBbs" alias="weBbs" />
+		<typeAlias type="org.gliderwiki.web.domain.WeWikiLog" alias="weWikiLog" />
+		<typeAlias type="org.gliderwiki.web.domain.WeTemplate" alias="weTemplate" />
+		<typeAlias type="org.gliderwiki.web.domain.WeFunction" alias="weFunction" />
+		<typeAlias type="org.gliderwiki.web.domain.WePatch" alias="wePatch" />
+	</typeAliases>
+
+	<!--======= Difinition of MAPPER Path =======-->
+	<mappers>
+		<mapper resource="org/gliderwiki/sql/MemberManage.xml" />
+		<mapper resource="org/gliderwiki/sql/CommonManage.xml" />
+		<mapper resource="org/gliderwiki/sql/AdminManage.xml" />
+		<mapper resource="org/gliderwiki/sql/SpaceManage.xml" />
+		<mapper resource="org/gliderwiki/sql/MainManage.xml" />
+		<mapper resource="org/gliderwiki/sql/WikiManage.xml" />
+		<mapper resource="org/gliderwiki/sql/BoardManage.xml" />
+	</mappers>
+</configuration>

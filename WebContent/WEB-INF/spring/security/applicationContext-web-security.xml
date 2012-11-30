@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		
+	<beans:import resource="classpath:/org/gliderwiki/web/system/security/applicationContext-common-security.xml" />
+
+	<http use-expressions="true" access-decision-manager-ref="accessDecisionManager">
+		<intercept-url pattern="/resource/**" filters="none" />
+
+		<!-- 모든 사용자 접근허용 -->
+		<intercept-url pattern="/" access="permitAll" />
+		<intercept-url pattern="/login" access="permitAll" />
+		<intercept-url pattern="/search/*" access="permitAll" />
+
+		<!-- 회원인증  -->
+		<intercept-url pattern="/authUser/*" method="GET" access="permitAll" />
+		<intercept-url pattern="/download" method="GET" access="permitAll" />
+
+		<!-- 내 정보 -->
+		<intercept-url pattern="/user/action" method="GET" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/user/alarm" method="GET" access="hasRole('ROLE_USER')" />
+
+		<!-- 로그인후 메인 -->
+		<intercept-url pattern="/dashboard" method="GET" access="permitAll" />
+
+		<!-- 위키 -->
+		<intercept-url pattern="/wiki/new" method="POST" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/wiki/new/*" method="GET" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/wiki/new/*/*" method="GET" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/wiki/edit/*" method="GET" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/wiki/edit/*" method="POST" access="hasRole('ROLE_USER')" />
+
+
+		<!-- 공간 -->
+		<intercept-url pattern="/space" method="GET" access="permitAll" />
+		<intercept-url pattern="/space/entryList" method="GET" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/space/openList" method="GET" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/space/form" method="GET" access="hasRole('ROLE_USER') and leastLevel(3)" />
+		<intercept-url pattern="/space/createSpaceCheck" method="GET" access="hasRole('ROLE_USER') and leastLevel(3)" />
+		<intercept-url pattern="/space/*/form" method="GET" access="hasRole('ROLE_USER') and leastLevel(3)" />
+		<intercept-url pattern="/space/main/*" method="GET" access="permitAll" />
+
+		<!-- 어드민 -->
+		<intercept-url pattern="/admin/login" method="GET" access="permitAll" />
+		<intercept-url pattern="/admin/install" method="GET" access="permitAll" />
+		<intercept-url pattern="/admin/**" method="GET" access="hasRole('ROLE_USER') and leastLevel(9)" />
+		<intercept-url pattern="/patchList/**" method="GET" access="permitAll" />
+
+		<access-denied-handler ref="accessDeniedHandler"/>
+
+		<custom-filter ref="ipFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+
+		<form-login
+			login-processing-url="/user/login"
+			login-page="/"
+			default-target-url="/dashboard" always-use-default-target="false"
+			authentication-success-handler-ref="authenticationSuccessHandler"
+			authentication-failure-handler-ref="authenticationFailureHandler" />
+
+		<remember-me key="gliderWikiUser" />
+
+		<logout logout-url="/logout" success-handler-ref="gliderwikiLogoutHandler" />
+
+	</http>
+
+</beans:beans>

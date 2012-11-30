@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd">
+	<tlib-version>1.0</tlib-version>
+	<short-name>gf</short-name>
+	<uri>http://www.gliderwiki.org/gftags</uri>
+
+	<function>
+		<name>articleDate</name>
+		<function-class>org.gliderwiki.framework.util.DateUtil</function-class>
+		<function-signature>
+			java.lang.Integer getDate(java.util.Date, java.lang.String)
+		</function-signature>
+	</function>
+
+	<function>
+		<name>urlEncode</name>
+		<function-class>org.gliderwiki.framework.util.GliderWikiFunctions</function-class>
+		<function-signature>
+			java.lang.String urlEncode(java.lang.String)
+		</function-signature>
+	</function>
+
+	<function>
+		<name>cutAndRemoveTag</name>
+		<function-class>org.gliderwiki.framework.util.StringUtil</function-class>
+		<function-signature>
+			java.lang.String cutAndRemoveTag(java.lang.String, java.lang.Integer)
+		</function-signature>
+	</function>
+
+	<function>
+		<name>cut</name>
+		<function-class>org.gliderwiki.framework.util.StringUtil</function-class>
+		<function-signature>
+			java.lang.String cut(java.lang.String, java.lang.Integer)
+		</function-signature>
+	</function>
+
+</taglib>

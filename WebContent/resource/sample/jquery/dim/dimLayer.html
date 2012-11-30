@@ -1,0 +1,65 @@
+<!-- 개발적용 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery Layer Popup</title>
+
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/jquery-1.6.4.js"></script>
+<style type="text/css">
+.layer_area {position:absolute; left:50%; top:50%; background:#fff; padding:20px; border:4px solid #ddd;}
+/* Popup Layer */
+.layer {display:none; position:fixed; _position:absolute; top:0; left:0; width:100%; height:100%; z-index:10000;}
+.open {display:block;}
+.layer .bg {position:absolute; top:0; left:0; width:100%; height:100%; background:#000; opacity:.5; filter:alpha(opacity=50);}
+
+</style>
+<script type="text/javascript">
+jQuery(function($){
+	function layer_open(el) {
+		$('.layer').fadeIn();
+		var temp = $('#'+el)
+		if(temp.outerHeight() < $(document).height()) temp.css('margin-top', '-'+temp.outerHeight() / 2 + 'px');
+		else temp.css('top', '0px');
+		
+		if(temp.outerWidth() < $(document).width()) temp.css('margin-left', '-'+temp.outerWidth() / 2 + 'px');
+		else temp.css('left', '0px');
+	}	
+	
+	$('#layer_open').click(function() {
+		layer_open('layer1'); // 아이디 입력
+		return false;
+	});
+	
+	$('.layer .bg').click(function() {
+		$('.layer').fadeOut();
+	});
+	
+	$('#layer_close').click(function() {
+		$('.layer').fadeOut();
+		return false;
+	});
+	
+	$(document).ready(function() {
+		// $("p").append("<strong>Hello</strong>");
+	});
+});
+</script>
+</head>
+<body>
+
+<div class="layer">
+
+	<div class="bg"></div>
+	<div class="layer_area" id="layer1"><p style="width:400px; text-align:justify; font-family:Malgun gothic;">
+	이 것은 팝업창입니다. 뜨는 레이어의 크기에 상관없이 항상 가운데 오게 작업하였습니다. 
+	도큐먼트보다 클 경우에는 좌측/상단에 고정되게 하였습니다.</p><br />
+	<span class="button medium"><a href="#" id="layer_close">팝업창 닫기</a></span>
+	</div>
+</div>
+
+<div style="margin:30px;"><span><a href="#" id="layer_open">팝업창 열기</a></span></div>
+
+</body>
+</html>
+

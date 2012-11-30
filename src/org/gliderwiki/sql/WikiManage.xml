@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--
+	01. 답변 위키 글타래의 제일 작은 Order값
+	02. 답변 위키 글타래의 제일 큰 Order 값
+  -->
+
+<mapper namespace="WikiManage">
+
+	<!-- 답변 위키 글타래의 제일 작은 depth값  -->
+	<select id="WikiManage.getMinDepthIdx" parameterType="weWiki" resultType="java.lang.String">
+	<![CDATA[
+		SELECT min(we_wiki_depth_idx) as depthIdx
+		  FROM we_wiki
+		 WHERE we_wiki_parent_idx = #{we_wiki_parent_idx}
+		   AND we_wiki_depth_idx > #{we_wiki_depth_idx}
+		   AND we_wiki_order_idx <= #{we_wiki_order_idx}
+	]]>
+	</select>
+
+
+	<!-- 답변 위키 글타래의 순번증가   -->
+	<select id="WikiManage.getMaxDepthIdx" parameterType="weWiki" resultType="java.lang.String">
+	<![CDATA[
+		SELECT max(we_wiki_depth_idx) + 1 as depthIdx  /* WikiManage.getMaxDepthIdx  */
+		  FROM we_wiki
+     	WHERE we_wiki_parent_idx = #{we_wiki_parent_idx}
+	]]>
+	</select>
+
+	<!-- 자신이 속할 글 타래의 Order_idx 값을 증가시키고, 그 중 가장 작은값을 order_idx 로 세팅한다. -->
+	<update id="WikiManage.updateParentOrderIdx" parameterType="weUser">
+	<![CDATA[
+		UPDATE we_wiki /* WikiManage.updateParentOrderIdx - 자신이 속할 글 타래의 depth 값을 증가 */
+		SET    we_wiki_depth_idx = we_wiki_depth_idx+1
+	    WHERE  we_wiki_parent_idx = #{we_wiki_parent_idx}
+	    AND    we_wiki_depth_idx > #{we_wiki_depth_idx}
+	]]>
+	</update>
+
+	<!-- 현재 저장할 위키의 번호를 조회한다. -->
+	<select id="WikiManage.getNextWikiIdx"  resultType="java.lang.Integer">
+		SELECT /* WikiManage.getNextWikiIdx -  현재 저장할 위키의 번호를 조회한다. */
+		       IFNULL(MAX(LAST_INSERT_ID(we_wiki_idx)) + 1, 1) as wikiIdx
+  		FROM we_wiki
+	</select>
+
+	<insert id="WikiManage.insertWeWikiBak" parameterType="org.gliderwiki.web.domain.WeWikiBak">
+		<!-- 리비전 교체하면 BAK 테이블에 기존 데이터 저장 -->
+		INSERT INTO WE_WIKI_BAK (	/* WikiManage.insertWeWikiBak - 기존 위키를 Bak 테이블에 저장한다 */
+		       WE_BAK_IDX
+		     , WE_WIKI_IDX
+		     , WE_WIKI_TITLE
+		     , WE_WIKI_TEXT
+		     , WE_WIKI_MARKUP
+		     , WE_WIKI_REVISION
+		     , WE_WIKI_STATUS
+		     , WE_USER_IP
+		     , WE_WIKI_PROTECT
+		     , WE_EDIT_TEXT
+		     , WE_USE_YN
+		     , WE_INS_USER
+		     , WE_INS_DATE
+		     , WE_UPD_USER
+		     , WE_UPD_DATE
+		)
+		SELECT (
+		        SELECT IFNULL(MAX(LAST_INSERT_ID(WE_BAK_IDX)) + 1, 1) as WE_BAK_IDX
+  		          FROM WE_WIKI_BAK
+		       ) WE_BAK_IDX
+		      , WE_WIKI_IDX
+		      , WE_WIKI_TITLE
+		      , WE_WIKI_TEXT
+		      , WE_WIKI_MARKUP
+		      , WE_WIKI_REVISION
+		      , WE_WIKI_STATUS
+		      , WE_USER_IP
+		      , WE_WIKI_PROTECT
+		      , WE_EDIT_TEXT
+		      , WE_USE_YN
+		      , WE_INS_USER
+		      , WE_INS_DATE
+		      , WE_UPD_USER
+		      , WE_UPD_DATE
+		  FROM WE_WIKI
+		 WHERE WE_WIKI_IDX = #{we_wiki_idx}
+	</insert>
+
+
+
+	<select id="WikiManage.getWikiList"  parameterType="weWiki" resultType="weWiki">
+		SELECT    /* WikiManage.getWikiList -  공간에 속한 전체 위키를 제목  정렬 조건으로  조회한다. */
+				  T2.RNUM AS row_num
+				, we_wiki_idx
+				, CONCAT(LPAD(' ' , (CASE T1.WE_WIKI_ORDER_IDX WHEN 0 THEN 0
+                  ELSE T1.WE_WIKI_ORDER_IDX * 2 END) ,' ') , T1.WE_WIKI_TITLE) we_wiki_title
+				, T1.we_space_idx
+				, T1.we_wiki_parent_idx
+				, T1.we_wiki_order_idx
+				, T1.we_wiki_depth_idx
+				, T1.we_wiki_text
+				, T1.we_wiki_markup
+				, T1.we_wiki_revision
+				, T1.we_wiki_status
+				, T1.we_wiki_quota
+				, T1.we_wiki_url
+				, T1.we_wiki_agree
+				, T1.we_wiki_view_cnt
+				, T1.we_wiki_prev
+				, T1.we_wiki_next
+				, T1.we_user_ip
+				, T1.we_wiki_protect
+				, T1.we_edit_text
+				, T1.we_use_yn
+				, T1.we_edit_yn
+				, T1.we_ins_user
+				, T1.we_ins_date
+				, T1.we_upd_user
+				, T1.we_upd_date
+				, T1.we_user_nick
+				FROM
+				    (SELECT
+				        a.we_wiki_idx,
+				        a.we_space_idx,
+				        a.we_wiki_parent_idx,
+				        a.we_wiki_order_idx,
+				        a.we_wiki_depth_idx,
+				        a.we_wiki_title,
+				        a.we_wiki_text,
+				        a.we_wiki_markup,
+				        a.we_wiki_revision,
+				        a.we_wiki_status,
+				        a.we_wiki_quota,
+				        a.we_wiki_url,
+				        a.we_wiki_agree,
+				        a.we_wiki_view_cnt,
+				        a.we_wiki_prev,
+				        a.we_wiki_next,
+				        a.we_user_ip,
+				        a.we_wiki_protect,
+				        a.we_edit_text,
+				        a.we_use_yn,
+				        a.we_edit_yn,
+				        a.we_ins_user,
+				        a.we_ins_date,
+				        a.we_upd_user,
+				        a.we_upd_date,
+				        b.we_user_nick
+				    FROM
+				        WE_WIKI a
+				    INNER JOIN WE_USER b
+				    ON a.we_ins_user = b.we_user_idx
+				    WHERE we_space_idx = #{we_space_idx}
+				    AND we_use_yn = #{we_use_yn}
+				    ) T1
+				   LEFT OUTER JOIN
+				    (SELECT @RNUM := @RNUM + 1 RNUM
+				    ,      WE_WIKI_PARENT_IDX, WE_WIKI_ORDER_IDX
+				    ,      WE_WIKI_TITLE
+				    FROM WE_WIKI T1,
+				        (SELECT @RNUM := 0 FROM DUAL) T2
+				    WHERE T1.we_space_idx = #{we_space_idx}
+				    AND T1.we_use_yn = #{we_use_yn}
+				    AND T1.WE_WIKI_DEPTH_IDX =0
+				    ORDER BY T1.WE_WIKI_TITLE
+				    ) T2
+				   ON T1. WE_WIKI_PARENT_IDX = T2.WE_WIKI_PARENT_IDX
+				ORDER BY T2.RNUM ASC, T1. WE_WIKI_PARENT_IDX ASC ,T1.WE_WIKI_ORDER_IDX ASC
+	</select>
+
+	<insert id="WikiManage.insertArrayFileList" parameterType="java.util.HashMap">
+		INSERT INTO we_wiki_file(  /* WikiManage.insertArrayFileList - 임시저장된 파일을 실제 위키 파일 테이블로 저장  */
+				we_wiki_idx
+		      , we_file_real_name
+		      , we_file_save_name
+		      , we_file_save_path
+		      , we_thumb_path
+		      , we_thumb_name
+		      , we_file_type
+		      , we_file_size
+		      , we_wiki_revision
+		      , we_use_yn
+		      , we_file_down
+	      )
+		SELECT #{weWikiIdx}
+		     , we_file_real_name
+		     , we_file_save_name
+		     , we_file_save_path
+		     , we_thumb_path
+		     , we_thumb_name
+		     , we_file_type
+		     , we_file_size
+		     , #{weWikiRevision}
+		     , 'Y'
+		     , 0
+		  FROM we_file
+		 WHERE we_file_idx IN
+		 <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+		    #{item}
+		</foreach>
+	</insert>
+
+
+	<update id="WikiManage.delWeWikiFile" parameterType="java.lang.Integer">
+	<![CDATA[
+		UPDATE we_wiki_file /* WikiManage.delWeWikiFile - 위키 파일을 삭제한다. */
+		SET    we_use_yn = 'N'
+	    WHERE  we_file_idx = #{weFileIdx}
+	]]>
+	</update>
+
+
+
+	<insert id="WikiManage.insertSelectedWikiBak" parameterType="org.gliderwiki.web.domain.WeWikiBak">
+		<!-- 리비전 교체하면 BAK 테이블에 기존 데이터 저장 -->
+		INSERT INTO WE_WIKI_BAK (	/* WikiManage.insertWeWikiBak - 기존 위키를 Bak 테이블에 저장한다 */
+		       WE_BAK_IDX
+		     , WE_WIKI_IDX
+		     , WE_WIKI_TITLE
+		     , WE_WIKI_TEXT
+		     , WE_WIKI_MARKUP
+		     , WE_WIKI_REVISION
+		     , WE_WIKI_STATUS
+		     , WE_USER_IP
+		     , WE_WIKI_PROTECT
+		     , WE_EDIT_TEXT
+		     , WE_USE_YN
+		     , WE_INS_USER
+		     , WE_INS_DATE
+		     , WE_UPD_USER
+		     , WE_UPD_DATE
+		     , WE_MOV_DATE
+		)
+		SELECT (
+		        SELECT IFNULL(MAX(LAST_INSERT_ID(WE_BAK_IDX)) + 1, 1) as WE_BAK_IDX
+  		          FROM WE_WIKI_BAK
+		       ) WE_BAK_IDX
+		      , WE_WIKI_IDX
+		      , WE_WIKI_TITLE
+		      , WE_WIKI_TEXT
+		      , WE_WIKI_MARKUP
+		      , WE_WIKI_REVISION
+		      , WE_WIKI_STATUS
+		      , WE_USER_IP
+		      , WE_WIKI_PROTECT
+		      , WE_EDIT_TEXT
+		      , WE_USE_YN
+		      , WE_INS_USER
+		      , WE_INS_DATE
+		      , WE_UPD_USER
+		      , WE_UPD_DATE
+		      , NOW()
+		  FROM WE_WIKI
+		 WHERE WE_WIKI_IDX = #{we_wiki_idx}
+	</insert>
+
+
+	<update id="WikiManage.delWeWikiLink" parameterType="java.util.HashMap">
+	<![CDATA[
+		UPDATE we_wiki_link /* WikiManage.delWeWikiLink - 기존 링크들을 삭제한다. */
+		SET    we_use_yn = #{weUseYn}
+	    WHERE  we_wiki_idx = #{weWikiIdx}
+	    AND    we_wiki_revision = #{weWikiRevision}
+	]]>
+	</update>
+
+	<update id="WikiManage.delWeWikiSummary" parameterType="java.util.HashMap">
+	<![CDATA[
+		UPDATE we_wiki_summary /* WikiManage.delWeWikiSummary - 기존 섬머리들을 삭제한다. */
+		SET    we_use_yn =  #{weUseYn}
+	    WHERE  we_wiki_idx = #{weWikiIdx}
+	    AND    we_wiki_revision = #{weWikiRevision}
+	]]>
+	</update>
+
+	<update id="WikiManage.delWeWikiNote" parameterType="java.util.HashMap">
+	<![CDATA[
+		UPDATE we_wiki_note /* WikiManage.delWeWikiNote - 기존 주석들을 삭제한다. */
+		SET    we_use_yn =  #{weUseYn}
+	    WHERE  we_wiki_idx = #{weWikiIdx}
+	    AND    we_wiki_revision = #{weWikiRevision}
+	]]>
+	</update>
+
+	<update id="WikiManage.delWeWikiTag" parameterType="java.util.HashMap">
+	<![CDATA[
+		UPDATE we_wiki_tag /* WikiManage.delWeWikiweTag - 기존 태그들을 삭제한다. */
+		SET    we_use_yn =  #{weUseYn}
+	    WHERE  we_wiki_idx = #{weWikiIdx}
+	    AND    we_wiki_revision = #{weWikiRevision}
+	]]>
+	</update>
+
+	<update id="WikiManage.updateWikiFile" parameterType="java.util.HashMap">
+	<![CDATA[
+		UPDATE we_wiki_file /* WikiManage.updateWikiFile - 기존 파일들을 버전업한다. */
+		SET    we_wiki_revision = #{weWikiRevision}
+	    WHERE  we_wiki_idx = #{weWikiIdx}
+	    AND    we_use_yn =  #{weUseYn}
+	]]>
+	</update>
+
+	<update id="WikiManage.delWeWikiGraph" parameterType="java.util.HashMap">
+	<![CDATA[
+		UPDATE we_wiki_graph /* WikiManage.delWeWikiGraph - 기존 그래프들을 삭제한다. */
+		SET    we_use_yn =  #{weUseYn}
+	    WHERE  we_wiki_idx = #{weWikiIdx}
+	    AND    we_wiki_revision = #{weWikiRevision}
+	]]>
+	</update>
+
+	<update id="WikiManage.insertWeAgree" parameterType="weWikiAgree">
+	<![CDATA[
+		INSERT INTO WE_WIKI_AGREE ( we_user_idx,we_wiki_idx,we_view_date )
+		VALUES ( #{we_user_idx},#{we_wiki_idx}, now())
+	]]>
+	</update>
+
+	<update id="WikiManage.insertWikiLog" parameterType="weWikiLog">
+	<![CDATA[
+		INSERT INTO we_wiki_log (
+						WE_WIKI_IDX,
+						WE_WIKI_STATUS,
+						WE_USER_IDX,
+						WE_WIKI_REVISION,
+						WE_WIKI_ACTION_TYPE,
+						WE_INS_DATE
+					) VALUES (
+						#{we_wiki_idx},
+						#{we_wiki_status},
+						#{we_user_idx},
+						#{we_wiki_revision},
+						#{we_wiki_action_type},
+						NOW()
+					)
+	]]>
+	</update>
+
+	<!--  템플릿 목록을 조회한다.. -->
+	<select id="WikiManage.getWeTemplateIdx"  resultType="weTemplate">
+		SELECT b.we_template_idx /* WikiManage.getWeTemplateIdx -  템플릿 목록을 조회한다. */
+		     , b.we_template_type
+		     , b.we_template_name
+		FROM WE_TEMPLATE b
+	   WHERE we_use_yn = #{we_use_yn}
+	   ORDER BY we_template_idx DESC 
+	</select>
+
+	<!--  템플릿 목록을 조회한다.. -->
+	<select id="WikiManage.getWeTemplateList"  resultType="weTemplate">
+		SELECT b.we_template_idx /* WikiManage.getWeTemplateList -  템플릿 목록을 조회한다. */
+		     , b.we_template_type
+		     , b.we_template_name
+		     , b.we_ins_user
+		     , b.we_ins_date
+		     , b.we_upd_user
+		     , b.we_upd_date 
+		     ,(SELECT a.we_user_nick FROM we_user a WHERE a.we_user_idx = b.we_ins_user) AS we_user_nick
+		FROM WE_TEMPLATE b
+	   WHERE we_use_yn = #{we_use_yn}
+	   ORDER BY we_template_idx DESC 
+	</select>
+
+		
+	<!--  리비전 목록을 조회한다. -->
+	<select id="WikiManage.getListWikiRevision"  resultType="weWikiBak">
+		SELECT /* WikiManage.getListWikiRevision - 리비전 목록을 조회한다. */
+			   b.we_bak_idx
+			 , b.we_wiki_idx
+			 , b.we_wiki_title
+			 , b.we_wiki_text
+			 , b.we_wiki_markup
+			 , b.we_wiki_revision
+			 , b.we_wiki_status
+			 , b.we_user_ip
+			 , b.we_wiki_protect
+			 , b.we_edit_text
+			 , b.we_use_yn
+			 , b.we_ins_user
+			 , b.we_ins_date
+			 , b.we_upd_user
+			 , b.we_upd_date
+			 , b.we_mov_date
+			 , (SELECT a.we_user_nick FROM we_user a WHERE a.we_user_idx = b.we_ins_user) AS we_user_nick
+	 	FROM WE_WIKI_BAK b 
+	   WHERE b.we_wiki_idx = #{we_wiki_idx} 
+	   ORDER BY b.we_wiki_revision desc
+	</select>
+	
+	<!--  리비전 오리지날 대상 위키를 조회한다. -->
+	<select id="WikiManage.getOriginWiki"  resultType="weWiki">
+		SELECT /* WikiManage.getListWikiRevision - 리비전 목록을 조회한다. */
+			 b.we_wiki_idx
+			 , b.we_space_idx
+			 , b.we_wiki_title
+			 , b.we_wiki_text
+			 , b.we_wiki_markup
+			 , b.we_wiki_revision
+			 , b.we_wiki_status
+			 , b.we_user_ip
+			 , b.we_wiki_protect
+			 , b.we_edit_text
+			 , b.we_use_yn
+			 , b.we_ins_user
+			 , b.we_ins_date
+			 , b.we_upd_user
+			 , b.we_upd_date
+			 , (SELECT a.we_user_nick FROM we_user a WHERE a.we_user_idx = b.we_ins_user) AS we_user_nick
+	 	FROM WE_WIKI b 
+	   WHERE b.we_wiki_idx = #{we_wiki_idx} 
+	</select>
+
+</mapper>

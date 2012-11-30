@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--
+	공간관련 맵핑파일
+-->
+
+<mapper namespace="MainManage">
+
+	<!-- 내 활동내역 리스트 조회 -->
+	<select id="MainManage.getMyActionList" parameterType="int" resultType="java.util.HashMap"> 
+		select /* MainManage.Space.getMyActionList - 내 활동 내역 목록을 조회한다.  */
+		       a.we_wiki_idx 		as idx
+		     , b.we_wiki_title		as title
+		     , a.we_ins_date		    as insDate
+		     , case when a.we_wiki_action_type = 'I'   
+		            then '입력'
+		            when a.we_wiki_action_type = 'U'
+		            then '수정' end as actionType
+		 from (
+		       select we_wiki_idx
+		            , we_user_idx
+		            , max(we_wiki_revision) as we_wiki_revision
+		            , we_wiki_action_type
+		            , max(we_ins_date) as we_ins_date
+		      from    we_wiki_log
+		      group by we_wiki_idx, we_user_idx, we_wiki_action_type
+		      ) a, we_wiki b
+		where a.we_wiki_idx = b.we_wiki_idx
+		and   a.we_user_idx = #{weUserIdx}
+		and b.WE_USE_YN = 'Y'
+		ORDER BY a.we_ins_date DESC LIMIT 5
+	</select>
+
+	<!-- 
+	<select id="MainManage.getCurrentWikiList" parameterType="int" resultType="java.util.HashMap">
+		select /* MainManage.Space.getMyActionList - 내 활동 내역 목록을 조회한다.  */
+		       we_wiki_idx 		as idx
+		     , we_wiki_title	as title
+	         , a.we_ins_date	as insDate
+		from we_wiki_log
+		where a.we_wiki_idx = b.we_wiki_idx
+        and a.we_user_idx=#{weUserIdx}
+        ORDER BY a.we_ins_date DESC
+        LIMIT 5
+	</select>
+ 	-->
+ 
+	<select id="MainManage.getWikiList" parameterType="int" resultType="java.util.HashMap">
+		SELECT  a.we_wiki_idx AS idx  /* MainManage.getWikiList - 대시보드의 위키 목록을 지정된 건수만큼 조회해온다.  */
+			  , a.we_wiki_title AS title
+              , a.we_ins_date AS insDate
+              , IFNULL(d.we_wiki_idx, 0) AS favorited
+              , b.we_view_privacy
+              , c.we_user_nick
+              , a.we_space_idx
+              ,	a.we_ins_user
+              , DATE_FORMAT(a.we_ins_date,  '%Y-%m-%d') AS insert_date   
+		FROM we_wiki a
+		INNER JOIN we_space b
+		ON a.we_space_idx=b.we_space_idx
+		INNER JOIN we_user c
+		ON a.we_ins_user = c.we_user_idx
+		LEFT JOIN (SELECT we_wiki_idx,we_space_idx FROM we_favorite WHERE we_user_idx=#{userIdx} AND we_favorite_type='WIKI' AND we_use_yn='Y') d
+		ON a.we_space_idx = d.we_space_idx AND a.we_wiki_idx = d.we_wiki_idx
+		WHERE  a.WE_USE_YN = 'Y' 
+		GROUP BY a.we_wiki_title
+			   , a.we_ins_date
+		<choose>
+		<when test="listType == 'recent'">
+		ORDER BY a.we_ins_date DESC
+		LIMIT  #{startRow},  #{endRow}
+		</when>
+		<otherwise>
+		ORDER BY a.we_wiki_title
+		LIMIT  #{startRow},  #{endRow}
+		</otherwise>
+		</choose>
+	</select>
+	
+	
+
+	<select id="MainManage.getUpdatedList" resultType="java.util.HashMap">
+		SELECT   we_wiki_idx
+		       , we_ins_date
+		       , we_wiki_text 
+		       , we_wiki_title
+		       , profileImg
+		       , we_user_nick
+		       , we_user_idx
+		       , DATE_FORMAT(we_ins_date, '%Y-%m-%d') AS insert_date 
+		   FROM (
+			SELECT  MAX(a.we_wiki_idx) AS we_wiki_idx
+	      		  , MAX(a.we_ins_date) AS we_ins_date
+		          , b.we_wiki_text
+		          , b.we_wiki_title
+		          , CONCAT( c.we_thumb_path, c.we_thumb_name) AS profileImg
+		          , d.we_user_nick
+		          ,	d.we_user_idx
+			FROM we_wiki_log a
+			INNER JOIN we_wiki b
+			ON a.we_wiki_idx = b.we_wiki_idx and b.WE_USE_YN = 'Y'
+			INNER JOIN we_profile c
+			ON a.we_user_idx=c.we_user_idx AND b.we_ins_user=c.we_user_idx
+			INNER JOIN we_user d
+			ON a.we_user_idx=d.we_user_idx AND b.we_ins_user=d.we_user_idx AND c.we_user_idx=d.we_user_idx
+			WHERE a.we_wiki_status='S'
+			<if test="spaceIdx != null">
+			AND b.we_space_idx=#{spaceIdx}
+			</if>
+			GROUP BY we_wiki_text, we_wiki_title, profileImg, we_user_nick, we_user_idx
+		) T1
+		ORDER BY we_ins_date DESC
+		LIMIT #{startRow},  #{endRow}
+	</select>
+
+	<select id="MainManage.getFavorList" resultType="java.util.HashMap">
+		SELECT a.we_wiki_idx
+	    	 , b.we_wiki_title
+             , a.cnt
+		FROM (
+				SELECT we_wiki_idx
+					 , COUNT(we_wiki_idx) AS cnt
+				FROM we_favorite
+				WHERE we_wiki_idx IS NOT NULL
+				AND WE_USE_YN = 'Y' 
+				AND we_use_yn="Y"
+				GROUP BY we_wiki_idx
+				ORDER BY cnt DESC
+				LIMIT 5
+			) a
+		INNER JOIN we_wiki b
+		ON a.we_wiki_idx = b.we_wiki_idx
+		and b.WE_USE_YN = 'Y'
+	</select>
+
+	<select id="MainManage.getAgreeList" resultType="java.util.HashMap">
+		SELECT we_wiki_idx
+	         , we_wiki_title
+	         , we_wiki_agree
+		FROM we_wiki
+		WHERE we_wiki_status='S'
+		AND we_use_yn='Y'
+		ORDER BY we_wiki_agree DESC
+		LIMIT 5
+	</select>
+
+	<select id="MainManage.getUserPointList" resultType="java.util.HashMap">
+		SELECT b.we_user_nick
+			 , b.we_user_idx
+             , a.we_point
+		FROM we_profile a
+		INNER JOIN we_user b
+		ON a.we_user_idx = b.we_user_idx
+		WHERE a.we_point > 10
+		ORDER BY a.we_point DESC
+		LIMIT 5
+	</select>
+
+	<select id="MainManage.getHomeWikiList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT a.we_wiki_idx
+	      	 , a.we_wiki_title
+	      	 , a.we_wiki_view_cnt
+		FROM we_wiki a
+		INNER JOIN we_space b
+		ON a.we_space_idx=b.we_space_idx
+		WHERE b.we_view_privacy='ALLGROUP'
+		AND   a.we_wiki_status='S'
+		AND   a.we_use_yn='Y'
+		<choose>
+		<when test="listType == 'best'">
+		ORDER BY we_wiki_view_cnt DESC
+		</when>
+		<otherwise>
+		ORDER BY a.we_ins_date DESC
+		</otherwise>
+		</choose>
+		LIMIT 4;
+	</select>
+
+	<select id="MainManage.getWikiCount" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM we_wiki
+		WHERE we_wiki_status='S'
+		AND we_use_yn='Y'
+	</select>
+
+	<select id="MainManage.getTagCount" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM we_wiki_tag
+		WHERE we_use_yn='Y'
+	</select>
+
+	<select id="MainManage.getMyWikiCount" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM we_wiki
+		WHERE we_ins_user=#{userIdx}
+	</select>
+
+	<select id="MainManage.getMyPeopleCount" resultType="int">
+		SELECT count(a.we_target_user_idx) AS CNT
+		FROM we_add_friend a, we_user b, we_profile c
+		WHERE a.we_target_user_idx = b.we_user_idx
+		AND   b.we_user_idx = c.we_user_idx
+		AND   a.we_use_yn = 'Y'
+		AND   c.we_away_yn = 'N'
+		AND   a.we_user_idx = #{userIdx}
+	</select>
+
+	<select id="MainManage.getToMePeopleCount" resultType="int">
+		select count(a.we_user_idx) AS CNT
+		from we_add_friend a, we_user b, we_profile c
+		where a.we_user_idx = b.we_user_idx
+		and   b.we_user_idx = c.we_user_idx
+		and   a.we_use_yn = 'Y'
+		and   c.we_away_yn = 'N'
+		and   a.we_target_user_idx = #{userIdx}
+	</select>
+
+	<select id="MainManage.getMyNotiList" resultType="java.util.HashMap">
+		SELECT * FROM (
+				SELECT a.we_bbs_idx
+					,  a.we_space_idx
+					,  a.we_bbs_title
+					,  DATE_FORMAT(a.we_ins_date,  '%Y-%m-%d') AS we_ins_date 
+					,  a.we_ins_name
+					,  a.we_hit_count 
+				FROM we_bbs a, we_space b 
+				WHERE a.we_space_idx = b.we_space_idx
+				AND   b.we_space_exposed = 'Y'
+				AND   a.we_use_yn = b.we_use_yn
+				AND   b.we_view_privacy = 'ALLGROUP'
+				AND   a.we_use_yn = 'Y'
+				UNION ALL 
+				SELECT a.we_bbs_idx
+					,  a.we_space_idx
+					,  a.we_bbs_title
+					,  DATE_FORMAT(a.we_ins_date,  '%Y-%m-%d') AS we_ins_date 
+					,  a.we_ins_name
+					,  a.we_hit_count 
+				FROM we_bbs a, we_space b, we_space_user c
+				WHERE a.we_space_idx = b.we_space_idx
+				AND   b.we_space_exposed = 'Y'
+				AND   a.we_use_yn = b.we_use_yn
+				AND   b.we_view_privacy = 'USER'
+				AND   a.we_space_idx = c.we_space_idx 
+				AND   c.we_view_permit = '1'
+				AND   c.we_user_idx = #{weUserIdx}
+				UNION ALL 
+				SELECT a.we_bbs_idx
+					,  a.we_space_idx
+					,  a.we_bbs_title
+					,  DATE_FORMAT(a.we_ins_date,  '%Y-%m-%d') AS we_ins_date 
+					,  a.we_ins_name
+					,  a.we_hit_count 
+				FROM we_bbs a, we_space b, ( SELECT d.* 
+								FROM we_group_user c, we_space_group d, we_group_info e
+								WHERE 1 = 1
+								AND c.we_use_yn = 'Y'
+								AND c.we_group_idx = d.we_group_idx 
+								AND c.we_group_idx = e.we_group_idx
+								AND d.we_view_permit = '1'
+								AND c.we_user_idx =  #{weUserIdx}) c
+				WHERE a.we_space_idx = b.we_space_idx
+				AND   b.we_space_exposed = 'Y'
+				AND   a.we_use_yn = b.we_use_yn
+				AND   b.we_view_privacy = 'GROUP'
+				AND   b.we_space_idx = c.we_space_idx
+				) t1
+		ORDER BY we_ins_date DESC
+		LIMIT #{startRow},  #{endRow}
+	</select>
+
+
+	
+</mapper>

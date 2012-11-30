@@ -1,0 +1,95 @@
+﻿<html>
+<head>
+  </head>
+
+<body>
+
+<h1 class="sectionedit1"><a name="기본_설치_문서" id="기본_설치_문서">기본 설치 문서</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.dokuwiki.org/Install" class="urlextern" title="http://www.dokuwiki.org/Install" rel="nofollow">http://www.dokuwiki.org/Install</a> 에 기본 설치 문서가 있다.</div>
+</li>
+</ul>
+
+</div>
+
+<h1 class="sectionedit2"><a name="파일_정리" id="파일_정리">파일 정리</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> /var/www/ 에 dokuwiki 파일 압축을 푼다.</div>
+</li>
+<li class="level1"><div class="li"> $ mv /var/www/dokuwik-version dokuwiki</div>
+</li>
+<li class="level1"><div class="li"> $ chown -R www-data:www-data dokuwiki</div>
+</li>
+</ul>
+
+</div>
+
+<h1 class="sectionedit3"><a name="apache_기본_설정" id="apache_기본_설정">Apache 기본 설정</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> /etc/apache2/conf.d/charset 에서 “AddDefaultCharset UTF-8” 추가한다.</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://wiki.kwonnam.pe.kr/apache/security" class="wikilink1" title="apache:security">Apache 보안사항 적용</a></div>
+</li>
+<li class="level1"><div class="li"> /etc/apache2/site-enabled/default 에 다음 추가</div>
+</li>
+</ul>
+<pre class="code">  Alias /wiki /var/www/dokuwiki
+  &lt;Directory /var/www/dokuwiki&gt;
+    AllowOverride All
+  &lt;/Directory&gt;</pre>
+<ul>
+<li class="level1"><div class="li"> <strong>AllowOverride All</strong>은 .htaccess 파일 접근 권한 때문에 필요하다.</div>
+</li>
+<li class="level1"><div class="li"> /etc/init.d/apache2 restart 로 재시작.</div>
+</li>
+</ul>
+
+</div>
+
+<h1 class="sectionedit4"><a name="서버_설정_마무리" id="서버_설정_마무리">서버 설정 마무리</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> <a href="http://server/dokuwiki/install.php" class="urlextern" title="http://server/dokuwiki/install.php" rel="nofollow">http://server/dokuwiki/install.php</a> 를 실행하여 설치를 마무리 한다.</div>
+</li>
+<li class="level1"><div class="li"> 완료후 install.php는 삭제해버린다.</div>
+</li>
+</ul>
+
+</div>
+
+<h1 class="sectionedit5"><a name="보안" id="보안">보안</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> dokuwiki 아래의 bin,conf,inc,data 디렉토리는 브라우저로 접근 가능하면 안된다. .htaccess 파일이 접근알 자동으로 막고 있지만, 혹시 접근 되는 파일이 있는지 직접 브라우저에서 주소를 쳐서 확인해본다.</div>
+</li>
+<li class="level1"><div class="li"> 만약 위 디렉토리에서 접근 가능한 파일이 있다면 그것은 아파치 설정에서 <strong>AllowOverride All</strong>이 빠져있기 때문일 수 있다.</div>
+</li>
+<li class="level1"><div class="li"> 사용자 Register 방지 : 나 외의 다른 사용자는 가입 불가이며, 읽기 쓰기 금지이다. <a href="http://www.dokuwiki.org/faq:regdisable" class="urlextern" title="http://www.dokuwiki.org/faq:regdisable" rel="nofollow">http://www.dokuwiki.org/faq:regdisable</a> 참조</div>
+<ul>
+<li class="level2"><div class="li"> conf/local.php 에 <strong>$conf['disableactions'] = 'register';</strong> 추가</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<h1 class="sectionedit6"><a name="예쁜_url_만들기" id="예쁜_url_만들기">예쁜 URL 만들기</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.dokuwiki.org/rewrite" class="urlextern" title="http://www.dokuwiki.org/rewrite" rel="nofollow">http://www.dokuwiki.org/rewrite</a> 참조</div>
+</li>
+<li class="level1"><div class="li"> .htaccess에서 주석 풀어주고,</div>
+</li>
+<li class="level1"><div class="li"> conf/local.php 파일에서</div>
+</li>
+<li class="level1"><div class="li"> <pre class="code">$conf['userewrite'] = 1;
+$conf['useslash'] = 1;</pre>
+</div>
+</li>
+</ul>
+
+</body></html>

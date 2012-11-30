@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- 
+	01. 그룹관리
+  -->
+
+<mapper namespace="AdminManage">
+
+	<!-- 그룹정보 리스트를 조회한다. -->
+	<select id="AdminManage.getGroupInfoList" resultType="groupInfoVo">
+		select /* AdminManage.getGroupInfoList - 그룹정보 리스트 조회 */
+		       a.we_group_idx   as weGroupIdx
+		     , a.we_group_name  as weGroupName
+		     , case when a.we_group_type = '0'   
+		            then '조직'
+		            when a.we_group_type = '1'
+		            then '그룹' end
+		       as weGroupType
+		     , a.we_group_owner as weGroupOwner
+		     , a.we_group_info  as weGroupInfo
+		     , a.we_ins_date    as weInsDate
+		     , b.we_user_nick   as weUserNick
+		  from we_group_info a, we_user b  
+		 where a.we_use_yn = 'Y'
+		 and   a.we_group_owner = b.we_user_idx
+	</select>
+	
+	<!-- 그룹에 속한 사용자 리스트 조회 -->
+	<select id="AdminManage.getGroupUserList" parameterType="groupUserVo" resultType="groupUserVo">
+		select /* AdminManage.getGroupUserList - 그룹에 속한 사용자 리스트 조회 */
+		       a.we_user_idx 	as weUserIdx
+		     , a.we_user_id		as weUserId
+		     , a.we_user_nick	as weUserNick
+		     , b.we_ins_date	as weInsDate
+		from we_user a, we_group_user b
+		where b.we_use_yn = 'Y'
+		and a.we_user_auth_yn = 'Y'
+		and a.we_user_idx = b.we_user_idx
+		and b.we_group_idx = #{weGroupIdx}
+		order by a.we_user_idx
+	</select>
+	
+	
+	<!-- 회원 정보  리스트 조회 : 검색조회 -->
+	<select id="AdminManage.getUserListMailInfo" parameterType="weUser" resultType="mailSendUserVo">
+		select /* AdminManage.getUserListMailInfo - 그룹에 속한 사용자 리스트 조회 */
+		         a.we_user_idx          as weUserIdx
+		       , a.we_user_name         as weUserName
+		       , a.we_user_id			as weUserId
+			   , a.we_user_nick			as weUserNick
+			   , b.we_user_email		as weUserEmail
+			   , a.we_user_join_date	as weUserJoinDate
+			   , a.we_user_auth_yn		as weUserAuthYn
+			   , a.we_user_auth_date	as weUserAuthDate
+			   , b.we_grade				as weGrade
+			   , b.we_point				as wePoint
+			   , b.we_visit_date		as weVisitDate
+			   , b.we_tech_yn			as weTechYn
+			   , (select c.we_ins_date from we_send_mail c
+                   where c.we_user_idx = a.we_user_idx ) as weInsDate
+			   , (select case when d.we_send_status = '0' then '전송완료' 
+			             when d.we_send_status = '1' then '전송실패' 
+			             when d.we_send_status = '2' then '관리자재전송' 
+			             when d.we_send_status = '3' then '관리자재전송실패' 
+                         end from we_send_mail d
+                      where d.we_user_idx = a.we_user_idx ) as weSendStatus
+		  from we_user a, we_profile b
+		 where a.we_user_idx = b.we_user_idx
+		   and b.we_away_yn = 'N'
+		 <if test="we_user_id != null and we_user_id != '' ">
+			and a.we_user_id LIKE CONCAT('%', #{we_user_id}, '%')
+		 </if>
+		 <if test="we_user_nick != null and we_user_nick != '' ">
+			and a.we_user_nick LIKE CONCAT('%', #{we_user_nick}, '%')
+		 </if>
+		 <if test="we_user_name != null and we_user_name != '' ">
+			and a.we_user_name LIKE CONCAT('%', #{we_user_name}, '%')
+		 </if>
+
+	</select>
+	
+	
+	<!-- 회원 정보  리스트 조회 : 검색조회 -->
+	<select id="AdminManage.getUserListByGrade" parameterType="weProfile" resultType="mailSendUserVo">
+		select /* AdminManage.getUserListByGrade - 그룹에 속한 사용자 리스트 조회 */
+		         a.we_user_idx          as weUserIdx
+		       , a.we_user_name         as weUserName
+		       , a.we_user_id			as weUserId
+			   , a.we_user_nick			as weUserNick
+			   , b.we_user_email		as weUserEmail
+			   , a.we_user_join_date	as weUserJoinDate
+			   , a.we_user_auth_yn		as weUserAuthYn
+			   , a.we_user_auth_date	as weUserAuthDate
+			   , b.we_grade				as weGrade
+			   , b.we_point				as wePoint
+			   , b.we_visit_date		as weVisitDate
+			   , b.we_tech_yn			as weTechYn
+			   , (select c.we_ins_date from we_send_mail c
+                   where c.we_user_idx = a.we_user_idx ) as weInsDate
+			   , (select case when d.we_send_status = '0' then '전송완료' 
+			             when d.we_send_status = '1' then '전송실패' 
+			             when d.we_send_status = '2' then '관리자재전송' 
+			             when d.we_send_status = '3' then '관리자재전송실패' 
+                         end from we_send_mail d
+                      where d.we_user_idx = a.we_user_idx ) as weSendStatus
+		  from we_user a, we_profile b
+		 where a.we_user_idx = b.we_user_idx
+		   and b.we_away_yn = #{we_away_yn}
+		   and b.we_grade = #{we_grade}
+	</select>
+	
+	<!-- 그룹에 속한 회원정보 리스트  조회 -->
+	<select id="AdminManage.getUserListByGroup" parameterType="groupUserVo" resultType="mailSendUserVo">
+		select /* AdminManage.getUserListByGroup - 그룹에 속한 사용자 리스트 조회 */
+		         a.we_user_idx          as weUserIdx
+		       , a.we_user_name         as weUserName
+		       , a.we_user_id			as weUserId
+			   , a.we_user_nick			as weUserNick
+			   , b.we_user_email		as weUserEmail
+			   , a.we_user_join_date	as weUserJoinDate
+			   , a.we_user_auth_yn		as weUserAuthYn
+			   , a.we_user_auth_date	as weUserAuthDate
+			   , b.we_grade				as weGrade
+			   , b.we_point				as wePoint
+			   , b.we_visit_date		as weVisitDate
+			   , b.we_tech_yn			as weTechYn
+			   , (select c.we_ins_date from we_send_mail c
+                   where c.we_user_idx = a.we_user_idx ) as weInsDate
+			   , (select case when d.we_send_status = '0' then '전송완료' 
+			             when d.we_send_status = '1' then '전송실패' 
+			             when d.we_send_status = '2' then '관리자재전송' 
+			             when d.we_send_status = '3' then '관리자재전송실패' 
+                         end from we_send_mail d
+                      where d.we_user_idx = a.we_user_idx ) as weSendStatus
+		  from we_user a, we_profile b, we_group_user c
+		 where a.we_user_idx = b.we_user_idx
+		   and a.we_user_idx = c.we_user_idx
+		   and b.we_away_yn = 'N'
+		   and c.we_use_yn = 'Y'
+		   and c.we_group_idx = #{weGroupIdx}
+	</select>	
+	
+	
+	<select id="AdminManage.getSearchAdminList" resultType="weUser">
+	<![CDATA[
+		SELECT a.we_user_idx
+		     , a.we_user_id
+		     , a.we_user_name
+		     , a.we_user_nick 
+		     , DATE_FORMAT(a.we_user_join_date,  '%Y-%m-%d') AS we_user_join_date   
+		FROM   we_user a, we_profile b
+		WHERE  a.we_user_idx = b.we_user_idx
+		AND    a.we_user_auth_yn = 'Y'
+		AND    b.we_away_yn = 'N'
+		AND    b.we_grade >= 3
+	]]>
+	</select>
+	
+	
+	<update id="AdminManage.deleteGroupInfoDWR" parameterType="weGroupInfo">
+		UPDATE we_group_info  /* AdminManage.deleteGroupInfoDWR - 그룹을 삭제한다 */
+		SET    we_use_yn = #{we_use_yn}
+     		 , we_upd_date = now()
+     		 , we_upd_user = #{we_upd_user}
+		WHERE  1 = 1
+	    AND    we_group_idx =  #{we_group_idx}
+	</update>
+		
+	
+	<update id="AdminManage.deleteUserInGroupDWR" parameterType="weGroupUser">
+		UPDATE we_group_user  /* AdminManage.deleteUserInGroupDWR - 그룹에 속한 사용자 일괄 업데이트  */
+		SET    we_use_yn = #{we_use_yn}
+     		 , we_ins_date = now()
+     		 , we_ins_user = #{we_ins_user}
+		WHERE  1 = 1
+	    AND    we_group_idx =  #{we_group_idx}
+	</update>
+	
+	
+	<update id="AdminManage.deleteGroupUserDWR" parameterType="weGroupUser">
+		UPDATE we_group_user  /* AdminManage.deleteGroupUserDWR - 그룹에 속한 사용자 개별 업데이트   */
+		SET    we_use_yn = #{we_use_yn}
+     		 , we_ins_date = now()
+     		 , we_ins_user = #{we_ins_user}
+		WHERE  1 = 1
+	    AND    we_group_idx =  #{we_group_idx}
+	    AND    we_user_idx =  #{we_user_idx}
+	</update>
+	
+	
+	<update id="AdminManage.updateSpaceByAdmin" parameterType="weSpace">
+		UPDATE we_space  /* AdminManage.updateSpaceByAdmin - 공간 정보 업데이트    */
+		SET    we_space_name = #{we_space_name}
+     		 , we_space_desc = #{we_space_desc}
+     		 , we_admin_idx = #{we_admin_idx}
+     		 , we_space_exposed = #{we_space_exposed}
+     		 , we_upd_user = #{we_upd_user}
+     		 , we_upd_date = now()
+		WHERE  1 = 1
+	    AND    we_space_idx =  #{we_space_idx}
+	    AND    we_use_yn   = 'Y'
+	</update>
+		
+	<!-- 그룹에 속한 사용자 리스트 조회 -->
+	<select id="AdminManage.getUserJoinGroupList" parameterType="Integer" resultType="weGroupInfo">
+		select a.we_group_idx, a.we_group_name, a.we_group_type
+		 from we_group_info a, we_group_user b
+		where a.we_group_idx = b.we_group_idx 
+		and a.we_use_yn = a.we_use_yn
+		and b.we_use_yn = 'Y'
+		and b.we_user_idx  = #{weGroupIdx}
+	</select>
+
+
+	<select id="AdminManage.getSpaceListMonth" resultType="weSpace">
+		SELECT /* AdminManage.getSpaceListMonth	 - 최근 한달간 생성된 공간 목록 조회 */ 
+			 	a.we_space_idx, 
+				a.we_space_name, 
+				a.we_space_desc, 
+				a.we_view_privacy, 
+				a.we_edit_privacy, 
+				a.we_admin_idx, 
+				a.we_space_exposed, 
+				a.we_use_yn, 
+				a.we_ins_user, 
+				a.we_ins_date, 
+				a.we_upd_user, 
+				a.we_upd_date,
+				b.we_user_nick as we_space_admin_nick
+		FROM 	we_space a, we_user b
+		WHERE   a.we_use_yn = #{space.we_use_yn}
+		AND     a.we_admin_idx = we_user_idx
+		<if test="month != null and month != '' ">
+		AND     a.we_ins_date >= #{month}
+		</if>
+	</select>
+	
+	<select id="AdminManage.getSpaceSearchList" resultType="weSpace">
+		SELECT /* AdminManage.getSpaceSearchList	 - 공간 검색 조회 */ 
+			 	a.we_space_idx, 
+				a.we_space_name, 
+				a.we_space_desc, 
+				a.we_view_privacy, 
+				a.we_edit_privacy, 
+				a.we_admin_idx, 
+				a.we_space_exposed, 
+				a.we_use_yn, 
+				a.we_ins_user, 
+				a.we_ins_date, 
+				a.we_upd_user, 
+				a.we_upd_date,
+				b.we_user_nick as we_space_admin_nick
+		FROM 	we_space a, we_user b
+		WHERE   a.we_use_yn = 'Y'
+		AND     a.we_admin_idx = we_user_idx
+		<if test="we_admin_idx != null and we_admin_idx != '' ">
+		AND     a.we_admin_idx = #{we_admin_idx}
+		</if>
+		<if test="we_space_name != null and we_space_name != '' ">
+		AND     a.we_space_name LIKE CONCAT('%', #{we_space_name}, '%')
+		</if>
+	</select>
+	
+	<select id="AdminManage.getSpaceDetailInfo" resultType="weSpace">
+		SELECT /* AdminManage.getSpaceDetailInfo	 - 공간 상세 조회 */ 
+			 	a.we_space_idx, 
+				a.we_space_name, 
+				a.we_space_desc, 
+				a.we_view_privacy, 
+				a.we_edit_privacy, 
+				a.we_admin_idx, 
+				a.we_space_exposed, 
+				a.we_use_yn, 
+				a.we_ins_user, 
+				a.we_ins_date, 
+				a.we_upd_user, 
+				a.we_upd_date,
+				b.we_user_nick as we_space_admin_nick
+		FROM 	we_space a, we_user b
+		WHERE   a.we_use_yn = 'Y'
+		AND     a.we_admin_idx = we_user_idx
+		AND     a.we_space_idx = #{weSpaceIdx}
+	</select>
+	
+	
+	<select id="AdminManage.getWikiListInSpace" resultType="weWiki">
+		SELECT /* AdminManage.getWikiListInSpace - 공간에 속한 위키 리스트 조회  */ 
+		   	    we_wiki_idx, 
+				we_space_idx, 
+				we_wiki_parent_idx, 
+				we_wiki_order_idx, 
+				we_wiki_depth_idx, 
+				we_wiki_title, 
+				we_wiki_text, 
+				we_wiki_markup, 
+				we_wiki_revision, 
+				we_wiki_status, 
+				we_wiki_quota, 
+				we_wiki_url, 
+				we_wiki_agree, 
+				we_wiki_view_cnt, 
+				we_wiki_prev, 
+				we_wiki_next, 
+				we_user_ip, 
+				we_edit_text, 
+				we_use_yn, 
+				we_ins_user, 
+				we_ins_date, 
+				we_upd_user, 
+				we_upd_date, 
+				we_edit_yn,
+				(SELECT a.we_user_nick FROM we_user a WHERE a.we_user_idx = b.we_ins_user) AS we_user_nick,
+				CASE WHEN b.we_wiki_protect = '0' THEN '기본' 
+				     WHEN b.we_wiki_protect = '1' THEN '준보호' 
+				     WHEN b.we_wiki_protect = '2' THEN '보호' 
+				     WHEN b.we_wiki_protect = '3' THEN '신고' 
+				     WHEN b.we_wiki_protect = '4' THEN '삭제예정' 
+				     WHEN b.we_wiki_protect = '6' THEN '이의제기' 
+				     WHEN b.we_wiki_protect = '7' THEN '토론' 
+				     WHEN b.we_wiki_protect = '8' THEN '삭제복구' 
+				     WHEN b.we_wiki_protect = '9' THEN '관리자삭제' 
+			    END  AS we_wiki_protect     
+		FROM    we_wiki b
+		WHERE   we_space_idx = #{weSpaceIdx}
+		AND     we_use_yn = 'Y'
+	</select>
+	
+	
+	<select id="AdminManage.getWikiSearchList" resultType="weWiki">
+		SELECT 	we_wiki_idx, 
+				we_space_idx, 
+				we_wiki_parent_idx, 
+				we_wiki_order_idx, 
+				we_wiki_depth_idx, 
+				we_wiki_title, 
+				we_wiki_text, 
+				we_wiki_markup, 
+				we_wiki_revision, 
+				we_wiki_status, 
+				we_wiki_quota, 
+				we_wiki_url, 
+				we_wiki_agree, 
+				we_wiki_view_cnt, 
+				we_wiki_prev, 
+				we_wiki_next, 
+				we_user_ip, 
+				we_edit_text, 
+				we_use_yn, 
+				we_ins_user, 
+				we_ins_date, 
+				we_upd_user, 
+				we_upd_date, 
+				we_edit_yn,
+				(SELECT a.we_user_nick FROM we_user a WHERE a.we_user_idx = b.we_ins_user) AS we_user_nick,
+				CASE WHEN b.we_wiki_protect = '0' THEN '기본' 
+				     WHEN b.we_wiki_protect = '1' THEN '준보호' 
+				     WHEN b.we_wiki_protect = '2' THEN '보호' 
+				     WHEN b.we_wiki_protect = '3' THEN '신고' 
+				     WHEN b.we_wiki_protect = '4' THEN '삭제예정' 
+				     WHEN b.we_wiki_protect = '6' THEN '이의제기' 
+				     WHEN b.we_wiki_protect = '7' THEN '토론' 
+				     WHEN b.we_wiki_protect = '8' THEN '삭제복구' 
+				     WHEN b.we_wiki_protect = '9' THEN '관리자삭제' 
+			    END  AS we_wiki_protect                
+		FROM    we_wiki b
+		WHERE 1 = 1
+		<if test="weUserNick != null and weUserNick != '' ">
+		AND 	we_ins_user IN (SELECT we_user_idx FROM we_user c WHERE c.we_user_nick LIKE CONCAT('%', #{weUserNick}, '%'))
+		</if>
+		<if test="weWikiTitle != null and weWikiTitle != '' ">
+		AND 	we_wiki_title LIKE CONCAT('%', #{weWikiTitle}, '%')
+		</if>
+		<if test="weWikiText != null and weWikiText != '' ">
+		AND 	we_wiki_text  LIKE CONCAT('%', #{weWikiText}, '%')
+		</if>
+		<if test="weSpaceName != null and weSpaceName != '' ">
+		AND 	we_space_idx IN (SELECT we_space_idx FROM we_space d WHERE d.we_space_name LIKE CONCAT('%', #{weSpaceName}, '%'))
+		</if>
+		AND     we_use_yn = 'Y'
+	</select>
+	
+	
+	<select id="AdminManage.getWikiDetailInfo" resultType="weWiki">
+		SELECT 	/* AdminManage.getWikiDetailInfo - 위키 상세 내역 조회   */ 
+		        we_wiki_idx, 
+				we_space_idx, 
+				we_wiki_parent_idx, 
+				we_wiki_order_idx, 
+				we_wiki_depth_idx, 
+				we_wiki_title, 
+				we_wiki_text, 
+				we_wiki_markup, 
+				we_wiki_revision, 
+				we_wiki_status, 
+				we_wiki_quota, 
+				we_wiki_url, 
+				we_wiki_agree, 
+				we_wiki_view_cnt, 
+				we_wiki_prev, 
+				we_wiki_next, 
+				we_user_ip, 
+				we_edit_text, 
+				we_use_yn, 
+				we_ins_user, 
+				we_ins_date, 
+				we_upd_user, 
+				we_upd_date, 
+				we_edit_yn,
+				(SELECT a.we_user_nick FROM we_user a WHERE a.we_user_idx = b.we_ins_user) AS we_user_nick,
+				CASE WHEN b.we_wiki_protect = '0' THEN '기본' 
+				     WHEN b.we_wiki_protect = '1' THEN '준보호' 
+				     WHEN b.we_wiki_protect = '2' THEN '보호' 
+				     WHEN b.we_wiki_protect = '3' THEN '신고' 
+				     WHEN b.we_wiki_protect = '4' THEN '삭제예정' 
+				     WHEN b.we_wiki_protect = '6' THEN '이의제기' 
+				     WHEN b.we_wiki_protect = '7' THEN '토론' 
+				     WHEN b.we_wiki_protect = '8' THEN '삭제복구' 
+				     WHEN b.we_wiki_protect = '9' THEN '관리자삭제' 
+			    END  AS we_wiki_protect     
+		FROM    we_wiki b
+		WHERE   we_wiki_idx = #{weWikiIdx}
+		AND     we_use_yn = 'Y'
+	</select>
+	
+
+	<update id="AdminManage.updateWeWikiByAdmin" parameterType="weWiki">
+		UPDATE we_wiki  /* AdminManage.updateWeWikiByAdmin - 선택한 위키를 삭제한다 */
+		SET    we_use_yn = #{we_use_yn}
+     		 , we_wiki_protect = #{we_wiki_protect}
+     		 , we_upd_date = now()
+     		 , we_upd_user = #{we_upd_user}
+		WHERE  1 = 1
+	    AND    we_wiki_idx =  #{we_wiki_idx}
+	</update>
+
+
+
+	<select id="AdminManage.getKeywordList" resultType="keywordVo">
+		SELECT t.* FROM ( /* AdminManage.getKeywordList - 키워드 리스트  조회   */ 
+		SELECT b.we_wiki_tag_idx as weWikiTagIdx
+		     , a.we_wiki_title   as weWikiTitle
+		     , b.we_wiki_idx	 as weWikiIdx
+		     , b.we_tag			 as weTag
+		     , b.we_wiki_revision as weWikiRevision
+		     , b.we_ins_date	  as weInsDate
+		FROM   we_wiki a, we_wiki_tag b
+		WHERE  a.we_wiki_idx = b.we_wiki_idx
+		AND    a.we_use_yn = 'Y'
+		AND    b.we_use_yn = 'Y'
+		ORDER BY b.we_wiki_tag_idx DESC) t
+		LIMIT  #{startRow},  #{endRow}
+	</select>
+	
+	<select id="AdminManage.getWikiListMonth" resultType="weWiki">
+		select  we_wiki_idx, 
+				we_space_idx, 
+				we_wiki_parent_idx, 
+				we_wiki_order_idx, 
+				we_wiki_depth_idx, 
+				we_wiki_title, 
+				we_wiki_text, 
+				we_wiki_markup, 
+				we_wiki_revision, 
+				we_wiki_status, 
+				we_wiki_quota, 
+				we_wiki_url, 
+				we_wiki_agree, 
+				we_wiki_view_cnt, 
+				we_wiki_prev, 
+				we_wiki_next, 
+				we_user_ip, 
+				we_edit_text, 
+				we_use_yn, 
+				we_ins_user, 
+				we_ins_date, 
+				we_upd_user, 
+				we_upd_date, 
+				we_edit_yn,
+				(SELECT a.we_user_nick FROM we_user a WHERE a.we_user_idx = b.we_ins_user) AS we_user_nick,
+				CASE WHEN b.we_wiki_protect = '0' THEN '기본' 
+				     WHEN b.we_wiki_protect = '1' THEN '준보호' 
+				     WHEN b.we_wiki_protect = '2' THEN '보호' 
+				     WHEN b.we_wiki_protect = '3' THEN '신고' 
+				     WHEN b.we_wiki_protect = '4' THEN '삭제예정' 
+				     WHEN b.we_wiki_protect = '6' THEN '이의제기' 
+				     WHEN b.we_wiki_protect = '7' THEN '토론' 
+				     WHEN b.we_wiki_protect = '8' THEN '삭제복구' 
+				     WHEN b.we_wiki_protect = '9' THEN '관리자삭제' 
+			    END  AS we_wiki_protect     
+		FROM    we_wiki b
+		where 	we_use_yn = 'Y'
+		AND     we_ins_date >= #{month}
+	</select>
+	
+	<update id="AdminManage.insertGroupInfo" parameterType="weGroupInfo">
+		INSERT INTO WE_GROUP_INFO ( 
+					     we_group_code
+					    ,we_group_name
+					    ,we_group_type
+					    ,we_group_owner
+					    ,we_required_yn
+					    ,we_group_info
+					    ,we_use_yn
+					    ,we_ins_user
+					    ,we_ins_date
+					) VALUES ( 
+					     #{we_group_code}
+					    ,#{we_group_name}
+					    ,'1'
+					    ,(SELECT * FROM (SELECT WE_USER_IDX FROM WE_USER WHERE WE_USER_ID = #{we_group_owner}) T1)
+					    ,'Y'
+					    ,#{we_group_info}
+					    ,'Y'
+					    ,1
+					    ,NOW()
+					)
+		
+	</update>
+	
+	<update id="AdminManage.insertGroupUser" parameterType="weGroupUser">
+	INSERT INTO WE_GROUP_USER ( 
+				     we_group_idx
+				    ,we_user_idx
+				    ,we_use_yn
+				    ,we_ins_user
+				    ,we_ins_date
+				) VALUES ( 
+				     (SELECT * FROM (SELECT WE_GROUP_IDX FROM WE_GROUP_INFO WHERE WE_GROUP_CODE = #{we_group_idx}) T1)
+				    ,(SELECT * FROM (SELECT WE_USER_IDX FROM WE_USER WHERE WE_USER_ID = #{we_user_idx}) T2)
+				    ,'Y'
+				    ,1
+				    ,NOW()
+				)
+		
+	</update>
+	
+	<select id="AdminManage.getCurrentFunctionList" resultType="weFunction">
+		SELECT 	WE_FUNCTION_IDX,   /* AdminManage.getCurrentFunctionList - 기능  리스트  조회   */ 
+				WE_FUNCTION_NAME, 
+				WE_FUNCTION_DESC, 
+				WE_FUNCTION_CODE, 
+				WE_FUNCTION_VER, 
+				WE_FUNCTION_TYPE, 
+				WE_USE_YN, 
+				WE_EXTEND_YN, 
+				WE_INS_DATE, 
+				WE_INS_USER, 
+				WE_CALL_URL
+		FROM 	we_function 
+		WHERE   WE_USE_YN = 'Y'
+		AND     WE_EXTEND_YN = #{we_extend_yn}
+		AND     WE_FUNCTION_IDX > (SELECT WE_FUNCTION_IDX FROM we_function WHERE we_function_ver = #{version})
+	</select>
+	
+	<update id="AdminManage.updateKeywordWiki" parameterType="weGroupUser">
+		/*  위키 태그 삭제 */
+		UPDATE 
+				WE_WIKI_TAG
+		SET 
+				WE_INS_DATE = NOW()
+				, WE_USE_YN = #{we_use_yn}
+		WHERE 
+				WE_WIKI_IDX = #{we_wiki_idx}
+		    	AND WE_WIKI_REVISION = #{we_wiki_revision}
+	</update>
+	
+	<select id="AdminManage.getWePatchInfo" resultType="wePatch">
+		SELECT 	WE_PATCH_IDX, 
+				WE_FUNCTION_IDX, 
+				WE_FILE_NAME, 
+				WE_FILE_PATH, 
+				WE_PATCH_TYPE, 
+				WE_PATCH_PATH, 
+				WE_INS_DATE
+		FROM    we_patch 
+		WHERE 	WE_FUNCTION_IDX = #{we_function_idx}
+	</select>
+	
+	
+	<!-- 회원 정보  리스트 조회 : 검색조회 -->
+	<select id="AdminManage.getUserAwayList" parameterType="weUser" resultType="mailSendUserVo">
+		select /* AdminManage.getUserListMailInfo - 그룹에 속한 사용자 리스트 조회 */
+		         a.we_user_idx          as weUserIdx
+		       , a.we_user_name         as weUserName
+		       , a.we_user_id			as weUserId
+			   , a.we_user_nick			as weUserNick
+			   , b.we_user_email		as weUserEmail
+			   , a.we_user_join_date	as weUserJoinDate
+			   , a.we_user_auth_yn		as weUserAuthYn
+			   , a.we_user_auth_date	as weUserAuthDate
+			   , b.we_grade				as weGrade
+			   , b.we_point				as wePoint
+			   , b.we_visit_date		as weVisitDate
+			   , b.we_tech_yn			as weTechYn
+			   , (select c.we_ins_date from we_send_mail c
+                   where c.we_user_idx = a.we_user_idx ) as weInsDate
+			   , (select case when d.we_send_status = '0' then '전송완료' 
+			             when d.we_send_status = '1' then '전송실패' 
+			             when d.we_send_status = '2' then '관리자재전송' 
+			             when d.we_send_status = '3' then '관리자재전송실패' 
+                         end from we_send_mail d
+                      where d.we_user_idx = a.we_user_idx ) as weSendStatus
+		  from we_user a, we_profile b
+		 where a.we_user_idx = b.we_user_idx
+		   and b.we_away_yn = 'Y'
+	</select>
+		
+	<select id="AdminManage.getBbsSearchList" resultType="weBbs">
+		SELECT we_bbs_idx
+			,  we_space_idx
+			,  we_user_ip
+			,  we_bbs_title
+			,  we_bbs_text
+			,  we_ins_date
+			,  we_ins_name
+			,  we_hit_count
+		FROM we_bbs
+		WHERE 1 = 1
+		AND   we_use_yn='Y'
+		<if test="we_space_idx != null and we_space_idx != '' ">
+		AND   we_space_idx = #{we_space_idx}
+		</if>
+		<if test="we_ins_name != null and we_ins_name != '' ">
+		AND   we_ins_name LIKE CONCAT('%', #{we_ins_name}, '%')
+		</if>
+		<if test="we_bbs_title != null and we_bbs_title != '' ">
+		AND   we_bbs_title LIKE CONCAT('%', #{we_bbs_title}, '%')
+		</if>
+		<if test="we_bbs_text != null and we_bbs_text != '' ">
+		AND   we_bbs_text LIKE CONCAT('%', #{we_bbs_text}, '%')
+		</if>
+		ORDER BY we_bbs_idx DESC
+	</select>
+	
+</mapper>

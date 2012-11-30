@@ -1,0 +1,83 @@
+.main { background-color: #FFF; }
+
+.main .body-cont { margin: 0 0 -45px; padding: 40px 0 0; border: 0 none; }
+
+.main .body-cont .box-top { position: relative; min-height: 330px; border: 1px solid #d7d7d7; background-color: #f4f4f4; }
+
+.main .body-cont .box-top .about { margin: 20px 20px 20px; width: 500px; }
+
+.main .body-cont .box-top .about h2 { background-color: #47a4d7; margin: 0 0 20px; padding: 5px 10px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -ms-border-radius: 5px; -o-border-radius: 5px; border-radius: 5px; font-size: 14px; color: #fff; }
+
+.main .body-cont .box-top .about a { font-weight: bold; color: #416191; }
+
+.main .body-cont .box-top .about p { padding-left: 10px; padding-right: 10px; }
+
+.main .body-cont .box-top .login { position: absolute; right: 0; top: 0; width: 300px; padding-top: 120px; padding-left: 50px; padding-bottom: 40px; background: url("/resource/glider/front/images/main/img-top.gif") no-repeat 100% 0; }
+
+.main .body-cont .box-top .login input[type="text"], .main .body-cont .box-top .login input[type="password"] { width: 256px; background-color: #FFF; margin-bottom: 5px; }
+
+.main .body-cont .box-top .login .wrap-chk { margin-bottom: 6px; }
+
+.main .body-cont .box-top .login .wrap-chk label { display: inline-block; margin-right: 10px; }
+
+.main .body-cont .box-top .login .util { margin-bottom: 10px; }
+
+.main .body-cont .box-top .login .util a { display: inline-block; margin-right: 10px; text-decoration: none; color: #666; }
+
+.main .body-cont .box-top .login .util a:hover { text-decoration: underline; }
+
+.main .body-cont .box-top .login .util a:before { content: ''; display: inline-block; width: 2px; height: 2px; margin-left: 4px; margin-right: 4px; background: #666; vertical-align: middle; }
+
+.main .body-cont .box-top .login .wrap-btn .btn { height: 40px; line-height: 40px; }
+
+.main .body-cont .wrap-box { margin-top: 40px; *zoom: 1; }
+
+.main .body-cont .wrap-box:before, .main .body-cont .wrap-box:after { content: ''; display: table; }
+
+.main .body-cont .wrap-box:after { clear: both; }
+
+.main .body-cont .wrap-box h2 { margin: 0; padding: 6px 0 7px 25px; border-bottom: 1px solid #d8d8d8; background: url(/resource/glider/front/images/main/ico-bullet.png) no-repeat 10px 49%; font-size: 12px; }
+
+.main .body-cont .wrap-box .left { float: left; width: 465px; }
+
+.main .body-cont .wrap-box .left .box { position: relative; margin-top: 10px; }
+
+.main .body-cont .wrap-box .left .box:first-child { margin-top: 0; }
+
+.main .body-cont .wrap-box .left .box .list { margin-top: 10px; min-height: 96px; }
+
+.main .body-cont .wrap-box .left .box .list .title { width: 380px; }
+
+.main .body-cont .wrap-box .left .box .list .info { float: right; }
+
+.main .body-cont .wrap-box .left .box .link-more { position: absolute; right: 0; top: 10px; text-decoration: none; color: #666; }
+
+.main .body-cont .wrap-box .left .box .link-more:hover { text-decoration: underline; }
+
+.main .body-cont .wrap-box .right { float: right; width: 425px; }
+
+.main .body-cont .wrap-box .right .count { margin-bottom: 60px; border-top: 2px solid #515151; }
+
+.main .body-cont .wrap-box .right .count .box-count { *zoom: 1; padding-top: 98px; background: url(/resource/glider/front/images/main/img-count.jpg) no-repeat; margin-left: 25px; }
+
+.main .body-cont .wrap-box .right .count .box-count:before, .main .body-cont .wrap-box .right .count .box-count:after { content: ''; display: table; }
+
+.main .body-cont .wrap-box .right .count .box-count:after { clear: both; }
+
+.main .body-cont .wrap-box .right .count .box-count .box { float: left; text-align: center; font-weight: bold; }
+
+.main .body-cont .wrap-box .right .count .box-count .box h3 { margin: 0 0 6px; font-size: 12px; padding: 0; }
+
+.main .body-cont .wrap-box .right .count .box-count .box.visit { width: 104px; margin-right: 13px; }
+
+.main .body-cont .wrap-box .right .count .box-count .box.wiki { width: 140px; }
+
+.main .body-cont .wrap-box .right .count .box-count .box.tag { width: 125px; }
+
+.main .body-cont .wrap-box .right .wrap-btn { margin-bottom: 30px; text-align: center; }
+
+.main .body-cont .wrap-box .right .wrap-btn .btn-main { display: inline-block; width: 173px; height: 52px; margin: 0 8px; color: #fff; font-weight: bold; text-decoration: none; line-height: 52px; text-align: center; text-indent: 10px; background: url(/resource/glider/front/images/main/btn-main.png) no-repeat; }
+
+.main .body-cont .wrap-box .right .wrap-btn .btn-main.preview { background-position: 0 0; }
+
+.main .body-cont .wrap-box .right .wrap-btn .btn-main.apply { background-position: -180px 0; }

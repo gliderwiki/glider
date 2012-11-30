@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--
+  // 1. 회원 로그인
+  // 2. 회원 가입
+  // 3. 회원 정보 수정
+  // 4. 아이디 찾기, 비밀번호 찾기, 비밀번호 변경
+  // 5. 회원 정보 조회
+  // 6. 활동 내역
+  // 7. 사용자 알람 선택
+  // 8. 즐겨찾기
+  // 9. 내 인맥
+  -->
+
+<mapper namespace="MemberManage">
+
+	<!-- 인자로 받은 아뒤와 비번에 해당하는 사용자 정보를 가져온다 -->
+	<select id="MemberManage.getRowWeUserById" parameterType="weUser" resultType="memberSessionVo">
+		SELECT /* MemberManage.getRowWeUserById - 회원기본정보 조회*/
+		       a.we_user_idx as weUserIdx,
+		       a.we_user_id as weUserId,
+		       a.we_user_name as weUserName,
+		       a.we_user_nick as weUserNick,
+		       a.we_user_key as weUserKey,
+		       a.we_user_pwd as weUserPwd,
+		       a.we_user_auth_yn as weUserAuthYn,
+		       b.we_user_email as weUserEmail,
+		       b.we_user_site as weUserSite,
+		       b.we_thumb_path as weThumbPath,
+		       b.we_thumb_name as weThumbName,
+		       b.we_grade as weGrade,
+		       b.we_tech_yn as weTechYn,
+		       b.we_point as wePoint
+		FROM   we_user a, we_profile b
+		WHERE  a.we_user_idx = b.we_user_idx
+		AND    b.we_away_yn = 'N'
+		AND    a.we_user_id = #{we_user_id}
+	</select>
+
+
+
+	<!-- 회원 인증값을 변경한다. -->
+	<update id="MemberManage.updateUserAuth" parameterType="weUser">
+		UPDATE we_user /* MemberManage.updateUserAuth - 회원인증여부 수정*/
+		SET    we_user_auth_yn = 'Y', we_user_auth_date = now()
+	    WHERE  we_user_idx = ${we_user_idx}
+	    AND    we_user_auth = ${we_user_auth}
+	</update>
+
+	<!-- 내 활동 내역 목록을 조회한다.  -->
+	<select id="MemberManage.getMyWikiLogAction" parameterType="memberSessionVo" resultType="wikiLogVo">
+	    select /* MemberManage.getMyWikiLogAction - 내 활동 내역 목록을 조회한다.  */
+		       b.we_space_idx 		as weSpaceIdx
+		     , b.we_wiki_idx 		as weWikiIdx
+		     , b.we_wiki_title		as weWikiTitle
+	         , b.we_wiki_agree		as weWikiAgree
+	         , b.we_wiki_view_cnt	as weWikiViewCnt
+	         , b.we_wiki_protect	as weWikiProtect
+	         , b.we_ins_user		as weInsUser
+		     , b.we_wiki_status     as weWikiStatus
+		     , b.we_ins_user as weUserIdx
+		     , b.we_wiki_revision	as weWikiRevision
+		     , DATE_FORMAT(b.we_ins_date,  '%Y-%m-%d %H:%i:%s') as weInsDate
+			 from we_wiki b
+			where b.we_ins_user = #{weUserIdx}
+			and   b.we_use_yn = 'Y'
+
+	</select>
+
+	<!-- 내 활동 내역 공간을 조회한다. -->
+	<select id="MemberManage.getSpaceInfoByIdx"  resultType="wikiLogVo">
+	    select /* MemberManage.getSpaceInfoByIdx - 내 활동 내역 공간을 조회한다.  */
+			   we_space_idx		as weSpaceIdx
+		     , we_space_name	as weSpaceName
+		     , we_space_desc	as weSpaceDesc
+		     , we_admin_idx		as weAdminIdx
+		     , we_ins_user		as weInsUser
+		     , we_ins_date 		as weCreDate
+		from we_space
+		where 1 = 1
+		and   we_space_idx in
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+		    #{item}
+		</foreach>
+		and   we_use_yn ='Y'
+	</select>
+
+	<!-- 내가 신청한 가입 내역을 조회한다. -->
+	<select id="MemberManage.getUserSpaceJoinList"  resultType="weSpaceJoin">
+		select /* MemberManage.getUserSpaceJoinList - 내가 신청한 가입 내역을 조회한다.  */
+		       we_space_join_idx
+		     , we_space_idx
+		     , we_join_type
+		     , we_user_idx
+		     , we_join_status
+		     , DATE_FORMAT(we_ins_date,  '%Y-%m-%d %H:%i:%s') as we_ins_date
+		from we_space_join
+		where we_user_idx = #{we_user_idx}
+		and we_join_type = #{we_join_type}
+		<if test="we_ins_date != null">
+		and we_ins_date >= #{we_ins_date}
+		</if>
+		and we_join_status in ('APPROVE', 'REQUEST', 'REJECT', 'REAPPLICATION')
+	</select>
+
+
+
+	<!-- 메타 알람 정보 조회 (사용자가 선택한 내역까지 조회한다) -->
+	<select id="MemberManage.getUserMetaInfoList"  resultType="metaInfoVo">
+		select /* MemberManage.getUserMetaInfoList - 메타 알람 정보 조회   */
+		       a.we_meta_idx 		as weMetaIdx
+		     , we_meta_type			as weMetaType
+		     , we_meta_domain		as weMetaDomain
+		     , we_meta_desc			as weMetaDesc
+		     , we_meta_table_name	as weMetaTableName
+		     , we_meta_table_key	as weMetaTableKey
+		     , we_use_yn			as weUseYn
+		     , (select 'Y' from we_user_alarm b
+		        where b.we_meta_idx = a.we_meta_idx
+		        and   b.we_user_idx = #{weUserIdx}
+		        and   b.we_use_yn = 'Y'
+		       ) as userCheckYn
+		 from we_meta_info a
+		 where a.we_use_yn = 'Y'
+	</select>
+
+
+	<!-- 사용자에게 전송된 최근 알람 내역을 조회한다. -->
+	<select id="MemberManage.getUserAlarmList"  resultType="alarmInfoVo">
+	    select /* MemberManage.getUserAlarmList - 사용자에게 전송된 알람 내역을 조회한다. */
+		       we_alarm_idx			as weAlarmIdx
+		     , we_meta_idx			as weMetaIdx
+		     , we_alarm_type		as weAlarmType
+		     , we_user_idx			as weUserIdx
+		     , we_target_user_idx	as weTargetUserIdx
+		     , we_alarm_text		as weAlarmText
+	 	     , we_use_yn			as weUseYn
+		     , we_ins_date		    as weInsDate
+		     , we_ins_user			as weInsUser
+		 from  we_alarm_info
+		 where we_target_user_idx = #{weUserIdx}
+		   and we_use_yn = 'Y'
+		 order by we_alarm_idx desc
+		 LIMIT 30
+	</select>
+
+
+	<!-- 내 즐겨찾기 공간 내역을 조회한다. -->
+	<select id="MemberManage.getMyFavoriteSpaceList" resultType="wikiFavoriteVo">
+		select /* MemberManage.getMyFavoriteSpaceList - 내 즐겨찾기 내역을 조회한다. (공간) */
+			   b.we_space_name 		as weSpaceName
+		     , b.we_space_desc 		as weSpaceDesc
+		     , b.we_admin_idx		as weAdminIdx
+		     , a.we_user_idx		as weUserIdx
+		     , a.we_favorite_type	as weFavoriteType
+		     , a.we_space_idx		as weSpaceIdx
+		     , a.we_wiki_idx		as weWikiIdx
+		     , a.we_use_yn			as weUseYn
+		     , DATE_FORMAT(a.we_add_date,  '%Y-%m-%d %H:%i:%s') as weAddDate
+		from we_favorite a, we_space b
+		where a.we_space_idx = b.we_space_idx
+		and   b.we_use_yn = 'Y'
+		and   a.we_use_yn = 'Y'
+		and   a.we_favorite_type = 'SPACE'
+		and   a.we_user_idx = #{weUserIdx}
+	</select>
+
+	<!-- 내 즐겨찾기 위키  내역을 조회한다. -->
+	<select id="MemberManage.getMyFavoriteWikiList" resultType="wikiFavoriteVo">
+		select /* MemberManage.getMyFavoriteWikiList - 내 즐겨찾기 내역을 조회한다. (위키) */
+			   b.we_wiki_title 		as weWikiTitle
+		     , b.we_wiki_revision	as weWikiRevision
+		     , b.we_wiki_status 	as weWikiStatus
+		     , a.we_user_idx		as weUserIdx
+		     , a.we_favorite_type	as weFavoriteType
+		     , a.we_space_idx		as weSpaceIdx
+		     , a.we_wiki_idx		as weWikiIdx
+		     , a.we_use_yn			as weUseYn
+		     , DATE_FORMAT(a.we_add_date,  '%Y-%m-%d %H:%i:%s') as weAddDate
+		from we_favorite a, we_wiki b
+		where a.we_wiki_idx = b.we_wiki_idx
+		and   b.we_use_yn = 'Y'
+		and   a.we_use_yn = 'Y'
+		and   a.we_favorite_type = 'WIKI'
+		and   a.we_user_idx = #{weUserIdx}
+	</select>
+
+	<!-- 내가 추가한 인맥을 조회한다. -->
+	<select id="MemberManage.getMyConnection" parameterType="memberSessionVo" resultType="addFriendVo">
+		select /* MemberManage.getMyConnection - 내가 추가한 인맥을 조회한다 */
+		       a.we_user_idx 		 as weUserIdx
+		     , a.we_target_user_idx	 as weTargetUserIdx
+		     , b.we_user_nick		 as weUserNick
+		     , DATE_FORMAT(a.we_add_date,  '%Y-%m-%d %H:%i:%s') as weAddDate
+		     , a.we_use_yn			 as weUseYn
+		from we_add_friend a, we_user b, we_profile c
+		where a.we_target_user_idx = b.we_user_idx
+		and   b.we_user_idx = c.we_user_idx
+		and   a.we_use_yn = 'Y'
+		and   c.we_away_yn = 'N'
+		and   a.we_user_idx = #{weUserIdx}
+	</select>
+
+	<!-- 나를 추가한 인맥을 조회한다. -->
+	<select id="MemberManage.getConnectionToMe" parameterType="memberSessionVo" resultType="addFriendVo">
+		select /* MemberManage.getConnectionToMe - 내가 추가한 인맥을 조회한다 */
+		       a.we_user_idx			as weUserIdx
+		     , a.we_target_user_idx		as weTargetUserIdx
+		     , b.we_user_nick			as weUserNick
+		     , DATE_FORMAT(a.we_add_date,  '%Y-%m-%d %H:%i:%s') as weAddDate
+		     , a.we_use_yn				as weUseYn
+		from we_add_friend a, we_user b, we_profile c
+		where a.we_user_idx = b.we_user_idx
+		and   b.we_user_idx = c.we_user_idx
+		and   a.we_use_yn = 'Y'
+		and   c.we_away_yn = 'N'
+		and   a.we_target_user_idx = #{weUserIdx}
+	</select>
+
+
+	<!-- 회원 정보를 리셋한다. (탈퇴) -->
+	<update id="MemberManage.updateAwayUser" parameterType="Integer">
+		UPDATE  we_user  /* MemberManage.updateAwayUser - 회원탈퇴 */
+		SET     WE_USER_NAME = '' ,
+				WE_USER_NICK = '' ,
+				WE_USER_KEY = '' ,
+				WE_USER_PWD = '' ,
+				WE_USER_AUTH_YN = '' ,
+				WE_USER_AUTH = ''
+		WHERE	WE_USER_IDX = #{weUserIdx}
+	</update>
+
+
+	<!-- 회원 정보를 리셋한다. (탈퇴) -->
+	<update id="MemberManage.updateAwayProfile" parameterType="Integer">
+		UPDATE we_profile  /* MemberManage.updateAwayProfile - 회원탈퇴 */
+		SET		WE_USER_SITE = '' ,
+				WE_FILE_REAL_NAME = '' ,
+				WE_FILE_SAVE_NAME = '' ,
+				WE_FILE_SAVE_PATH = '' ,
+				WE_THUMB_PATH = '' ,
+				WE_THUMB_NAME = '' ,
+				WE_AWAY_YN = 'Y' ,
+				WE_GRADE = 0 ,
+				WE_TECH_YN = '' ,
+				WE_POINT = 0 ,
+				WE_VISIT_DATE = NOW(),
+				WE_UPD_DATE = NOW()
+		WHERE	WE_USER_IDX = #{weUserIdx}
+	</update>
+
+    <!-- 회원 정보를 일괄처리한다. (입력) -->
+	<update id="MemberManage.insertUser" parameterType="Integer">
+		INSERT INTO WE_USER 
+		(
+		WE_USER_ID, 
+		WE_USER_NAME, 
+		WE_USER_NICK, 
+		WE_USER_KEY, 
+		WE_USER_PWD, 
+		WE_USER_JOIN_DATE, 
+		WE_USER_AUTH_YN, 
+		WE_USER_AUTH_DATE
+		)
+		VALUES
+		(
+		#{we_user_id}, 
+		#{we_user_name}, 
+		#{we_user_nick}, 
+		'lcXEywSaKQqRsmxBwUqBasqiBLGRzqZFNLAzNaxwDMGkEtMhoGUwnSVQlaVJwwWgLdRMoEdOmrtGGwRpMdTsnNovVbhrYdPpLCzvFFXateXklcTRpFfQBxhabVilcJAg', -- 암호화키
+		'URV48pFKmWw=', -- 1111
+		NOW(),
+		'Y', 
+		NOW()
+		)
+	</update>
+	
+	<!-- user 제일 큰 번호 -->
+	<select id="MemberManage.getUserMaxIdx" resultType="Integer">
+		SELECT ifnull(MAX(we_user_idx),0) maxIdx
+		FROM   we_user 
+	</select>
+	
+
+	<update id="MemberManage.insertProfile" parameterType="Integer" >
+	INSERT INTO we_profile (WE_USER_IDX,
+                        WE_USER_EMAIL,  
+                        WE_AWAY_YN,
+                        WE_GRADE,
+                        WE_TECH_YN,
+                        WE_POINT,
+                        WE_INS_DATE
+                        )
+                 SELECT WE_USER_IDX, 
+                        WE_USER_ID,
+                        'N',
+                        1,
+                        'Y',
+                        1, SYSDATE() 
+                        FROM we_user 
+                WHERE WE_USER_IDX > #{we_user_idx}
+	</update>
+	
+	
+	<!-- 현재 입력된 메일 IDX조회  -->
+	<select id="MemberManage.getCurrentMailIdx" resultType="Integer">
+		SELECT IFNULL(MAX(LAST_INSERT_ID(we_mail_idx)), 1) as mailIdx 
+		FROM   WE_SEND_MAIL
+	</select>
+	
+	
+</mapper>

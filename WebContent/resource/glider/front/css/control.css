@@ -1,0 +1,55 @@
+.body-cont.control .tit-sec { margin-bottom: 0; }
+
+.body-cont.control .tit-sec em { font-style: normal; color: #A13853; }
+
+.body-cont.control .history { width: 100%; border-bottom: 1px solid #D8D8D8; text-align: center; }
+
+.body-cont.control .history thead { background-color: #F5F5F5; }
+
+.body-cont.control .history thead th { padding: 6px 0; border-bottom: 1px solid #C4C4C4; }
+
+.body-cont.control .history tbody tr:first-child td { padding-top: 14px; }
+
+.body-cont.control .history tbody td { padding: 6px 0; }
+
+.body-cont.control .history tbody .subject { text-align: left; }
+
+.body-cont.control .diff { *zoom: 1; margin: -40px -50px 0; }
+
+.body-cont.control .diff:before, .body-cont.control .diff:after { content: ''; display: table; }
+
+.body-cont.control .diff:after { clear: both; }
+
+.body-cont.control .diff .box { width: 430px; margin: 0; }
+
+.body-cont.control .diff .box .box-tit { *zoom: 1; padding: 6px 10px; border: 1px solid #D3D3D3; color: #fff; font-weight: bold; font-size: 14px; }
+
+.body-cont.control .diff .box .box-tit:before, .body-cont.control .diff .box .box-tit:after { content: ''; display: table; }
+
+.body-cont.control .diff .box .box-tit:after { clear: both; }
+
+.body-cont.control .diff .box .box-tit .time { float: left; }
+
+.body-cont.control .diff .box .box-tit .ver { float: right; }
+
+.body-cont.control .diff .box .cont { position: relative; overflow-y: scroll; max-height: 450px; border: 1px solid #D3D3D3; border-top: 0; }
+
+.body-cont.control .diff .box .cont .line-number { position: absolute; left: 0; top: 0; min-width: 15px; padding-right: 3px; font-family: Tahoma, Dotum ;text-align: right; color: #999; background: #eaeaea; border-right: 1px solid #bbb; }
+
+.body-cont.control .diff .box .cont .source { overflow-x: auto; }
+
+.body-cont.control .diff .box .cont .source .inner { width: 700px; }
+
+.body-cont.control .diff .box.left { float: left; }
+
+.body-cont.control .diff .box.left .box-tit { background-color: #47A4D7; }
+
+.body-cont.control .diff .box.right { float: right; }
+
+.body-cont.control .diff .box.right .box-tit { background-color: #E795B0; }
+
+.body-cont.control .diff .wrap-btn { clear: both; padding-top: 15px; text-align: right; }
+
+.body-cont.control .diff .btn-rollback { display: inline-block; padding: 4px 8px; border: 0 none; -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.16); -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.16); box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.16); font-weight: bold; text-align: center; text-decoration: none; color: #fff !important; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; background-color: #E795B0; }
+
+.body-cont.control .diff .btn-rollback:hover { background-color: #ED7A97; }
