@@ -1,0 +1,49 @@
+.dashboard .body-cont { position: relative; padding: 40px 45px; }
+
+.dashboard .body-cont .symbol-dashboard { display: block; position: absolute; right: 0; top: -68px; width: 160px; height: 80px; font-size: 0; text-indent: -9999px; background: url(/resource/glider/front/images/symbol-dashboard.png) no-repeat; }
+
+.dashboard .body-cont .box { position: relative; margin-top: 30px; }
+
+.dashboard .body-cont .box:first-child { margin-top: 0; }
+
+.dashboard .body-cont .col-2 { *zoom: 1; }
+
+.dashboard .body-cont .col-2:before, .dashboard .body-cont .col-2:after { content: ''; display: table; }
+
+.dashboard .body-cont .col-2:after { clear: both; }
+
+.dashboard .body-cont .col-2 .tit-sec { border-bottom-color: #595959; }
+
+.dashboard .body-cont .col-2 .list.type1 > li { padding-top: 0; padding-bottom: 0; }
+
+.dashboard .body-cont .col-2 .col-main { float: left; width: 466px; }
+
+.dashboard .body-cont .col-2 .col-main .tit-sec { color: #a13853; }
+
+.dashboard .body-cont .col-2 .col-main .list.type1 .title { width: 250px; }
+
+.dashboard .body-cont .col-2 .col-main .list.type1 .time { width: 80px; }
+
+.dashboard .body-cont .col-2 .col-main .list.type1 .user { width: 80px; }
+
+.dashboard .body-cont .col-2 .col-main .list.type1 .info .ico { font-size: 0; line-height: 0; text-indent: -9999px; }
+
+.dashboard .body-cont .col-2 .col-sub { float: right; width: 310px; }
+
+.dashboard .body-cont .col-2 .col-sub .tit-sec { color: #0068b7; }
+
+.dashboard .body-cont .col-2 .col-sub h4 { margin: 6px 0 2px; padding: 0; }
+
+.dashboard .body-cont .col-2 .col-sub h4:first-child { margin-top: 0; }
+
+.dashboard .body-cont .col-2 .col-sub .list.type1 .title { width: 240px; }
+
+.dashboard .body-cont .col-2 .col-sub .list.type1 .time { width: 70px; }
+
+.dashboard .body-cont .col-2 .col-sub .list.type2 .title { width: 240px; }
+
+.dashboard .body-cont .col-2 .col-sub .list.type2 .info { width: 70px; }
+
+.dashboard .body-cont .col-2 .col-sub .list.type3 { margin-top: -2px; }
+
+.dashboard .body-cont .col-2 .col-sub .list.type3 .user { width: 90px; }

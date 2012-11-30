@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="target_pie">
+
+</div>
+<div id="target_bar">
+
+</div>
+<script type="text/javascript" src="../../libs/jquery/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="../../libs/jquery/jquery.pieChart.js"></script>
+
+
+<script type="text/javascript">
+
+	$(function(){
+		var data = [
+						['pepper',7],
+						['nange',3],
+						['ggari',9],
+						['cabbage',5],
+						['plum',3],
+						['gaji',8],
+						['buchu',3],
+						['pumpkin',3],
+					];
+		$('#target_pie').pieChart(data,300,"pie");								
+		$('#target_bar').pieChart(data,300,"bar");
+	});
+</script>
+
+ 
+<!-- 
+@@@@@@@@@@@@@@@@@@@예제4<br />
+<br />
+<div id="asdf"></div><br />
+<script type="text/javascript"><br />
+var data = [['1',2],['2',2],['3',3],['4',4]];<br />
+$("#asdf").pieChart(data,300,"pie");<br />
+</script><div id="test"></div><br />
+<script type="text/javascript"><br />
+var data = [['1',2],['2',2],['3',3],['4',4]];<br />
+$("#test").pieChart(data,300,"pie");<br />
+</script><br />
+<br />
+__차트__ **//만들었어요//**<br />
+
+-->
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+<title>Base | jQuery</title>
+<link type="text/css" rel="stylesheet" href="../css/import.css" />
+<!--[if IE]><link type="text/css" rel="stylesheet" href="../css/ie6.css" /><![endif]-->
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/jquery-1.6.4.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/base.js"></script>
+ <script type="text/javascript" charset="UTF-8">
+	 jQuery(document).ready(function(){
+		alert("Hello jQ1");
+	});
+	 $(document).ready(function(){
+		alert("Hello jQ2");
+	});
+</script>
+</head>
+ <body>
+<h2 class="title">jQuery == $</h2>
+<pre>
+ jQuery(document).ready(function(){
+	alert("Hello jQ1");
+ });
+	$(document).ready(function(){
+	alert("Hello jQ2");
+ });
+</pre>
+<hr />
+<p class="txt">jQuery == $<br />
+$(document).ready(function)</p>
+ </body>
+</html>

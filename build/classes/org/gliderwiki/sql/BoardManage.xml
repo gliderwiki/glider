@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--
+	공간게시판 관련 맵핑파일
+-->
+
+<mapper namespace="BoardManage">
+
+	<select id="BoardManage.getList" parameterType="java.util.HashMap" resultType="weBbs">
+	SELECT we_bbs_idx
+		,  we_space_idx
+		,  we_user_ip
+		,  we_bbs_title
+		,  we_bbs_text
+		,  we_ins_date
+		,  we_ins_name
+		,  we_hit_count
+	FROM we_bbs
+	WHERE we_space_idx = #{spaceIdx}
+	AND   we_use_yn='Y'
+	ORDER BY we_bbs_idx DESC
+	<choose>
+	<when test="listType == 'all'">
+	LIMIT #{startRow},#{blockList}
+	</when>
+	<otherwise>
+	LIMIT 5
+	</otherwise>
+	</choose>
+	</select>
+
+	
+</mapper>

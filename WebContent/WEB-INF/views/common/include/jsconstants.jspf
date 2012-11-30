@@ -1,0 +1,16 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@include file="/WEB-INF/views/common/include/tags.jspf" %>
+<script type="text/javascript">
+(function($) {
+	"use strict";
+
+	if (typeof window.GliderWiki === "undefined") { window.GliderWiki = {};}
+	if (typeof GliderWiki.LoginUser === "undefined") { GliderWiki.LoginUser = {}; }
+
+	GliderWiki.LoginUser.isGuest = ${loginUser.guest};
+
+	<c:if test="${loginUser.guest eq false}">
+		GliderWiki.LoginUser.alarmChannel = '${loginUserChannel}';
+	</c:if>
+})(jQuery);
+</script>

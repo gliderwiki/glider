@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+<title>Base | jQuery</title>
+<link type="text/css" rel="stylesheet" href="../css/import.css" />
+<!--[if IE]><link type="text/css" rel="stylesheet" href="../css/ie6.css" /><![endif]-->
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/jquery-1.6.4.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/base.js"></script>
+<!-- <script type="text/javascript" charset="UTF-8">
+	 $(document).ready(function(){
+		var header = $("h1");
+		header.css("color", "#ff6600");
+		header.css("background-color", "#eaeaea");
+	});
+</script> -->
+<script type="text/javascript" charset="UTF-8">
+ $(document).ready(function(){
+		$("h1").css("color", "#ff6600").css("background-color", "#eaeaea");
+	});
+</script>
+</head>
+ <body>
+ <h1>Are You Ready??</h1>
+<hr />
+
+<h3>1번</h3>
+ <pre>
+ $(document).ready(function(){
+	var header = $("h1");
+	header.css("color", "#ff6600");
+	header.css("background-color", "#eaeaea");
+ });
+ </pre>
+<hr />
+<h3>2번</h3>
+ <pre>
+ $(document).ready(function(){
+	$("h1").css("color", "#ff6600").css("background-color", "#eaeaea");
+ });
+ </pre>
+<hr />
+
+<p class="txt">
+ 1번에서 header.css를 여러번 쓴것을 2번에서는 메서드체인 방식으로 사용 할 수 있음. <br />
+ 
+ 팁) 1번에서 var header = $("h1"); 부분을   var $header = $("h1"); 권장함
+</p>
+ </body>
+</html>

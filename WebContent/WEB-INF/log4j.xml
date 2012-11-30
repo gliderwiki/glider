@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="encoding" value="UTF-8" />
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:SSS}] %-5p %C{1}.%M(%F:%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- 파일로 출력하는 형태를 정의함 -->
+	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="encoding" value="UTF-8" />
+		<param name="File" value="${myapp.root}/WEB-INF/logs/NightHawk.log" />
+		<param name="Append" value="true" />
+		<param name="DatePattern" value="'.'yyyyMMdd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{HH:mm:ss.SSS}] %-5p %C{1}.%M(%F:%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+    	<param name="BufferSize" value="500"/>
+        <appender-ref ref="FILE"/>
+    </appender>
+
+	<logger name="jdbc.resultsettable" additivity="false">
+		<level value="info" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="jdbc.audit" additivity="false">
+		<level value="warn" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="jdbc.resultset" additivity="false">
+		<level value="warn" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="jdbc.sqltiming" additivity="false">
+		<level value="warn" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="org.springframework.web" additivity="false">
+		<level value="info" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="org.gliderwiki">
+		<level value="info" />
+		<appender-ref ref="ASYNC" />
+	</logger>
+	
+	<logger name="test.*">
+		<level value="info" />
+		<appender-ref ref="console" />
+	</logger>
+	
+	<!-- Root Log Level -->
+	<root>
+		<priority value="info" />
+		<appender-ref ref="console" />
+	</root>
+
+</log4j:configuration>

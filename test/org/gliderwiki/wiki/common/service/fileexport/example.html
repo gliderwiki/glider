@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0041)http://wiki.kwonnam.pe.kr/apache/security -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <title>
+    apache:security    [권남]
+  </title>
+
+<body>
+<div class="dokuwiki">
+
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="pagename">
+        [[<a href="http://wiki.kwonnam.pe.kr/apache/security?do=backlink" title="이전 링크">apache:security</a>]]
+      </div>
+      <div class="logo">
+        <a href="http://wiki.kwonnam.pe.kr/" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">권남</a>      </div>
+
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_source" method="post" action="./example_files/example.htm"><div class="no"><input type="hidden" name="do" value="edit"><input type="hidden" name="rev" value=""><input type="submit" value="소스 보기" class="button" accesskey="v" title="소스 보기 [V]"></div></form>        <form class="button btn_revs" method="get" action="./example_files/example.htm"><div class="no"><input type="hidden" name="do" value="revisions"><input type="submit" value="이전 버전들" class="button" accesskey="o" title="이전 버전들 [O]"></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="./example_files/example.htm"><div class="no"><input type="hidden" name="do" value="recent"><input type="submit" value="최근 변경 목록" class="button" accesskey="r" title="최근 변경 목록 [R]"></div></form>        <form action="http://wiki.kwonnam.pe.kr/" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no"><input type="hidden" name="do" value="search"><input type="text" id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]"><input type="submit" value="찾기" class="button" title="찾기"><div id="qsearch__out" class="ajax_qsearch JSpopup" style="display: none; "></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div>
+
+        <div class="breadcrumbs">
+      <span class="bchead">추적:</span> <span class="bcsep">?</span> <a href="http://wiki.kwonnam.pe.kr/dokuwiki" class="breadcrumbs" title="dokuwiki">dokuwiki</a> <span class="bcsep">?</span> <span class="curid"><a href="./example_files/example.htm" class="breadcrumbs" title="apache:security">security</a></span>          </div>
+
+
+  </div>
+
+
+  <div class="page">
+    <!-- wikipage start -->
+
+<p>
+Ubuntu에서는 /etc/apache2/conf.d/security 파일에 설정한다.
+</p>
+
+<h1 class="sectionedit1"><a name="불필요한_정보_숨기기" id="불필요한_정보_숨기기">불필요한 정보 숨기기</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> ServerTokens Prod : <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> 헤더에 불필요한 서버 관련 상세정보 제거</div>
+</li>
+<li class="level1"><div class="li"> ServerSignature Off : Apache가 자동으로 보여주는 페이지들에서 서버관련 상세정보 제거</div>
+</li>
+<li class="level1"><div class="li"> TraceEnable Off : TRACE 메소드 거부</div>
+</li>ahe
+</ul>
+
+</div>
+
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer"></div>
+
+
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+      <div class="doc">
+        apache/security.txt · 마지막 수정: 2010/12/02 19:47 (외부 편집기)      </div>
+    </div>
+
+
+    <div class="bar" id="bar__bottom">
+      <div class="bar-left" id="bar__bottomleft">
+        <form class="button btn_source" method="post" action="./example_files/example.htm"><div class="no"><input type="hidden" name="do" value="edit"><input type="hidden" name="rev" value=""><input type="submit" value="소스 보기" class="button" accesskey="v" title="소스 보기 [V]"></div></form>        <form class="button btn_revs" method="get" action="./example_files/example.htm"><div class="no"><input type="hidden" name="do" value="revisions"><input type="submit" value="이전 버전들" class="button" accesskey="o" title="이전 버전들 [O]"></div></form>              </div>
+      <div class="bar-right" id="bar__bottomright">
+                                <form class="button btn_login" method="get" action="./example_files/example.htm"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="14bea29014fb5e52516e9eec0b570f6e"><input type="submit" value="로그인" class="button" title="로그인"></div></form>        <form class="button btn_index" method="get" action="./example_files/example.htm"><div class="no"><input type="hidden" name="do" value="index"><input type="submit" value="색인" class="button" accesskey="x" title="색인 [X]"></div></form>        <a class="nolink" href="http://wiki.kwonnam.pe.kr/apache/security#dokuwiki__top"><input type="button" class="button" value="맨위로" onclick="window.scrollTo(0, 0)" title="맨위로"></a>&nbsp;
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+  <div class="license">이 위키의 내용은 다음의 라이센스에 따릅니다 : <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license" class="urlextern">CC Attribution-Share Alike 3.0 Unported</a></div>
+</div>
+
+<div class="footerinc">
+
+  <a href="http://wiki.kwonnam.pe.kr/feed.php" title="Recent changes RSS feed"><img src="http://wiki.kwonnam.pe.kr/lib/tpl/default/images/button-rss.png" width="80" height="15" alt="Recent changes RSS feed"></a>
+
+        <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license" title="CC Attribution-Share Alike 3.0 Unported"><img src="http://wiki.kwonnam.pe.kr/lib/images/license/button/cc-by-sa.png" width="80" height="15" alt=""></a>
+
+  <a href="http://www.dokuwiki.org/donate" title="Donate"><img src="http://wiki.kwonnam.pe.kr/lib/tpl/default/images/button-donate.gif" alt="Donate" width="80" height="15"></a>
+
+  <a href="http://www.php.net/" title="Powered by PHP"><img src="http://wiki.kwonnam.pe.kr/lib/tpl/default/images/button-php.gif" width="80" height="15" alt="Powered by PHP"></a>
+
+  <a href="http://validator.w3.org/check/referer" title="Valid XHTML 1.0"><img src="http://wiki.kwonnam.pe.kr/lib/tpl/default/images/button-xhtml.png" width="80" height="15" alt="Valid XHTML 1.0"></a>
+
+  <a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3" title="Valid CSS"><img src="http://wiki.kwonnam.pe.kr/lib/tpl/default/images/button-css.png" width="80" height="15" alt="Valid CSS"></a>
+
+  <a href="http://dokuwiki.org/" title="Driven by DokuWiki"><img src="http://wiki.kwonnam.pe.kr/lib/tpl/default/images/button-dw.png" width="80" height="15" alt="Driven by DokuWiki"></a>
+
+
+
+</div>
+
+<table class='TableWithBorders' >
+<tr><td class='CellBorderOn' style='font-weight:bold' colspan='2' >Shoulder</td></tr>
+</table>
+
+</body></html>

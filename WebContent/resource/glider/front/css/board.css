@@ -1,0 +1,111 @@
+.body-cont.board .list-board .search-board { margin-bottom: 15px; text-align: right; }
+
+.body-cont.board .list-board .search-board .sel { width: 80px; height: 27px; margin-right: 5px; }
+
+.body-cont.board .list-board .search-board .keyword { width: 200px; }
+
+.body-cont.board .list-board .search-board .btn-submit { width: 70px; height: 27px; border: 0 none; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; font-weight: bold; color: #fff; background-color: #787878; }
+
+.body-cont.board .list-board .list { width: 100%; border-top: 2px solid #7dabc0; border-bottom: 1px solid #d8d8d8; }
+
+.body-cont.board .list-board .list th, .body-cont.board .list-board .list td { padding-top: 7px; padding-bottom: 8px; text-align: center; }
+
+.body-cont.board .list-board .list a { color: #666; text-decoration: none; }
+
+.body-cont.board .list-board .list a:hover { text-decoration: underline; }
+
+.body-cont.board .list-board .list thead th { border-bottom: 1px solid #c4c4c4; background-color: #f5f5f5; }
+
+.body-cont.board .list-board .list .title { padding-left: 8px; text-align: left; }
+
+.body-cont.board .list-board .list .title:before { display: none; }
+
+.body-cont.board .list-board .paging { padding: 10px 0 0; text-align: center; }
+
+.body-cont.board .list-board .paging a { display: inline-block; padding: 3px; color: #666; text-decoration: none; }
+
+.body-cont.board .list-board .paging a:hover { font-weight: bold; }
+
+.body-cont.board .list-board .paging a.active { font-weight: bold; color: #0068b7; }
+
+.body-cont.board .list-board .paging a.navi { letter-spacing: -2px; }
+
+.body-cont.board .list-board .paging a.navi:hover { font-weight: normal; }
+
+.body-cont.board .list-board .wrap-btn { margin-top: -19px; text-align: right; }
+
+.body-cont.board .view-board .title { margin: 0; padding: 5px; border: 1px solid #ddd; background-color: #efefef; font-size: 15px; color: #444; }
+
+.body-cont.board .view-board .meta { padding: 7px 5px; border-bottom: 1px solid #b6b6b6; text-align: right; }
+
+.body-cont.board .view-board .meta .item { padding-left: 20px; }
+
+.body-cont.board .view-board .cont { padding: 20px; border-bottom: 1px solid #b6b6b6; }
+
+.body-cont.board .view-board .wrap-btn { padding: 20px 0; text-align: center; }
+
+.body-cont.board .view-board .wrap-btn .btn { margin: 0 10px; }
+
+.body-cont.board .view-board .form-cmt { padding: 20px 20px 0; border: 1px solid #e1e1e1; background-color: #efefef; }
+
+.body-cont.board .view-board .form-cmt table { width: 700px; margin-bottom: 10px; }
+
+.body-cont.board .view-board .form-cmt table th, .body-cont.board .view-board .form-cmt table td { padding-bottom: 10px; }
+
+.body-cont.board .view-board .form-cmt table th { text-align: justify; }
+
+.body-cont.board .view-board .form-cmt table th:before { content: ''; display: inline-block; width: 2px; height: 2px; margin-left: 4px; margin-right: 4px; background: #666; vertical-align: middle; }
+
+.body-cont.board .view-board .form-cmt table tr.content th { vertical-align: top; }
+
+.body-cont.board .view-board .form-cmt input[type="text"], .body-cont.board .view-board .form-cmt input[type="password"], .body-cont.board .view-board .form-cmt textarea { border: 1px solid #b6b6b6; -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; background-color: #FFF; }
+
+.body-cont.board .view-board .form-cmt input[type="text"], .body-cont.board .view-board .form-cmt input[type="password"] { width: 200px; }
+
+.body-cont.board .view-board .form-cmt textarea { display: block; width: 550px; height: 150px; margin-bottom: 10px; }
+
+.body-cont.board .view-board .list-cmt { list-style: none; margin: 40px 0 0; padding: 0; }
+
+.body-cont.board .view-board .list-cmt a { color: #666; text-decoration: none; }
+
+.body-cont.board .view-board .list-cmt a:hover { text-decoration: underline; }
+
+.body-cont.board .view-board .list-cmt li { margin-top: 20px; border: 1px solid #c5c5c5; }
+
+.body-cont.board .view-board .list-cmt .head { position: relative; padding: 10px 20px; border-bottom: 1px solid #c5c5c5; }
+
+.body-cont.board .view-board .list-cmt .head .time { padding-left: 5px; font-family: Tahoma, Dotum ;font-size: 11px; color: #999; }
+
+.body-cont.board .view-board .list-cmt .head .util { position: absolute; right: 16px; top: 0; }
+
+.body-cont.board .view-board .list-cmt .head .util .btn-edit, .body-cont.board .view-board .list-cmt .head .util .btn-del { display: inline-block; font-size: 0; line-height: 0; text-indent: -9999px; width: 18px; height: 18px; margin-left: 5px; }
+
+.body-cont.board .view-board .list-cmt .head .util .btn-edit { background: url(/resource/glider/front/images/board/btn-edit.gif) no-repeat; }
+
+.body-cont.board .view-board .list-cmt .head .util .btn-del { background: url(/resource/glider/front/images/board/btn-del.gif) no-repeat; }
+
+.body-cont.board .view-board .list-cmt .content { padding: 10px 20px; }
+
+.body-cont.board .write-board table { width: 100%; margin-bottom: 10px; }
+
+.body-cont.board .write-board table th { text-align: justify; font-weight: normal; }
+
+.body-cont.board .write-board table th:before { content: ''; display: inline-block; width: 2px; height: 2px; margin-left: 4px; margin-right: 4px; background: #666; vertical-align: middle; }
+
+.body-cont.board .write-board table th, .body-cont.board .write-board table td { padding-bottom: 10px; }
+
+.body-cont.board .write-board input[type="text"], .body-cont.board .write-board input[type="password"] { width: 220px; -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
+
+.body-cont.board .write-board input[type="text"].title, .body-cont.board .write-board input[type="password"].title { width: 654px; }
+
+.body-cont.board .write-board .util { padding: 10px 0; border-top: 2px solid #a4a4a4; text-align: right; }
+
+.body-cont.board .write-board .util label { display: inline-block; margin-left: 20px; }
+
+.body-cont.board .write-board .wiki { padding: 20px; border: 1px solid #ddd; background-color: #f1f1f1; }
+
+.body-cont.board .write-board .wiki .editor .e-toolbar { border-width: 1px; }
+
+.body-cont.board .write-board .file { margin-top: 10px; }
+
+.body-cont.board .write-board .file input { margin-left: 20px; }

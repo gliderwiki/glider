@@ -1,0 +1,20 @@
+@charset "UTF-8";
+/*
+----------------------------------------
+Website : jQuery Life
+File Name : common.css
+Version : CSS2.0
+Maker : minuya | amoo (hyorin2mo@nate.com)
+Date : 2011 / August
+Explanation : 공통
+Modify Date: 2011 / 08 / 25
+----------------------------------------
+*/
+
+body{background:#f7f7f7; }
+hr{clear:both; color:#fff; }
+.clear{clear:both; display:block; }
+h2.title{padding:0 10px;color:#f4f4f4; font-size:1.2em; line-height:2em; font-weight:bold; background-color:#679854; }
+.txt{padding-left:20px; color:#555; font-size:0.75em; line-height:1.3em; background:url('../images/txt.png') no-repeat; }
+.sample01{clear:both; height:35px; }
+.h70{clear:both; height:70px; }

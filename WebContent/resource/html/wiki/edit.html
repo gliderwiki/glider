@@ -1,0 +1,521 @@
+<!doctype html>
+<!--[if lt IE 8]> <html class="lt-ie8" lang="ko"> <![endif]-->
+<!--[if gt IE 7]><!--> <html lang="ko"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width">
+<title>페이지 생성 - GLiDERWiki</title>
+<link rel="stylesheet" href="/resource/glider/front/css/common.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/dashboard.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/space.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/taglist.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/my.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/control.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/main.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/board.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/wiki.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/alimi.css" />
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<!--[if lt IE 8]>
+<p style="padding:1em;border-bottom:10px dashed #fff;background-color:#efefef;">
+	<strong>낡은 브라우저</strong>를 사용하고 계십니다.<br />
+	<a href="http://browsehappy.com/">새로운 브라우저로 업그레이드</a> 하거나 <a href="http://www.google.com/chromeframe/?redirect=true">구글 크롬프레임을 설치</a>해서 더 빠르고 아름다운 웹을 경험해 보세요.
+</p>
+<![endif]-->
+<header class="header" role="banner">
+	
+	<div class="main">
+		<div class="wrap-cont">
+			<h1>
+				<a href="/">GLiDERWiki</a>
+			</h1>
+			<div class="search-global">
+				<h2 class="ir">검색</h2>
+				<form action="/">
+					<fieldset>
+						<legend class="ir">검색폼</legend>
+						<input type="text" />
+						<button type="submit">검색</button>
+					</fieldset>
+				</form>
+			</div>
+			<ul class="navi">
+				<li>
+					<a href="#">공간생성하기</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a class="active" href="#">공간관리</a>
+					<!-- 공간관리메뉴레이어
+					<div class="layer-navi">
+						<ul>
+							<li>
+								<a href="#">전체공간 보기</a>
+							</li>
+							<li class="active">
+								<a href="#">공간정보 보기</a>
+							</li>
+							<li>
+								<a href="#">공간정보 수정</a>
+							</li>
+							<li>
+								<a href="#">이 공간에 동료 초대</a>
+							</li>
+							<li>
+								<a href="#">가입신청/가입신청관리</a>
+							</li>
+							<li>
+								<a href="#">공간내용 Export</a>
+							</li>
+						</ul>
+						<i class="tail">
+							<i class="tail_inner"></i>
+							<i class="tail_outer"></i>
+						</i>
+					</div>
+					-->
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">내정보</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">하나쯤더</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="sub">
+		<div class="wrap-cont">
+			<ul class="navi">
+				<li>
+					<a href="#">편집</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">페이지생성</a>
+					
+					<div class="layer-navi">
+						<ul>
+							<li>
+								<a href="#">페이지 변경내역</a>
+							</li>
+							<li>
+								<a href="#">페이지 관리. 두줄일 경우 이렇게 떨어짐</a>
+							</li>
+							<li>
+								<a href="#">Export PDF</a>
+							</li>
+							<li class="active">
+								<a href="#">Export WORD</a>
+							</li>
+							<li>
+								<a href="#">사용자 관리</a>
+							</li>
+						</ul>
+						<i class="tail">
+							<i class="tail_inner"></i>
+							<i class="tail_outer"></i>
+						</i>
+					</div>
+					
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">관리</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">옵션</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+</header>
+<section class="contents " role="main">
+	<div class="wrap-cont">
+		
+		<h2 class="tit-cont">페이지 생성</h2>
+		
+		
+		<form action="/">
+	<div class="body-cont wiki">
+		<div class="edit">
+			<div class="main">
+				<div class="lab">
+					<strong>제목</strong>
+				</div>
+				<input type="text" class="inp_txt" />
+				<div class="lab">
+					<strong>내용</strong>
+				</div>
+				<div class="editor">
+					<div class="e-type">
+						<button type="button" class="e-type-btn on">WYSIWYG</button>
+						<button type="button" class="e-type-btn">HTML</button>
+						<button type="button" class="e-type-btn">TEXT</button>
+					</div>
+					<div class="e-toolbar">
+						<ul class="e-tb-group">
+							<li class="e-tb-btn print" title="인쇄">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn undo" title="실행취소">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn redo" title="다시실행">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn copy" title="복사">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn cut" title="잘라내기">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn paste" title="붙여넣기">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn table" title="표만들기">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn select-all" title="전체선택">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-clr"></li>
+							<li class="e-tb-btn hr" title="구분선">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn link" title="링크">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn image" title="이미지">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn flash" title="플래시">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn media" title="미디어">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn chart" title="차트">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn alert" title="주의">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn info" title="정보">
+								<i class="e-tb-icon"></i>
+							</li>
+						</ul>
+						<div class="e-tb-bar"></div>
+						<ul class="e-tb-group">
+							<li class="e-tb-btn bold on" title="굵게">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn italic" title="이탤릭">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn underline" title="밑줄">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn strike" title="취소선">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn sub" title="아래첨자">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn sup" title="위첨자">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn font-color" title="글자색">
+								<i class="e-tb-icon"></i>
+								<i class="e-tb-color" style="background-color:#faa"></i>
+							</li>
+							<li class="e-tb-btn bg-color" title="배경색">
+								<i class="e-tb-icon"></i>
+								<i class="e-tb-color" style="background-color:#afa"></i>
+							</li>
+							<li class="e-tb-btn box-bg-color" title="박스배경색">
+								<i class="e-tb-icon"></i>
+								<i class="e-tb-color" style="background-color:#aaf"></i>
+							</li>
+							<li class="e-tb-clr"></li>
+							<li class="e-tb-select font-family">
+								<span class="e-tb-select-txt" style="font-family:dotum;">글자체</span>
+								<i class="e-tb-select-box">
+									<i class="e-tb-select-arr"></i>
+								</i>
+								<div class="e-tb-select-layer">
+									<ul>
+										<li>
+											<a href="#">
+												<span style="font-family:'돋움', dotum;">돋움</span>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<span style="font-family:'굴림', gulim;">굴림</span>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<span style="font-family:'궁서', gungsuh;">궁서</span>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<span style="font-family:'바탕', batang;">바탕</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li class="e-tb-select font-size">
+								<span class="e-tb-select-txt">글자크기(12)</span>
+								<i class="e-tb-select-box">
+									<i class="e-tb-select-arr"></i>
+								</i>
+								<div class="e-tb-select-layer">
+									<ul>
+										<li>
+											<a href="#">
+												<span style="font-size:11px;">11px</span>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<span style="font-size:12px;">12px</span>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<span style="font-size:14px;">14px</span>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<span style="font-size:18px;">18px</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li class="e-tb-select style">
+								<span class="e-tb-select-txt">스타일</span>
+								<i class="e-tb-select-box">
+									<i class="e-tb-select-arr"></i>
+								</i>
+								<div class="e-tb-select-layer">
+									<ul>
+										<li>
+											<a href="#">
+												<span>일반텍스트</span>
+											</a>
+											<a href="#">
+												<h1>제목.h1</h1>
+											</a>
+											<a href="#">
+												<h2>부제목.h2</h2>
+											</a>
+											<a href="#">
+												<h3>제목1.h3</h3>
+											</a>
+											<a href="#">
+												<h4>제목2.h4</h4>
+											</a>
+											<a href="#">
+												<h5>제목3.h5</h5>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+						<div class="e-tb-bar"></div>
+						<ul class="e-tb-group">
+							<li class="e-tb-btn align-left" title="왼쪽정렬">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn align-center" title="중앙정렬">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn align-right" title="오른쪽정렬">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn align-justify" title="균등정렬">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-clr"></li>
+							<li class="e-tb-btn list-ol" title="구분선">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn list-ul" title="링크">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn indent" title="들여쓰기">
+								<i class="e-tb-icon"></i>
+							</li>
+							<li class="e-tb-btn outdent" title="내어쓰기">
+								<i class="e-tb-icon"></i>
+							</li>
+						</ul>
+					</div>
+					<div class="e-textarea">
+						<div class="e-">
+						</div>
+						<textarea></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="sub">
+				<div class="place-layer">
+					<button class="btn-pink">템플릿불러오기 ▼</button>
+					<div class="layer-edit">
+						<ul>
+							<li>
+								<a href="#">회의록 템플릿</a>
+							</li>
+							<li>
+								<a href="#">회계예산 템플릿</a>
+							</li>
+							<li>
+								<a href="#">주간업무보고 템플릿</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="tips">
+					<strong class="tit">Wiki Markup Tips</strong>
+					<div>
+						<div class="line">- 기본활용</div>
+						<div class="line"><h2>h1. 큰 헤드라인</h2></div>
+						<div class="line"><h3>h2. 중간 헤드라인</h3></div>
+						<div class="line"><h4>h3. 작은 헤드라인</h4></div>
+						<div class="line"><b>굵게</b> : **굵게**<br>							</div>
+						<div class="line"><i>기울임</i> : //기울임//<br></div>
+						<div class="line"><u>밑줄</u> : __밑줄__<br></div>
+						<div class="line"><b><u><i>조합</i></u></b> : **__//조합//__**<br></div>
+						<div class="line"><del>취소선</del> : [del]취소선[del]<br></div>
+						<div class="line"><li>목록 : ##목록 </li></div>
+						<div class="line"><hr style="width: 100%"></div>
+						<div class="line">- 고급활용<br></div>
+						<div class="line">[@|링크주소|링크명]<br></div>
+						<div class="line">[!|URL경로|이미지]<br></div>
+						<div class="line">[info]정보[info]<br></div>
+						<div class="line">[field]필드셋[field]<br></div>
+						<div class="line">[alert]경고[alert]<br></div>
+						<div class="line">[note|각주#각주의 설명]<br></div>
+						<hr>
+						|| 표 헤더제목 1 || 표 헤더제목 2 ||<br>
+						| 표 내용 첫번째 | 표 내용 두번째 |<br>
+					</div>
+				</div>
+			</div>
+			<div class="edit-bottom">
+				<div class="main">
+					<div class="lab">
+						<strong>태그</strong>
+					</div>
+					<input type="text" class="inp_txt" />
+					<div class="lab">
+						<strong>파일첨부</strong>
+					</div>
+					<input type="file" />
+				</div>
+				<div class="sub">
+					<div class="place-layer">
+						<button class="btn-pink">공개레벨설정 ▼</button>
+						<div class="layer-edit">
+							<ul>
+								<li>
+									<a href="#">전체공개</a>
+								</li>
+								<li>
+									<a href="#">그룹공개</a>
+								</li>
+								<li>
+									<a href="#">구성원공개</a>
+								</li>
+								<li>
+									<a href="#">비공개</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="foot-cont">
+		<a href="#" class="btn">미리보기</a>
+		<button type="submit" class="btn">수정하기</button>
+		<button type="button" class="btn">임시저장</button>
+	</div>
+</form>
+
+		
+	</div>
+</section>
+<footer class="footer">
+	<div class="wrap-cont">
+		<ul class="navi">
+			<li>
+				<a href="#">Wiki 100% 활용하기</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">GLider Wiki에 대하여</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">버전 확인</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">후원하기</a>
+			</li>
+		</ul>
+		<p class="copyright">Copyright &copy; 2012 GLiDER</p>
+	</div>
+</footer>
+
+<div class="alimi">
+	<div class="bg_alimi left"></div>
+	<div class="bg_alimi right"></div>
+	<a href="#" class="btn_open notificationCountBtn" id="notificationCountBtn">
+		<span class="txt">알림</span>
+		<em class="num" id="notificationCount">0</em>
+	</a>
+	<div class="wrap_toggle">
+		<label for="checkRealTimeNotification">실시간 팝업</label>
+		<input type="checkbox" class="inp_chk" id="checkRealTimeNotification">
+	</div>
+	<div class="layer_alimi" id="realTimeNotification">
+		<ul class="list_alimi" style="display:none;">
+			<li>
+				<a href="#" class="cont">알림</a>
+			</li>
+			<li>
+				<a href="#" class="cont">알림</a>
+			</li>
+			<li>
+				<a href="#" class="cont">알림</a>
+			</li>
+			<!-- 알림 없을때 
+			<li class="empty">
+				<div class="cont">알림이 없습니다</div>
+			</li>
+			-->
+		</ul>
+	</div>
+</div>
+</body>
+</html>

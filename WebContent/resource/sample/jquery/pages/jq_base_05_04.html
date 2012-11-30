@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+<title>Base | jQuery</title>
+<link type="text/css" rel="stylesheet" href="../css/import.css" />
+<!--[if IE]><link type="text/css" rel="stylesheet" href="../css/ie6.css" /><![endif]-->
+<style type="text/css">
+	.buttons{width:100px; float:left; text-align:center; margin:5px; border:2px solid #ff6600; font-weight:bold; cursor:pointer; }
+	.hover{cursor:crosshair; color:#fff; background-color:#ff0066; }
+</style>
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/jquery-1.6.4.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/base.js"></script>
+ <script type="text/javascript" charset="UTF-8">
+	 jQuery(document).ready(function(){
+		$(".buttons").toggle(
+			function(){
+			$(this).addClass("hover");
+			},
+			function(){
+			$(this).removeClass("hover");
+			}
+		);
+	});
+</script>
+</head>
+ <body>
+	<h2 class="title">[toggle:선택한 엘리먼트에 두 개의 이벤트 핸들러를 연결]</h2>
+	<hr />
+	<div class="sample01">
+		<span class="buttons">AAAAA</span>
+		<span class="buttons">BBBBB</span>
+	</div>
+	<hr />
+	<pre class="clear">
+ jQuery(document).ready(function(){
+	$(".buttons").toggle(
+		function(){
+		$(this).addClass("hover");
+		},
+		function(){
+		$(this).removeClass("hover");
+		}
+	);
+ });
+	</pre>
+	<hr />
+	<p class="txt">첫 번째 이벤트 핸들러 함수는 0부터 시작한다고 할 경우 이벤트 짝수 번째로 발생한 경우에 실행되고, 두번째 이벤트 핸들러 함수는 이벤트가 홀수 번째로 발생한 경우에 실행<br />
+	이벤트가 처음 발생하면 첫 번째 이벤트 핸들러 함수가 실행되고 다시 발생하면 두번째 이벤트 핸들러 함수가 실행<br />이벤트 발생 시마다 이벤트 핸들러 함수가 순환</p>
+ </body>
+</html>

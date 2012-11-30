@@ -1,0 +1,735 @@
+<!doctype html>
+<!--[if lt IE 8]> <html class="lt-ie8" lang="ko"> <![endif]-->
+<!--[if gt IE 7]><!--> <html lang="ko"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width">
+<title>메인화면 관리 - GLiDERWiki</title>
+<link rel="stylesheet" href="/resource/glider/admin/css/admin.css" />
+
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+
+<body class="admin">
+<!--[if lt IE 8]>
+<p style="padding:1em;border-bottom:10px dashed #fff;background-color:#efefef;">
+	<strong>낡은 브라우저</strong>를 사용하고 계십니다.<br />
+	<a href="http://browsehappy.com/">새로운 브라우저로 업그레이드</a> 하거나 <a href="http://www.google.com/chromeframe/?redirect=true">구글 크롬프레임을 설치</a>해서 더 빠르고 아름다운 웹을 경험해 보세요.
+</p>
+<![endif]-->
+<header class="header" role="banner">
+	<div class="main">
+		<div class="wrap-cont">
+			<h1>
+				<a href="/">GLiDERWiki<span class="top">admin</span></a>
+			</h1>
+			<ul class="navi">
+				<li>
+					<a href="#">그룹 및 사용자 관리</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a class="active" href="#">확장기능 관리</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">공간 및 위키 관리</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">메일전송 관리 </a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">위키 정보</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="sub">
+		<div class="wrap-cont">
+			<ul class="navi">
+				<li>
+					<a href="#">메인화면 관리</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">로고 관리</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</header>
+<section class="contents " role="main">
+	<div class="wrap-cont">
+		
+		<h2 class="tit-cont">메인화면 관리</h2>
+		
+		
+		
+<div class="body-cont">
+	<div class="count">
+		<h3>통계</h3>
+		<div class="box-count">
+			<div class="item">
+				<strong class="num">93,123</strong>
+				<span class="txt">방문</span>
+			</div>
+			<div class="item">
+				<strong class="num">1,123</strong>
+				<span class="txt">개설된 Wiki</span>
+			</div>
+			<div class="item">
+				<strong class="num">20,123</strong>
+				<span class="txt">총태그</span>
+			</div>
+		</div>
+	</div>
+	<div class="srch has-btn">
+		<h3>조회조건</h3>
+		<div class="btnbox-rt">
+			<button type="button" class="btn-down">버튼1</button>
+			<button type="button" class="btn-down">버튼2</button>
+		</div>
+		<div class="box-srch">
+			<form action="/">
+				<table>
+					<tr>
+						<th>기간검색</th>
+						<td>
+							<input type="text" class="time" />년
+							<input type="text" class="time" />월
+							<input type="text" class="time" />일부터 
+							<input type="text" class="time" />년
+							<input type="text" class="time" />월
+							<input type="text" class="time" />일까지 
+						</td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td>
+							<input type="text" />
+						</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td>
+							<input type="text" />
+						</td>
+					</tr>
+				</table>
+				<button type="submit" class="btn btn-submit">검색</button>
+			</form>
+		</div>
+	</div>
+	<div class="block">
+		<h3>접근제어</h3>
+		<div class="box-add">
+			<form action="/">
+				<table>
+					<tr>
+						<th>아이피</th>
+						<td>
+							<input type="text" />
+						</td>
+					</tr>
+				</table>
+				<button type="submit" class="btn btn-submit">등록
+				</button>
+			</form>
+		</div>
+		<table class="tbl-result">
+			<thead>
+				<tr>
+					<th>등록일</th>
+					<th>아이피</th>
+					<th>구분</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<tr>
+					<td>2002-01-01</td>
+					<td>192.168.0.1</td>
+					<td>삭제</td>
+				</tr>
+				
+				<tr>
+					<td>2002-01-01</td>
+					<td>192.168.0.1</td>
+					<td>삭제</td>
+				</tr>
+				
+				<tr>
+					<td>2002-01-01</td>
+					<td>192.168.0.1</td>
+					<td>삭제</td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+	<div class="group">
+		<div class="box">
+			<h3>그룹생성</h3>	
+			<div class="box-create">
+				<form action="/">
+					<table>
+						<tr>
+							<th>그룹명</th>
+							<td>
+								<input type="text" />
+							</td>
+						</tr>
+						<tr>
+							<th>그룹타입</th>
+							<td>
+								<input type="text" />
+							</td>
+						</tr>
+						<tr>
+							<th>그룹설명</th>
+							<td>
+								<input type="text" />
+							</td>
+						</tr>
+						<tr>
+							<th>그룹관리자</th>
+							<td>
+								<input type="text" class="inp-srch"/>
+								<button type="button" class="btn-srch">찾기</button>
+							</td>
+						</tr>
+					</table>
+					<button type="submit" class="btn btn-submit">그룹생성</button>
+				</form>
+			</div>
+		</div>
+		<div class="wrap-box">
+			<div class="box left">
+				<h3>전체그룹</h3>
+				<form action="/">
+					<table>
+						<thead>
+							<tr>
+								<td class="check"></td>
+								<th class="title">그룹명</th>
+								<th class="admin">관리자</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+							<tr>
+								<td class="check">
+									<input type="checkbox" />
+								</td>
+								<td class="title">공간1</td>
+								<td class="admin">이남희</td>
+							</tr>
+							
+							<tr>
+								<td class="check">
+									<input type="checkbox" />
+								</td>
+								<td class="title">공간1</td>
+								<td class="admin">이남희</td>
+							</tr>
+							
+							<tr>
+								<td class="check">
+									<input type="checkbox" />
+								</td>
+								<td class="title">공간1</td>
+								<td class="admin">이남희</td>
+							</tr>
+							
+							<tr>
+								<td class="check">
+									<input type="checkbox" />
+								</td>
+								<td class="title">공간1</td>
+								<td class="admin">이남희</td>
+							</tr>
+							
+							<tr>
+								<td class="check">
+									<input type="checkbox" />
+								</td>
+								<td class="title">공간1</td>
+								<td class="admin">이남희</td>
+							</tr>
+							
+						</tbody>
+					</table>
+					<div class="wrap-btn">
+						<button type="submit" class="btn">선택그룹삭제</button>
+					</div>
+				</form>
+			</div>
+			<div class="box right">
+				<h3>그룹 사용자</h3>
+				<form action="/">
+					<button type="button" class="btn-add">사용자추가</button>
+					<table>
+						<thead>
+							<tr>
+								<td class="check"></td>
+								<th class="title">그룹명</th>
+								<th class="admin">관리자</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+							<tr>
+								<td class="check">
+									<input type="checkbox" />
+								</td>
+								<td class="title">공간1</td>
+								<td class="admin">이남희</td>
+							</tr>
+							
+							<tr>
+								<td class="check">
+									<input type="checkbox" />
+								</td>
+								<td class="title">공간1</td>
+								<td class="admin">이남희</td>
+							</tr>
+							
+							<tr>
+								<td class="check">
+									<input type="checkbox" />
+								</td>
+								<td class="title">공간1</td>
+								<td class="admin">이남희</td>
+							</tr>
+							
+							<tr>
+								<td class="check">
+									<input type="checkbox" />
+								</td>
+								<td class="title">공간1</td>
+								<td class="admin">이남희</td>
+							</tr>
+							
+							<tr>
+								<td class="check">
+									<input type="checkbox" />
+								</td>
+								<td class="title">공간1</td>
+								<td class="admin">이남희</td>
+							</tr>
+							
+						</tbody>
+					</table>
+					<div class="wrap-btn">
+						<button type="submit" class="btn">현재 상태 저장</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="extension">
+		<table class="tbl-result">
+			<thead>
+				<tr>
+					<th>기능</th>
+					<th>버전</th>
+					<th>설치여부</th>
+					<th>구분</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<tr>
+					<td>캘린더</td>
+					<td>v1.2</td>
+					<td>
+						설치완료 / <a href="#">제거하기</a>
+					</td>
+					<td>
+						<a href="#">업데이트</a>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>캘린더</td>
+					<td>v1.2</td>
+					<td>
+						설치완료 / <a href="#">제거하기</a>
+					</td>
+					<td>
+						<a href="#">업데이트</a>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>회의실 예약</td>
+					<td>v0.1</td>
+					<td>
+						미설치
+					</td>
+					<td>
+						<a href="#">설치하기</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="user">
+		<h3>사용자 조회</h3>
+		<div class="box-srch">
+			<form action="/">
+				<table>
+					<tr>
+						<th>사용자 이름</th>
+						<td>
+							<input type="text" />
+						</td>
+					</tr>
+					<tr>
+						<th>조직별</th>
+						<td>
+							<select>
+								<option vale="0">- 사용자 생성 그룹 -</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<button type="submit" class="btn btn-submit">조회
+				</button>
+			</form>
+		</div>
+		<table class="tbl-result">
+			<thead>
+				<tr>
+					<th>회원번호</th>
+					<th>회원명</th>
+					<th>등급</th>
+					<th>가입일</th>
+					<th>구분</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<tr>
+					<td>1</td>
+					<td>김용훈</td>
+					<td>-</td>
+					<td>2002-01-01</td>
+					<td>인증 메일 재전송</td>
+				</tr>
+				
+				<tr>
+					<td>1</td>
+					<td>김용훈</td>
+					<td>-</td>
+					<td>2002-01-01</td>
+					<td>인증 메일 재전송</td>
+				</tr>
+				
+				<tr>
+					<td>1</td>
+					<td>김용훈</td>
+					<td>-</td>
+					<td>2002-01-01</td>
+					<td>인증 메일 재전송</td>
+				</tr>
+				
+			</tbody>
+		</table>
+		<div class="mem-info">
+			<table class="tbl-info">
+				
+				<tr>
+					<th>항목</th>
+					<td>내용들</td>
+				</tr>
+				
+				<tr>
+					<th>항목</th>
+					<td>내용들</td>
+				</tr>
+				
+				<tr>
+					<th>항목</th>
+					<td>내용들</td>
+				</tr>
+				
+				<tr>
+					<th>항목</th>
+					<td>내용들</td>
+				</tr>
+				
+				<tr>
+					<th>항목</th>
+					<td>내용들</td>
+				</tr>
+				
+				<tr>
+					<th>항목</th>
+					<td>내용들</td>
+				</tr>
+				
+				<tr>
+					<th>항목</th>
+					<td>내용들</td>
+				</tr>
+				
+				<tr>
+					<th>항목</th>
+					<td>내용들</td>
+				</tr>
+				
+				<tr>
+					<th>항목</th>
+					<td>내용들</td>
+				</tr>
+				
+				<tr>
+					<th>항목</th>
+					<td>내용들</td>
+				</tr>
+				
+			</table>
+			<div class="wrap-btn">
+				<a href="#" class="btn">강제탈퇴</a>
+			</div>
+		</div>
+	</div>
+	<div class="category">
+		<h3>분류관리</h3>
+		<div class="box-srch">
+			<form action="/">
+				<table>
+					<tr>
+						<th>대분류</th>
+						<td>
+							<select>
+								<option value="0">대분류</option>
+							</select>
+						</td>
+						<th>소분류</th>
+						<td>
+							<select>
+								<option value="0">소분류</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<button type="submit" class="btn btn-submit">조회
+				</button>
+			</form>
+		</div>
+	</div>
+	<div class="space">
+		<h3>공간관리</h3>
+		<div class="box-srch">
+			<form action="/">
+				<table>
+					<tr>
+						<th>공간명</th>
+						<td>
+							<input type="text" />
+						</td>
+					</tr>
+				</table>
+				<button type="submit" class="btn btn-submit">조회
+				</button>
+			</form>
+		</div>
+	</div>
+	<div class="wiki">
+		<h3>위키관리</h3>
+		<div class="box-srch">
+			<form action="/">
+				<table>
+					<tr>
+						<th>위키명</th>
+						<td>
+							<input type="text" />
+						</td>
+						<th>생성자</th>
+						<td>
+							<input type="text" />
+						</td>
+					</tr>
+				</table>
+				<button type="submit" class="btn btn-submit">조회
+				</button>
+			</form>
+		</div>
+		<table class="tbl-result">
+			<thead>
+				<tr>
+					<th>위키명</th>
+					<th>생성자</th>
+					<th>기타정보들</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<tr>
+					<td>이런위키</td>
+					<td>Yion Lee</td>
+					<td>항목별로 정보들이 들어감</td>
+				</tr>
+				
+				<tr>
+					<td>이런위키</td>
+					<td>Yion Lee</td>
+					<td>항목별로 정보들이 들어감</td>
+				</tr>
+				
+				<tr>
+					<td>이런위키</td>
+					<td>Yion Lee</td>
+					<td>항목별로 정보들이 들어감</td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+	<div class="mail">
+		<h3>메일설정</h3>
+		<div class="box-mail">
+			<form action="/">
+				<table>
+					<tr>
+						<th>메일호스트</th>
+						<td>
+							<input type="text" />
+						</td>
+					</tr>
+					<tr>
+						<th>메일주소</th>
+						<td>
+							<input type="text" />
+						</td>
+					</tr>
+					<tr>
+						<th>메일비밀번호</th>
+						<td>
+							<input type="text" />
+						</td>
+					</tr>
+					<tr>
+						<th>메일전송자</th>
+						<td>
+							<input type="text" />
+						</td>
+					</tr>
+				</table>
+				<button type="submit" class="btn btn-submit">전송메일<br />설정하기</button>
+			</form>
+		</div>
+		<div class="wrap-btn">
+			<a href="#" class="btn">테스트 메일전송</a>
+		</div>
+	</div>
+	<div class="license">
+		<h3>라이선스 정보</h3>
+		<div class="box-srch">
+			<form action="/">
+				<table>
+					<tr>
+						<th>라이선스</th>
+						<td>Community Lisence (20 user)</td>
+					</tr>
+					<tr>
+						<th>라이선스키</th>
+						<td>
+							<input type="text" />
+						</td>
+					</tr>
+				</table>
+				<button type="submit" class="btn btn-submit">업데이트
+				</button>
+			</form>
+		</div>
+		<table class="tbl-result">
+			<thead>
+				<tr>
+					<th>라이센스 적용일</th>
+					<th>라이센스 만료일</th>
+					<th>사용가능 유저수</th>
+					<th>사용가능 위키수</th>
+					<th>사용가능 공간수</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>2012-08-24</td>
+					<td>2013-08-24</td>
+					<td>1,000 user</td>
+					<td>1,000 page</td>
+					<td>1,000 space</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="update">
+		<h3>업데이트 정보</h3>
+		<div class="box-info">
+			<ul>
+				<li>
+					현재버전 : v1.23
+				</li>
+				<li>
+					최신버전 : <strong style="color:red;">v1.6</strong>
+				</li>
+			</ul>	
+		</div>
+		<div class="wrap-btn">
+			<a href="#" class="btn">최신버전으로 업데이트</a>
+		</div>
+		<table class="tbl-result">
+			<thead>
+				<tr>
+					<th class="version">버전</th>
+					<th class="title">제목</th>
+					<th class="time">작성일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="version">v1.6</td>
+					<td class="title">
+						<a href="#">글라이더 위키팀에서 알려드립니다</a>
+					</td>
+					<td>2012-08-24</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+		
+	</div>
+</section>
+<footer class="footer">
+	<div class="wrap-cont">
+		<ul class="navi">
+			<li>
+				<a href="#">Wiki 100% 활용하기</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">GLider Wiki에 대하여</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">버전 확인</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">후원하기</a>
+			</li>
+		</ul>
+		<p class="copyright">Copyright &copy; 2012 GLiDER</p>
+	</div>
+</footer>
+</body>
+</html>

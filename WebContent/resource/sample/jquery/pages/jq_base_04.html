@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+<title>Base | jQuery</title>
+<link type="text/css" rel="stylesheet" href="../css/import.css" />
+<!--[if IE]><link type="text/css" rel="stylesheet" href="../css/ie6.css" /><![endif]-->
+<style type="text/css">
+	.listStyle{list-style-type:none;}
+	.hStyle{float:left; width:120px; height:80px; border:2px dotted #ff6600; margin:10px; overflow:hidden; }
+</style>
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/jquery-1.6.4.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/base.js"></script>
+ <script type="text/javascript" charset="UTF-8">
+	 jQuery(document).ready(function(){
+		$("li").addClass("listStyle");
+		$("li").addClass("hStyle");
+		//$("li").removeClass("hStyle");
+	});
+</script>
+</head>
+ <body>
+	<h2 class="title">[스타일적용]</h2>
+	<div class="h50">
+	<ul>
+		<li>Abcdefghijklmnopqrstuvwxyz</li>
+		<li>aBcdefghijklmnopqrstuvwxyz</li>
+		<li>abCdefghijklmnopqrstuvwxyz</li>
+	</ul>
+	</div>
+	<hr />
+	<pre>
+ jQuery(document).ready(function(){
+	$("li").addClass("listStyle");
+	$("li").addClass("hStyle");
+  });
+	</pre>
+	<hr />
+	<h2 class="title">[스타일원복]</h2>
+	<div class="h50">
+		<p>Abcdefghijklmnopqrstuvwxyz</p>
+		<p>aBcdefghijklmnopqrstuvwxyz</p>
+		<p>abCdefghijklmnopqrstuvwxyz</p>
+	</div>
+	<hr />
+	<pre>
+ jQuery(document).ready(function(){
+	$("li").removeClass("hStyle");
+ });
+	</pre>
+	<hr />
+ </body>
+</html>

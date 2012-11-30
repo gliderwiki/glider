@@ -1,0 +1,145 @@
+.body-cont.space .edit h3, .body-cont.space .view h3 { height: 21px; margin: 0 0 10px; padding-left: 25px; font-size: 14px; background: url(/resource/glider/front/images/ico-balloon.png) no-repeat; }
+
+.body-cont.space .box { margin-top: 30px; }
+
+.body-cont.space .box:first-child { margin-top: 0; }
+
+.body-cont.space .box-empty { margin-top: 60px; }
+
+.body-cont.space .tit { color: #f3265a; }
+
+.body-cont.space .view img { max-width: 100%; }
+
+.body-cont.space .view .btn-add { display: inline-block; margin-left: 4px; padding: 0 3px; font-weight: normal; font-size: 11px; color: #fff; background-color: #a33c65; text-decoration: none; }
+
+.body-cont.space .view .box-group { padding-top: 10px; }
+
+.body-cont.space .view .box-group .group { display: inline-block; margin-right: 8px; margin-bottom: 12px; padding: 5px; border-width: 1px; border-style: solid; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; font-weight: bold; white-space: nowrap; }
+
+.body-cont.space .view .box-group .btn-del { display: inline-block; margin-left: 2px; width: 13px; height: 13px; text-align: center; font-weight: normal; font-family: Tahoma, Dotum ; font-size: 11px; line-height: 11px; vertical-align: middle; text-decoration: none; color: #fff; background-color: #737373; }
+
+.body-cont.space .view .box-group.read .group { border-color: #e795b0; color: #c56283; background-color: #f8dee6; }
+
+.body-cont.space .view .box-group.edit .group { border-color: #92c6c7; color: #3b726b; background-color: #e5f0f0; }
+
+.body-cont.space .edit input[type="text"], .body-cont.space .edit textarea { width: 100%; }
+
+.body-cont.space .edit input[type="radio"] { margin-right: 5px; }
+
+.body-cont.space .edit h4 { margin: 0 0 8px; padding-left: 15px; background: url(/resource/glider/front/images/ico-bullet.gif) no-repeat 0 5px; }
+
+.body-cont.space .edit .box-group { margin-top: 28px; padding: 25px; border: 1px solid #d1d1d1; background-color: #e5f0f0; }
+
+.body-cont.space .edit .box-group.fst { margin-top: 0; }
+
+.body-cont.space .edit .box-group input[type="radio"] { margin-right: 3px; }
+
+.body-cont.space .edit .box-group .item { white-space: nowrap; margin-right: 30px; }
+
+.body-cont.space .edit .form-img .box { margin-top: 60px; }
+
+.body-cont.space .edit .box-img { display: inline-block; overflow: hidden; width: 166px; min-height: 98px; margin-right: 10px; border: 1px solid #c4c4c4; text-align: center; vertical-align: top; background-color: #fbfbfb; }
+
+.body-cont.space .edit .box-img img { max-width: 100%; }
+
+.body-cont.space .edit input.inp-dup { width: 650px; }
+
+.body-cont.space .edit .btn-dup { width: 120px; height: 27px; border: 0; margin-left: 10px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; color: #fff; background-color: #787878; }
+
+.body-cont.space .all .list.type1 { border-top: 2px solid #719CC8; width: 100%; }
+
+.body-cont.space .all .list.type1 .title { width: 358px; padding-right: 20px; }
+
+.body-cont.space .all .list.type1 .time { width: 140px; }
+
+.body-cont.space .all .list.type1 .user { width: 100px; }
+
+.body-cont.space .all .list.type1 .active { width: 110px; padding-right: 10px; }
+
+.body-cont.space .all .list.type1 .info { width: 50px; }
+
+.body-cont.space .relation .box, .body-cont.space .relation .box-empty { margin-top: 0; }
+
+.body-cont.space .relation .wrap-box { *zoom: 1; }
+
+.body-cont.space .relation .wrap-box:before, .body-cont.space .relation .wrap-box:after { content: ''; display: table; }
+
+.body-cont.space .relation .wrap-box:after { clear: both; }
+
+.body-cont.space .relation .wrap-box .box { width: 360px; }
+
+.body-cont.space .relation .wrap-box .boxConnection { width: 390px; }
+
+.body-cont.space .relation .wrap-box .box.left { float: left; }
+
+.body-cont.space .relation .wrap-box .box.right { float: right; }
+
+.body-cont.space .relation .wrap-box .boxConnection.left { float: left; }
+
+.body-cont.space .relation .wrap-box .boxConnection.right { float: right; }
+
+.body-cont.space .relation .tit-sub { margin: 0 0 20px; padding: 0; font-size: 22px; color: #a13853; }
+
+.body-cont.space .relation .tit-sub a { color: #a13853; text-decoration: none; }
+
+.body-cont.space .relation .tit-sub a:hover { text-decoration: underline; }
+
+.body-cont.space .relation .list.type1 .title { width: 160px; }
+
+.body-cont.space .relation .list.type1 .time { width: 120px; }
+
+.body-cont.space .relation .list.type1 .action { width: 100px; text-align: right; padding-right: 10px; }
+
+.body-cont.space .relation .btn-relation { display: inline-block; padding: 0 3px; font-size: 11px; border-width: 1px; border-style: solid; border-color: #868686 #515151 #515151 #868686; color: #fff; background-color: #5f5f5f; text-decoration: none; }
+
+.body-cont.space .main { *zoom: 1; }
+
+.body-cont.space .main:before, .body-cont.space .main:after { content: ''; display: table; }
+
+.body-cont.space .main:after { clear: both; }
+
+.body-cont.space .main .col { width: 400px; }
+
+.body-cont.space .main .col.left { float: left; }
+
+.body-cont.space .main .col.right { float: right; }
+
+.body-cont.space .main .box { position: relative; }
+
+.body-cont.space .main .col .box-empty { margin-top: 0; }
+
+.body-cont.space .main .tit-sec { border-bottom-color: #595959; }
+
+.body-cont.space .main .tit-sec em { font-style: normal; color: #a13853; }
+
+.body-cont.space .main .list.type1.info .title { width: 260px; }
+
+.body-cont.space .main .list.type1.info .time { width: 90px; }
+
+.body-cont.space .main .list.type1.upload > li > div { display: table-cell; float: none; }
+
+.body-cont.space .main .list.type1.upload .title { width: 200px; }
+
+.body-cont.space .main .list.type1.upload .title img { margin-right: 3px; }
+
+.body-cont.space .main .list.type1.upload .time { width: 70px; text-align: center;}
+
+.body-cont.space .main .list.type1.upload .name { width: 77px; text-align: center;}
+
+.body-cont.space .main .list.type1.upload .info { text-align: left; width: 50px;}
+
+.body-cont.space .main .list.type3 .user { width: 120px; }
+
+.space-intro { position: relative; margin-top: 30px; min-height: 160px; padding-left: 295px; padding-bottom: 20px; border-bottom: 1px solid #d8d8d8; }
+
+.space-intro h2 { margin: 0; font-size: 28px; color: #b6405f; }
+
+.space-intro .txt { color: #666; }
+
+.space-intro .txt textarea { display: block; width: 100%; background-color: #FFF; }
+
+.space-intro .txt .wrap-btn { margin-top: 10px; text-align: right; }
+
+.space-intro .txt .wrap-btn .btn { width: 90px; height: 30px; line-height: 30px; }
+
+.space-intro .symbol { position: absolute; left: 30px; top: 50%; width: 220px; height: 140px; margin-top: -87px; }

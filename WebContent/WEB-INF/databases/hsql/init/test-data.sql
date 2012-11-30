@@ -1,0 +1,6 @@
+INSERT INTO we_wiki ( WE_SPACE_IDX, WE_WIKI_TITLE, WE_WIKI_TEXT, WE_WIKI_REVISION, WE_WIKI_STATUS, WE_WIKI_AGREE, WE_WIKI_VIEW_CNT)
+VALUES(1 ,'title' ,'text' ,1 ,'S' ,1 ,1 );
+
+INSERT INTO we_space (WE_SPACE_NAME, WE_SPACE_DESC, WE_VIEW_PRIVACY, WE_EDIT_PRIVACY, WE_ADMIN_IDX, WE_SPACE_EXPOSED, WE_USE_YN, WE_INS_USER, WE_INS_DATE )
+VALUES ( '기본공간', 'GLiDER™ Wiki 기본 공간입니다. 글라이더 위키의 전체적인 사용방법과 위키의 작성방법, 사이트 운영정책에 대해서 설명합니다.', 'ALLGROUP', 'ALLGROUP', '1', 'Y', 'Y',	'1',NOW);
+

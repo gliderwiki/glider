@@ -1,0 +1,305 @@
+<!doctype html>
+<!--[if lt IE 8]> <html class="lt-ie8" lang="ko"> <![endif]-->
+<!--[if gt IE 7]><!--> <html lang="ko"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width">
+<title>공간정보 보기 - GLiDERWiki</title>
+<link rel="stylesheet" href="/resource/glider/front/css/common.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/dashboard.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/space.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/taglist.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/my.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/control.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/main.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/board.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/wiki.css" />
+<link rel="stylesheet" href="/resource/glider/front/css/alimi.css" />
+<link rel="stylesheet" href="/resource/glider/admin/css/admin.css" />
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<!--[if lt IE 8]>
+<p style="padding:1em;border-bottom:10px dashed #fff;background-color:#efefef;">
+	<strong>낡은 브라우저</strong>를 사용하고 계십니다.<br />
+	<a href="http://browsehappy.com/">새로운 브라우저로 업그레이드</a> 하거나 <a href="http://www.google.com/chromeframe/?redirect=true">구글 크롬프레임을 설치</a>해서 더 빠르고 아름다운 웹을 경험해 보세요.
+</p>
+<![endif]-->
+<header class="header" role="banner">
+	
+	<div class="main">
+		<div class="wrap-cont">
+			<h1>
+				<a href="/">GLiDERWiki</a>
+			</h1>
+			<div class="search-global">
+				<h2 class="ir">검색</h2>
+				<form action="/">
+					<fieldset>
+						<legend class="ir">검색폼</legend>
+						<input type="text" />
+						<button type="submit">검색</button>
+					</fieldset>
+				</form>
+			</div>
+			<ul class="navi">
+				<li>
+					<a href="#">공간생성하기</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a class="active" href="#">공간관리</a>
+					<!-- 공간관리메뉴레이어
+					<div class="layer-navi">
+						<ul>
+							<li>
+								<a href="#">전체공간 보기</a>
+							</li>
+							<li class="active">
+								<a href="#">공간정보 보기</a>
+							</li>
+							<li>
+								<a href="#">공간정보 수정</a>
+							</li>
+							<li>
+								<a href="#">이 공간에 동료 초대</a>
+							</li>
+							<li>
+								<a href="#">가입신청/가입신청관리</a>
+							</li>
+							<li>
+								<a href="#">공간내용 Export</a>
+							</li>
+						</ul>
+						<i class="tail">
+							<i class="tail_inner"></i>
+							<i class="tail_outer"></i>
+						</i>
+					</div>
+					-->
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">내정보</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">하나쯤더</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="sub">
+		<div class="wrap-cont">
+			<ul class="navi">
+				<li>
+					<a href="#">편집</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">페이지생성</a>
+					
+					<div class="layer-navi">
+						<ul>
+							<li>
+								<a href="#">페이지 변경내역</a>
+							</li>
+							<li>
+								<a href="#">페이지 관리. 두줄일 경우 이렇게 떨어짐</a>
+							</li>
+							<li>
+								<a href="#">Export PDF</a>
+							</li>
+							<li class="active">
+								<a href="#">Export WORD</a>
+							</li>
+							<li>
+								<a href="#">사용자 관리</a>
+							</li>
+						</ul>
+						<i class="tail">
+							<i class="tail_inner"></i>
+							<i class="tail_outer"></i>
+						</i>
+					</div>
+					
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">관리</a>
+				</li>
+				<li class="bar"> | </li>
+				<li>
+					<a href="#">옵션</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+</header>
+<section class="contents " role="main">
+	<div class="wrap-cont">
+		
+		<h2 class="tit-cont">공간정보 보기</h2>
+		
+		
+		
+
+<div class="body-cont space">
+	<div class="edit">
+		<form action="/">
+			<div class="box">
+				<h3>공간제목을 입력하세요</h3>
+				<div>
+					<input type="text" class="inp-dup" />
+					<button type="button" class="btn-dup">중복체크</button>
+				</div>
+				<label for="" class="error">에러 메시지를 입력해주세요</label>
+			</div>
+			<div class="box">
+				<h3>공간설명을 입력하세요</h3>
+				<textarea rows="5"></textarea>
+			</div>
+			<div class="box">
+				<h3>공간 Privacy 설정</h3>
+				<p>
+					<input type="radio" name="privacy" id="privacyPublic" />
+					<label for="privacyPublic">
+						<strong class="tit">공간 정보 공개</strong>
+						: 공간의 업데이트가 정보가 메인 화면에 노출됩니다.
+					</label>
+				</p>
+				<p>
+					<input type="radio" name="privacy" id="privacyNonPublic" checked />
+					<label for="privacyNonPublic">
+						<strong class="tit">공간 정보 공개 안함</strong>
+						: 공간의 업데이트가 정보가 메인 화면에 노출되지 않습니다.
+					</label>
+				</p>
+			</div>
+			<div class="box">
+				<h3>공간 권한 지정 : 페이지 생성, 수정 권한을 할당할 수 있습니다</h3>
+				<div class="box-group fst">
+					<h4 class="tit">공간의 내용을 볼 수 있는 그룹</h4>
+					<span class="item">
+						<input type="radio" name="read" id="read1" checked />
+						<label for="read1">전체 사용자 허용</label>
+					</span>
+					<span class="item">
+						<input type="radio" name="read" id="read2" />
+						<label for="read2">그룹선택</label>
+					</span>
+					<span class="item">
+						<input type="radio" name="read" id="read3" />
+						<label for="read3">구성원선택</label>
+					</span>
+					<span class="item">
+						<input type="radio" name="read" id="read4" />
+						<label for="read4">내가 속한 그룹만</label>
+					</span>
+				</div>
+				<div class="box-group">
+					<h4 class="tit">공간의 페이지를 생성, 수정할 수 있는 그룹</h4>
+					<span class="item">
+						<input type="radio" name="edit" id="edit1" checked />
+						<label for="edit1">전체 사용자 허용</label>
+					</span>
+					<span class="item">
+						<input type="radio" name="edit" id="edit2" />
+						<label for="edit2">그룹선택</label>
+					</span>
+					<span class="item">
+						<input type="radio" name="edit" id="edit3" />
+						<label for="edit3">구성원선택</label>
+					</span>
+					<span class="item">
+						<input type="radio" name="edit" id="edit4" />
+						<label for="edit4">내가 속한 그룹만</label>
+					</span>
+				</div>
+			</div>
+			<!-- 이미지 업로드되면 경로를 아래 히든인풋에 바인딩 시켜줍니다 -->
+			<input type="hidden" />
+			<!-- 기본 섭밋 버튼은 숨겨줍니다 -->
+			<button type="submit" style="display:none;">수정하기</button>
+		</form>
+		<!-- 이미지 업로드 처리용 폼 -->
+		<form action="/" target="hiddenImgForm" class="form-img">
+			<div class="box">
+				<h3>공간의 Identity 이미지를 업로드하세요</h3>
+				<span class="box-img">
+					<img src="" alt="" />
+				</span>
+				<input type="file" multiple />
+			</div>
+		</form>
+	</div>
+</div>
+<div class="foot-cont">
+	<button type="button" class="btn">미리보기</button>
+	<!-- 아래버튼으로 맨위 폼의 섭밋을 트리거 해줍니다 -->
+	<button type="button" class="btn">수정하기</button>
+</div>
+<iframe name="hiddenImgForm" id="hiddenImgForm" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" height="0" width="0"  ></iframe>
+		
+	</div>
+</section>
+<footer class="footer">
+	<div class="wrap-cont">
+		<ul class="navi">
+			<li>
+				<a href="#">Wiki 100% 활용하기</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">GLider Wiki에 대하여</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">버전 확인</a>
+			</li>
+			<li class="bar"> | </li>
+			<li>
+				<a href="#">후원하기</a>
+			</li>
+		</ul>
+		<p class="copyright">Copyright &copy; 2012 GLiDER</p>
+	</div>
+</footer>
+
+<div class="alimi">
+	<div class="bg_alimi left"></div>
+	<div class="bg_alimi right"></div>
+	<a href="#" class="btn_open notificationCountBtn" id="notificationCountBtn">
+		<span class="txt">알림</span>
+		<em class="num" id="notificationCount">0</em>
+	</a>
+	<div class="wrap_toggle">
+		<label for="checkRealTimeNotification">실시간 팝업</label>
+		<input type="checkbox" class="inp_chk" id="checkRealTimeNotification">
+	</div>
+	<div class="layer_alimi" id="realTimeNotification">
+		<ul class="list_alimi" style="display:none;">
+			<li>
+				<a href="#" class="cont">알림</a>
+			</li>
+			<li>
+				<a href="#" class="cont">알림</a>
+			</li>
+			<li>
+				<a href="#" class="cont">알림</a>
+			</li>
+			<!-- 알림 없을때 
+			<li class="empty">
+				<div class="cont">알림이 없습니다</div>
+			</li>
+			-->
+		</ul>
+	</div>
+</div>
+</body>
+</html>

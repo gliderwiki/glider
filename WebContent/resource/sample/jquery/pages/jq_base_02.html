@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+<title>Base | jQuery</title>
+<link type="text/css" rel="stylesheet" href="../css/import.css" />
+<!--[if IE]><link type="text/css" rel="stylesheet" href="../css/ie6.css" /><![endif]-->
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/jquery-1.6.4.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../scripts/jquery/base.js"></script>
+<script type="text/javascript" charset="UTF-8">
+	 $(document).ready(function(){
+		$("h1").css("color", "#ff6600");
+		$("#myId").css("background-color", "#eaeaea");
+		$(".myClass").css("font-family", "Verdana");
+	});
+</script>
+</head>
+ <body>
+ <h1>Are You Ready??</h1>
+ <h1 id="myId">Are You Ready??</h1>
+ <h1 class="myClass">Are You Ready??</h1>
+<hr />
+ <pre>
+  $(document).ready(function(){
+	$("h1").css("color", "#ff6600");
+	$("#myId").css("background-color", "#eaeaea");
+	$(".myClass").css("font-family", "Verdana");
+ });
+ </pre>
+<hr />
+ </body>
+</html>
