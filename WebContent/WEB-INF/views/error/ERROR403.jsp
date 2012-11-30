@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <link rel="stylesheet" href="/resource/glider/front/css/common.css">
-<title>::Enterprise OpenSource Wiki ? GLiDER™ </title>
+<title>::Enterprise OpenSource Wiki – GLiDER™ </title>
 <script type="text/javascript">
 //<![CDATA[
 
