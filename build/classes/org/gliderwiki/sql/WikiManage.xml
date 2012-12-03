@@ -165,7 +165,7 @@
 				    ORDER BY T1.WE_WIKI_TITLE
 				    ) T2
 				   ON T1. WE_WIKI_PARENT_IDX = T2.WE_WIKI_PARENT_IDX
-				ORDER BY T2.RNUM ASC, T1. WE_WIKI_PARENT_IDX ASC ,T1.WE_WIKI_ORDER_IDX ASC
+				ORDER BY T2.RNUM ASC, T1. WE_WIKI_PARENT_IDX ASC ,T1.WE_WIKI_ORDER_IDX ASC, T1.WE_WIKI_TITLE
 	</select>
 
 	<insert id="WikiManage.insertArrayFileList" parameterType="java.util.HashMap">
