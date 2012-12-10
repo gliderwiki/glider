@@ -8,7 +8,6 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 
 <section class="contents " role="main">
 	<div class="wrap-cont">
-
 		<h2 class="tit-cont">게시판 목록</h2>
 		<div class="body-cont board">
 			<div class="list-board">

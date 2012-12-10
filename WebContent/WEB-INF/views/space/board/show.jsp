@@ -29,8 +29,7 @@ pageContext.setAttribute("cr", "\r");
 					<a style="cursor:pointer" id="bbsList" class="btn">목록</a>
 					<a style="cursor:pointer" id="bbsUpdate" data-bbs-idx="${bbs.we_bbs_idx}" data-space-idx="${bbs.we_space_idx}" data-user-idx="${bbs.we_ins_user}" class="btn">수정</a>
 					<a style="cursor:pointer" class="btn articleDelete" data-bbs-idx="${bbs.we_bbs_idx}" data-space-idx="${bbs.we_space_idx}" data-user-idx="${bbs.we_ins_user}" >삭제</a>
-				</div>		
-				
+				</div>				
 				<div class="form-cmt" id="_comment">
 					<form:form modelAttribute="WeBbsComment" name="WeBbsComment" id="WeBbsComment" method="POST" action="/space/${spaceIdx}/board/${boardIdx}/insertComment">
 					<input type="hidden" name="weBbsCommentIdx" id="weBbsCommentIdx" />

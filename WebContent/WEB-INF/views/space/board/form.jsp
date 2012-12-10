@@ -6,7 +6,6 @@
 <body>
 <section class="contents " role="main">
 	<div class="wrap-cont">
-
 		<h2 class="tit-cont">게시판 글쓰기</h2>
 			<form:form modelAttribute="WeBbs" name="WeBbs" method="POST" action="/space/${spaceIdx}/board/create">
 			<form:hidden path="we_bbs_idx"/>
