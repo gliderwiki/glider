@@ -35,7 +35,7 @@
 										<input type="text" name="noSpam" id="noSpam" />
 										<input type="hidden" name="randomKey" id="randomKey" value="${randomKey}"/>
 									</td>
-									<th scope="row" colspan="2">스팸 방지 보안 문자 [<b>${randomKey}</b>]</th>
+									<th scope="row" colspan="2">스팸 방지 보안문자 [<b>${randomKey}</b>]</th>
 								</tr>
 							</tbody>
 						</table>
@@ -50,6 +50,7 @@
 								</div>
 							</div>
 						</div>
+					</div>
 				</div>
 				<div class="foot-cont">
 					<c:choose>

@@ -10,9 +10,6 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 	<div class="wrap-cont">
 
 		<h2 class="tit-cont">게시판 목록</h2>
-		
-		
-		
 		<div class="body-cont board">
 			<div class="list-board">
 				<div class="search-board">
@@ -23,7 +20,7 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 							<option>이름</option>
 						</select>
 						<input type="text" class="keyword" />
-						<button type="submit" class="btn-submit">검색</button>
+						<button type="button" class="btn-submit" id="searchBbs">검색</button>
 					</form>
 				</div>
 				<table class="list">
@@ -85,13 +82,11 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 				</div>
 				<sec:authorize access="hasRole('ROLE_USER') and leastLevel(3)">
 				<div class="wrap-btn">
-					<a href="/space/${spaceIdx}/board/form" class="btn">쓰기</a>
+					<a style="cursor:pointer" id="insertBbs" class="btn">쓰기</a>
 				</div>
 				</sec:authorize>
 			</div>
 		</div>
-		
-
 	</div>
 </section>
 
@@ -99,7 +94,21 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 <script type="text/javascript" src="/resource/glider/space/spaceService.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
+	$("#insertBbs").bind("click", function(){
+		var url = "/space/${spaceIdx}/board/form";
+		var isGuest = "${loginUser.guest}";
+		var accessPermit = "${loginUser.weGrade}";
+		
+		if(isGuest == "true" || (accessPermit < 3)) {
+			GliderWiki.alert("에러","권한이 없습니다.");
+		} else {
+			$(location).attr('href', url);	
+		}
+	});
+	
+	$("#searchBbs").bind("click", function(){
+		GliderWiki.alert("안내","준비중입니다.");
+	});
 });
 
 </script>
