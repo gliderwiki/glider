@@ -762,4 +762,15 @@ public class StringUtil {
     public static String cutAndRemoveTag(String str, Integer len) {
     	return strCut(removeTag(str), len);
     }
+    
+    /**
+	 * 랜덤 키값 4자리 리턴 
+	 * @return
+	 */
+	public static String getRandomKey() {
+		String temp = String.valueOf(System.nanoTime());
+		String randomKey = temp.substring(temp.length() -8, temp.length()-4);
+		return randomKey;
+	}
+
 }

@@ -12,6 +12,7 @@ package org.gliderwiki.web.wiki.common.service;
 import java.util.List;
 
 import org.gliderwiki.web.domain.FavorityType;
+import org.gliderwiki.web.domain.WeBbsComment;
 import org.gliderwiki.web.domain.WeFile;
 import org.gliderwiki.web.domain.WeGroupInfo;
 import org.gliderwiki.web.domain.WeMenu;
@@ -251,5 +252,12 @@ public interface CommonService {
 	 * @throws Throwable
 	 */
 	public List<WikiVo> getWikiSearchList(String wiki_text) throws Throwable;
+
+
+	/**
+	 * @param weBbsCommentIdx
+	 * @return
+	 */
+	public WeBbsComment getWeBbsComment(String weBbsCommentIdx) throws Throwable;
 	
 }

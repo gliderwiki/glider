@@ -18,6 +18,8 @@
 			
 			me.$writeForm.on("submit", function(e) {
 				e.preventDefault();
+				var accessPermit = "${loginUser.weGrade}";
+				var isGuest = "${loginUser.guest}";
 				
 				var title = $("#we_bbs_title", me.$writeForm).val();
 				var text = $("#we_bbs_text", me.$writeForm).val();
@@ -25,6 +27,11 @@
 				var method = $("#_method", me.$writeForm);
 				var noSpam = $("#noSpam").val();
 				var randomKey = $("#randomKey").val();
+				
+				if(isGuest == "true" || (accessPermit < 3)) {
+					GliderWiki.alert("에러","권한이 없습니다. ");
+					return false;
+				}
 				
 				if(GliderWiki.Utils.isEmpty(title)) {
 					GliderWiki.alert("에러","제목을 입력하셔야 합니다.");

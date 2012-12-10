@@ -17,7 +17,9 @@ import javax.annotation.Resource;
 import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.GliderwikiException;
 import org.gliderwiki.web.domain.WeBbs;
+import org.gliderwiki.web.domain.WeBbsComment;
 import org.gliderwiki.web.space.dao.BoardDao;
+import org.gliderwiki.web.vo.MemberSessionVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -133,6 +135,23 @@ public class BoardService {
 		} catch (Throwable e) {
 			throw new GliderwikiException("게시판 게시물 수정 도중 에러발생!", e);
 		}
+	}
+
+	/**
+	 * @param boardIdx
+	 * @param loginUser
+	 * @return
+	 */
+	@Transactional(readOnly = false)
+	public int insertBbsComment(WeBbsComment domain) {
+		int result = 0;
+		try {
+			result = entityService.insertEntity(domain);
+		} catch (Throwable e) {
+			result = -1;
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

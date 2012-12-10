@@ -14,6 +14,7 @@ import java.util.Date;
 
 import org.gliderwiki.framework.orm.sql.annotation.Column;
 import org.gliderwiki.framework.orm.sql.annotation.Table;
+import org.gliderwiki.web.vo.BaseObjectBean;
 
 
 /**
@@ -22,7 +23,7 @@ import org.gliderwiki.framework.orm.sql.annotation.Table;
  *
  */
 @Table("WE_BBS_COMMENT")
-public class WeBbsComment implements Serializable {
+public class WeBbsComment extends BaseObjectBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "we_bbs_comment_idx", primaryKey = true, autoIncrement = true)
@@ -43,6 +44,14 @@ public class WeBbsComment implements Serializable {
 	@Column(name = "we_ins_date")
 	private Date we_ins_date;
 
+	
+	@Column(name = "we_ins_name")
+	private String we_ins_name;
+	
+	@Column(name = "we_use_yn")
+	private String we_use_yn;
+
+	
 	public WeBbsComment() {}
 
 	/**
@@ -127,5 +136,34 @@ public class WeBbsComment implements Serializable {
 	 */
 	public void setWe_ins_date(Date we_ins_date) {
 		this.we_ins_date = we_ins_date;
+	}
+	
+
+	/**
+	 * @return the we_ins_name
+	 */
+	public String getWe_ins_name() {
+		return we_ins_name;
+	}
+
+	/**
+	 * @param we_ins_name the we_ins_name to set
+	 */
+	public void setWe_ins_name(String we_ins_name) {
+		this.we_ins_name = we_ins_name;
+	}
+
+	/**
+	 * @return the we_use_yn
+	 */
+	public String getWe_use_yn() {
+		return we_use_yn;
+	}
+
+	/**
+	 * @param we_use_yn the we_use_yn to set
+	 */
+	public void setWe_use_yn(String we_use_yn) {
+		this.we_use_yn = we_use_yn;
 	}
 }

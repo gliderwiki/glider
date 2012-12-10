@@ -23,6 +23,7 @@ import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.web.domain.FavorityType;
 import org.gliderwiki.web.domain.WeAddFriend;
 import org.gliderwiki.web.domain.WeAlarmInfo;
+import org.gliderwiki.web.domain.WeBbsComment;
 import org.gliderwiki.web.domain.WeFavorite;
 import org.gliderwiki.web.domain.WeFile;
 import org.gliderwiki.web.domain.WeGroupInfo;
@@ -531,6 +532,15 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public List<WikiVo> getWikiSearchList(String wiki_text) throws Throwable {
 		return commonDao.getWikiSearchList(wiki_text);
+	}
+
+	@Override
+	public WeBbsComment getWeBbsComment(String weBbsCommentIdx) throws Throwable {
+		WeBbsComment domain = new WeBbsComment();
+		domain.setWe_bbs_comment_idx(Integer.parseInt(weBbsCommentIdx));
+		domain.setWe_use_yn("Y");
+		
+		return (WeBbsComment) entityService.getRowEntity(domain);
 	}
 
 }
