@@ -76,53 +76,35 @@ public class tagTest {
 		//System.out.println(str);
 	}
 	*/
+	public List<Object> h1TagList = new ArrayList<Object>();
+	
 	@Test
 	public void te(){
 		String str = "\r\n"+
 				 "[%]\r\n"+
-				 "[타이틀1,10],\r\n"+
-				 "[타이틀1,20],\r\n"+
-				 "[타이틀1,30],\r\n"+
-				 "pie[자동생성]\r\n"+
-				 "[%]\r\n"+
+				 "||hey|| ahae|| aa ||\r\n"+
+				 "|hi|hea|jye|\r\n"+
 				 "----hhhhi4\r\n"+
 				"다음[syntax]내용2[syntax][syntax]내용3[syntax]";
 		
-		String patternTxt = "(\\[%\\](.*?)\\[%\\])";
+		String patternTxt = "";
+		String[] tableStr = str.split("\r\n");
+		str = "";
 		
-		if( GliderTagPaserUtil.getMatchFind(str, patternTxt, Pattern.DOTALL) ){
-			String parsingTxt = GliderTagPaserUtil.getFirstReturnTag(str, patternTxt, "$2", Pattern.DOTALL);
-			System.out.print("parsingTxt :: "+parsingTxt);
+		Map<String, String> hTagMap = null;
+		for( int i=0; i<tableStr.length; i++ ){
+			
+			patternTxt = "(?<=\\|\\|)(.*?)(?=\\|\\|)";
+			if( GliderTagPaserUtil.getMatchFind(tableStr[i], patternTxt, Pattern.MULTILINE) ){
+				String imsi = GliderTagPaserUtil.replaceAllTag(tableStr[i], patternTxt, "tag  $2", Pattern.MULTILINE);
+				System.out.println("imsi :: "+imsi);
+			}
+			
 			
 			
 		}
-		/**
-		 * [%]
-['eee',12], 
-['aaa',11], 
-['vvv',22], 
-pie[4mCINJ0R] 
-[%]
-
-
-
-<div id='자동생성'></div>
-<div style="clear:left;height: 50px;"></div>
-
-<script type="text/javascript">
-function graph1(){
-var data1 = [ 
-
-[타이틀1,10],
-[타이틀1,20],
-[타이틀1,30],
-
- ];
-$("#자동생성").pieChart(data1,300,"pie");
-
-};
-		 */
-		//System.out.print(str);
+		
+		//System.out.println("str :: "+str);
 		
 	}
 }

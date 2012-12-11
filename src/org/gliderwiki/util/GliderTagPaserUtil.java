@@ -65,7 +65,72 @@ public class GliderTagPaserUtil {
 	}
 	
 	/**
-	 * 태그를 잘라내서 처리할때 사용하는 메소드
+	 * 패턴에 검색한 태그중 가장 첫번째 tag를 가져온다.
+	 * @param str
+	 * @param patternTxt
+	 * @return
+	 */
+	public static String getFirstTag(String str, String patternTxt){
+		
+		Pattern pattern = Pattern.compile(patternTxt);
+		Matcher match = pattern.matcher(str);
+		
+		if ( match.find() ) {
+			str = match.group();
+		}else{
+			str = null;
+		}
+		
+		return str;
+	}
+	
+	/**
+	 * 태그를 잘라내서 첫번째 변환된 내용만 발라내서 리턴한다.
+	 * @param str
+	 * @param patternTxt
+	 * @param replacement
+	 * @return
+	 */
+	public static String getFirstReturnTag(String str, String patternTxt, String replacement){
+		Pattern pattern = Pattern.compile(patternTxt);
+		Matcher match = pattern.matcher(str);
+		
+		if ( match.find() ) {
+			str = match.group();
+			match = pattern.matcher(str);
+			str = match.replaceFirst(replacement);
+		}else{
+			str = null;
+		}
+		
+		return str;
+	}
+	
+	/**
+	 * 태그를 잘라내서 첫번째 변환된 내용만 발라내서 리턴한다.( Pattern flags를 사용시..)
+	 * @param str
+	 * @param patternTxt
+	 * @param replacement
+	 * @param flags
+	 * @return
+	 */
+	public static String getFirstReturnTag(String str, String patternTxt, String replacement, int flags){
+		Pattern pattern = Pattern.compile(patternTxt, flags);
+		Matcher match = pattern.matcher(str);
+		
+		if ( match.find() ) {
+			str = match.group();
+			match = pattern.matcher(str);
+			str = match.replaceFirst(replacement);
+		}else{
+			str = "";
+		}
+		
+		return str;
+	}
+	
+	/**
+	 * 태그를 첫번째것만 잘라내서 처리할때 사용하는 메소드
 	 * @param str
 	 * @param patternTxt
 	 * @param replacement
@@ -81,7 +146,7 @@ public class GliderTagPaserUtil {
 	}
 	
 	/**
-	 * 태그를 잘라내서 처리할때 사용하는 메소드( Pattern flags를 사용시..)
+	 * 태그를 첫번째것만 잘라내서 처리할때 사용하는 메소드( Pattern flags를 사용시..)
 	 * @param str
 	 * @param patternTxt
 	 * @param replacement
@@ -96,50 +161,10 @@ public class GliderTagPaserUtil {
 		
 		return str;
 	}
+
 	
 	/**
-	 * 태그를 잘라내서 변환된 내용만 발라내서 리턴한다.
-	 * @param str
-	 * @param patternTxt
-	 * @param replacement
-	 * @return
-	 */
-	public static String getFirstReturnTag(String str, String patternTxt, String replacement){
-		Pattern pattern = Pattern.compile(patternTxt);
-		Matcher match = pattern.matcher(str);
-		
-		if ( match.find() ) {
-			str = match.group();
-			match = pattern.matcher(str);
-			str = match.replaceFirst(replacement);
-		}
-		
-		return str;
-	}
-	
-	/**
-	 * 태그를 잘라내서 변환된 내용만 발라내서 리턴한다.( Pattern flags를 사용시..)
-	 * @param str
-	 * @param patternTxt
-	 * @param replacement
-	 * @param flags
-	 * @return
-	 */
-	public static String getFirstReturnTag(String str, String patternTxt, String replacement, int flags){
-		Pattern pattern = Pattern.compile(patternTxt, flags);
-		Matcher match = pattern.matcher(str);
-		
-		if ( match.find() ) {
-			str = match.group();
-			match = pattern.matcher(str);
-			str = match.replaceFirst(replacement);
-		}
-		
-		return str;
-	}
-	
-	/**
-	 * 패턴에 검색한 태그를 변환Txt에 맞게 변환후 리턴한다.
+	 * 패턴에 검색한 태그를 모두를 변환Txt에 맞게 변환후 리턴한다.
 	 * @param str
 	 * @param patternTxt
 	 * @param replacement
@@ -152,7 +177,7 @@ public class GliderTagPaserUtil {
 	}
 	
 	/**
-	 * 패턴에 검색한 태그를 변환Txt에 맞게 변환후 리턴한다.( Pattern flags를 사용시..)
+	 * 패턴에 검색한 태그를 모두를 변환Txt에 맞게 변환후 리턴한다.( Pattern flags를 사용시..)
 	 * @param str
 	 * @param patternTxt
 	 * @param replacement
@@ -163,24 +188,6 @@ public class GliderTagPaserUtil {
 		Pattern pattern = Pattern.compile(patternTxt, flags);
 		Matcher match = pattern.matcher(str);
 		return match.replaceAll(replacement);
-	}
-	
-	/**
-	 * 패턴에 검색한 태그중 가장 첫번째 tag를 가져온다.
-	 * @param str
-	 * @param patternTxt
-	 * @return
-	 */
-	public static String getFirstTag(String str, String patternTxt){
-		
-		Pattern pattern = Pattern.compile(patternTxt);
-		Matcher match = pattern.matcher(str);
-		
-		if ( match.find() ) {
-			str = match.group();
-		}
-		
-		return str;
 	}
 	
 	/**

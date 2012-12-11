@@ -10,7 +10,10 @@
 package org.gliderwiki.util.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.gliderwiki.util.GliderTagPaserUtil;
 
@@ -21,6 +24,10 @@ import org.gliderwiki.util.GliderTagPaserUtil;
 public class GliderTagParserMethodSpecialTag {
 
 	public List<String> syntaxList = new ArrayList<String>();
+	// 그래프
+	public Integer graphCnt = 0;
+	// h1
+	public List<Object> h1TagList = new ArrayList<Object>();
 	
 	/**
 	 * 1. falg는 syntax의 처음호출인지 마지막 호출인지 파악. ( flag == true 처음, flag == false 마지막)
@@ -70,11 +77,89 @@ public class GliderTagParserMethodSpecialTag {
 	
 	public String getGRAPH(String str){
 
+		String patternTxt = "(\\[%\\](.*?)\\[%\\])";
+		
+		Integer graphCnt = 0; 
+		while( GliderTagPaserUtil.getMatchFind(str, patternTxt, Pattern.DOTALL) ){
+			graphCnt++;
+			
+			String parsingTxt = GliderTagPaserUtil.getFirstReturnTag(str, patternTxt, "$2", Pattern.DOTALL);
+			
+			String pie = GliderTagPaserUtil.getFirstReturnTag(parsingTxt, "^pie\\[(.*)\\]", "$1", Pattern.MULTILINE);
+			parsingTxt = GliderTagPaserUtil.replaceFirstTag(parsingTxt, "^pie\\[(.*)\\]", "", Pattern.MULTILINE);
+			
+			String bar = GliderTagPaserUtil.getFirstReturnTag(parsingTxt, "^bar\\[(.*)\\]", "$1", Pattern.MULTILINE);
+			parsingTxt = GliderTagPaserUtil.replaceFirstTag(parsingTxt, "^bar\\[(.*)\\]", "", Pattern.MULTILINE);
+
+			String graphHtml = "<div style=\"clear:left;height: 50px;\"></div>\n"
+				  				+ "<script type=\"text/javascript\">\n"
+				  				+ "function graph"+graphCnt+"(){\n"
+								+ "var data" +graphCnt+ " = [\n"
+								+ parsingTxt + "\n"
+								+ "]\n";
+			
+			if ( !"".equals(pie) ){
+				graphHtml = "<div id='"+pie+"'></div>\n"
+						+ graphHtml;
+				pie = "\\\\\\$(\"#"+pie+"\").pieChart(data" +graphCnt+ ",300,\"pie\"); \n";
+
+			}
+			if( !"".equals(bar) ){
+				graphHtml = "<div id='"+bar+"'></div>\n"
+						+ graphHtml;
+				bar = "\\\\\\$(\"#"+bar+"\").pieChart(data" +graphCnt+ ",300,\"bar\"); \n";
+				
+			}
+			graphHtml = graphHtml
+						+ pie
+						+ bar
+						+ ");\n";
+			
+			str = GliderTagPaserUtil.replaceFirstTag(str, patternTxt, graphHtml, Pattern.DOTALL);
+			
+		}
+		this.graphCnt = graphCnt;
+		
 		return str;
 	}
 	
 	public String getH1(String str){
-
+		
+		String patternTxt = "";
+		String[] htagStr = str.split("\r\n");
+		str = "";
+		
+		Map<String, String> hTagMap = null;
+		for( int i=0; i<htagStr.length; i++ ){
+			hTagMap = new HashMap<String, String>();
+			
+			patternTxt = "(h1\\.(\\s{0,}))(.*)?";
+			if( GliderTagPaserUtil.getMatchFind(htagStr[i], patternTxt) ){
+				hTagMap.put("tag", "h1" );
+				hTagMap.put("tagVal", GliderTagPaserUtil.getFirstReturnTag(htagStr[i], patternTxt, "$3") );
+				htagStr[i] = GliderTagPaserUtil.replaceFirstTag(htagStr[i], patternTxt, "<h2><a id=\"$3\" name=\"$3\">$3</a></h2>");
+			}
+			
+			patternTxt = "(h2\\.(\\s{0,}))(.*)?";
+			if( GliderTagPaserUtil.getMatchFind(htagStr[i], patternTxt) ){
+				hTagMap.put("tag", "h2" );
+				hTagMap.put("tagVal", GliderTagPaserUtil.getFirstReturnTag(htagStr[i], patternTxt, "$3") );
+				htagStr[i] = GliderTagPaserUtil.replaceFirstTag(htagStr[i], patternTxt, "<h3><a id=\"$3\" name=\"$3\">$3</a></h3>");
+			}
+			
+			patternTxt = "(h3\\.(\\s{0,}))(.*)?";
+			if( GliderTagPaserUtil.getMatchFind(htagStr[i], patternTxt) ){
+				hTagMap.put("tag", "h3" );
+				hTagMap.put("tagVal", GliderTagPaserUtil.getFirstReturnTag(htagStr[i], patternTxt, "$3") );
+				htagStr[i] = GliderTagPaserUtil.replaceFirstTag(htagStr[i], patternTxt, "<h4><a id=\"$3\" name=\"$3\">$3</a></h4>");
+			}
+			
+			str += htagStr[i]+"\r\n";
+			if( !hTagMap.isEmpty() ){
+				h1TagList.add(hTagMap);
+			}
+		}
+		
 		return str;
 	}
 	
