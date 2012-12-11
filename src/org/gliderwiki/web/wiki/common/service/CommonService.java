@@ -21,6 +21,7 @@ import org.gliderwiki.web.domain.WeSpace;
 import org.gliderwiki.web.domain.WeTemplate;
 import org.gliderwiki.web.domain.WeUser;
 import org.gliderwiki.web.domain.WeWiki;
+import org.gliderwiki.web.domain.WeWikiComment;
 import org.gliderwiki.web.domain.WeWikiFile;
 import org.gliderwiki.web.domain.WeWikiGraph;
 import org.gliderwiki.web.domain.WeWikiLink;
@@ -259,5 +260,12 @@ public interface CommonService {
 	 * @return
 	 */
 	public WeBbsComment getWeBbsComment(String weBbsCommentIdx) throws Throwable;
+
+
+	/**
+	 * @param weWikiCommentIdx
+	 * @return
+	 */
+	public WeWikiComment getWeWikiComment(String weWikiCommentIdx) throws Throwable;
 	
 }

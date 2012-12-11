@@ -34,6 +34,7 @@ import org.gliderwiki.web.domain.WeTemplate;
 import org.gliderwiki.web.domain.WeUser;
 import org.gliderwiki.web.domain.WeUserAlarm;
 import org.gliderwiki.web.domain.WeWiki;
+import org.gliderwiki.web.domain.WeWikiComment;
 import org.gliderwiki.web.domain.WeWikiFile;
 import org.gliderwiki.web.domain.WeWikiGraph;
 import org.gliderwiki.web.domain.WeWikiLink;
@@ -541,6 +542,16 @@ public class CommonServiceImpl implements CommonService {
 		domain.setWe_use_yn("Y");
 		
 		return (WeBbsComment) entityService.getRowEntity(domain);
+	}
+
+
+	@Override
+	public WeWikiComment getWeWikiComment(String weWikiCommentIdx) throws Throwable {
+		WeWikiComment domain = new WeWikiComment();
+		domain.setWe_wiki_comment_idx(Integer.parseInt(weWikiCommentIdx));
+		domain.setWe_use_yn("Y");
+		
+		return (WeWikiComment) entityService.getRowEntity(domain);
 	}
 
 }

@@ -17,6 +17,7 @@ import org.gliderwiki.web.domain.WeSpace;
 import org.gliderwiki.web.domain.WeTemplate;
 import org.gliderwiki.web.domain.WeWiki;
 import org.gliderwiki.web.domain.WeWikiBak;
+import org.gliderwiki.web.domain.WeWikiComment;
 import org.gliderwiki.web.vo.MemberSessionVo;
 
 
@@ -116,5 +117,11 @@ public interface WikiService {
 
 
 	int addFavorite(int loginUserIdx, int spaceIdx, int wikiIdx);
+
+	/**
+	 * @param domain
+	 * @return
+	 */
+	int insertWikiComment(WeWikiComment domain);
 
 }

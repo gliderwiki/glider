@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import net.sf.json.JSONArray;
 
@@ -25,12 +26,15 @@ import org.apache.commons.lang.StringUtils;
 import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.DBHandleException;
 import org.gliderwiki.framework.exception.FilePermitMsgException;
+import org.gliderwiki.framework.exception.GliderwikiException;
 import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
 import org.gliderwiki.framework.util.GliderFileUtils;
 import org.gliderwiki.framework.util.StringUtil;
+import org.gliderwiki.util.RequestManager;
 import org.gliderwiki.util.WikiProdectStatus;
 import org.gliderwiki.web.common.DownLoadAction;
+import org.gliderwiki.web.domain.WeBbsComment;
 import org.gliderwiki.web.domain.WeFile;
 import org.gliderwiki.web.domain.WePoint;
 import org.gliderwiki.web.domain.WeProfile;
@@ -38,6 +42,7 @@ import org.gliderwiki.web.domain.WeSpace;
 import org.gliderwiki.web.domain.WeTemplate;
 import org.gliderwiki.web.domain.WeUser;
 import org.gliderwiki.web.domain.WeWiki;
+import org.gliderwiki.web.domain.WeWikiComment;
 import org.gliderwiki.web.domain.WeWikiFile;
 import org.gliderwiki.web.domain.WeWikiGraph;
 import org.gliderwiki.web.domain.WeWikiLink;
@@ -96,6 +101,9 @@ public class WikiController {
 
 	@Value("#{config['file.maxSize']}")
 	String uploadMaxSize;
+	
+	@Autowired
+	private RequestManager requestManager;
 
 	/**
 	 * 위키 신규 페이지를 생성한다.
@@ -289,8 +297,22 @@ public class WikiController {
 		} else {
 			htmlContent = htmlTagRemove;
 		}
+		
+		// 댓글 프로세스 
+		String randomKey = StringUtil.getRandomKey();
 				
-
+		WeWikiComment comment = new WeWikiComment();
+		comment.setWe_wiki_idx(weWikiIdx);
+		comment.setWe_use_yn("Y");
+		
+		List commentList = null;
+		
+		try {
+			commentList = (List) entityService.getListEntity(comment);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		
 		// TODO 조회 사용자 insert 해야 함
 
 		model.addAttribute("weWiki", weWiki);
@@ -305,6 +327,9 @@ public class WikiController {
 		model.addAttribute("protectStatus", protectStatus);
 		model.addAttribute("title", weWiki.getWe_wiki_title());
 		model.addAttribute("htmlContent", htmlContent);
+		model.addAttribute("WeWikiComment", comment);
+		model.addAttribute("randomKey", randomKey);		// 인증키 생성
+		model.addAttribute("commentList", commentList);
 
 		if (StringUtils.equals("ok", pdfView)) {
 			return "wiki/pdf/show";
@@ -1107,6 +1132,166 @@ public class WikiController {
 		fileUtils.htmlToPdfExport(request, response, wikiIdx);
 	}
 
+	/**
+	 * 댓글 저장 
+	 * @param request
+	 * @param wikiIdx
+	 * @param loginUser
+	 * @param weWikiComment
+	 * @return
+	 */
+	@RequestMapping(value = "/{wikiIdx}/insertComment", method = RequestMethod.POST)
+	public String insertComment(HttpServletRequest request, @PathVariable("wikiIdx") Integer wikiIdx, 
+			@LoginUser MemberSessionVo loginUser, @Valid WeWikiComment weWikiComment) {
+		
+		String noSpam = StringUtil.strNull(request.getParameter("noSpam"));
+		String randomKey = StringUtil.strNull(request.getParameter("randomKey"));
+		
+		if(!noSpam.equals(randomKey)) {
+			throw new GliderwikiException("인증값이 올바르지 않습니다");
+		}
+		
+		
+		WeWikiComment domain = new WeWikiComment();
+		domain.setWe_wiki_idx(wikiIdx);
+		domain.setWe_ins_date(new Date());
+		domain.setWe_ins_user(loginUser.getWeUserIdx());
+		domain.setWe_user_ip(requestManager.getRemoteAddress(request));
+		domain.setWe_bbs_text(weWikiComment.getWe_bbs_text());
+		domain.setWe_ins_name(weWikiComment.getWe_ins_name());
+		domain.setWe_use_yn("Y");
+		
+		logger.debug("### domain : " + domain.toString());
+		
+		int result = wikiService.insertWikiComment(domain);
+		
+		if(result == 1) {
+			return "redirect:/wiki/"+wikiIdx;
+		} else {
+			throw new GliderwikiException("댓글 저장시 에러발생!");
+		}
+	}
+	
+	/**
+	 * 댓글 수정 
+	 * @param wikiIdx
+	 * @param request
+	 * @param response
+	 * @param modelAndView
+	 * @return
+	 * @throws Throwable
+	 */
+	@RequestMapping(value = "/{wikiIdx}/updateComment", method = RequestMethod.POST)
+	public ModelAndView updateComment(@PathVariable("wikiIdx") Integer wikiIdx, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+		logger.debug("##updateComment");
+		String weWikiCommentIdx = request.getParameter("weWikiCommentIdx");
+		String weBbsText = request.getParameter("weBbsText");
+		
+		WeWikiComment domain = new WeWikiComment();
+		domain = commonService.getWeWikiComment(weWikiCommentIdx);
+		
+		domain.setWe_ins_date(new Date());
+		domain.setWe_wiki_idx(wikiIdx);
+		domain.setWe_bbs_text(weBbsText);
+		
+		int result = entityService.updateEntity(domain);
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		if(result == 1) {
+			param.put("result", "SUCCESS");
+			param.put("status", SystemConst.CALL_SUCCESS);
+		} else {
+			param.put("result", "FAIL");
+			param.put("status", SystemConst.CALL_FAIL);
+		}	
+		
+		return new ModelAndView("json_").addObject("param", param);
+	}
+	
+	/**
+	 * 댓글 삭제 
+	 * @param wikiIdx
+	 * @param loginUser
+	 * @param request
+	 * @param response
+	 * @param modelAndView
+	 * @return
+	 * @throws Throwable
+	 */
+	@RequestMapping(value = "/{wikiIdx}/deleteComment", method = RequestMethod.POST)
+	public ModelAndView deleteComment(@PathVariable("wikiIdx") Integer wikiIdx, @LoginUser MemberSessionVo loginUser,  
+			HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+		logger.debug("##deleteComment");
+		String weWikiCommentIdx = request.getParameter("weWikiCommentIdx");
+		String weUserIdx = request.getParameter("weUserIdx");
+		
+		WeWikiComment domain = new WeWikiComment();
+		domain = commonService.getWeWikiComment(weWikiCommentIdx);
+		
+		int result = 0;
+		Map<String, Object> param = new HashMap<String, Object>();
+		if(domain.getWe_ins_user() == Integer.parseInt(weUserIdx) || loginUser.getWeGrade() == 9) {
+			domain.setWe_use_yn("N");
+			domain.setWe_ins_user(loginUser.getWeUserIdx());
+			domain.setWe_ins_date(new Date());
+			
+			result = entityService.updateEntity(domain);
+			
+			if(result == 1) {
+				param.put("result", "SUCCESS");
+				param.put("status", SystemConst.CALL_SUCCESS);
+			} else {
+				param.put("result", "FAIL");
+				param.put("status", SystemConst.CALL_FAIL);
+			}	
+		}
+		
+		return new ModelAndView("json_").addObject("param", param);
+	}
+	
+	
+	@RequestMapping(value = "/{wikiIdx}/getComment", method = RequestMethod.GET)
+	public ModelAndView getComment(@PathVariable("wikiIdx") Integer wikiIdx, @LoginUser MemberSessionVo loginUser, HttpServletRequest request, 
+			HttpServletResponse response, ModelAndView modelAndView) {
+		String weWikiCommentIdx = StringUtil.strNull(request.getParameter("weWikiCommentIdx"));
+		String weUserIdx = StringUtil.strNull(request.getParameter("weUserIdx"));		
+
+		if(loginUser.isGuest()) {
+			throw new GliderwikiException("로그인 정보가 올바르지 않습니다");
+		}
+		
+		// 보안문자열 값 
+		// String randomKey = StringUtil.getRandomKey();
+		
+		Map<String, String> param = new HashMap<String, String>();
+		
+		WeWikiComment domain = new WeWikiComment();
+		domain.setWe_wiki_comment_idx(Integer.parseInt(weWikiCommentIdx));
+		domain.setWe_ins_user(Integer.parseInt(weUserIdx));
+		domain.setWe_wiki_idx(wikiIdx);
+		domain.setWe_use_yn("Y");
+		WeWikiComment bbsComment = null;
+		
+		try {
+			bbsComment = (WeWikiComment) entityService.getRowEntity(domain);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		
+		if(bbsComment != null) {
+			param.put("contents", bbsComment.getWe_bbs_text());
+			param.put("result", "1");
+			//param.put("randomKey", randomKey);
+		} else {
+			param.put("contents", "");
+			param.put("result", "-1");
+			throw new GliderwikiException("정보가 올바르지 않습니다");
+		}
+		
+		return new ModelAndView("json_").addObject("param", param);
+	}
+	
+	
 	/**
 	 * 위키 파일 다운로드
 	 *
