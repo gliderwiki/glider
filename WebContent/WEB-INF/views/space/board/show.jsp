@@ -5,12 +5,6 @@ pageContext.setAttribute("crlf", "\r\n");
 pageContext.setAttribute("lf", "\n");
 pageContext.setAttribute("cr", "\r");
 </jsp:scriptlet>
-
-
-<html>
-<head>
-</head>
-<body>
 <section class="contents " role="main">
 	<div class="wrap-cont">
 		<h2 class="tit-cont">게시판 글보기</h2>
@@ -278,5 +272,3 @@ function checkValid(isGuest, text, noSpam, randomKey) {
 
 </script>
 </js:scripts>
-</body>
-</html>

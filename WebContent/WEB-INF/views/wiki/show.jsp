@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/views/common/include/tags.jspf" %>
-
+<jsp:scriptlet>
+pageContext.setAttribute("crlf", "\r\n");
+pageContext.setAttribute("lf", "\n");
+pageContext.setAttribute("cr", "\r");
+</jsp:scriptlet>
 <link href="/resource/glider/code/css/shCore.css" rel="stylesheet" type="text/css" />
 <link href="/resource/glider/code/css/shThemeDefault.css" rel="stylesheet" type="text/css" />
 
@@ -143,10 +147,10 @@
 						</table>
 					</div>
 				</div>
-
-			</article>
+				
+			</article>			
 		</div>
-
+		
 		<div class="foot-cont">
 			<a href="/wiki/new/${weWiki.we_space_idx}/${weWiki.we_wiki_idx}" class="btn">자식위키 생성</a>
 			<c:choose>
@@ -158,15 +162,79 @@
 				</c:otherwise>
 			</c:choose>
 			
-			
 			<c:if test="${weGrade eq 3 || weGrade eq 8 || weGrade eq 9 }">
 				<a href="javascript:dellWiki();" class="btn">삭제하기</a>
 				<a href="javascript:updateWikiProdect();" class="btn">위키잠금</a>
 			</c:if>
 			<a href="/space/main/${weWiki.we_space_idx}" class="btn">공간메인목록</a>
-		</div>
+		</div>	
 
-	</div>
+		<div class="body-cont board" style="margin-top:25px;border-top:1px solid #D8D8D8">
+			<div class="view-board">
+			
+				<div class="form-cmt" id="_comment">
+					<form:form modelAttribute="WeWikiComment" name="WeWikiComment" id="WeWikiComment" method="POST" action="/wiki/${weWiki.we_wiki_idx}/insertComment">
+					<input type="hidden" name="weWikiCommentIdx" id="weWikiCommentIdx" />
+					<input type="hidden" name="weWikiIdx" id="weWikiIdx" />
+						<table>
+							<colgroup>
+								<col style="width:15%;" />
+								<col style="width:35%;" />
+								<col style="width:15%;" />
+								<col style="width:35%;" />
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row">작성자</th>
+									<td colspan="3">
+										<input type="text" name="userNick" value="${loginUser.weUserNick}" disabled />
+										<form:hidden path="we_ins_name" class="title" value="${loginUser.weUserNick}"/>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">보안문자</th>
+									<td>
+										<input type="text" name="noSpam" id="noSpam" />
+										<input type="hidden" name="randomKey" id="randomKey" value="${randomKey}"/>
+									</td>
+									<th scope="row" colspan="2">스팸 방지 보안문자 [<b>${randomKey}</b>]</th>
+								</tr>
+								<tr class="content">
+									<th scope="row">내용</th>
+									<td colspan="3">
+										<form:textarea path="we_bbs_text" id="we_bbs_text" value="" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="4" align="center" id="commentStatus"><button type="button" id="commentInsert" class="btn">댓글저장</button></th>
+								</tr>
+							</tbody>
+						</table>
+					</form:form>
+				</div>
+				<ul class="list-cmt">
+					<c:forEach var="commentList" items="${commentList}" varStatus="row">
+					<li>
+						<div class="head">
+							<strong>
+								<a href="#">${commentList.we_ins_name} </a>
+							</strong>
+							<span class="time">${gf:articleDate(commentList.we_ins_date,'yyyy.MM.dd HH:mm:ss')}</span>
+							<div class="util">
+								<a href="javascript:callModify('${commentList.we_wiki_comment_idx}', '${commentList.we_wiki_idx}', '${commentList.we_ins_user}');" class="btn-edit" title="수정">수정</a>
+								<a href="javascript:callDelete('${commentList.we_wiki_comment_idx}', '${commentList.we_wiki_idx}', '${commentList.we_ins_user}');" class="btn-del" title="삭제">삭제</a>
+							</div>
+						</div>
+						<div class="content">
+							${fn:replace(commentList.we_bbs_text, lf, "<br/>")}
+						</div>
+					</li>
+					</c:forEach>
+				</ul>
+			</div>
+		</div>
+	</div>		
+			
 </section>
 
 <iframe name="fileDownload" width="0" height="0" frameborder="0"  style="display:hidden"></iframe>
@@ -212,6 +280,7 @@
 		$("#hiddenContents").click(function() {
 			$("#contentsLayer").hide();
 		});
+		
 		<c:if test="${!empty wikiGraph }">
 			<c:forEach begin="1" end="${wikiGraph.we_graph_cnt }" var="i">
 			graph${i }();
@@ -236,6 +305,49 @@
 				}
 			);
 		});
+		
+		// 댓글 저장 		
+		$("#commentInsert").bind("click", function(e){
+			e.preventDefault();
+			
+		
+			var isGuest = "${loginUser.guest}";
+			var noSpam = $("#noSpam").val();
+			var randomKey = $("#randomKey").val();
+			var text = $("#we_bbs_text").val();
+			
+			console.log("#isGuest : " + isGuest);
+			
+			if(checkValid(isGuest, text, noSpam, randomKey)) {
+				$("#WeWikiComment").submit();	
+			}
+			
+		});
+		
+		// 댓글 수정 
+		$("#commentUpdate").live("click", function(){
+			console.log("update");
+			var isGuest = "${loginUser.guest}";
+			var noSpam = $("#noSpam").val();
+			var randomKey = $("#randomKey").val();
+			var text = $("#we_bbs_text").val();
+			var weWikiCommentIdx = $("#weWikiCommentIdx").val();
+			var weWikiIdx = $("#weWikiIdx").val();
+			
+			if(checkValid(isGuest, text, noSpam, randomKey)) {
+				GliderWiki.confirm('확인 ', '해당글을 수정하겠습니까?',  function() {
+					$.post("/wiki/"+weWikiIdx+"/updateComment", {weWikiCommentIdx:weWikiCommentIdx,weBbsText:text}, function(data){
+						console.log("data : " + data);
+						if(data.result == 'SUCCESS'){
+							$(location).attr('href', "/wiki/"+weWikiIdx);	
+						} else {
+							GliderWiki.alert("에러","에러가 발생 하였습니다. 다시 시도 하세요.");
+						}
+					});	
+				});
+			}
+		});
+		
 	});
 
 	 <%-- 01. 공감추가 --%>
@@ -404,6 +516,92 @@
 		}
 		
 	}
+	
+	/**
+	 * 댓글 수정 
+	 */
+	function callModify(weWikiCommentIdx, weWikiIdx, userIdx){
+		console.log("#commentIdx : " + weWikiCommentIdx);
+		location.href = "#_comment";
+		var weUserIdx = '${loginUser.weUserIdx}';
+		var isGuest = "${loginUser.guest}";
+		
+		if(weUserIdx != userIdx || isGuest == "true") {
+			GliderWiki.alert("에러","수정 권한이 없습니다.");
+			return;
+		}
+		
+		$.ajax({
+			type:"GET"
+			,url:"/wiki/"+weWikiIdx+"/getComment"
+			,data:{"weWikiCommentIdx":weWikiCommentIdx,"weUserIdx":weUserIdx,"weWikiIdx":weWikiIdx}
+			,dataType:"json"
+			,success:function(rtnObj){
+				if(rtnObj.result == 1) {
+					$("#we_bbs_text").val(rtnObj.contents);	
+					$("#commentStatus").html("<button type=\"button\" id=\"commentUpdate\" class=\"btn\">댓글수정</button>");
+					$("#weWikiCommentIdx").val(weWikiCommentIdx);
+					$("#weWikiIdx").val(weWikiIdx);
+				} else {
+					GliderWiki.alert("에러","잘못된 접근입니다");
+					return;
+				}
+				
+			}
+		});
+	}
+
+	/**
+	 * 댓글 삭제 
+	 */
+	function callDelete(weWikiCommentIdx, weWikiIdx, userIdx){
+		var weUserIdx = '${loginUser.weUserIdx}';
+		var weGrade = "${loginUser.weGrade}";
+		var weUserIdx = '${loginUser.weUserIdx}';
+
+		if(userIdx == weUserIdx || weGrade == '9') {
+			GliderWiki.confirm('확인 ', '해당글을 삭제 하겠습니까?',  function() {
+				$.post("/wiki/"+weWikiIdx+"/deleteComment", {weWikiCommentIdx:weWikiCommentIdx,weUserIdx:weUserIdx}, function(data){
+					console.log("data : " + data);
+					if(data.result == 'SUCCESS'){
+						$(location).attr('href', "/wiki/"+weWikiIdx);	
+					} else {
+						GliderWiki.alert("에러","에러가 발생 하였습니다. 다시 시도 하세요.");
+					}
+				});	
+			});
+		} else {
+			GliderWiki.alert("에러","수정 권한이 없습니다.");
+			return;
+		}
+	}
+
+	
+	
+	/**
+	 * 댓글 체크 
+	 */
+	function checkValid(isGuest, text, noSpam, randomKey) {
+
+		if(isGuest == "true") {
+			GliderWiki.alert("에러","권한이 없습니다.로그인 후 이용하세요.");
+			return false;
+		}
+		
+		if(GliderWiki.Utils.isEmpty(text)) {
+			GliderWiki.alert("에러","내용을  입력하셔야 합니다.");
+			return false;
+		}
+		
+		if(GliderWiki.Utils.isEmpty(noSpam) || noSpam != randomKey) {
+			GliderWiki.alert("에러","보안 문자가 올바르지 않습니다.");
+			return false;
+		}
+		
+		return true;
+	}
+
+
 //]]>
 </script>
 </js:scripts>
