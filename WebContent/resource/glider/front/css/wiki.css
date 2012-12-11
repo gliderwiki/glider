@@ -14,7 +14,7 @@
 
 .wiki .viewer ol { margin: 0; padding: 5px 0; list-style-position: inside; }
 
-.wiki .viewer ol li { padding-left: 20px; style-type: decimal; }
+.wiki .viewer ol li.lv1 { padding-left: 20px; style-type: decimal; }
 
 .wiki .viewer ol li.lv2 { padding-left: 40px; list-style-type: lower-alpha;  }
 
@@ -22,7 +22,7 @@
 
 .wiki .viewer ul { margin: 0; padding: 10px 0; list-style-position: inside; }
 
-.wiki .viewer ul li { padding-left: 20px; }
+.wiki .viewer ul li.lv1 { padding-left: 20px; }
 
 .wiki .viewer ul li.lv2 { padding-left: 40px; }
 

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.gliderwiki.util.GliderTagParser;
+import org.gliderwiki.util.GliderTagPaserUtil;
 
 
 /**
@@ -237,3 +238,72 @@ public class paserTest {
 				//"__차트__ **//만들었어요//**\n";
 
 }
+
+/**
+
+//"[^#]";
+		String patternMainTxt = "#";
+		System.out.println("str  ::  "+str);
+		
+		// wiki 내용을 한줄씩 잘라서 배열에 담는다.
+		String[] strLine = str.split("\r\n");
+		String patternTxt = null;
+		// patternMainTxt 값에 따른 tag 값을 설정한다.
+		String tag = null;
+		str = "";
+		
+		if( "-".equals(patternMainTxt.trim()) ){
+			tag = "ol";
+		}else{
+			tag = "ul";
+		}
+		
+		
+		String patternTag = null;
+		int lineCnt = 0;
+		for( int lvl=3; lvl>0; lvl-- ){
+			patternTag = "";
+			// 검색할 태그를 만든다.
+			for( int b=0; b<=lvl; b++ ){
+				patternTag += patternMainTxt;
+			}
+			
+			for( int i=0; i<strLine.length; i++ ){
+
+				patternTxt = "(^"+patternTag+")([^"+patternMainTxt+"].*)";
+				if( GliderTagPaserUtil.getMatchFind(strLine[i], patternTxt) ){
+					lineCnt++;
+					// lineCnt 가 "1" 이라는 의미는 line 태그 처음변환된다는 의미.
+					// lineCnt가 1아니면 tag값이 연속적이라는 의미
+					if( lineCnt == 1 ){
+						strLine[i] = GliderTagPaserUtil.getFirstReturnTag(strLine[i], patternTxt, "<"+tag+">\n<li class=\"lv"+lvl+"\">$2</li>\n");
+					}else{
+						strLine[i] = GliderTagPaserUtil.getFirstReturnTag(strLine[i], patternTxt, "<li class=\"lv"+lvl+"\">$2</li>\n");
+					}
+				}else{
+					// match를 통해 찾지 못했으며, lineCnt 값이 0 보다 크면 line태그는 종료이다. 
+					if( lineCnt > 0 ){
+						strLine[i-1] = strLine[i-1]+"</"+tag+">\n";
+						strLine[i] = strLine[i];
+						lineCnt = 0;
+					}else{
+						// 최초의 for문을 돌때에만 \r\n을 붙인다.
+						if( lvl == 3){
+							strLine[i] = strLine[i]+"\r\n";	
+						}else{
+							strLine[i] = strLine[i];	
+						}
+						
+					}
+				}
+			}
+		}
+
+		for( int i=0; i<strLine.length; i++ ){
+			str += strLine[i];
+		}
+		
+		System.out.print(str);
+		
+		**/
+
