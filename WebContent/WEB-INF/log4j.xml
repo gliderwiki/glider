@@ -51,7 +51,7 @@
 	</logger>
 
 	<logger name="org.gliderwiki">
-		<level value="debug" />
+		<level value="info" />
 		<appender-ref ref="ASYNC" />
 	</logger>
 	
@@ -62,7 +62,7 @@
 	
 	<!-- Root Log Level -->
 	<root>
-		<priority value="debug" />
+		<priority value="info" />
 		<appender-ref ref="console" />
 	</root>
 
