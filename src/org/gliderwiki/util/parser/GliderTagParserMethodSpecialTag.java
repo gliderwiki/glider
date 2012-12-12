@@ -246,4 +246,11 @@ public class GliderTagParserMethodSpecialTag {
 		
 		return str;
 	}
+	
+	
+	private String tablePaser(String str, String patternTxt, String tableTag, String tablePasring){
+		
+		
+		return str;
+	}
 }
