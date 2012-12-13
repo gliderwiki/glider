@@ -31,6 +31,7 @@ import org.gliderwiki.web.domain.WeSpace;
 import org.gliderwiki.web.domain.WeTemplate;
 import org.gliderwiki.web.domain.WeWiki;
 import org.gliderwiki.web.domain.WeWikiBak;
+import org.gliderwiki.web.domain.WeWikiComment;
 import org.gliderwiki.web.domain.WeWikiFile;
 import org.gliderwiki.web.domain.WeWikiGraph;
 import org.gliderwiki.web.domain.WeWikiLink;
@@ -941,5 +942,17 @@ public class WikiServiceImpl implements WikiService {
 		} catch (Throwable e) {
 			throw new GliderwikiException(e);
 		}
+	}
+
+	@Override
+	public int insertWikiComment(WeWikiComment domain) {
+		int result = 0;
+		try {
+			result = entityService.insertEntity(domain);
+		} catch (Throwable e) {
+			result = -1;
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
