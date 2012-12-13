@@ -120,7 +120,7 @@ public class WikiServiceImpl implements WikiService {
 
 			Map<String, Object> resultMap = null;
 			try {
-				resultMap = gtp.parserMap(weWiki.getWe_wiki_text());
+				resultMap = gtp.getHtml(weWiki.getWe_wiki_text());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -651,7 +651,7 @@ public class WikiServiceImpl implements WikiService {
 
 			Map<String, Object> resultMap = null;
 			try {
-				resultMap = gtp.parserMap(weWiki.getWe_wiki_text());
+				resultMap = gtp.getHtml(weWiki.getWe_wiki_text());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

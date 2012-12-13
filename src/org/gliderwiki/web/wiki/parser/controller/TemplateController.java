@@ -136,7 +136,7 @@ public class TemplateController {
 
 		Map<String, Object> resultMap = null;
 		try {
-			resultMap = gtp.parserMap(wikiForm.getWe_wiki_text());
+			resultMap = gtp.getHtml(wikiForm.getWe_wiki_text());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	

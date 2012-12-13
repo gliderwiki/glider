@@ -54,7 +54,7 @@ public class WikiTagController {
 
 		Map<String, Object> resultMap = null;
 		try {
-			resultMap = gtp.parserMap(tagHtml);
+			resultMap = gtp.getHtml(tagHtml);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
