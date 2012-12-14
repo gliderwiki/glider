@@ -453,9 +453,9 @@ body { background-color: #f5f5f5; }
 
 
 /* loading */
-.groupWrap {position:fixed; top:0; left:0; width:100%; height:100%; font-size: 12px}
+.groupWrap {position:fixed; top:0; left:0; width:100%; height:100%; font-size: 12px;z-index: 10000;}
 .loadingBg{position:absolute; top:0; left:0; width:100%; height:100%; background:#000; opacity:.5; filter:alpha(opacity=50);  z-index:6500; }
-#groupDiv{position:absolute; top:24%; left:27%; width:580px; height:auto; margin:-12px 0 0 -12px; background:none; z-index:6500;border:5px solid #157EB7 }
+#groupDiv{position:absolute; width:580px; height:auto; margin:-12px 0 0 -12px; background:none; z-index:6500;border:5px solid #157EB7 }
 
 /* loading */
 .loadingWrap, .profileWrap, .previewWrap{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index:10000 }

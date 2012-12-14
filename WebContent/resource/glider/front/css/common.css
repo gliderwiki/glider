@@ -517,10 +517,10 @@ body { background-color: #f5f5f5; }
 .loadingWrap, .profileWrap, .searchWrap, .mediaWrap, .previewWrap { position: fixed; top: 0; left: 0; width: 100%; height: 100%;  z-index: 10000;}
 .loadingBg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; opacity: .5; filter: alpha(opacity=50); z-index: 6500; }
 #loading { position: absolute; top: 50%; left: 50%; width: 32px; height: auto; margin: -32px 0 0 -32px; background: none; z-index: 6500; }
-#load_prof { position: absolute; top: 27%; left: 30%; width: 500px; height: auto; margin: -12px 0 0 -12px; background: none; z-index: 6500; }
-#load_search { position: absolute; top: 30%; left: 30%; width: 500px; height: auto; margin: -12px 0 0 -12px; background: none; z-index: 6500; }
+#load_prof { position: absolute; width: 500px; height: auto; margin: -12px 0 0 -12px; background: none; z-index: 6500; }
+#load_search { position: absolute; width: 500px; height: auto; margin: -12px 0 0 -12px; background: none; z-index: 6500; }
 #load_media { position: absolute; top: 20%; left: 30%; width: 500px; height: auto; margin: -12px 0 0 -12px; background: none; z-index: 6500; }
 #load_image { position: absolute; top: 12%; left: 27%; width: 500px; height: auto; margin: -12px 0 0 -12px; background: none; z-index: 6500; }
 #load_editor_chart { position: absolute; top: 20%; left: 20%; width: 500px; height: auto; margin: -12px 0 0 -12px; background: none; z-index: 6500; }
-#load_preview { position: absolute; top: 12%; left: 20%;  margin: -12px 0 0 -12px; background: none; z-index: 6500; }
+#load_preview { position: absolute;  margin: -12px 0 0 -12px; background: none; z-index: 6500; }
 

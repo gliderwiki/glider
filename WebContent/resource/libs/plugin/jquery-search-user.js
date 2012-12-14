@@ -75,6 +75,7 @@
 		].join('');
 
 		$('body').before(resourceHtml);
+		wrapWindowMask();
 	};
 
 	$.search_user.hide = function(){
@@ -195,6 +196,14 @@
 		}
 	}
 
-
+	function wrapWindowMask(){		
+		var POSLEFT = ( ($(window).width() - $("#searchUserInfo").width()) / 2 );
+		var POSTOP = ( ($(window).height() - $("#searchUserInfo").height()) / 2 );
+		
+		//Set the popup window to center         
+		$("#searchUserInfo").css('top',  POSTOP);         
+		$("#searchUserInfo").css('left', POSLEFT);		
+	}
+	
 })(jQuery);
 
