@@ -1,32 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/views/common/include/tags.jspf" %><%@
 taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-	<title>::Enterprise OpenSource Wiki – GLiDER™ </title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-	<meta http-equiv="Expires" content="0"/>
-	<meta http-equiv="Pragma" content="no-cache"/>
-	<meta name="Subject" content="GLiDER, OpenSource Wiki, OpenSource KMS, 한국형 오픈소스 위키, 협업툴, 지식정보공유툴 ">
-	<meta name="Title" content="OpenSource Wiki GLiDER, 한국형 오픈소스 위키  글라이더 ">
-	<meta name="Description" content="위키 기반의 한국형 오픈소스 협업 툴, 프로젝트 관리 및 산출물 작성, 지식관리도구 , 지식정보공유, 교육자료 및 프리젠테이션 ">
-	<meta name="Keywords" content="OpenSource, Wiki, Java, JSP, Spring, MySQL, HSQL, Enterprise OpenSource Wiki, KMS, 지식관리도구 , 지식정보공유">
-	<meta name="Author" content="GLiDERWiki™ OpenSource Team">
-	<meta name="Publisher" content="GLiDERWiki™ OpenSource Team">
-	<meta name="Other Agent" content="GLiDERWiki™ OpenSource Team">
-	<meta name="Classification" content=" Wiki, Java, JSP, Spring, MySQL, HSQL, KMS">
-	<meta name="Author-Date(Date)" content="2012.10.1">
-	<meta name="Location" content="Seoul, KOREA, South KOREA">
-	<meta name="Distribution" content="GLiDERWiki™ OpenSource Team">
-	<meta name="Copyright" content="GLiDERWiki™ OpenSource Team">
-	<meta name="Robots" content="ALL">
-	<!--[if IE]>
-	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-</head>
 
 <body>
 <!--[if lt IE 8]>
