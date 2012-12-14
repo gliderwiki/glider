@@ -131,27 +131,27 @@ public class GliderTagParser {
 			break;
 			
 		case GRAPH:
-			special.getGRAPH(str);
+			str = special.getGRAPH(str);
 			break;
 			
 		case H1:
-			special.getH1(str);
+			str = special.getH1(str);
 			break;
 			
 		case LINE:
-			special.getLINE(str);
+			str = special.getLINE(str);
 			break;
 		
 		case TABLE:
-			special.getTABLE(str);
+			str = special.getTABLE(str);
 			break;
 			
 		case SYNTAXAFTER:
-			special.getSYNTAX(str, false);
+			str = special.getSYNTAX(str, false);
 			break;
 			
 		case SYNTAXBEFORE:
-			special.getSYNTAX(str, true);
+			str = special.getSYNTAX(str, true);
 			break;
 			
 		default:

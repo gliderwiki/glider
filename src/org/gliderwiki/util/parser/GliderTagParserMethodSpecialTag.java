@@ -154,10 +154,13 @@ public class GliderTagParserMethodSpecialTag {
 				htagStr[i] = GliderTagPaserUtil.replaceFirstTag(htagStr[i], patternTxt, "<h4><a id=\"$3\" name=\"$3\">$3</a></h4>");
 			}
 			
-			str += htagStr[i]+"\r\n";
 			if( !hTagMap.isEmpty() ){
 				h1TagList.add(hTagMap);
+				htagStr[i] = htagStr[i]+"\n";
+			}else{
+				htagStr[i] = htagStr[i]+"\r\n";
 			}
+			str += htagStr[i];
 		}
 		
 		return str;
@@ -220,15 +223,24 @@ public class GliderTagParserMethodSpecialTag {
 			}
 			
 			// 테이블태그가 최초카운팅시 <table>태그를 넣는다.
-			if( tableFlag == 1){
+			if( tableCnt > 0 && tableFlag == 1 ){
 				tableStr[i] = "<table>\n"+tableStr[i];
-				
+						// table 태그가 문자열에 없고(non파싱), 테이블플레그가 0보다 크면 테이블태그를 마무리 한다.
 			}else if( tableCnt == 0 && tableFlag > 0 ){
 				tableStr[i] = "</table>\n"+tableStr[i];
 				tableFlag = 0;
+			
+			// ( tableStr.length - 1 == i &&  tableFlag > 0  )  ==> 문장의 마지막이면서 테이블태그가 끝나지 않았다면 태그를 닫아준다.
+			}else if( tableStr.length - 1 == i &&  tableFlag > 0 ){
+				tableStr[i] = tableStr[i]+"\n</table>\n";
+				tableFlag = 0;
+				
+			// table 태그가 없는경우.
+			}else if( tableCnt == 0 && tableFlag == 0 ){
+				tableStr[i] = tableStr[i] + "\r\n";	
 			}
 			
-			str += tableStr[i] + "\r\n";
+			str += tableStr[i];
 			
 		}
 		
@@ -287,12 +299,12 @@ public class GliderTagParserMethodSpecialTag {
 				strLine[i] = "<"+tag+">\n"+strLine[i];
 			
 			// 하위depth로 내려갈때 태그를 만든다.
-			}else if( afterPattern !=null  &&  afterPattern.length() > beforePattern.length() ){
+			}else if( afterPattern != null  &&  afterPattern.length() > beforePattern.length() ){
 				chk ++;
 				strLine[i] = "<"+tag+">\n"+strLine[i];
 			
 			// 상위depth로 내려갈때 태그를 닫아준다.
-			}else if( afterPattern !=null  &&  beforePattern.length() - afterPattern.length() > 0 ){
+			}else if( afterPattern != null  &&  beforePattern.length() - afterPattern.length() > 0 ){
 				Integer depth = beforePattern.length() - afterPattern.length();
 				for( int j=0; j< depth; j++){
 					chk = chk-1 ;
@@ -305,9 +317,14 @@ public class GliderTagParserMethodSpecialTag {
 					strLine[i] = "</"+tag+">\n"+strLine[i];
 				}
 				chk = 0;
+			
+			// Line 태그가 없을시.
+			}else if( afterPattern == null  &&  beforePattern == null){
+				strLine[i] = strLine[i]+"\r\n";	
 			}
 			
-			str += strLine[i]+"\r\n";
+			str += strLine[i];
+			
 			
 		}
 		
