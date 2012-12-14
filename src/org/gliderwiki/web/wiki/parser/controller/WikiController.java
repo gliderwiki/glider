@@ -285,6 +285,8 @@ public class WikiController {
 		weprofile.setWe_tech_yn(null);
 		weprofile.setWe_point(null);
 		weprofile = (WeProfile) entityService.getRowEntity(weprofile);
+		
+		logger.debug("####weprofile : " + weprofile.toString());
 
 		// 조회수 증가
 		weWiki.setWe_wiki_view_cnt(weWiki.getWe_wiki_view_cnt() + 1);

@@ -151,7 +151,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			logger.error("***위키삭제 처리중  Error " + e.getCause());
 			tx.rollback(status);
 		}
-		result.put("msg", "삭제를 성공했습니다.");
+		result.put("msg", "처리 되었습니다.");
 		result.put("flag", "success");
 		
 		return result;
