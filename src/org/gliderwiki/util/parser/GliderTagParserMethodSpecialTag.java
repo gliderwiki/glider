@@ -156,11 +156,8 @@ public class GliderTagParserMethodSpecialTag {
 			
 			if( !hTagMap.isEmpty() ){
 				h1TagList.add(hTagMap);
-				htagStr[i] = htagStr[i]+"\n";
-			}else{
-				htagStr[i] = htagStr[i]+"\r\n";
 			}
-			str += htagStr[i];
+			str += htagStr[i]+"\r\n";
 		}
 		
 		return str;

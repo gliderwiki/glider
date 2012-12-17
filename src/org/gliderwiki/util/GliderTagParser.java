@@ -154,6 +154,9 @@ public class GliderTagParser {
 			str = special.getSYNTAX(str, true);
 			break;
 			
+		case BR:
+			str = basic.getBR(str);
+			
 		default:
 			break; 
 		}
@@ -195,13 +198,15 @@ public class GliderTagParser {
 		list.add(EsCharacter.TABLE);
 		list.add(EsCharacter.SYNTAXAFTER);
 		
+		list.add(EsCharacter.BR);
+		
 		return list;
 	}
 	
 	private enum EsCharacter {
 		BOLD, ITALIC, UNDERLINING, STRIKE, SUPERSCRIPT, SUBERSCRIPT, HIPERLINK, 
 		H1, NOTE, SYNTAXAFTER, SYNTAXBEFORE, LINE, IMG, ALERT, FIELD, INFO, TABLE,
-		GRAPH, COLOR, BACKGROUND, FONT, FONTSIZE, FONTALIGN, BOX, HR
+		GRAPH, COLOR, BACKGROUND, FONT, FONTSIZE, FONTALIGN, BOX, HR, BR
 		
 	}
 }

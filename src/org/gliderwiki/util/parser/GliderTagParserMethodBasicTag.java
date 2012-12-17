@@ -200,5 +200,22 @@ public class GliderTagParserMethodBasicTag {
 		return str;
 	}
 	
+	public String getBR(String str){
+		
+		String[] brArray = str.split("\r\n");
+		str = "";
+		
+		for(int i=0; i< brArray.length; i++){
+			if( "".equals(brArray[i].trim() ) ){
+				str += brArray[i]+"\r\n";
+			}else{
+				str += brArray[i]+"\n";
+			}
+		}
+		str = str + "\r\n";
+		
+		return str;
+	}
+	
 	
 }
