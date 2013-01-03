@@ -24,6 +24,11 @@ public class GliderTagParserMethodBasicTag {
 	
 	public List<Map<String, Object>> linkTagList = new ArrayList<Map<String,Object>>();
 	
+	/**
+	 * 볼드처리 
+	 * @param str
+	 * @return
+	 */
 	public String getBOLD(String str){
 		str = GliderTagPaserUtil.replaceAllTag(str, "\\*{2}([\\w\\W]+?)\\*{2}", "<B>$1</B>");
 		return str;
