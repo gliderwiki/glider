@@ -25,6 +25,7 @@ public class GliderTagParserMethodSpecialTag {
 
 	public List<String> syntaxList = new ArrayList<String>();
 	// 그래프
+	
 	public Integer graphCnt = 0;
 	// h1
 	public List<Object> h1TagList = new ArrayList<Object>();

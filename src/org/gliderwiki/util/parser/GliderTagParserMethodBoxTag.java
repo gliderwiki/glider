@@ -25,6 +25,7 @@ public class GliderTagParserMethodBoxTag {
 	public List<Map<String, Object>> noteTagList = new ArrayList<Map<String,Object>>();
 	
 	// [note|각주이름1#각주설명1] 혹은 [note|각주이름2]
+	
 	public String getNOTE(String str){
 		String patternTxt = "\\[(note\\|)(.*?)(#(.*?))?\\]";
 		
