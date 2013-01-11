@@ -232,7 +232,7 @@ public class InstallController {
 	 * @return
 	 * @throws Throwable
 	 */
-	@RequestMapping(value="/admin/install/createTables", method = RequestMethod.GET)
+	@RequestMapping(value="/admin/install/createTables", method = RequestMethod.POST)
 	public ModelAndView createTables(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		
 		String charType = request.getParameter("charType");  //CREATE할 테이블 타입 
@@ -341,6 +341,7 @@ public class InstallController {
 	@RequestMapping(value="/admin/install/loadData", method = RequestMethod.POST)
 	public ModelAndView loadData(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		
+		//TODOLIST : restClient를 이용하여 글라이더 서버에 관련 데이터를 전송해야 한다. 
 		String adminMailId  = request.getParameter("adminMailId"); // 관리자 로그인 메일주소(ID)
 		String adminpass 	= request.getParameter("adminpass");   // 관리자 로그인 비밀번
 		String adminSite 	= request.getParameter("adminSite");   // 시스템 도메인 주
@@ -415,7 +416,6 @@ public class InstallController {
 		String svcPath = request.getSession().getServletContext().getRealPath("/resource/temp/");
 		String svcRealPath = request.getSession().getServletContext().getRealPath("/resource/real/");
 		String svcDataPath = request.getSession().getServletContext().getRealPath("/resource/data/");
-		
 		
 		String rtnCode = ShellCommands.execute("uname");		
 		

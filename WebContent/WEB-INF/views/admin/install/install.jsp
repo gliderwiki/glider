@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@include file="/WEB-INF/views/common/include/tags.jspf" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@include file="/WEB-INF/views/common/include/tags.jspf"%>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -146,7 +147,7 @@
 			
 			/* 연동 테스트를 합니다. Ajax 호출 */
 			$.ajax({
-				type:"GET"
+				type:"POST"
 				,url:"/admin/install/createTables"
 				,data:{"charType":charType,"strKor":strKor}
 			    ,dataType:"json"
@@ -581,7 +582,7 @@
 		inHtml += "<ul>";
 		inHtml += "<li>	어드민 모드에 접속하기위해 아래의 주소를 기억해주시기  바랍니다.</li>";
 		inHtml += "<li>	어드민 모드는 오직 URL 을 입력한 후 Step.3 에서 입력한 아이디와 비밀번호를 통해 접속하도록 되어있습니다.</li>";
-		inHtml += "<li>	어드민 주소 : "+domain+"/admin/wikiadminlogin</li>";
+		inHtml += "<li>	어드민 주소 : "+domain+"admin/wikiadminlogin</li>";
 		inHtml += "</ul>";
 		inHtml += "	아울러, 본 Web Installer 화면은 더 이상 접근할 수 없습니다. 반드시 서버를 restart 해주시기 바라며, 만약 설치가 제대로 안된 경우라면 GLiDERWiki™ 를 참고하여 수동 설치 방식으로 재설치 하시기 바랍니다.<br/>";
 		inHtml += "	지식정보 공유 및 축적을 위한 협업 플랫폼으로 개발한 오픈소스 GLiDERWiki™ 를 이용해주셔서 감사합니다.</div><br/>";

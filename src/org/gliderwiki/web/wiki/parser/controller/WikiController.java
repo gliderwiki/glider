@@ -715,9 +715,6 @@ public class WikiController {
 	public String replyForm(@LoginUser MemberSessionVo loginUser, @PathVariable("spaceIdx") Integer spaceIdx,
 			@PathVariable("parentIdx") Integer parentIdx, Model model) throws Throwable {
 
-		if (loginUser.getWeUserId().equals("GUEST") || loginUser.getWeUserIdx() == null) {
-			// 에러 처리
-		}
 		// 템플릿 정보 조회
 		WeTemplate temp = new WeTemplate();
 		temp.setWe_use_yn("Y");
@@ -748,6 +745,7 @@ public class WikiController {
 		wikiForm.setWe_wiki_text(null);
 		wikiForm.setWe_wiki_title(null);
 		wikiForm.setWe_wiki_markup(null);
+		wikiForm.setWe_wiki_parent_idx(parentIdx);		// 부모 글 세팅 
 
 		logger.debug("#### wikiForm " + wikiForm.toString());
 

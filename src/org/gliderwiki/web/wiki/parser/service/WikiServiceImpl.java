@@ -284,12 +284,15 @@ public class WikiServiceImpl implements WikiService {
 	 * 부모글이 있는 위키를 저장한다. 부모글 하위 글 타래 로직은 게시판의 답변 로직과 동일하다. parent_idx - 부모글 번호
 	 * (글 그룹), depth_idx - 글의 스텝(깊이), order_idx - 글의 정렬 순서
 	 * -------------------------------------------------------------------------
-	 * idx, title, parent, order, depth
+	 * idx, title,          parent, order, depth
 	 * -------------------------------------------------------------------------
-	 * 1, 위키제목입니다. 1, 0, 0 2, 안녕하세요. 2, 0, 0 4, re : 안녕하세요. 2, 1, 1 : 2번의 답변이 될때
-	 * 부모 순번을 물고 들어옴 6, re : re : 안녕하세 2, 2, 2 : 중간에 글이 들어오면, 현재 글 보다 같거나 높은
-	 * order 값을 +1 로 증가 7, re : re : re : 안녕 2, 3, 3 : 답변의 깊이를 가져와 +1 5, re :
-	 * 안녕하세요. 2, 4, 1 3, 글라이더 입니다. 3, 0, 0
+	 * 1, 위키제목입니다.       1, 0, 0 
+	 * 2, 안녕하세요.          2, 0, 0 
+	 * 4, re : 안녕하세요.     2, 1, 1 : 2번의 답변이 될때 부모 순번을 물고 들어옴 
+	 * 6, re : re : 안녕하세     2, 2, 2 : 중간에 글이 들어오면, 현재 글 보다 같거나 높은  order 값을 +1 로 증가 
+	 * 7, re : re : re : 안녕  2, 3, 3 : 답변의 깊이를 가져와 +1 
+	 * 5, re : 안녕하세요.     2, 4, 1 
+	 * 3, 글라이더 입니다.      3, 0, 0
 	 * -------------------------------------------------------------------------
 	 */
 	public int addSubWikiAllContents(WeWiki weWiki, WeSpace weSpace, String weTag, String[] weFileIdx,
@@ -300,7 +303,7 @@ public class WikiServiceImpl implements WikiService {
 		String maxStep = "";
 		String minStep = "";
 
-		// 현재 글기준으로 order가 큰값과 depth가 작거나 같은것중 가장 작은 order 값을 가져온다.
+		// 현재 글기준으로 order가 큰 값과 depth가 작거나 같은것중 가장 작은 order 값을 가져온다.
 		// 답변 스텝을 구하기 위해 현재 글타래의 가장 작은수를 구해온다.
 		minStep = wikiRegistDao.getMinDepthIdx(weWiki);
 

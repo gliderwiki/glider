@@ -28,10 +28,10 @@
 	]]>
 	</select>
 
-	<!-- 자신이 속할 글 타래의 Order_idx 값을 증가시키고, 그 중 가장 작은값을 order_idx 로 세팅한다. -->
-	<update id="WikiManage.updateParentOrderIdx" parameterType="weUser">
+	<!-- 자신이 속할 글 타래의 depth_idx 값을 증가시키고, 그 중 가장 작은값을 order_idx 로 세팅한다. -->
+	<update id="WikiManage.updateParentDepthIdx" parameterType="weUser">
 	<![CDATA[
-		UPDATE we_wiki /* WikiManage.updateParentOrderIdx - 자신이 속할 글 타래의 depth 값을 증가 */
+		UPDATE we_wiki /* WikiManage.updateParentDepthIdx - 자신이 속할 글 타래의 depth 값을 증가 */
 		SET    we_wiki_depth_idx = we_wiki_depth_idx+1
 	    WHERE  we_wiki_parent_idx = #{we_wiki_parent_idx}
 	    AND    we_wiki_depth_idx > #{we_wiki_depth_idx}
@@ -164,8 +164,8 @@
 				    AND T1.WE_WIKI_DEPTH_IDX =0
 				    ORDER BY T1.WE_WIKI_TITLE
 				    ) T2
-				   ON T1. WE_WIKI_PARENT_IDX = T2.WE_WIKI_PARENT_IDX
-				ORDER BY T2.RNUM ASC, T1. WE_WIKI_PARENT_IDX ASC ,T1.WE_WIKI_ORDER_IDX ASC, T1.WE_WIKI_TITLE
+				   ON T1.WE_WIKI_PARENT_IDX = T2.WE_WIKI_PARENT_IDX
+				ORDER BY T2.RNUM ASC, T1. WE_WIKI_PARENT_IDX ASC ,T1.WE_WIKI_DEPTH_IDX ASC, T1.WE_WIKI_TITLE
 	</select>
 
 	<insert id="WikiManage.insertArrayFileList" parameterType="java.util.HashMap">
