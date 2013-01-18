@@ -42,7 +42,7 @@ public class WikiRegistDaoImpl extends SqlSessionDaoSupport implements WikiRegis
 
 	@Override
 	public int updateParentDepthIdx(WeWiki weWiki, String minDepthIdx) throws Throwable {
-		weWiki.setWe_wiki_depth_idx(Integer.parseInt(minDepthIdx));
+		weWiki.setWe_wiki_order_idx(Integer.parseInt(minDepthIdx));
 		return getSqlSession().update("WikiManage.updateParentDepthIdx", weWiki);
 	}
 
@@ -62,4 +62,10 @@ public class WikiRegistDaoImpl extends SqlSessionDaoSupport implements WikiRegis
 		return result;
 	}
 
+	@Override
+	public int getCurrentWikiIdx() throws Throwable {
+		return (Integer) getSqlSession().selectOne("WikiManage.getCurrentWikiIdx");
+	}
+	
+	
 }

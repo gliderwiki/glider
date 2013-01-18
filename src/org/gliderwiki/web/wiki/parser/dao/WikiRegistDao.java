@@ -47,4 +47,9 @@ public interface WikiRegistDao {
 	 */
 	public int insertArrayFileList(String[] weFileIdx, int currIdx, int weWikiRevision) throws Throwable;
 
+	/**
+	 * @return
+	 */
+	public int getCurrentWikiIdx() throws Throwable;
+
 }

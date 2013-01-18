@@ -745,8 +745,7 @@ public class WikiController {
 		wikiForm.setWe_wiki_text(null);
 		wikiForm.setWe_wiki_title(null);
 		wikiForm.setWe_wiki_markup(null);
-		wikiForm.setWe_wiki_parent_idx(parentIdx);		// 부모 글 세팅 
-
+ 
 		logger.debug("#### wikiForm " + wikiForm.toString());
 
 		model.addAttribute("weWiki", wikiForm);

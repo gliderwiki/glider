@@ -101,7 +101,8 @@ public class WikiServiceImpl implements WikiService {
 		 * 서머리 저장 - 있을 경우 위키작성로그 저장
 		 */
 
-		int currIdx = 0; // 저장될 위키의 시퀀스 번호를 따온다.
+		int nextIdx = 0; // 저장될 위키의 시퀀스 번호를 따온다. (IFNULL(MAX(LAST_INSERT_ID(we_wiki_idx)) + 1, 1) as wikiIdx)
+		int currIdx = 0; // 현재 저장된 위키의 시퀀스 번호를 따온다. (IFNULL(MAX(LAST_INSERT_ID(we_wiki_idx)), 1) as wikiIdx )
 		int result = 0;
 
 		int tagSize = 0; // "," 구분자로 split 할것
@@ -138,23 +139,32 @@ public class WikiServiceImpl implements WikiService {
 			logger.debug("#####################################");
 
 			// 위키 기본정보 저장
-			currIdx = this.getNextWikiIdx();
+			nextIdx = this.getNextWikiIdx();
 
 			logger.debug("###부모 번호가 있는지 : " + weWiki.getWe_wiki_parent_idx());
 
 			// 부모 번호가 있다면 자식 위키 저장하는 로직임
 			if (weWiki.getWe_wiki_parent_idx() == null || weWiki.getWe_wiki_parent_idx() == 0) {
-				weWiki.setWe_wiki_parent_idx(currIdx); // 현재 입력되는 IDX와 같은 값을
+				weWiki.setWe_wiki_parent_idx(nextIdx); // 현재 입력되는 IDX와 같은 값을
 														// 넣어준다.
 			}
 			weWiki.setWe_wiki_markup(resultMap.get("htmltag").toString()
 					.replaceAll("\r\n", "\r\n<br class=\"br\"/>\r\n"));
-
+			
 			result = entityService.insertEntity(weWiki);
 
+			if(result > 0) {
+				currIdx = this.getCurrentWikiIdx();		// 현재 저장된 위키 시퀀스 지정 
+			} else {
+				result = -1;
+				logger.info("위키저장 Error  (result=" + result + "}");
+				tx.rollback(status);
+				throw new DBHandleException("위키저장 에러", null, result);
+			}
+			
 			// links 저장
 			if (linkList != null) {
-				result = this.insertLinks(result, linkList, currIdx, 1);
+				result = this.insertLinks(result, linkList, nextIdx, 1);
 				if (result < 1) {
 					logger.info("***위키저장  에러 롤백!!!! ");
 					tx.rollback(status);
@@ -164,7 +174,7 @@ public class WikiServiceImpl implements WikiService {
 			logger.debug("### 링크 저장 후 result : " + result);
 
 			if (headList != null) {
-				result = this.insertSummary(result, headList, currIdx, 1);
+				result = this.insertSummary(result, headList, nextIdx, 1);
 				if (result < 1) {
 					logger.info("***위키저장  에러 롤백!!!! ");
 					tx.rollback(status);
@@ -174,7 +184,7 @@ public class WikiServiceImpl implements WikiService {
 			logger.debug("### 섬머리 저장 후 result  : " + result);
 
 			if (noteList != null) {
-				result = this.insertNote(result, noteList, currIdx, 1);
+				result = this.insertNote(result, noteList, nextIdx, 1);
 				if (result < 1) {
 					logger.info("***위키저장 에러 롤백!!!! ");
 					tx.rollback(status);
@@ -184,7 +194,7 @@ public class WikiServiceImpl implements WikiService {
 			logger.debug("### 각주 저장 후 result  : " + result);
 
 			if (graphCnt != null && graphCnt != 0) {
-				result = this.insertGraph(result, graphCnt, currIdx, 1);
+				result = this.insertGraph(result, graphCnt, nextIdx, 1);
 				if (result < 1) {
 					logger.info("***위키저장 에러 롤백!!!! ");
 					tx.rollback(status);
@@ -196,7 +206,7 @@ public class WikiServiceImpl implements WikiService {
 			if (result >= 1) { // 연관 테이블 저장
 				// 태그가 있을 경우
 				if (tagSize > 0) {
-					result = this.insertTags(weWiki, result, tagSize, arrWeTag, currIdx, 1); // 키워드
+					result = this.insertTags(weWiki, result, tagSize, arrWeTag, nextIdx, 1); // 키워드
 																								// 저장
 					if (result < 1) {
 						logger.info("***위키저장 에러 롤백!!!! ");
@@ -206,9 +216,9 @@ public class WikiServiceImpl implements WikiService {
 
 				// 파일이 있을 경우
 				if (weFileIdx != null) {
-					logger.debug("### currIdx : " + currIdx);
+					logger.debug("### nextIdx : " + nextIdx);
 					int retCount = 0;
-					retCount = wikiRegistDao.insertArrayFileList(weFileIdx, currIdx, 1); // 최초
+					retCount = wikiRegistDao.insertArrayFileList(weFileIdx, nextIdx, 1); // 최초
 																							// 저장시
 																							// 리비전은
 																							// 1이다.
@@ -239,7 +249,7 @@ public class WikiServiceImpl implements WikiService {
 
 				// 저장 후 최종적으로 WE_WIKI_LOG 에 기록을 쌓는다 .
 				WeWikiLog wikiLog = new WeWikiLog();
-				wikiLog.setWe_wiki_idx(currIdx);
+				wikiLog.setWe_wiki_idx(nextIdx);
 				wikiLog.setWe_wiki_revision(1);
 				wikiLog.setWe_wiki_status("S");
 				wikiLog.setWe_user_idx(weWiki.getWe_ins_user());
@@ -281,18 +291,20 @@ public class WikiServiceImpl implements WikiService {
 	}
 
 	/**
-	 * 부모글이 있는 위키를 저장한다. 부모글 하위 글 타래 로직은 게시판의 답변 로직과 동일하다. parent_idx - 부모글 번호
-	 * (글 그룹), depth_idx - 글의 스텝(깊이), order_idx - 글의 정렬 순서
+	 * 부모글이 있는 위키를 저장한다. 부모글 하위 글 타래 로직은 게시판의 답변 로직과 동일하다. 
+	 * parent_idx - 부모글 번호 (글 그룹), 
+	 * depth_idx - 글의 스텝(깊이), 
+	 * order_idx - 글의 정렬 순서
 	 * -------------------------------------------------------------------------
 	 * idx, title,          parent, order, depth
 	 * -------------------------------------------------------------------------
-	 * 1, 위키제목입니다.       1, 0, 0 
-	 * 2, 안녕하세요.          2, 0, 0 
-	 * 4, re : 안녕하세요.     2, 1, 1 : 2번의 답변이 될때 부모 순번을 물고 들어옴 
-	 * 6, re : re : 안녕하세     2, 2, 2 : 중간에 글이 들어오면, 현재 글 보다 같거나 높은  order 값을 +1 로 증가 
-	 * 7, re : re : re : 안녕  2, 3, 3 : 답변의 깊이를 가져와 +1 
-	 * 5, re : 안녕하세요.     2, 4, 1 
-	 * 3, 글라이더 입니다.      3, 0, 0
+	 * 1, 위키제목입니다.       1,       0,     0 
+	 * 2, 안녕하세요.          2,       0,     0 
+	 * 4, re : 안녕하세요.     2,       1,     1 : 2번의 답변이 될때 부모 순번을 물고 들어옴 
+	 * 6, re : re : 안녕하세     2,       2,     2 : 중간에 글이 들어오면, 현재 글 보다 같거나 높은  order 값을 +1 로 증가 
+	 * 7, re : re : re : 안녕  2,       3,     3 : 답변의 깊이를 가져와 +1 
+	 * 5, re : 안녕하세요.     2,       4,     1 
+	 * 3, 글라이더 입니다.      3,       0,     0
 	 * -------------------------------------------------------------------------
 	 */
 	public int addSubWikiAllContents(WeWiki weWiki, WeSpace weSpace, String weTag, String[] weFileIdx,
@@ -317,22 +329,18 @@ public class WikiServiceImpl implements WikiService {
 				// 답변 위키 글타래의 순번증가
 				maxStep = wikiRegistDao.getMaxDepthIdx(weWiki); // 제일 밑으로 붙는 형태
 																// Order + 1
-																//
 				logger.debug("제일 밑으로 붙는 형태의 maxDepth : " + maxStep);
-				weWiki.setWe_wiki_depth_idx(Integer.parseInt(maxStep));
+				weWiki.setWe_wiki_order_idx(Integer.parseInt(maxStep));
+				
 
-			} else { // 값이 있으면 Order 가 이미 존재하기 때문에 사이에 끼는 글이므로 depth 를 증가시키고 현재
-						// order 와 같거나 높은 값을 +1 처리
+			} else { // 값이 있으면 Order 가 이미 존재하기 때문에 사이에 끼는 글이므로 depth 를 증가시키고 현재 order 와 같거나 높은 값을 +1 처리
 				logger.debug("사이에 끼는 타입  minStep : " + minStep);
 				// 자신이 속할 글 타래의 depth 값을 증가시키고, 관련 Order 값들을 증가시킴
 				int result = wikiRegistDao.updateParentDepthIdx(weWiki, minStep);
-
-				weWiki.setWe_wiki_depth_idx(Integer.parseInt(minStep));
-
+				// depth 처리
 			}
 
-			// depth 처리
-			weWiki.setWe_wiki_order_idx(weWiki.getWe_wiki_order_idx() + 1);
+			weWiki.setWe_wiki_depth_idx(weWiki.getWe_wiki_depth_idx()+1);
 
 			logger.debug("##order 자동증가 : " + weWiki.getWe_wiki_order_idx());
 
@@ -368,6 +376,10 @@ public class WikiServiceImpl implements WikiService {
 	 */
 	private int getNextWikiIdx() throws Throwable {
 		return wikiRegistDao.getNextWikiIdx();
+	}
+	
+	private int getCurrentWikiIdx() throws Throwable {
+		return wikiRegistDao.getCurrentWikiIdx();
 	}
 
 	/**
@@ -441,16 +453,16 @@ public class WikiServiceImpl implements WikiService {
 	 * @param result
 	 * @param tagSize
 	 * @param arrWeTag
-	 * @param currIdx
+	 * @param nextIdx
 	 * @return
 	 * @throws Throwable
 	 */
 	@SuppressWarnings("unchecked")
-	private int insertTags(WeWiki weWiki, int result, int tagSize, String[] arrWeTag, int currIdx, int revision)
+	private int insertTags(WeWiki weWiki, int result, int tagSize, String[] arrWeTag, int nextIdx, int revision)
 			throws Throwable {
 		WeWikiTag weWikiTag = new WeWikiTag();
 		weWikiTag.setWe_use_yn("Y");
-		weWikiTag.setWe_wiki_idx(currIdx);
+		weWikiTag.setWe_wiki_idx(nextIdx);
 		weWikiTag.setWe_wiki_revision(revision);
 		weWikiTag.setWe_ins_date(DateUtil.getTodayTime());
 
@@ -473,19 +485,19 @@ public class WikiServiceImpl implements WikiService {
 	 * @param status
 	 * @param result
 	 * @param linkList
-	 * @param currIdx
+	 * @param nextIdx
 	 * @return
 	 * @throws Throwable
 	 */
 	@SuppressWarnings("unchecked")
-	private int insertLinks(int result, List<Object> linkList, int currIdx, int revision) throws Throwable {
+	private int insertLinks(int result, List<Object> linkList, int nextIdx, int revision) throws Throwable {
 		Map<String, Object> tagMap;
 		int linkSize = linkList.size();
 		for (int i = 0; i < linkSize; i++) {
 			tagMap = (Map<String, Object>) linkList.get(i);
 			WeWikiLink link = new WeWikiLink();
 
-			link.setWe_wiki_idx(currIdx);
+			link.setWe_wiki_idx(nextIdx);
 			link.setWe_wiki_revision(revision); // 최초 저장시 리비전은 무조 1임
 			String fullTextLink = "<a href='" + (String) tagMap.get("tagUrl") + "' target='_blank' title='"
 					+ (String) tagMap.get("tagTitle").toString().trim() + "'>"
@@ -515,10 +527,10 @@ public class WikiServiceImpl implements WikiService {
 	 * @param status
 	 * @param result
 	 * @param headList
-	 * @param currIdx
+	 * @param nextIdx
 	 * @return
 	 */
-	private int insertSummary(int result, List<Object> headList, int currIdx, int revision) throws Throwable {
+	private int insertSummary(int result, List<Object> headList, int nextIdx, int revision) throws Throwable {
 		Map<String, Object> tagMap;
 		int headSize = headList.size();
 
@@ -527,7 +539,7 @@ public class WikiServiceImpl implements WikiService {
 			tagMap = (Map<String, Object>) headList.get(i);
 			WeWikiSummary summary = new WeWikiSummary();
 
-			summary.setWe_wiki_idx(currIdx);
+			summary.setWe_wiki_idx(nextIdx);
 			summary.setWe_wiki_revision(revision); // 최초 저장시 리비전은 무조 1임
 			summary.setWe_summary_tag((String) tagMap.get("tag"));
 			summary.setWe_summary_title((String) tagMap.get("tagVal"));
@@ -553,10 +565,10 @@ public class WikiServiceImpl implements WikiService {
 	 * @param status
 	 * @param result
 	 * @param noteList
-	 * @param currIdx
+	 * @param nextIdx
 	 * @return
 	 */
-	private int insertNote(int result, List<Object> noteList, int currIdx, int revision) throws Throwable {
+	private int insertNote(int result, List<Object> noteList, int nextIdx, int revision) throws Throwable {
 		Map<String, Object> tagMap;
 		int noteSize = noteList.size();
 
@@ -565,7 +577,7 @@ public class WikiServiceImpl implements WikiService {
 			tagMap = (Map<String, Object>) noteList.get(i);
 			WeWikiNote note = new WeWikiNote();
 
-			note.setWe_wiki_idx(currIdx);
+			note.setWe_wiki_idx(nextIdx);
 			note.setWe_wiki_revision(revision); // 최초 저장시 리비전은 무조 1임
 			note.setWe_wiki_note_name((String) tagMap.get("tag"));
 			note.setWe_wiki_note_desc((String) tagMap.get("tagVal"));
@@ -591,14 +603,14 @@ public class WikiServiceImpl implements WikiService {
 	 * @param status
 	 * @param result
 	 * @param headList
-	 * @param currIdx
+	 * @param nextIdx
 	 * @return
 	 */
-	private int insertGraph(int result, Integer graphCnt, int currIdx, int revision) throws Throwable {
+	private int insertGraph(int result, Integer graphCnt, int nextIdx, int revision) throws Throwable {
 
 		WeWikiGraph weWikiGraph = new WeWikiGraph();
 
-		weWikiGraph.setWe_wiki_idx(currIdx);
+		weWikiGraph.setWe_wiki_idx(nextIdx);
 		weWikiGraph.setWe_wiki_revision(revision);
 		weWikiGraph.setWe_graph_cnt(graphCnt);
 		weWikiGraph.setWe_use_yn("Y");
