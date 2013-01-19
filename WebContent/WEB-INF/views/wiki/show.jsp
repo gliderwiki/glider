@@ -162,7 +162,7 @@ pageContext.setAttribute("cr", "\r");
 				</c:otherwise>
 			</c:choose>
 			
-			<c:if test="${weGrade eq 3 || weGrade eq 8 || weGrade eq 9 }">
+			<c:if test="${loginUser.weGrade eq 3 || loginUser.weGrade eq 8 || loginUser.weGrade eq 9 }">
 				<a href="javascript:dellWiki();" class="btn">삭제하기</a>
 				<a href="javascript:updateWikiProdect();" class="btn">위키잠금</a>
 			</c:if>

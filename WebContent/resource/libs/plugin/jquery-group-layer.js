@@ -16,7 +16,7 @@
 		var resourceHtml = "";
 			resourceHtml = "<div class=\"groupWrap\" id=\"groupWrap\">";
 			resourceHtml	+= "<div class=\"loadingBg\"></div>";
-			resourceHtml	+= "<div id=\"groupDiv\">";
+			resourceHtml	+= "<div id=\"groupDiv\">"; 
 			resourceHtml	+= "<section class=\"layer-select\">";
 			resourceHtml	+= "<div class=\"tit\"><strong>구성원을 선택하세요</strong></div>";
 			resourceHtml	+= "<div class=\"cont\">";
@@ -26,7 +26,7 @@
 			resourceHtml	+= "			<th class=\"name\" style=\"width:240px\">회원아이디</th>";
 			resourceHtml	+= "			<th class=\"name\" style=\"width:100px\">닉네임</th>";
 			resourceHtml	+= "			<th class=\"name\" style=\"width:160px\">가입일</th>";
-			resourceHtml	+= "			<th class=\"name\" style=\"width:100px\">이름</th>";
+			resourceHtml	+= "			<th class=\"name\" style=\"width:100px\">이름</th>"; 
 			resourceHtml	+= "		</tr>";
 			resourceHtml	+= "	</thead>";
 			resourceHtml	+= "	<tbody>";
@@ -51,6 +51,7 @@
 		
 
 		$('body').after(resourceHtml);
+		wrapWindowMask();
 	};
 	
 	$.groupLayer.hide = function(){
@@ -104,6 +105,16 @@
 		}
 		
 	});
+	
+	function wrapWindowMask(){
+		var POSLEFT = ( ($(window).width() - $("#groupDiv").width()) / 2 );
+		var POSTOP =  ( ($(window).height() - $("#groupDiv").height()) / 2 );
+		
+		//Set the popup window to center         
+		$("#groupDiv").css('top',  POSTOP);         
+		$("#groupDiv").css('left', POSLEFT);		
+	}
+	
 		
 })(jQuery);
 

@@ -285,6 +285,8 @@ public class WikiController {
 		weprofile.setWe_tech_yn(null);
 		weprofile.setWe_point(null);
 		weprofile = (WeProfile) entityService.getRowEntity(weprofile);
+		
+		logger.debug("####weprofile : " + weprofile.toString());
 
 		// 조회수 증가
 		weWiki.setWe_wiki_view_cnt(weWiki.getWe_wiki_view_cnt() + 1);
@@ -713,9 +715,6 @@ public class WikiController {
 	public String replyForm(@LoginUser MemberSessionVo loginUser, @PathVariable("spaceIdx") Integer spaceIdx,
 			@PathVariable("parentIdx") Integer parentIdx, Model model) throws Throwable {
 
-		if (loginUser.getWeUserId().equals("GUEST") || loginUser.getWeUserIdx() == null) {
-			// 에러 처리
-		}
 		// 템플릿 정보 조회
 		WeTemplate temp = new WeTemplate();
 		temp.setWe_use_yn("Y");
@@ -746,7 +745,7 @@ public class WikiController {
 		wikiForm.setWe_wiki_text(null);
 		wikiForm.setWe_wiki_title(null);
 		wikiForm.setWe_wiki_markup(null);
-
+ 
 		logger.debug("#### wikiForm " + wikiForm.toString());
 
 		model.addAttribute("weWiki", wikiForm);

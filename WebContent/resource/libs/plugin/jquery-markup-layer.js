@@ -11,10 +11,10 @@
 				
 		var resourceHtml = [
 		            		'<div class="previewWrap" id="previewWrap">',
-		            		'	<div class="loadingBg"></div>',
+		            		'	<div class="loadingBg" id="loadingBg"></div>',
 		            		'	<div id="load_preview">',
 		            		'	<div class="wrap_layer">',
-		            		'	<section class="layer desc">',
+		            		'	<section class="layer desc" id="previewLayer">',
 		            		'		<a style="cursor:pointer;font-size:44px;" role="button" class="btn_close" id="close_preview_box" title="닫기">&times;</a>',
 		            		'		<div class="box">',
 		            		'       <div class="body-cont wiki">',
@@ -325,6 +325,8 @@
 		].join('');
 		
 		$('body').before(resourceHtml);	
+		
+		wrapWindowMask();
 	};
 	
 	$.markup_layer.hide = function(){
@@ -340,6 +342,16 @@
 	$('#close_preview_btn').live("click" , function(e) {
 		$.markup_layer.hide();
 	});
+	
+	function wrapWindowMask(){
+		var POSLEFT = ( ($(window).width() - $("#previewLayer").width()) / 2 );
+		var POSTOP =  ( ($(window).height() - $("#previewLayer").height()) / 2 );
+		
+		//Set the popup window to center         
+		$("#previewLayer").css('top',  POSTOP);         
+		$("#previewLayer").css('left', POSLEFT);		
+	}
+	
 	
 })(jQuery);
 

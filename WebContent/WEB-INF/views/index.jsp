@@ -101,7 +101,7 @@ taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 				</div>
 				<div class="right">
 					<div class="count">
-						<h2>통계</h2>
+						<h2> 통계 </h2>
 						<div class="box-count">
 							<div class="visit box">
 								<h3>방문</h3>

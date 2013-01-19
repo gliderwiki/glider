@@ -39,9 +39,11 @@
 <script type="text/javascript" src="/resource/libs/plugin/jquery-glider-license.js"></script>
 <script type="text/javascript" src="/resource/libs/plugin/jquery-glider-support.js"></script>
 <script type="text/javascript" src="/resource/libs/plugin/jquery-markup-layer.js"></script>
+
 <script type="text/javascript">
 //<![CDATA[
 	$(document).ready(function() {
+		
 		var weUserIdx = '${loginUser.weUserIdx}';
 		// 메인 메뉴의 서브 리스트를 조회한다.
 		$('a[name="head_menu"]').each(function(i) {

@@ -35,7 +35,7 @@
 
 <body>
 <form:form id="loginForm" name="loginForm" action="/user/login" method="post">
-<input type="hidden" name="spring-security-fail-redirect" value="/admin/login?login_error=true" />
+<input type="hidden" name="spring-security-fail-redirect" value="/admin/wikiadminlogin?login_error=true" />
 <input type="hidden" name="spring-security-redirect" value="/admin/index" />
 <div id="signup" style="display: block; position: fixed; opacity: 1; z-index: 11000; left: 50%; margin-left: -202px; top: 150px;">
 	<div id="signup-ct">

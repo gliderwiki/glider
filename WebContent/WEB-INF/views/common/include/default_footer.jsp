@@ -27,8 +27,10 @@
 		<p class="copyright bluelink"><b>Copyright &copy; 2012 <a href="http://www.gliderwiki.org" target="_blank">GLiDERWiki™ OpenSource Team</a></b></p>
 	</div>
 </footer>
-
-
+<script type="text/javascript" src="/resource/libs/jquery/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="/resource/libs/plugin/jquery-about-glider.js"></script>
+<script type="text/javascript" src="/resource/libs/plugin/jquery-glider-license.js"></script>
+<script type="text/javascript" src="/resource/libs/plugin/jquery-glider-support.js"></script>
 <script type="text/javascript">
 //<![CDATA[
 

@@ -5,7 +5,7 @@
 <body>
 <section class="contents" role="main">
 	<div class="wrap-cont">
-		<h2 class="tit-cont">시스템 정보 목록</h2>
+		<h2 class="tit-cont">시스템 정보 목록 - Git hub이관 </h2>
 		
 				
 		<div class="body-cont">
@@ -73,8 +73,6 @@
 	$(document).ready(function() {
 		
 	});
-	
-	
 //]]>
 </script>
 </js:scripts>

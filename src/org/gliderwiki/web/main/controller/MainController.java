@@ -131,6 +131,8 @@ public class MainController {
 			// CLASS NAME : org.hsqldb.jdbcDriver
 
 			logger.debug("$$$ HSQL Connection $$$");
+			logger.debug("$$$ dbUrl : " + dbUrl);
+			logger.debug("$$$ driverClassName : " + driverClassName);
 			model.addAttribute("bestWikiList", null);
 			model.addAttribute("recentWikiList", null);
 			model.addAttribute("allWikiCnt", 0);

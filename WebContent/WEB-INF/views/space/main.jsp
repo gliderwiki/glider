@@ -34,7 +34,7 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 						<c:forEach items="${wikiList}" var="wikiList" varStatus="stat">
 						<li>
 							<div class="title">
-								<c:forEach begin="1" end="${wikiList.we_wiki_order_idx}">
+								<c:forEach begin="1" end="${wikiList.we_wiki_depth_idx}">
 								&nbsp;&nbsp;&nbsp;
 								</c:forEach>
 								<a href="/wiki/${wikiList.we_wiki_idx}">${wikiList.we_wiki_title}</a>

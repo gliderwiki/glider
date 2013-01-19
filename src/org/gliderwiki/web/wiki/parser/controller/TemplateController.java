@@ -84,7 +84,7 @@ public class TemplateController {
 	 * @throws Throwable
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/template/new", method = RequestMethod.GET)
+	@RequestMapping(value = "/template", method = RequestMethod.GET)
 	public String newForm(@LoginUser MemberSessionVo loginUser, @ModelAttribute("wikiForm") WeWiki wikiForm, Model model) throws Throwable {
 		
 
@@ -295,8 +295,6 @@ public class TemplateController {
 		}
 		
 		logger.debug("#### res : " + res.getResult().toString());
-		
-			
 		return res;
 		
 	}
