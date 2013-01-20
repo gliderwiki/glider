@@ -49,9 +49,7 @@
 	<select id="WikiManage.getCurrentWikiIdx" resultType="Integer">
 		SELECT IFNULL(MAX(LAST_INSERT_ID(we_wiki_idx)), 1) as wikiIdx 
 		FROM   we_wiki
-	</select>
-	
-	
+	</select>	
 	
 
 	<insert id="WikiManage.insertWeWikiBak" parameterType="org.gliderwiki.web.domain.WeWikiBak">
