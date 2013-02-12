@@ -59,60 +59,61 @@
 								<li class="e-tb-btn paste disabled" title="붙여넣기">
 									<i class="e-tb-icon"></i>
 								</li>
-								<li class="e-tb-btn table" title="표만들기">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn table" title="표만들기" data-mode="layer" data-type="table">
+									<i>표만들기</i>
 								</li>
-								<li class="e-tb-btn select-all" title="필드" data-before="[field|타이틀]" data-center=""  data-after="[field]">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn select-all" title="필드" data-mode="append" data-before="[field|타이틀]" data-center=""  data-after="[field]">
+									<i>필드</i>
 								</li>
-								<li class="e-tb-btn note" title="각주" data-before="[note|" data-center="각주"  data-after="#설명]">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn note" title="각주" data-mode="append" data-before="[note|" data-center="각주"  data-after="#설명]">
+									<i>각주</i>
 								</li>
 								<li class="e-tb-clr"></li>
-								<li class="e-tb-btn hr" title="구분선" data-before="[hr]" data-center=""  data-after="">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn hr" title="구분선" data-mode="insert" data-before="[hr]" data-center=""  data-after="">
+									<i>구분선</i>
 								</li>
-								<li class="e-tb-btn link" title="링크">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn link" title="링크" data-mode="layer" data-type="link">
+									<i>링크</i>
 								</li>
-								<li class="e-tb-btn image" title="이미지">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn image" title="이미지" data-mode="layer" data-type="image">
+									<i>이미지</i>
 								</li>
-								<li class="e-tb-btn flash" title="플래시">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn flash" title="플래시" data-mode="layer" data-type="flash">
+									<i>플래시</i>
 								</li>
-								<li class="e-tb-btn media" title="미디어">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn media" title="미디어" data-mode="layer" data-type="media">
+									<i>미디어</i>
 								</li>
-								<li class="e-tb-btn chart" title="차트">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn chart" title="차트" data-mode="layer" data-type="chart">
+									<i>차트</i>
 								</li>
-								<li class="e-tb-btn alert" title="주의" data-before="[alert]" data-center=" " data-after="[alert]">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn alert" title="주의" data-mode="append" data-before="[alert]" data-center=" " data-after="[alert]">
+									<i>주의</i>
 								</li>
-								<li class="e-tb-btn info" title="정보" data-before="[info]"  data-center=" "  data-after="[info]">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn info" title="정보" data-mode="append" data-before="[info]"  data-center=" "  data-after="[info]">
+									<i>정보</i>
 								</li>
 							</ul>
 							<div class="e-tb-bar"></div>
 							<ul class="e-tb-group">
-								<li class="e-tb-btn bold" title="굵게" data-before="**" 	data-center=" "  data-after="**">
-									<i class="e-tb-icon"></i>
+								<!-- value="굵게" id="bold" data-mode="append" data-before="**" data-center=" " data-after="**"  -->
+								<li class="e-tb-btn" title="굵게" data-mode="append" data-before="**" data-center=" " data-after="**">
+									<i>굵게</i>
 								</li>
-								<li class="e-tb-btn italic" title="이탤릭" data-before="//" 	data-center=" "   data-after="//">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn" title="이탤릭" data-mode="append" data-before="//" 	data-center=" "   data-after="//">
+									<i>이탤릭</i>
 								</li>
-								<li class="e-tb-btn underline" title="밑줄" data-before="__" 	data-center=" "  data-after="__">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn" title="밑줄" data-mode="append" data-before="__" 	data-center=" "  data-after="__">
+									<i>밑줄</i>
 								</li>
-								<li class="e-tb-btn strike" title="취소선" data-before="[d]"  data-center=" " data-after="[d]">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn" title="취소선" data-mode="append" data-before="[d]"  data-center=" " data-after="[d]">
+									<i>취소선</i>
 								</li>
-								<li class="e-tb-btn sub" title="아래첨자" data-before="[sb]"  data-center=" " 	data-after="[sb]">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn" title="아래첨자" data-mode="append" data-before="[sb]"  data-center=" " 	data-after="[sb]">
+									<i>아래첨자</i>
 								</li>
-								<li class="e-tb-btn sup" title="위첨자" data-before="[sp]"  data-center=" "  data-after="[sp]">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn" title="위첨자" data-mode="append" data-before="[sp]"  data-center=" "  data-after="[sp]">
+									<i>위첨자</i>
 								</li>
 								<li class="e-tb-btn colorlayer font-color" title="글자색">
 									<i class="e-tb-icon"></i>
@@ -241,24 +242,24 @@
 							</ul>
 							<div class="e-tb-bar"></div>
 							<ul class="e-tb-group">
-								<li class="e-tb-btn align-left" title="왼쪽정렬" data-before="[align:left]" data-center=""  data-after="[align]">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn align-left" title="왼쪽정렬" data-mode="append" data-before="[align:left]" data-center=""  data-after="[align]">
+									<i>왼쪽정렬</i>
 								</li>
-								<li class="e-tb-btn align-center" title="중앙정렬" data-before="[align:center]" data-center=""  data-after="[align]">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn align-center" title="중앙정렬" data-mode="append" data-before="[align:center]" data-center=""  data-after="[align]">
+									<i>중앙정렬</i>
 								</li>
-								<li class="e-tb-btn align-right" title="오른쪽정렬" data-before="[align:right]" data-center=""  data-after="[align]">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn align-right" title="오른쪽정렬" data-mode="append" data-before="[align:right]" data-center=""  data-after="[align]">
+									<i>오른쪽정렬</i>
 								</li>
-								<li class="e-tb-btn align-justify" title="균등정렬" data-before="[align:justify]" data-center=""  data-after="[align]">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn align-justify" title="균등정렬" data-mode="append" data-before="[align:justify]" data-center=""  data-after="[align]">
+									<i>균등정렬</i>
 								</li>
 								<li class="e-tb-clr"></li>
-								<li class="e-tb-btn list-ol" title="구분선" data-before="--" data-center=""  data-after="">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn list-ol" title="숫자순번" data-mode="insert" data-before="--" data-center=""  data-after="">
+									<i>숫자순번</i>
 								</li>
-								<li class="e-tb-btn list-ul" title="링크" data-before="##" data-center=""  data-after="">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn list-ul" title="사각순번" data-mode="insert" data-before="##" data-center=""  data-after="">
+									<i>사각순번</i>
 								</li>
 								<li class="e-tb-btn indent" title="들여쓰기">
 									<i class="e-tb-icon"></i>
@@ -627,10 +628,30 @@
 <script type="text/javascript" src="/resource/libs/jquery/jquery.pieChart.js"></script>
 <script type="text/javascript" src="/resource/editor/gEditor.js"></script>
 
+<script type="text/javascript" src="/resource/glider/wiki/customer/fn-layer-table.js"></script>
+<script type="text/javascript" src="/resource/glider/wiki/customer/fn-layer-link.js"></script>
+<script type="text/javascript" src="/resource/glider/wiki/customer/fn-layer-image.js"></script>
+<script type="text/javascript" src="/resource/glider/wiki/customer/fn-layer-flash.js"></script>
+<script type="text/javascript" src="/resource/glider/wiki/customer/fn-layer-media.js"></script>
+<script type="text/javascript" src="/resource/glider/wiki/customer/fn-layer-chart.js"></script>
+
+<script type="text/javascript" src="/resource/glider/wiki/edit/fn-editor-selector-v4.js"></script>
+<script type="text/javascript" src="/resource/glider/wiki/edit/fn-editor-util.js"></script>
+<script type="text/javascript" src="/resource/glider/wiki/edit/fn-editor.js"></script>
+<script type="text/javascript" src="/resource/glider/wiki/edit/fn.editor.layer.js"></script>
+
 <script type="text/javascript">
 	var $wikiEditor = $("#wikiEditor");
 	var $toolbars = $(".e-toolbar");
 
+	var tempLayer = "temp-layer";
+	$.makeLayer.init();
+	$.makeLayer.addLayer ( $.layer_link, "link" );
+	$.makeLayer.addLayer ( $.layer_image, "image" );
+	$.makeLayer.addLayer ( $.layer_flash, "flash" );
+	$.makeLayer.addLayer ( $.layer_media, "media" );
+	$.makeLayer.addLayer ( $.layer_chart, "chart" );
+		
 $(function(){
 
 	gEditor.__init('wikiEditor', 'e-toolbar', 'temp-layer');
@@ -638,8 +659,15 @@ $(function(){
 	$toolbars.on("click",".e-tb-btn",function(event){
 		var $me = $(this);
 		var markup = $me.data();
-
-		if($me.hasClass("link")){
+		
+		if ( $me.hasClass("colorlayer") ) {
+			gLayer.dropdownColor($me);
+		}else{
+			$.editorAction(wikiEditor, $me, markup, tempLayer);
+		}
+		
+		
+		/* if($me.hasClass("link")){
 			gLayer.showLayerLink();
 		}
 		else if($me.hasClass("image")){
@@ -664,9 +692,9 @@ $(function(){
 			if($.trim(markup.before !== '') && typeof markup.before !== 'undefined'){
 				gCore.setSelectText(markup.before, markup.after, markup.center);
 			}
-		}
+		} */
 
-		return false;
+		return false; 
 	});
 
 	$toolbars.on("click", ".e-tb-select-layer a", function(event){
