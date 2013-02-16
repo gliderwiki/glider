@@ -663,12 +663,12 @@ $(function(){
 		if ( $me.hasClass("colorlayer") ) {
 			gLayer.dropdownColor($me);
 		}else{
-			$.editorAction(wikiEditor, $me, markup, tempLayer);
+			$.editorAction($wikiEditor, $me, markup, tempLayer);
 		}
 		
 		
 		/* if($me.hasClass("link")){
-			gLayer.showLayerLink();
+			gLayer.showLayerLink();-
 		}
 		else if($me.hasClass("image")){
 			gLayer.showLayerImage();
