@@ -60,11 +60,15 @@ insert into we_meta_info (WE_META_TYPE, WE_META_DOMAIN, WE_META_DESC, WE_META_TA
 -- 글라이더 기본 그룹을 생성한다. 
 INSERT INTO we_group_info (WE_GROUP_CODE, WE_GROUP_NAME, WE_GROUP_TYPE, WE_REQUIRED_YN, WE_GROUP_OWNER, WE_GROUP_INFO, WE_USE_YN,WE_INS_USER, WE_INS_DATE) VALUES ('REQUIRED-01', '기본그룹', '1', 'Y', '1', '글라이더 위키 기본 그룹(삭제불가) ', 'Y', 1 ,NOW());
 
+-- 관리자의 기본 그룹 유저 데이터를 생성한다.
+INSERT INTO we_group_user (WE_GROUP_IDX,WE_USER_IDX,WE_USE_YN,WE_INS_DATE,WE_INS_USER) VALUES (1,1,'Y',NOW(),1);
+
+
 -- 글라이더 기본 공간을 생성한다.
 INSERT INTO we_space (WE_SPACE_NAME, WE_SPACE_DESC, WE_VIEW_PRIVACY, WE_EDIT_PRIVACY, WE_ADMIN_IDX, WE_SPACE_EXPOSED, WE_USE_YN, WE_INS_USER, WE_INS_DATE ) VALUES ( '기본공간', 'GLiDER™ Wiki 기본 공간입니다. 글라이더 위키의 전체적인 사용방법과 위키의 작성방법, 사이트 운영정책에 대해서 설명합니다.', 'ALLGROUP', 'ALLGROUP', '1', 'Y', 'Y',	'1',NOW());
 
 	
--- 글라이더 기본 공간을 생성한다. 
+-- 글라이더 기본 이미을 생성한다. 
 INSERT INTO we_space_image (WE_SPACE_IMAGE_IDX,	WE_SPACE_IDX, WE_USED, WE_INS_DATE) VALUES (1, 1, 1, NOW());
 
 -- 글라이더 기본 위키를 생성한다.  
