@@ -208,34 +208,58 @@
 	</select>
 
 	<select id="SpaceManage.getAllSpaceList" parameterType="int" resultType="java.util.HashMap">
-	SELECT a.we_space_idx
+	SELECT /* SpaceManage.getAllSpaceList - 전체 공간을 조회한다.  */
+		   a.we_space_idx
          , a.we_space_name
          , a.we_ins_date
          , a.we_view_privacy
          , IFNULL(c.we_space_idx, 0) AS favorited
-         , IFNULL(COUNT(b.we_wiki_idx),0) AS wikiCnt
          , d.we_user_nick
          , a.we_ins_user
-	FROM we_space a
-	LEFT JOIN we_wiki b
-	ON a.we_space_idx = b.we_space_idx
+         , (select IFNULL(count(t.we_wiki_idx), 0) from we_wiki t where t.we_space_idx = a.we_space_idx and t.we_use_yn ='Y') AS wikiCnt
+      FROM
+	  (
+       SELECT t.* 
+	    FROM we_space t 
+        , (
+        SELECT * FROM       
+        (
+         SELECT we_space_idx FROM
+	       (
+	         SELECT we_group_idx 
+	           FROM we_group_user
+	          WHERE we_user_idx = #{userIdx,jdbcType=NUMERIC}
+	            and we_use_yn = 'Y'
+	       ) t1 ,we_space_group  t2
+	      WHERE t1.we_group_idx  = t2.we_group_idx
+	        AND t2.we_view_permit =1
+          UNION ALL
+         SELECT T3.WE_SPACE_IDX  
+         FROM 
+         (
+         SELECT we_space_idx
+	       FROM we_space_user
+	      WHERE we_user_idx = #{userIdx,jdbcType=NUMERIC}
+	        AND we_view_permit =1
+          ) T3
+          UNION ALL
+         SELECT we_space_idx FROM WE_SPACE
+           WHERE WE_VIEW_PRIVACY = 'ALLGROUP' 
+             AND we_use_yn = 'Y' ) T2
+         ) T2
+        WHERE t.WE_SPACE_IDX = T2.WE_SPACE_IDX         
+	    AND t.we_use_yn = 'Y'
+	) a
 	LEFT JOIN (SELECT we_space_idx FROM we_favorite WHERE we_user_idx=#{userIdx,jdbcType=NUMERIC} AND we_favorite_type='SPACE' AND we_use_yn='Y') c
-	ON a.we_space_idx = c.we_space_idx
-	INNER JOIN we_user d
-	ON a.we_admin_idx=d.we_user_idx
-	WHERE a.we_space_exposed = 'Y'
-	AND a.we_use_yn='Y'
-	GROUP BY a.we_space_idx
-           , a.we_space_name
-           , a.we_ins_date
-           , a.we_view_privacy
-           , d.we_user_nick
-    ORDER BY we_ins_date DESC
-    LIMIT 20
+		 ON a.we_space_idx = c.we_space_idx
+		 INNER JOIN we_user d
+		 ON a.we_admin_idx=d.we_user_idx
+	ORDER BY we_ins_date DESC
 	</select>
 
 	<select id="SpaceManage.getRecentSpaceList" resultType="java.util.HashMap">
-	SELECT a.we_space_idx
+	SELECT /* SpaceManage.getRecentSpaceList -  최근 생성된 공간을 조회한다 (대시보드)  */
+		   a.we_space_idx
          , a.we_space_name
          , a.we_ins_date
          , a.we_view_privacy
@@ -243,23 +267,48 @@
          , d.we_user_nick
          , a.we_ins_user
          , DATE_FORMAT(a.we_ins_date,  '%Y-%m-%d') AS insert_date
-	FROM we_space a
-	LEFT JOIN we_wiki b
-	ON a.we_space_idx = b.we_space_idx
-	and b.WE_USE_YN = 'Y'  
-	LEFT JOIN (SELECT we_space_idx FROM we_favorite WHERE we_user_idx=#{userIdx,jdbcType=NUMERIC} AND we_favorite_type='SPACE' AND we_use_yn='Y') c
-	ON a.we_space_idx = c.we_space_idx
-	INNER JOIN we_user d
-	ON a.we_admin_idx=d.we_user_idx
-	WHERE a.we_space_exposed = 'Y'
-	AND a.we_use_yn='Y'
-	GROUP BY a.we_space_idx
-           , a.we_space_name
-           , a.we_ins_date
-           , a.we_view_privacy
-           , d.we_user_nick
-    ORDER BY we_ins_date DESC
-    LIMIT  #{startRow},  #{endRow}
+      FROM
+	  (
+       SELECT t.* 
+	    FROM we_space t 
+        , (
+        SELECT * FROM       
+        (
+         SELECT we_space_idx FROM
+	       (
+	         SELECT we_group_idx 
+	           FROM we_group_user
+	          WHERE we_user_idx = #{userIdx,jdbcType=NUMERIC}
+	            and we_use_yn = 'Y'
+	       ) t1 ,we_space_group  t2
+	      WHERE t1.we_group_idx  = t2.we_group_idx
+	        AND t2.we_view_permit = 1
+          UNION ALL
+         SELECT T3.we_space_idx  
+         FROM 
+         (
+         SELECT we_space_idx
+	       FROM we_space_user
+	      WHERE we_user_idx = #{userIdx,jdbcType=NUMERIC}
+	        AND we_view_permit =1
+          ) T3
+          UNION ALL
+         SELECT we_space_idx FROM WE_SPACE
+           WHERE WE_VIEW_PRIVACY = 'ALLGROUP' 
+             AND we_use_yn = 'Y' ) T2
+         ) T2
+        WHERE t.WE_SPACE_IDX = T2.WE_SPACE_IDX         
+	    AND t.we_use_yn = 'Y'
+	) a
+	LEFT JOIN (SELECT we_space_idx FROM we_favorite 
+	            WHERE we_user_idx= #{userIdx,jdbcType=NUMERIC} 
+	              AND we_favorite_type='SPACE' 
+	              AND we_use_yn='Y') c
+		 ON a.we_space_idx = c.we_space_idx
+		 INNER JOIN we_user d
+		 ON a.we_admin_idx=d.we_user_idx
+	ORDER BY we_ins_date DESC
+    LIMIT  #{startRow},  #{endRow} 
 	</select>
 
 	<!-- 내가 조회그룹에 있는지 검사함 -->
