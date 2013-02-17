@@ -80,6 +80,11 @@ public class SpaceDao extends SqlSessionDaoSupport {
 		return userList;
 	}
 
+	/**
+	 * 내가 조회할 수 있는 모든 공간을 조회한다. (20건식)
+	 * @param userIdx
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Map<String, String>> getAllSpaceList(int userIdx) {
 		List<Map<String, String>> userList = null;

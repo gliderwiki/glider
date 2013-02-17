@@ -14,7 +14,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.web.domain.AuthorityType;
 import org.gliderwiki.web.domain.FavorityType;
 import org.gliderwiki.web.domain.ImageInfo;
@@ -70,14 +72,15 @@ public class SpaceController {
 
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String list(@LoginUser MemberSessionVo loginUser, ModelMap model) throws Throwable {
+	public ModelAndView list(@LoginUser MemberSessionVo loginUser,  HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		List<Map<String, String>> list = spaceService.getAllSpaceList(loginUser.getWeUserIdx());
 		logger.debug("생성된 리스트 객체 사이즈 : {}", list.size());
 
-		model.addAttribute("list", list);
-		model.addAttribute("listType", "all");
-
-		return "/space/list";
+		modelAndView.addObject("list", list);
+		modelAndView.addObject("listType", "all");
+		modelAndView.setViewName("/space/list");
+		return modelAndView;
+		
 	}
 
 	@RequestMapping(value = "/main/{spaceIdx}", method = RequestMethod.GET)
@@ -162,6 +165,14 @@ public class SpaceController {
 		return "/space/form";
 	}
 
+	/**
+	 * 공간 정보 저장 
+	 * @param loginUser
+	 * @param request
+	 * @param weSpace
+	 * @return
+	 * @throws Throwable
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(@LoginUser MemberSessionVo loginUser, HttpServletRequest request,
 			@ModelAttribute WeSpace weSpace) throws Throwable {
