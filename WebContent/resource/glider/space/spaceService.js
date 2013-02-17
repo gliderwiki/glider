@@ -17,12 +17,14 @@
 			me.$viewName = $("#we_view_name", me.$writeForm);
 			me.$editData = $("#we_edit_data", me.$writeForm);
 			me.$editName = $("#we_edit_name", me.$writeForm);
+			
 		},
 		create: function() {
 			var me = this;
 
 			me.uploadTempFile();
 			me.checkGroup();
+			me.checkExposed();
 			me.userSelect();
 			me.writeFormSubmit();
 			me.preview();
@@ -92,6 +94,22 @@
 				}
 			});
 		},
+		checkExposed : function() {
+			$("input[name=we_space_exposed]").live("click", function() {	
+				var exposed =  $(this).val();
+				console.log("val = " + exposed)
+				if(exposed == 'N') {
+					$("#we_view_privacy1").attr("disabled", true);
+					$("#we_edit_privacy1").attr("disabled", true);
+					$("#we_view_privacy1").attr("checked", false);
+					$("#we_edit_privacy1").attr("checked", false);
+				} else {
+					$("#we_view_privacy1").attr("disabled", false);
+					$("#we_edit_privacy1").attr("disabled", false);
+				}
+			});			
+		},
+		
 		viewAllGroup: function(checkType, type, $viewArea) {
 			$.get("/space/group/search", function(data){
 				if(data.length > 0) {
@@ -234,6 +252,8 @@
 			$(document).on("click", ".spaceCreate", function() {
 				jQuery($("#formSubmitBtn")).trigger('submit');
 			});
+			
+			
 		},
 		GroupAndUserSelectedCheck: function(authorityType, checkType) {
 			var me = this;
