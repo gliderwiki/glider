@@ -33,14 +33,14 @@
 							<form:radiobutton path="we_space_exposed" value="Y" />
 							<label for="privacyPublic">
 								<strong class="tit">공간 정보 공개</strong>
-								: 공간의 업데이트가 정보가 메인 화면에 노출됩니다.
+								: 대시보드에서 공간의 업데이트 정보를 전체 사용자가 조회 할 수 있습니다. 
 							</label>
 						</p>
 						<p>
 							<form:radiobutton path="we_space_exposed" value="N" />
 							<label for="privacyNonPublic">
 								<strong class="tit">공간 정보 공개 안함</strong>
-								: 공간의 업데이트가 정보가 메인 화면에 노출되지 않습니다.
+								: 대시보드에 지정된 그룹 혹은 지정된 사용자에게만 공간의 업데이트 정보를 노출합니다. 
 							</label>
 						</p>
 					</div>
