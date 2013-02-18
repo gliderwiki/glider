@@ -16,8 +16,8 @@ import net.sf.json.JSONSerializer;
 
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.util.DateUtil;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.JoinStatus;
 import org.gliderwiki.web.domain.JoinType;
 import org.gliderwiki.web.domain.WeSpaceJoin;

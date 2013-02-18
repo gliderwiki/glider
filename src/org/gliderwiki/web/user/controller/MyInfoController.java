@@ -21,11 +21,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.GliderwikiException;
 import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
 import org.gliderwiki.framework.util.StringUtil;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.JoinType;
 import org.gliderwiki.web.domain.WeFile;
 import org.gliderwiki.web.domain.WeProfile;
