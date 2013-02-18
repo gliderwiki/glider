@@ -42,7 +42,9 @@
 			};
 
 			try {
+				
 				socket = io.connect('http://gliderwiki.org:3000?myChannel='+me.$encryptAChannel, socketCliConf);
+				// 클라이언트에서 채널에 이벤트가 발생되면 데이터를 받는다. 
 				socket.on(me.$encryptAChannel, function(data){
 					me.showNewNotiCount();
 
