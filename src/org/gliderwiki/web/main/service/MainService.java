@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.util.RequestManager;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.VisitCounter;
 import org.gliderwiki.web.domain.WeSpace;
 import org.gliderwiki.web.domain.WeWiki;
