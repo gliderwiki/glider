@@ -30,6 +30,7 @@
 		</property>
 	</bean>
 
+	<!-- 현재 사용안함  RedisTemplate 을 상속하여 Spring-Data에서 redis로의 데이터 접근 및 처리명령을 제공하는 helper -->
 	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"
 		p:connectionFactory-ref="redisConnectionFactory" />
 
