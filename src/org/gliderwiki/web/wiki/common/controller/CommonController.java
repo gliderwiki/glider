@@ -212,7 +212,6 @@ public class CommonController {
 
 		try {
 			file.transferTo(f);
-			System.out.println("파일업로드 완료");
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -234,9 +233,6 @@ public class CommonController {
 	@RequestMapping(value = "/multiUploadFile", method = RequestMethod.POST)
 	public void multiUploadFile(@ModelAttribute("concat") UploadFileVo uploadFileVo, BindingResult result) {
 
-		System.out.println("1 :" + uploadFileVo.getFileData());
-		System.out.println("2 :" + uploadFileVo.getFile_upload());
-		System.out.println("3 :" + uploadFileVo.getFileNm());
 		/*
 		 * MultipartFile file = uploadFileVo.getFileData();
 		 *
