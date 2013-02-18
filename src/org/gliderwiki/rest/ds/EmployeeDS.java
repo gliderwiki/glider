@@ -17,8 +17,6 @@ public class EmployeeDS {
 		Employee e1 = new Employee(1L, "Huang Yi Ming", "huangyim@cn.ibm.com");
 		Employee e2 = new Employee(2L, "Wu Dong Fei", "wudongf@cn.ibm.com");
 		
-		System.out.println("###e1.getId() : " + e1.getId());
-		
 		allEmployees.put(e1.getId(), e1);
 		allEmployees.put(e2.getId(), e2);
 	}
