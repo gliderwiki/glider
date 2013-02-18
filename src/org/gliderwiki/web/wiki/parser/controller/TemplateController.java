@@ -20,10 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.DBHandleException;
 import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.util.GliderTagParser;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WePoint;
 import org.gliderwiki.web.domain.WeSpace;
 import org.gliderwiki.web.domain.WeTemplate;

@@ -13,8 +13,8 @@ package org.gliderwiki.web.wiki.parser.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.util.GliderTagParser;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.system.SystemConst;
 import org.gliderwiki.web.wiki.common.service.CommonService;
 import org.slf4j.Logger;

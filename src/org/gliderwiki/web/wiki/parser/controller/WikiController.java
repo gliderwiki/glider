@@ -23,7 +23,6 @@ import javax.validation.Valid;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.lang.StringUtils;
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.DBHandleException;
 import org.gliderwiki.framework.exception.FilePermitMsgException;
 import org.gliderwiki.framework.exception.GliderwikiException;
@@ -34,6 +33,7 @@ import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.util.RequestManager;
 import org.gliderwiki.util.WikiProdectStatus;
 import org.gliderwiki.web.common.DownLoadAction;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeBbsComment;
 import org.gliderwiki.web.domain.WeFile;
 import org.gliderwiki.web.domain.WePoint;
@@ -569,7 +569,7 @@ public class WikiController {
 			 */
 			logger.debug("### 알람 추가 시작");
 			int count = commonService.requestAlarmInfo(loginUser.getWeUserIdx(), loginUser.getWeUserNick(),
-					SystemConst.SPACE_NEW_POST, weSpace.getWe_ins_user(), null, weSpace.getWe_space_idx());
+					SystemConst.SPACE_NEW_POST, weSpace.getWe_ins_user(), insertWikiIdx, weSpace.getWe_space_idx());
 			logger.debug("### 알람 추가 끝 : {} ", count);
 
 			result.setMessage("위키가 저장되었습니다.");

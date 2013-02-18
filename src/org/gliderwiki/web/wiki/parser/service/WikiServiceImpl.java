@@ -17,13 +17,13 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.DBHandleException;
 import org.gliderwiki.framework.exception.GliderwikiException;
 import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
 import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.util.GliderTagParser;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.FavorityType;
 import org.gliderwiki.web.domain.WeFavorite;
 import org.gliderwiki.web.domain.WeFile;
