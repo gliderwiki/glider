@@ -32,8 +32,6 @@ public class GliderwikiAccessDeniedHandler implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-		System.out.println("erorrUrl : " + request.getRequestURI());
-
 		if (!response.isCommitted()) {
 			// Put exception into request scope (perhaps of use to a view)
 			request.setAttribute(WebAttributes.ACCESS_DENIED_403, accessDeniedException);
