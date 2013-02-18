@@ -11,8 +11,8 @@ package org.gliderwiki.web.wiki.engine.service;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.gliderwiki.framework.entity.dao.EntityDao;
 import org.gliderwiki.framework.exception.GliderwikiException;
+import org.gliderwiki.web.common.dao.EntityDao;
 import org.gliderwiki.web.domain.WeWiki;
 import org.gliderwiki.web.domain.WeWikiBak;
 import org.gliderwiki.web.wiki.engine.dao.WikiEngineDao;
