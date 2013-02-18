@@ -19,12 +19,12 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
 import org.gliderwiki.framework.util.SecretKeyPBECipher;
 import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.util.SendMailSMTP;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeProfile;
 import org.gliderwiki.web.domain.WeUser;
 import org.gliderwiki.web.system.SystemConst;
