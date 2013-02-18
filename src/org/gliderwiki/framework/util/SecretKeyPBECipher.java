@@ -22,7 +22,6 @@ public class SecretKeyPBECipher {
 	private static byte[] decryptedText;
 
 	public static void initiate(String currentKey) throws Exception {
-		System.out.println("currentKey : " + currentKey);
 		keyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
 		keySpec = new PBEKeySpec(currentKey.toCharArray());
 		key = keyFactory.generateSecret(keySpec);
@@ -69,9 +68,9 @@ public class SecretKeyPBECipher {
 			data = SecretKeyPBECipher.decrypt(data);
 			System.out.println("3 : " + new String(data, "euc-kr"));
 			
-			//data = SecretKeyPBECipher.decrypt("7qXgar1JEeE3LjrWBBelwA==");
-			//String password = Base64Coder.decodeString(new String(data, "euc-kr"));
-			//System.out.println("2 : " + password);
+			data = SecretKeyPBECipher.decrypt("7qXgar1JEeE3LjrWBBelwA==");
+			String password = Base64Coder.decodeString(new String(data, "euc-kr"));
+			System.out.println("2 : " + password);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
