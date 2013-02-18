@@ -266,7 +266,7 @@ public class GliderFileUtils extends FileUtils {
 				br = new BufferedReader(isr);
 				String line = null;
 				while ((line = br.readLine()) != null) {
-					System.out.println(line);
+					//System.out.println(line);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
