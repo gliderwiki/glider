@@ -17,11 +17,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.UserNotFoundException;
 import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.util.SessionUtil;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeUser;
 import org.gliderwiki.web.login.service.LoginService;
 import org.gliderwiki.web.system.SessionService;

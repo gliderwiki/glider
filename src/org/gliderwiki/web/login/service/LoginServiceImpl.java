@@ -25,7 +25,6 @@ import net.sf.json.JSONSerializer;
 
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.DBHandleException;
 import org.gliderwiki.framework.exception.GliderwikiException;
 import org.gliderwiki.framework.exception.UserNotFoundException;
@@ -34,6 +33,7 @@ import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.SecretKeyPBECipher;
 import org.gliderwiki.util.PropertyUtil;
 import org.gliderwiki.util.SendMailSMTP;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeGroupInfo;
 import org.gliderwiki.web.domain.WeGroupUser;
 import org.gliderwiki.web.domain.WeProfile;
