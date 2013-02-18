@@ -11,7 +11,7 @@ package org.gliderwiki.web.system.notification.service;
 
 import javax.annotation.Resource;
 
-import org.gliderwiki.framework.entity.service.EntityService;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeAlarmInfo;
 import org.springframework.stereotype.Service;
 
