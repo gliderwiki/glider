@@ -18,11 +18,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.GliderwikiException;
 import org.gliderwiki.framework.exception.ResourceNotFoundException;
 import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.AuthorityType;
 import org.gliderwiki.web.domain.ImageInfo;
 import org.gliderwiki.web.domain.JoinStatus;

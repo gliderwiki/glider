@@ -14,8 +14,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.GliderwikiException;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeBbs;
 import org.gliderwiki.web.domain.WeBbsComment;
 import org.gliderwiki.web.space.dao.BoardDao;

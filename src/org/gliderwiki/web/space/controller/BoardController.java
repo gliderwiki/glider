@@ -19,11 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.GliderwikiException;
 import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.util.PageNavigation;
 import org.gliderwiki.util.RequestManager;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeBbs;
 import org.gliderwiki.web.domain.WeBbsComment;
 import org.gliderwiki.web.space.service.BoardService;
