@@ -11,7 +11,7 @@ package org.gliderwiki.wiki.temp;
 
 import static com.ReflectionInjectorUtils.injector;
 
-import org.gliderwiki.framework.entity.service.EntityService;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeWiki;
 import org.gliderwiki.web.wiki.parser.service.WikiServiceImpl;
 import org.junit.Before;

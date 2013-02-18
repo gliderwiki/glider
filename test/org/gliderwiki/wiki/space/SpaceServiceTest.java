@@ -15,8 +15,8 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.gliderwiki.framework.entity.dao.EntityDao;
-import org.gliderwiki.framework.entity.service.EntityService;
+import org.gliderwiki.web.common.dao.EntityDao;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.AuthorityType;
 import org.gliderwiki.web.domain.ImageInfo;
 import org.gliderwiki.web.domain.WeSpace;

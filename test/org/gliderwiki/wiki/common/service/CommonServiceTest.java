@@ -16,7 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.gliderwiki.framework.entity.service.EntityService;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.FavorityType;
 import org.gliderwiki.web.domain.WeFavorite;
 import org.gliderwiki.web.wiki.common.service.CommonService;

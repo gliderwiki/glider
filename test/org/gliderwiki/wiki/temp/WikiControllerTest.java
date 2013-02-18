@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.gliderwiki.framework.entity.service.EntityService;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeSpace;
 import org.gliderwiki.web.domain.WeWiki;
 import org.gliderwiki.web.system.SystemConst;
