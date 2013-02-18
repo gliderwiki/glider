@@ -18,10 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.gliderwiki.admin.service.AdminGroupService;
 import org.gliderwiki.admin.service.AdminUserService;
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.GliderwikiException;
 import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.util.SessionUtil;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeGroupInfo;
 import org.gliderwiki.web.domain.WeUser;
 import org.gliderwiki.web.domain.WeWiki;

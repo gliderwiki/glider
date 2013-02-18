@@ -14,7 +14,7 @@ import java.util.List;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.gliderwiki.admin.dao.AdminKeywordDao;
-import org.gliderwiki.framework.entity.service.EntityService;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeWikiTag;
 import org.gliderwiki.web.system.SystemConst;
 import org.gliderwiki.web.vo.KeywordVo;
