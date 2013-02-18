@@ -13,8 +13,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.GliderwikiException;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeAccess;
 
 import com.google.common.collect.Lists;

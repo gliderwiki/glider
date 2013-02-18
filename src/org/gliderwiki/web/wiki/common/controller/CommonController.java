@@ -11,10 +11,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.exception.GliderwikiException;
 import org.gliderwiki.framework.util.GliderFileUtils;
 import org.gliderwiki.framework.util.StringUtil;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.Attachment;
 import org.gliderwiki.web.domain.AttachmentCategory;
 import org.gliderwiki.web.domain.AttachmentType;
