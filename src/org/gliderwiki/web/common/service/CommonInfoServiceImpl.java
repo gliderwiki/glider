@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.web.common.dao.CommonInfoDao;
 import org.gliderwiki.web.domain.WeFile;
 import org.gliderwiki.web.domain.WeMenu;

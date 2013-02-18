@@ -22,12 +22,12 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
-import org.gliderwiki.framework.entity.service.EntityService;
 import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.util.RequestManager;
 import org.gliderwiki.util.SessionUtil;
 import org.gliderwiki.web.common.DownLoadAction;
 import org.gliderwiki.web.common.service.CommonInfoService;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeMenu;
 import org.gliderwiki.web.system.SystemConst;
 import org.gliderwiki.web.vo.JsonResponse;
