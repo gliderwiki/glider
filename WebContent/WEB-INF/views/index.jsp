@@ -119,7 +119,7 @@ taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 					</div>
 					<div class="wrap-btn">
 						<a href="/dashboard" class="btn-main preview">둘러보기</a>
-						<a href="javascript:alert('준비중...')" class="btn-main apply">다운로드</a>
+						<a href="/download" class="btn-main apply">다운로드</a>
 					</div>
 				</div>
 			</div>
