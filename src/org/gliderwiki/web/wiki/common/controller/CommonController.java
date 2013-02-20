@@ -63,7 +63,8 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * Service 명명 규칙 : 업무명 + Service,  업무명 + ServiceImpl 의 형태로 작성한다.
  * Dao 명명 규칙 : 업무명 + Dao,  업무명 + DaoImpl 의 형태로 작성한다.
- * //target = new String( target.getBytes("ISO-8859-1"),"UTF-8");
+ * target = new String( target.getBytes("ISO-8859-1"),"UTF-8");
+ * TODOLIST : 사용하지 않는 일부 메소드 삭제 해야 함 
  */
 
 @Controller
@@ -81,13 +82,6 @@ public class CommonController {
 
 	@Autowired
 	private CommonService commonService;
-
-
-//	@Resource(name = "redisTemplate")
-//	private RedisTemplate<String, String> redisTemplate;
-//
-//	@Resource(name = "redisTemplate")
-//	private RedisTemplate<String, List<WeSpace>> spoaceRedisTemplate;
 
 	@Value("#{config['file.maxSize']}")
 	String maxSize;

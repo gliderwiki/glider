@@ -44,7 +44,10 @@ public class NotificationComponent {
 	@Async
 	public void sendNotification(Integer userIdx, String message) throws Throwable {
 		try {
-			logger.debug("redis call!!!");
+			logger.debug("#################redis call##################");
+			logger.debug("userIdx : {}", userIdx);
+			logger.debug("message : {}", message);
+			logger.debug("#################redis call##################");
 			redisTemplate.convertAndSend(simpleAesStringCipherManager.encrypt(String.format("A_%d", userIdx)), message);
 			logger.debug("alarm send success!!");
 		} catch (Exception e) {

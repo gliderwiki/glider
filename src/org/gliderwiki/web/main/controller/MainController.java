@@ -108,8 +108,6 @@ public class MainController {
 			List<Map<String, String>> bestWikiList = mainService.getHomeWikiList("best");
 			List<Map<String, String>> recentWikiList = mainService.getHomeWikiList("recent");
 
-
-
 			int allWikiCnt = mainService.getWikiCount();
 			int allTagCnt = mainService.getTagCount();
 			int myWikiCnt = mainService.getMyWikiCount(loginUser.getWeUserIdx());
