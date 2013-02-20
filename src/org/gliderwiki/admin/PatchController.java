@@ -9,15 +9,8 @@
  */
 package org.gliderwiki.admin;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
@@ -31,13 +24,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.install.InstallPropertyUtil;
 import org.gliderwiki.util.PropertyUtil;
-import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeFunction;
 import org.gliderwiki.web.domain.WePatch;
 import org.gliderwiki.web.system.SystemConst;
 import org.gliderwiki.web.vo.JsonResponse;
-import org.gliderwiki.web.vo.PatchInfoVo;
 import org.gliderwiki.web.vo.JsonResponse.ResponseStatus;
+import org.gliderwiki.web.vo.PatchInfoVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +45,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 /**
+ * @description 글라이더 위키의 패치 정보를 조회하여 서버에 반영한다. 
  * @author yion
  *
  */
@@ -62,14 +55,10 @@ public class PatchController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private EntityService entityService;
-	
-
-	@Autowired
     private RestTemplate restTemplate;
 	
-	
-	public static final String REST_SERVER_URL = "http://www.gliderwiki.org";
+	// 글라이더 위키의 파일 서버 접속 
+	public static final String REST_SERVER_URL = "http://localhost:8080";
 	//public static final String REST_SERVER_URL = "http://localhost";
 	
 	
@@ -181,7 +170,26 @@ public class PatchController {
 		String localPath = patchVo.getWe_patch_path();
 		String patchType = patchVo.getWe_patch_type();		// 패치 타입에 따라 수행되는 Biz Logic 이 다르다. 
 		
-		
+		/*
+		 * INSERT INTO `wiki2`.`we_patch` 
+			(
+			`WE_FUNCTION_IDX`, 
+			`WE_FILE_NAME`, 
+			`WE_FILE_PATH`, 
+			`WE_PATCH_TYPE`, 
+			`WE_PATCH_PATH`, 
+			`WE_INS_DATE`
+			)
+			VALUES
+			(
+			1, 
+			'framework-20130302.jar', 
+			'/resource/data/patch/v101/', 
+			'/WEB-INF/lib/', 
+			'WE_PATCH_PATH', 
+			NOW()
+			);
+		 */
 		
 		String fullPath = filePath + "/" + fileName;
 	
