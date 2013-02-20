@@ -63,7 +63,10 @@ public class PatchServiceRest {
 	@RequestMapping(method=RequestMethod.POST, value="/patchService")
 	public @ResponseBody PatchInfoVo patchService(@RequestBody PatchInfoVo patchInfoModel, HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		logger.debug("## Rest Call :  " + patchInfoModel.toString());
-		//TODOLIST 사용자 정보 인증 (라이센스 키, 도메인, 이메일) 
+		//TODOLIST 사용자 정보 인증
+		// 사용자 도메인
+		// 사용자 이메일
+		// 인증키를 받아 회원 DB에 등록되어 있는지 검증한다. 
 		
 		logger.debug("#request.getSession().getServletContext().getRealPath : " + request.getSession().getServletContext().getRealPath("/WEB-INF/spring/properties/"));
 		
@@ -94,6 +97,38 @@ public class PatchServiceRest {
 		// 버전이 다를 경우 WE_FUNCTION 에서 데이터 가져옴  Y = 확장 기능파일 , N = 패치파일  
 		arrayFunctionList = patchService.getCurrentFunctionList(clientVersion, "N");
 		
+		/*
+		 * 
+		INSERT INTO `wiki2`.`we_function` 
+			(
+			`WE_FUNCTION_NAME`, 
+			`WE_FUNCTION_DESC`, 
+			`WE_FUNCTION_CODE`, 
+			`WE_FUNCTION_VER`, 
+			`WE_FUNCTION_TYPE`, 
+			`WE_USE_YN`, 
+			`WE_EXTEND_YN`, 
+			`WE_CALL_URL`, 
+			`WE_INS_DATE`, 
+			`WE_INS_USER`
+			)
+			VALUES
+			(
+			'프레임웍 버그 패치', 
+			'framework20130302.jar 버그 패치 버전입니다.', 
+			'v01', 
+			'1.0.1', 
+			'LIB', 
+			'Y', 
+			'N', 
+			'/service/', 
+			NOW(), 
+			1
+			);
+
+		 * 
+		 * 
+		 */
 		return arrayFunctionList;
 	}
 	
