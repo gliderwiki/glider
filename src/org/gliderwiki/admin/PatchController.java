@@ -11,6 +11,7 @@ package org.gliderwiki.admin;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
@@ -37,6 +38,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -74,12 +76,7 @@ public class PatchController {
 	public ModelAndView adminPatch(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		logger.debug("### adminLogin ");
 		
-		String svcPath = request.getSession().getServletContext().getRealPath(SystemConst.PROPERTY_FULL_PATH + "version");
-		boolean isServer = false;
-		
-		// 클라이언트 버전 정보를 가져온다 
-		Properties props = PropertyUtil.getVersionPropertyInfo(svcPath, isServer);
-		String clientVersion = props.getProperty("version.info");
+		String clientVersion = PropertyUtil.getVersionProps(request, false);
 		
 		// 글라이더 서버에 전송하기 위한 기본 정보를 config.properties 에서 조회한다. 
 		String configPath = request.getSession().getServletContext().getRealPath(SystemConst.PROPERTY_FULL_PATH + "config");
@@ -108,8 +105,8 @@ public class PatchController {
 		logger.debug("###patch : " + patch.toString());
 		
 		// version 정보가 1.1.2 와 같은 형식이므로 rest 통신시 parameter로 넘어가지 않음
-		// 따라서 - 로 replace 처리 함 
-		String version = clientVersion.replaceAll("\\.", "-");  
+		// 따라서 112 같은 형식으로  replace 처리 함 
+		String version = clientVersion.replaceAll("\\.", "");  
 		
 		
 		ResponseEntity<WeFunction[]> weFunctionList = null;
@@ -132,7 +129,7 @@ public class PatchController {
 		modelAndView.setViewName("admin/extension/patchMgr");
 		return modelAndView; 
 	}
-	
+
 	
 	/**
 	 * 패치를 다운받아 지정된 위치에 파일을 복사한다. 
@@ -158,11 +155,17 @@ public class PatchController {
 		
 		HttpEntity<WePatch> entity = new HttpEntity<WePatch>(restVo);
 		String restUrl = REST_SERVER_URL + callUrl;
+		
+		logger.debug("#### restUrl : "  +restUrl);
+		// 패치 정보가 있는지 조회 
 		ResponseEntity<WePatch> entityResponse = restTemplate.postForEntity(restUrl, entity, WePatch.class);
 		
 		// 현재 클릭한 패치 버전의 WePatch 정보를 조회한다. 
 		// 패치의 경로, 패치 파일명, 패치 타입, 패치 파일의 로컬 저장 경로를 조회한다. 
 		WePatch patchVo = entityResponse.getBody();
+		
+		
+		logger.debug("############ entityResponse.getBody() : " +entityResponse.getBody().toString());
 		
 			
 		String filePath = patchVo.getWe_file_path();
@@ -170,28 +173,9 @@ public class PatchController {
 		String localPath = patchVo.getWe_patch_path();
 		String patchType = patchVo.getWe_patch_type();		// 패치 타입에 따라 수행되는 Biz Logic 이 다르다. 
 		
-		/*
-		 * INSERT INTO `wiki2`.`we_patch` 
-			(
-			`WE_FUNCTION_IDX`, 
-			`WE_FILE_NAME`, 
-			`WE_FILE_PATH`, 
-			`WE_PATCH_TYPE`, 
-			`WE_PATCH_PATH`, 
-			`WE_INS_DATE`
-			)
-			VALUES
-			(
-			1, 
-			'framework-20130302.jar', 
-			'/resource/data/patch/v101/', 
-			'/WEB-INF/lib/', 
-			'WE_PATCH_PATH', 
-			NOW()
-			);
-		 */
-		
 		String fullPath = filePath + "/" + fileName;
+		
+		logger.debug("### fullPath : " + fullPath);
 	
 		// 서버측 파일 전체 경로 
 		String listUrl = REST_SERVER_URL+fullPath;
@@ -221,6 +205,9 @@ public class PatchController {
 				FileOutputStream fos = new FileOutputStream(destination);
 				httpEntity.writeTo(fos);
 			    fos.close();
+			    
+			    
+			    // client-version 에 버전정보를 업데이트 해준다. 
 			    
 			    res.setResult(fileName);
 				res.setStatus(ResponseStatus.SUCCESS);
@@ -339,10 +326,6 @@ public class PatchController {
 			res.setResult(fileName);
 			res.setStatus(ResponseStatus.FAIL);
 		}
-		
-		
-		
-		
 		logger.debug("#### res : " + res.toString());
 		return res;
 	}
@@ -388,12 +371,7 @@ public class PatchController {
 	public ModelAndView adminExtension(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		logger.debug("### adminExtension ");
 		
-		String svcPath = request.getSession().getServletContext().getRealPath(SystemConst.PROPERTY_FULL_PATH + "version");
-		boolean isServer = false;
-		
-		// 클라이언트 버전 정보를 가져온다 
-		Properties props = PropertyUtil.getVersionPropertyInfo(svcPath, isServer);
-		String clientVersion = props.getProperty("version.info");
+		String clientVersion = PropertyUtil.getVersionProps(request, false);
 		
 		// 글라이더 서버에 전송하기 위한 기본 정보를 config.properties 에서 조회한다. 
 		String configPath = request.getSession().getServletContext().getRealPath(SystemConst.PROPERTY_FULL_PATH + "config");
@@ -423,7 +401,7 @@ public class PatchController {
 		
 		// version 정보가 1.1.2 와 같은 형식이므로 rest 통신시 parameter로 넘어가지 않음
 		// 따라서 - 로 replace 처리 함 
-		String version = clientVersion.replaceAll("\\.", "-");  
+		String version = clientVersion.replaceAll("\\.", "");  
 		
 		
 		ResponseEntity<WeFunction[]> weFunctionList = null;

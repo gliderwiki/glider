@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,7 +24,6 @@ import org.gliderwiki.web.domain.WeFunction;
 import org.gliderwiki.web.domain.WePatch;
 import org.gliderwiki.web.system.SystemConst;
 import org.gliderwiki.web.vo.PatchInfoVo;
-import org.gliderwiki.web.vo.TempUploadVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +33,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 
 /**
@@ -68,14 +64,7 @@ public class PatchServiceRest {
 		// 사용자 이메일
 		// 인증키를 받아 회원 DB에 등록되어 있는지 검증한다. 
 		
-		logger.debug("#request.getSession().getServletContext().getRealPath : " + request.getSession().getServletContext().getRealPath("/WEB-INF/spring/properties/"));
-		
-		String svcPath = request.getSession().getServletContext().getRealPath(SystemConst.PROPERTY_FULL_PATH + "version");
-		boolean isServer = true;
-		
-		// 서버의  버전 정보를 가져온다 
-		Properties props = PropertyUtil.getVersionPropertyInfo(svcPath, isServer);
-		String serverVersion = props.getProperty("version.info");
+		String serverVersion = PropertyUtil.getVersionProps(request, true);
 		
 		logger.debug("##serverVersion : " + serverVersion);
 		patchInfoModel.setWeServerVerionInfo(serverVersion);
@@ -149,61 +138,89 @@ public class PatchServiceRest {
 		return arrayFunctionList;
 	}
 	
+	
 	/**
 	 * 원격지 클라이언트 브라우저에서 다운로드 클릭시 파일을 다운로드 형태로 넘겨줌 - 추후 사용함 (실시간 패치가 아니고 다운로드형태임)
-	 * 글라이더 위키 다운로드시 이용할 예정임 
+	 * 글라이더 위키 다운로드시 이용할 예정임
 	 * @param functionIdx
 	 * @param request
 	 * @param response
 	 * @throws Throwable
-	 
+	
 	@RequestMapping(method=RequestMethod.POST, value = "/patchList/download/{functionIdx}")
 	public void download(@PathVariable("functionIdx") String functionIdx, HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		logger.debug("###download !!");
-		
+	
 		logger.debug("###functionIdx : " + functionIdx);
-		
-		//html 에서 아래와 같이 호출 함 
+	
+		//html 에서 아래와 같이 호출 함
 		//var funcFileDownload = function(url){
 		//$('#patchDownloadForm').attr('method', 'post');
-    	//$('#patchDownloadForm').attr('action', '/patchList/download/2');
-    	//$('#patchDownloadForm').submit();
-    	// }
-
-
+		//$('#patchDownloadForm').attr('action', '/patchList/download/2');
+		//$('#patchDownloadForm').submit();
+		// }
+	
+	
 	 	String filePath = request.getSession().getServletContext().getRealPath("/resource/data/patch/v101");
 		String fileName = "framework-20120723.jar";
-		
+	
 		String fullPath = filePath + "/" + fileName;
 	
-        File file = new File(fullPath);
-        response.setContentLength((int)file.length());
-        response.setHeader("Content-Disposition", "attachment; fileName=\""+file.getName()+"\";");
-        response.setHeader("Content-Transfer-Encoding", "binary");
-        ServletOutputStream out = response.getOutputStream();
-        
-        FileInputStream fls = null;
-        
-        try { 
-            fls = new FileInputStream(file);
-            FileCopyUtils.copy(fls, out);
-            
-        } finally { 
-            if(fls != null) { 
-                try { 
-                    fls.close();
-                } catch(IOException ex) { 
-                    
-                }
-            }
-        }
-        out.flush();
-        
+	    File file = new File(fullPath);
+	    response.setContentLength((int)file.length());
+	    response.setHeader("Content-Disposition", "attachment; fileName=\""+file.getName()+"\";");
+	    response.setHeader("Content-Transfer-Encoding", "binary");
+	    ServletOutputStream out = response.getOutputStream();
+	
+	    FileInputStream fls = null;
+	
+	    try {
+	        fls = new FileInputStream(file);
+	        FileCopyUtils.copy(fls, out);
+	
+	    } finally {
+	        if(fls != null) {
+	            try {
+	                fls.close();
+	            } catch(IOException ex) {
+	
+	            }
+	        }
+	    }
+	    out.flush();
+	
 	}
 	
 	*/
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/patchList/download/{functionIdx}")
+	public @ResponseBody File download(@PathVariable("functionIdx") String functionIdx, 
+								HttpServletRequest request, HttpServletResponse response) throws Throwable {
+		String filePath = request.getSession().getServletContext().getRealPath("/resource/data/patch/v101");
+		String fileName = "framework-20130302.jar";
+		String fullPath = filePath + "/" + fileName;
+	    File file = new File(fullPath);
+	    ServletOutputStream out = response.getOutputStream();
+	
+	    FileInputStream fls = null;
+	    try {
+	        fls = new FileInputStream(file);
+	        FileCopyUtils.copy(fls, out);
+	        out.flush();
+	    } finally {
+	        if(fls != null) {
+	            try {
+	                fls.close();
+	            } catch(IOException ex) {
+	            	ex.printStackTrace();
+	            }
+	        }
+	    }
+		return file;
+	}
+	
+	
+	@RequestMapping(method=RequestMethod.POST, value = "/patchList/getPatchInfo/{functionIdx}")
 	public @ResponseBody WePatch patchInfo(@PathVariable("functionIdx") String functionIdx, @RequestBody WePatch wePatchModel, HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		WePatch domain = patchService.getWePatchInfo(wePatchModel);
 		return domain;

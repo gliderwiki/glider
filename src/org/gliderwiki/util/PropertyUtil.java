@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.gliderwiki.web.system.SystemConst;
+
 /**
  * @author yion
  *
@@ -98,6 +102,23 @@ public class PropertyUtil {
 			ins.close();
 		}
 		return props;
+	}
+	
+	
+	/**
+	 * 현재 버전 정보를 가져온다. isServer 가 true 이면 서버정보, 아니면 클라이언트 정보 
+	 * @param request
+	 * @param isServer
+	 * @return
+	 * @throws IOException
+	 */
+	public static String getVersionProps(HttpServletRequest request, boolean isServer)
+			throws IOException {
+		String svcPath = request.getSession().getServletContext().getRealPath(SystemConst.PROPERTY_FULL_PATH + "version");
+		
+		Properties props = getVersionPropertyInfo(svcPath, isServer);
+		String version = props.getProperty("version.info");
+		return version;
 	}
 	
 }

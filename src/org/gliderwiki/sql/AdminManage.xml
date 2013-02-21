@@ -549,7 +549,7 @@
 		FROM 	we_function 
 		WHERE   WE_USE_YN = 'Y'
 		AND     WE_EXTEND_YN = #{we_extend_yn}
-		AND     WE_FUNCTION_IDX > (SELECT WE_FUNCTION_IDX FROM we_function WHERE we_function_ver = #{version})
+		AND     WE_FUNCTION_VER > #{version}
 	</select>
 	
 	<update id="AdminManage.updateKeywordWiki" parameterType="weGroupUser">
