@@ -52,7 +52,7 @@
 		<intercept-url pattern="/admin/installUpload" method="GET" access="permitAll" />
 		<intercept-url pattern="/admin/wikiadminlogin" method="GET" access="permitAll" />
 		<intercept-url pattern="/admin/**" method="GET" access="hasRole('ROLE_USER') and leastLevel(9)" />
-		<intercept-url pattern="/patchList/**" method="GET" access="permitAll" />
+		<intercept-url pattern="/service/patchList/**" method="POST" access="permitAll" />
 
 		<access-denied-handler ref="accessDeniedHandler"/>
 
