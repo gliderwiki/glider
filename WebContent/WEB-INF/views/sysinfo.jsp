@@ -59,10 +59,12 @@
 		%>
 		</div>
 		<div class="foot-cont">
-			<a href="#" role="button" class="btn">버튼이 있다면</a>
+			<a href="#" id="download" role="button" class="btn">다운로드</a>
+			
 			<a href="#" role="button" class="btn">여기에</a>
 		</div>
-		
+		<form id="patchDownloadForm" action="" method="post" enctype="multipart/form-data">
+		</form>
 	</div>
 </section>
 
@@ -72,7 +74,13 @@
 //<![CDATA[
 	$(document).ready(function() {
 		
+		$('#download').bind("click", function() {
+			$('#frm').attr('method', 'post');
+			$('#frm').attr('action', 'http://url/patchList/browser/1');
+			$('#frm').submit();
+		});
 	});
+	
 //]]>
 </script>
 </js:scripts>
