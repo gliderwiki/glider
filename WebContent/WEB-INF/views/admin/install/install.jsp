@@ -357,11 +357,11 @@
 		inHtml += " <table>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> JDBC URL </span></td>";
-		inHtml += "     	<td><input type=\"text\" name=\"jdbc_url\" id=\"jdbc_url\"  class=\"wide\" value=\"${jdbc_url}\" ></td>"; 
+		inHtml += "     	<td><input type=\"text\" name=\"jdbc_url\" id=\"jdbc_url\"  class=\"wide\" value=\"jdbc:mysql://14.63.225.165:3306/wiki3\" ></td>"; 
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> User ID </span></td>";
-		inHtml += "     	<td><input type=\"text\" name=\"jdbc_id\" id=\"jdbc_id\" class=\"wide\" value=\"${jdbc_id}\" ></td>";
+		inHtml += "     	<td><input type=\"text\" name=\"jdbc_id\" id=\"jdbc_id\" class=\"wide\" value=\"wiki3\" ></td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> User Password </span></td>";
@@ -419,7 +419,7 @@
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td width=\"180\"><b>관리자 Login 이메일</b></td>";
-		inHtml += "     	<td width=\"270\"><input type=\"text\" id=\"adminMailId\" name=\"adminMailId\" size=\"20\" style=\"\" disabled></td>";
+		inHtml += "     	<td width=\"270\"><input type=\"text\" id=\"adminMailId\" name=\"adminMailId\" size=\"20\" style=\"\" value=\"gliderwiki@gliderwiki.org\" disabled></td>";
 		inHtml += "     	<td width=\"150\"><b>관리자 Login Password</b></td>";
 		inHtml += "     	<td width=\"210\"><input type=\"password\" id=\"adminpass\" name=\"adminpass\" size=\"20\" style=\"\" disabled></td>";
 		inHtml += " 	</tr>";
@@ -431,7 +431,7 @@
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><b>Active Key</b></td>";
-		inHtml += "     	<td colspan=\"3\"><input type=\"text\" id=\"activeKey\" name=\"activeKey\" size=\"90\" style=\"\" disabled></td>";
+		inHtml += "     	<td colspan=\"3\"><input type=\"text\" id=\"activeKey\" name=\"activeKey\" size=\"90\" style=\"\" value=\"DFtzHGKKiFbdVlVktfrAaCFTNypBvKPOqTinLgyjCIHfJPgWwIaYuvEhxrnKkZiPaFvorJeLXUcQjrsdFDuTsIRxwzTkQQkkRGjvcjtghEIczyZZrAbihhPPChFSoQAE\"disabled></td>";
 		inHtml += " 	</tr>";
 		inHtml += " </table>";
 		inHtml += " <div style=\"text-align: center\"><button type=\"button\" id=\"dataSave\" name=\"dataSave\" class=\"btn-wide\">데이터저장</button></div>";
