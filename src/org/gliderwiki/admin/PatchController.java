@@ -205,8 +205,6 @@ public class PatchController {
 				FileOutputStream fos = new FileOutputStream(destination);
 				httpEntity.writeTo(fos);
 			    fos.close();
-			    
-			    
 			    // client-version 에 버전정보를 업데이트 해준다. 
 			    
 			    res.setResult(fileName);

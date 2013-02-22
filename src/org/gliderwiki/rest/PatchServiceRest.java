@@ -146,11 +146,10 @@ public class PatchServiceRest {
 	 * @param request
 	 * @param response
 	 * @throws Throwable
-	
-	@RequestMapping(method=RequestMethod.POST, value = "/patchList/download/{functionIdx}")
-	public void download(@PathVariable("functionIdx") String functionIdx, HttpServletRequest request, HttpServletResponse response) throws Throwable {
-		logger.debug("###download !!");
-	
+	 */
+	@RequestMapping(method=RequestMethod.POST, value = "/patchList/browser/{functionIdx}")
+	public void browserDownload(@PathVariable("functionIdx") String functionIdx, HttpServletRequest request, HttpServletResponse response) throws Throwable {
+		logger.debug("###browserDownload !!");
 		logger.debug("###functionIdx : " + functionIdx);
 	
 		//html 에서 아래와 같이 호출 함
@@ -161,11 +160,11 @@ public class PatchServiceRest {
 		// }
 	
 	
-	 	String filePath = request.getSession().getServletContext().getRealPath("/resource/data/patch/v101");
-		String fileName = "framework-20120723.jar";
-	
+		String filePath = request.getSession().getServletContext().getRealPath("/resource/data/patch/v101");
+		String fileName = "framework-20130302.jar";
 		String fullPath = filePath + "/" + fileName;
-	
+		logger.debug("##fullPath : " + fullPath);
+	    
 	    File file = new File(fullPath);
 	    response.setContentLength((int)file.length());
 	    response.setHeader("Content-Disposition", "attachment; fileName=\""+file.getName()+"\";");
@@ -188,34 +187,22 @@ public class PatchServiceRest {
 	        }
 	    }
 	    out.flush();
-	
 	}
 	
-	*/
 	
-	@RequestMapping(method=RequestMethod.POST, value = "/patchList/download/{functionIdx}")
-	public @ResponseBody File download(@PathVariable("functionIdx") String functionIdx, 
-								HttpServletRequest request, HttpServletResponse response) throws Throwable {
+	@RequestMapping(method=RequestMethod.GET, value = "/patchList/download/{functionIdx}")
+	public @ResponseBody File download(
+							@PathVariable("functionIdx") String functionIdx, 
+							HttpServletRequest request, HttpServletResponse response)
+																	throws Throwable {
+		logger.debug("#### 서버 파일 다운로드 시작 ####");
+		
 		String filePath = request.getSession().getServletContext().getRealPath("/resource/data/patch/v101");
 		String fileName = "framework-20130302.jar";
 		String fullPath = filePath + "/" + fileName;
+		logger.debug("##fullPath : " + fullPath);
 	    File file = new File(fullPath);
-	    ServletOutputStream out = response.getOutputStream();
-	
-	    FileInputStream fls = null;
-	    try {
-	        fls = new FileInputStream(file);
-	        FileCopyUtils.copy(fls, out);
-	        out.flush();
-	    } finally {
-	        if(fls != null) {
-	            try {
-	                fls.close();
-	            } catch(IOException ex) {
-	            	ex.printStackTrace();
-	            }
-	        }
-	    }
+	    
 		return file;
 	}
 	
