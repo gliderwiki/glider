@@ -10,17 +10,13 @@
 package org.gliderwiki.admin.dao;
 
 import java.util.List;
-import java.util.Map;
 
-import org.gliderwiki.web.domain.WeGroupInfo;
 import org.gliderwiki.web.domain.WeProfile;
 import org.gliderwiki.web.domain.WeUser;
 import org.gliderwiki.web.vo.GroupUserVo;
 import org.gliderwiki.web.vo.MailSendUserVo;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
-
-import com.google.common.collect.Maps;
 
 /**
  * @author yion

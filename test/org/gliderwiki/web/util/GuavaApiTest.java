@@ -9,17 +9,13 @@
  */
 package org.gliderwiki.web.util;
 
-import static com.ReflectionInjectorUtils.injector;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.util.Iterator;
 import java.util.List;
 
-import org.gliderwiki.web.space.controller.SpaceController;
-import org.junit.*;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

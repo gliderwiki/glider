@@ -23,6 +23,7 @@ import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
 import org.gliderwiki.framework.util.SecretKeyPBECipher;
 import org.gliderwiki.framework.util.StringUtil;
+import org.gliderwiki.util.CommonUtil;
 import org.gliderwiki.util.SendMailSMTP;
 import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeProfile;
@@ -106,7 +107,7 @@ public class InstallController {
 	public ModelAndView installMain(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		logger.debug("### installMain "); // = Step1
 		
-		String domain = getServerDomain(request);
+		String domain = CommonUtil.getClientDomain(request);
 		
 		
 		/*시스템 정보를 가져옵니다.*/
@@ -120,23 +121,6 @@ public class InstallController {
 		return modelAndView;
 	}
 
-	/**
-	 * @param request
-	 * @return
-	 */
-	public String getServerDomain(HttpServletRequest request) {
-		String path = request.getContextPath();
-		logger.debug("path : " + path);
-		String getProtocol = request.getScheme();
-		logger.debug("getProtocol : " + getProtocol);
-		String getDomain = request.getServerName();
-		logger.debug("getDomain : " + getDomain);
-		String getPort = Integer.toString(request.getServerPort());		
-		String domain = getProtocol + "://" + getDomain + ":" + getPort + path	+ "/";
-		logger.debug("domain : " + domain );
-		return domain;
-	}
-	
 
 	/**
 	 * 사용자가 입력한 properties 생성 합니다.
@@ -509,7 +493,7 @@ public class InstallController {
 		
 		Map<String, Object> param = new HashMap<String, Object>();
 		
-		String domain = getServerDomain(request);
+		String domain = CommonUtil.getClientDomain(request);
 		
 		String adminUrl =  domain+"admin/wikiadminlogin";
 				

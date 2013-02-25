@@ -15,7 +15,6 @@ import org.gliderwiki.web.domain.WeAddFriend;
 import org.gliderwiki.web.domain.WeFavorite;
 import org.gliderwiki.web.domain.WeProfile;
 import org.gliderwiki.web.vo.WikiVo;
-import org.mockito.internal.stubbing.answers.ThrowsException;
 
 
 /**

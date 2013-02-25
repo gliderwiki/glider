@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.lang.StringUtils;
 import org.gliderwiki.framework.util.StringUtil;
+import org.gliderwiki.util.CommonUtil;
 import org.gliderwiki.web.domain.FavorityType;
 import org.gliderwiki.web.domain.WeSpace;
 import org.gliderwiki.web.main.service.MainService;
@@ -87,7 +88,17 @@ public class MainController {
 		dbUrl = defaultDataSource.getUrl();
 		driverClassName = defaultDataSource.getDriverClassName();
 		Cookie[] cookies = request.getCookies();
-
+		String domain = CommonUtil.getClientDomain(request);
+		logger.debug("##domain : " + domain);
+		
+		if(domain.startsWith("http://www.gliderwiki") || domain.startsWith("http://gliderwiki")) {
+			model.addAttribute("linkYn", "Y");
+		} else { 
+			model.addAttribute("linkYn", "N");
+		}
+		// 클라이언트 도메인에 따라 다운로드 버튼의 경로 변경
+		
+		
 		logger.debug("##cookies : " + cookies);
 		if (cookies != null) {
 			for (int i = 0; i < cookies.length; i++) {
@@ -98,6 +109,7 @@ public class MainController {
 			}
 		}
 
+		
 		if(dbUrl.startsWith("jdbc:mysql:") && driverClassName.equals("com.mysql.jdbc.Driver")) {
 			// MySQL 인 경우 인스톨 된 상태이므로 인덱스 연결 시도함
 			// URL : jdbc:mysql://localhost:3306/wiki
