@@ -73,7 +73,6 @@
 <script type="text/javascript">
 //<![CDATA[
 	$(document).ready(function() {
-		
 		$('#download').bind("click", function() {
 			$('#frm').attr('method', 'post');
 			$('#frm').attr('action', 'http://url/patchList/browser/1');
