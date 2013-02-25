@@ -365,7 +365,7 @@
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> User Password </span></td>";
-		inHtml += "     	<td><input type=\"password\" name=\"jdbc_pw\" id=\"jdbc_pw\"  class=\"wide\" value=\"${jdbc_pw}\" ></td>";
+		inHtml += "     	<td><input type=\"password\" name=\"jdbc_pw\" id=\"jdbc_pw\"  class=\"wide\" value=\"\" ></td>";
 		inHtml += " 	</tr>";
 		inHtml += " </table>";
 		inHtml += "<br>JDBC 정보가 올바로 입력되었다면 아래 연동 테스트 버튼을 클릭하여 JDBC 연동이 정상적으로 수행되는지 확인해 주세요. <br/>";
@@ -506,7 +506,7 @@
 		inHtml += " <table>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td>Mail UserID </td>";
-		inHtml += "     	<td><input type=\"text\" size=\"30\" id=\"mailUserId\" name=\"mailUserId\"></td>";
+		inHtml += "     	<td><input type=\"text\" size=\"30\" id=\"mailUserId\" name=\"mailUserId\" value=\"glider.wiki@gmail.com\"></td>";
 		inHtml += "     	<td>전송 계정으로 사용할 G메일 주소 입력</td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
@@ -582,7 +582,7 @@
 		inHtml += "<ul>";
 		inHtml += "<li>	어드민 모드에 접속하기위해 아래의 주소를 기억해주시기  바랍니다.</li>";
 		inHtml += "<li>	어드민 모드는 오직 URL 을 입력한 후 Step.3 에서 입력한 아이디와 비밀번호를 통해 접속하도록 되어있습니다.</li>";
-		inHtml += "<li>	어드민 주소 : "+domain+"admin/wikiadminlogin</li>";
+		inHtml += "<li>	어드민 주소 : <a href=\""+domain+"admin/wikiadminlogin\" target=\"_blank\"> "+domain+"admin/wikiadminlogin</a></li>";
 		inHtml += "</ul>";
 		inHtml += "	아울러, 본 Web Installer 화면은 더 이상 접근할 수 없습니다. 반드시 서버를 restart 해주시기 바라며, 만약 설치가 제대로 안된 경우라면 GLiDERWiki™ 를 참고하여 수동 설치 방식으로 재설치 하시기 바랍니다.<br/>";
 		inHtml += "	지식정보 공유 및 축적을 위한 협업 플랫폼으로 개발한 오픈소스 GLiDERWiki™ 를 이용해주셔서 감사합니다.</div><br/>";
