@@ -119,7 +119,15 @@ taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 					</div>
 					<div class="wrap-btn">
 						<a href="/dashboard" class="btn-main preview">둘러보기</a>
-						<a href="/download" class="btn-main apply">다운로드</a>
+						<c:choose>
+						<c:when test="${downYn eq 'Y'}">
+						<a href="/download/v1.0.0" class="btn-main apply">다운로드</a>
+						</c:when>
+						<c:otherwise>
+						<a href="/download/v1.0.0"  target="_blank" class="btn-main apply">다운로드</a>
+						</c:otherwise>
+						</c:choose>
+						
 					</div>
 				</div>
 			</div>
