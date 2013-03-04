@@ -135,14 +135,6 @@ taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 	</div>
 </section>
 
-
-<iframe name="fileDownload" width="0" height="0" frameborder="0"  style="display:hidden"></iframe>
-
-<form id="downloadForm" name="downloadForm" method="post" action="">
-<input type="hidden" id="filaName" name="filaName" value="" />
-</form>
-
-
 <js:scripts>
 <script type="text/javascript" charset="UTF-8" src="/resource/libs/jquery/jquery.form.js"></script>
 <script type="text/javascript" charset="UTF-8" src="/resource/libs/jquery/jquery.cookie.js"></script>
@@ -219,14 +211,6 @@ function loginCheckSubmit() {
 		frm.submit();
 	}
 }
-
-
-function downloadFileServer(fileName){
-	$('#downloadForm input[name=filaName]').val(fileName);
-	$("#downloadForm").attr("target", "fileDownload");
-	$("#downloadForm").attr("action", "/common/download").submit();
-}	
-
 
 //]]>
 </script>
