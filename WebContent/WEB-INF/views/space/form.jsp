@@ -127,6 +127,5 @@
 $(document).ready(function() {
 	var write = new GliderWiki.Space.Write($(".edit"),'${adminName}').create();
 });
-
 </script>
 </js:scripts>
