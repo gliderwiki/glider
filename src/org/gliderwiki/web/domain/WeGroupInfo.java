@@ -84,6 +84,26 @@ public class WeGroupInfo extends BaseObjectBean {
 	@Column(name="we_upd_date") 
 	private Date we_upd_date;
 
+	
+	/**
+	 * 공간 개설자 닉네임
+	 */
+	private String we_user_nick;
+	
+	/**
+	 * @return the we_user_nick
+	 */
+	public String getWe_user_nick() {
+		return we_user_nick;
+	}
+
+	/**
+	 * @param we_user_nick the we_user_nick to set
+	 */
+	public void setWe_user_nick(String we_user_nick) {
+		this.we_user_nick = we_user_nick;
+	}
+
 	/**
 	 * @return the we_group_idx
 	 */

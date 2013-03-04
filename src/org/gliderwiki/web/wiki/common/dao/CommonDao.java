@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.gliderwiki.web.domain.WeAddFriend;
 import org.gliderwiki.web.domain.WeFavorite;
+import org.gliderwiki.web.domain.WeGroupInfo;
 import org.gliderwiki.web.domain.WeProfile;
 import org.gliderwiki.web.vo.WikiVo;
 
@@ -53,4 +54,10 @@ public interface CommonDao {
 	 * @return
 	 */
 	List<WikiVo> getWikiSearchList(String wiki_text) throws Throwable;
+
+	/**
+	 * @param domain
+	 * @return
+	 */
+	List<WeGroupInfo> getGroupList(WeGroupInfo domain) throws Throwable;
 }

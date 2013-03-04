@@ -308,7 +308,7 @@ public class CommonController {
 	 * @param request
 	 * @param response
 	 * @throws IOException
-	 */
+	 
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
 	public void download(HttpServletRequest request, HttpServletResponse response, String fileName) throws IOException {
 		logger.debug("다운로드 파일 이름 : " + fileName);
@@ -316,7 +316,7 @@ public class CommonController {
 				new File(request.getSession().getServletContext().getRealPath("/resource/temp/" + fileName)),
 				AttachmentType.DOWNLOAD);
 	}
-
+	 */
 	/**
 	 * 이미지 업로드 파일 미리보기용
 	 *

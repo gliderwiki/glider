@@ -223,6 +223,13 @@ public interface CommonService {
 	public List<WeUser> getWeUserList(Integer loginUserIdx, String userNick, String userEmail, String userName) throws Throwable;
 
 	/**
+	 * 그룹 정보 목록을 조회한다. 
+	 * @param loginUserIdx
+	 * @return
+	 * @throws Throwable
+	 */
+	public List<WeGroupInfo> getGroupList(Integer loginUserIdx) throws Throwable;
+	/**
 	 * 그룹 상세 정보를 조회한다. 
 	 * @param groupIdx
 	 * @return

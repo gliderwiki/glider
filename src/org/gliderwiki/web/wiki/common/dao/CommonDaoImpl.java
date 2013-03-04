@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.gliderwiki.web.domain.WeAddFriend;
 import org.gliderwiki.web.domain.WeFavorite;
+import org.gliderwiki.web.domain.WeGroupInfo;
 import org.gliderwiki.web.domain.WeProfile;
 import org.gliderwiki.web.vo.WikiVo;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -80,6 +81,12 @@ public class CommonDaoImpl extends SqlSessionDaoSupport implements  CommonDao {
 		mapper.put("wiki_text", wiki_text);
 		
 		return getSqlSession().selectList("CommonManage.getWikiSearchList", mapper);
+	}
+
+
+	@Override
+	public List<WeGroupInfo> getGroupList(WeGroupInfo domain) throws Throwable {
+		return getSqlSession().selectList("CommonManage.getGroupList", domain);
 	}
 
 }

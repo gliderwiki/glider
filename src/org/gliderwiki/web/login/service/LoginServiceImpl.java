@@ -231,9 +231,6 @@ public class LoginServiceImpl implements LoginService {
 			logger.info("***회원가입 Exception " + e.getCause());
 			tx.rollback(status);
 		}
-
-
-
 		logger.debug("###result : "+ result);
 		return result;
 	}

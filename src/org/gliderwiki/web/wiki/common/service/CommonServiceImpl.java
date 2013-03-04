@@ -494,6 +494,16 @@ public class CommonServiceImpl implements CommonService {
 		return entityService.getListEntityOrdered(domain, "WE_USER_JOIN_DATE");
 	}
 
+	/**
+	 * 그룹 정보 리스트를 생성일 역순으로 정렬하여 리턴한다. 
+	 */
+	@RemoteMethod
+	public List<WeGroupInfo> getGroupList(Integer loginUserIdx) throws Throwable {
+		WeGroupInfo domain = new WeGroupInfo();
+		domain.setWe_use_yn("Y");
+		return commonDao.getGroupList(domain);
+	}
+	
 	@Override
 	public WeGroupInfo getWeGroupInfo(Integer groupIdx) throws Throwable {
 		WeGroupInfo domain = new WeGroupInfo();

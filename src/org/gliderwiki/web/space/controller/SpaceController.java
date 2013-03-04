@@ -300,6 +300,13 @@ public class SpaceController {
 		return WebConstant.SUCCESS;
 	}
 
+	/**
+	 * 공간에 속한 그룹 목록을 조회한다. (공간정보 수정)
+	 * @param type
+	 * @param spaceIdx
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/group/{spaceIdx}/selectList", method = RequestMethod.GET)
 	public String groupSelectedList(@RequestParam(value = "authorityType") String type,
 			@PathVariable("spaceIdx") int spaceIdx, ModelMap model) {
@@ -311,6 +318,13 @@ public class SpaceController {
 		return "/space/popup/groupList";
 	}
 
+	/**
+	 * 공간에 속한 사용자 목록을 조회한다. (공간정보 수정)
+	 * @param type
+	 * @param spaceIdx
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/user/{spaceIdx}/selectList", method = RequestMethod.GET)
 	public String userSelectedList(@RequestParam(value = "authorityType") String type,
 			@PathVariable("spaceIdx") int spaceIdx, ModelMap model) {
