@@ -79,7 +79,7 @@
 
 <js:scripts>
 <script type="text/javascript" src="/resource/libs/jquery/jquery.form.js"></script>
-<script type="text/javascript" src="/resource/libs/plugin/jquery-group-layer.js"></script>
+<script type="text/javascript" src="/resource/libs/plugin/jquery-group-user-layer.js"></script>
 <script type="text/javascript" src="/resource/libs/jquery/jquery.dateFormat-1.0.js"></script>
 <script type='text/javascript' src='/dwr/engine.js'></script>
 <script type='text/javascript' src='/dwr/interface/CommonService.js'></script>
