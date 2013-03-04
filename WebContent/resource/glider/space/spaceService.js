@@ -60,16 +60,30 @@
 		checkGroup: function() {
 			var me = this;
 
+			// 공간 조회 권한 
 			me.$viewAuthorityBtn.click(function() {
+				console.log("me.$loginUserIdx; : "  +me.$loginUserIdx);
 				var checkType = $(":input:radio[name=we_view_privacy]:checked").val();
 
+				console.log("checkType : " + checkType);  // GROUP, USER
+				
 				if(checkType != 'ALLGROUP') {
+					// 공간 번호가 있을 경우 공간정보 수정화면임 
 					if(me.$weSpaceIdx.val().length > 0) {
 						var spaceIdx = $(this).data("spaceIdx");
 
 						window.open("/space/"+checkType.toLowerCase()+"/"+spaceIdx+"/selectList?authorityType=view", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
 					}else{
-						window.open("/space/"+checkType.toLowerCase()+"/list?authorityType=view", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
+						if(checkType == 'GROUP') {
+							CommonService.getGroupList(me.$loginUserIdx, callBackWeGroupList);
+						} else if(checkType == 'USER') {
+							var userNick = "";		// 닉네임
+							var userEmail = "";		// 이메일
+							var userName ="";		// 이름
+
+							CommonService.getWeUserList(me.$loginUserIdx, userNick, userEmail, userName, callBackWeUserList);
+						}
+							//window.open("/space/"+checkType.toLowerCase()+"/list?authorityType=view", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
 					}
 
 					me.$viewData.val("");
@@ -77,9 +91,12 @@
 				}
 			});
 
+			// 공간 수정 권한 
 			me.$editAuthorityBtn.click(function() {
+				console.log("$editAuthorityBtn");
 				var checkType = $(":input:radio[name=we_edit_privacy]:checked").val();
-
+				console.log("checkType : " + checkType);  // GROUP, USER
+				console.log("me.$loginUserIdx; : "  +me.$loginUserIdx);
 				if(checkType != 'ALLGROUP') {
 					if(me.$weSpaceIdx.val().length > 0) {
 						var spaceIdx = $(this).data("spaceIdx");
@@ -588,6 +605,46 @@
 				
 			}
 			$("#recentUpdate").append(inHtml);
+		}
+	}
+	
+	function callBackWeUserList(obj) {
+		var weUserList = eval(obj);
+
+		if(weUserList != null) {
+			$.groupLayer({
+				'userList' : weUserList,
+				'type'     : 'invite'
+			});
+		}
+	}
+
+	function inviteUserCallBack(arrayCheckId) {
+
+		var spaceIdx = "${spaceInfo.spaceIdx}";
+
+		if(GliderWiki.confirm('알림', '선택한 사용자를 초대하겠습니까?', function(){
+			$.post("/space/inviteRequest", {arrUserIdx:arrayCheckId,spaceIdx:spaceIdx}, function(data){
+
+				$(".groupWrap").remove();
+
+				if(data == 'SUCCESS') {
+					GliderWiki.alert("동료초대 결과","동료초대에 성공하였습니다.");
+				}else{
+					GliderWiki.alert("동료초대 결과","동료초대가 되지 않았습니다.");
+				}
+			});
+		}));
+	}
+	
+	function callBackWeGroupList(obj) {
+		var weGroupList = eval(obj);
+
+		if(weGroupList != null) {
+			$.groupInfoLayer({
+				'weGroupList' : weGroupList,
+				'type'     : 'groupInfo'
+			});
 		}
 	}
 })(jQuery);
