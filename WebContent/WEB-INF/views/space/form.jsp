@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/views/common/include/tags.jspf" %>
-<html>
-<head>
-</head>
-<body>
+<link rel="stylesheet" href="/resource/glider/admin/css/admin.css" />
 <section class="contents " role="main">
 	<div class="wrap-cont">
 		<h2 class="tit-cont">공간정보 보기</h2>
@@ -121,11 +118,15 @@
 <script type="text/javascript" src="/resource/libs/jquery/jquery.form.js"></script>
 <script type="text/javascript" src="/resource/libs/jquery/jquery.validate.js"></script>
 <script type="text/javascript" src="/resource/glider/space/spaceService.js"></script>
+<script type="text/javascript" src="/resource/libs/plugin/jquery-group-user-layer.js"></script>
+<script type="text/javascript" src="/resource/libs/plugin/jquery-group-info-layer.js"></script>
+<script type="text/javascript" src="/resource/libs/jquery/jquery.dateFormat-1.0.js"></script>
+<script type='text/javascript' src='/dwr/engine.js'></script>
+<script type='text/javascript' src='/dwr/interface/CommonService.js'></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	var write = new GliderWiki.Space.Write($(".edit"),'${adminName}').create();
 });
+
 </script>
 </js:scripts>
-</body>
-</html>

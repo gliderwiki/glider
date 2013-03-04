@@ -158,7 +158,7 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 <js:scripts>
 <script type="text/javascript" src="/resource/libs/jquery/jquery.form.js"></script>
 <script type="text/javascript" src="/resource/glider/space/spaceService.js"></script>
-<script type="text/javascript" src="/resource/libs/plugin/jquery-group-layer.js"></script>
+<script type="text/javascript" src="/resource/libs/plugin/jquery-group-user-layer.js"></script>
 <script type="text/javascript" src="/resource/libs/jquery/jquery.dateFormat-1.0.js"></script>
 <script type="text/javascript" src="/resource/libs/plugin/jquery.poshytip.js"></script>
 <script type='text/javascript' src='/dwr/engine.js'></script>
