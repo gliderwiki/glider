@@ -577,19 +577,20 @@ CREATE TABLE WE_WIKI_VIEWER (
 ) COMMENT = '위키조회사용자 : 위키를 조회한 각 사용자 정보' DEFAULT character set utf8 collate utf8_general_ci;
 
 
-
-
 -- 다운로드 사용자 목록 (인증)
 CREATE TABLE WE_INSTALL_USER
 (
-	WE_INSTALL_USER_IDX INT(7) AUTO_INCREMENT COMMENT '인스톨순번',
-	WE_DOMAIN VARCHAR(100) character set utf8 collate utf8_general_ci COMMENT '사용자도메인',
-	WE_ACTIVE_KEY VARCHAR(400) COMMENT '액티브키',
-	WE_EMAIL VARCHAR(100) COMMENT '이메일',
-	WE_INSTALL_DATE DATETIME COMMENT '다운로드일',
-	WE_AUTH_YN CHAR(1) NOT NULL COMMENT '인증여부',
-	WE_AUTH_DATE DATETIME COMMENT '인증일',
-	PRIMARY KEY (WE_INSTALL_USER_IDX)
+	WE_INSTALL_IDX INT(7) NOT NULL AUTO_INCREMENT COMMENT '인스톨순번 : 인스톨순번',
+	WE_EMAIL VARCHAR(100) NOT NULL COMMENT '이메일 : 사용자 이메일',
+	WE_DOMAIN VARCHAR(100) character set utf8 collate utf8_general_ci COMMENT '사용자도메인 : 사용자도메인',
+	WE_ACTIVE_KEY VARCHAR(400) COMMENT '액티브키 : 액티브키',
+	WE_AUTH_YN CHAR(1) COMMENT '인증여부',
+	WE_NEW_YN CHAR(1) COMMENT '뉴스레터 수신 여부  : 뉴스레터 수신 여부 ',
+	WE_USE_PURPOSE VARCHAR(30) COMMENT '사용목적 : 1.연구소/대학 2.개인/스터디 3.지식공유/커뮤니티 4.기업/업무용 5.TFT/프로젝트 6.기타',
+	WE_COMPANY VARCHAR(100) character set utf8 collate utf8_general_ci COMMENT '회사명 : 회사명',
+	WE_INSTALL_DATE DATETIME COMMENT '다운로드일 : 다운로드일 ',
+	WE_AUTH_DATE DATETIME COMMENT '최종인증일',
+	PRIMARY KEY (WE_INSTALL_IDX)
 ) COMMENT = '설치사용자정보' DEFAULT character set utf8 collate utf8_general_ci;
 
 
