@@ -32,7 +32,7 @@
 			resourceHtml	+= "	<tbody>";
 			for (var i = 0 ; i < listSize ; i++){
 				resourceHtml	+= "		<tr>";
-				resourceHtml	+= "			<td class=\"first\"><input type=\"checkbox\" name=\"group_idx\" value=\""+list[i].we_group_idx+"\" id=\"check_"+list[i].we_group_idx+"\"  title=\""+list[i].we_group_name+"\" />"+list[i].we_group_idx+"</td>";
+				resourceHtml	+= "			<td class=\"first\"><input type=\"checkbox\" name=\"group_idx\" value=\""+list[i].we_group_idx+"\" id=\"check_"+list[i].we_group_idx+"\"  title=\""+list[i].we_group_name+"\" />"+list[i].we_group_name+"</td>";
 				resourceHtml	+= "			<td class=\"name\">"+list[i].we_user_nick+"</td>";
 				resourceHtml	+= "			<td class=\"name\">"+list[i].we_group_type+"</td>";
 				resourceHtml	+= "			<td class=\"name\">"+$.format.date(list[i].we_ins_date, "yyyy.MM.dd")+"</td>";
