@@ -185,7 +185,7 @@ public class SpaceController {
 
 		spaceService.create(weSpace, loginUser.getWeUserIdx(), imageInfo);
 
-		return "redirect:/space";
+		return "redirect:/space/openList";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.PUT)
@@ -336,6 +336,7 @@ public class SpaceController {
 		return "/space/popup/userList";
 	}
 
+	/* 공간 조회, 수정 권한 지정 - 사용안함 
 	@RequestMapping(value = "/group/list", method = RequestMethod.GET)
 	public String groupList(@RequestParam(value = "authorityType") String type, ModelMap model) {
 		List<Map<String, Object>> myGroupSelectedList = spaceService.groupList();
@@ -345,7 +346,9 @@ public class SpaceController {
 
 		return "/space/popup/groupList";
 	}
+	*/
 
+	/* 공간 조회, 수정 권한 지정 - 사용안함 
 	@RequestMapping(value = "/user/list", method = RequestMethod.GET)
 	public String userList(@RequestParam(value = "authorityType") String type, ModelMap model) {
 		List<Map<String, Object>> myUserSelectedList = spaceService.userList();
@@ -355,6 +358,7 @@ public class SpaceController {
 
 		return "/space/popup/userList";
 	}
+	*/
 
 	@RequestMapping(value = "/joinManage/{spaceIdx}", method = RequestMethod.GET)
 	public String joinManage(@LoginUser MemberSessionVo loginUser, @PathVariable("spaceIdx") int spaceIdx,

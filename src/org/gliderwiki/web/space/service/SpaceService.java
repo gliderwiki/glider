@@ -506,14 +506,18 @@ public class SpaceService {
 		return spaceDao.userSelectedList(spaceIdx);
 	}
 
+	/* 공간 조회, 수정 권한 지정 목록조회 - 사용안함 
 	public List<Map<String, Object>> groupList() {
 		return spaceDao.groupList();
 
 	}
-
+	*/
+	
+	/* 공간 조회, 수정 권한 지정   목록조회- 사용안함 
 	public List<Map<String, Object>> userList() {
 		return spaceDao.userList();
 	}
+	*/
 
 	public Map<String, String> getAuthorityData(WeSpace weSpace) throws Throwable {
 		Map<String, String> result = Maps.newHashMap();

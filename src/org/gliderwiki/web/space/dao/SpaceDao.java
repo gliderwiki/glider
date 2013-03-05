@@ -120,19 +120,24 @@ public class SpaceDao extends SqlSessionDaoSupport {
 		return userSelectedList;
 	}
 
+	/* 공간 조회, 수정 권한 지정 목록조회 - 사용안함 
 	public List<Map<String, Object>> groupList() {
 		List<Map<String, Object>> groupList = null;
 		groupList = getSqlSession().selectList("SpaceManage.getGroupAuthorityList");
 
 		return groupList;
 	}
+	*/
 
+	
+	/* 공간 조회, 수정 권한 지정 목록조회 - 사용안함 
 	public List<Map<String, Object>> userList() {
 		List<Map<String, Object>> userList = null;
 		userList = getSqlSession().selectList("SpaceManage.getUserAuthorityList");
 
 		return userList;
 	}
+	*/
 
 	public List<Map<String, Object>> checkGroupIntoMe(int spaceIdx, int userIdx, String authorityType) {
 		List<Map<String, Object>> checkGroup = null;
