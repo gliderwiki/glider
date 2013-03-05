@@ -25,8 +25,8 @@
 			me.uploadTempFile();	// 이미지 업로드 (미리보기)
 			me.checkGroup();		// 그룹 조회 권한, 수정 권한 
 			me.checkExposed();		// 정보 공개에 따른 라디오버튼 비활성화 
-			me.userSelect();
-			me.writeFormSubmit();
+			//me.userSelect();
+			me.writeFormSubmit();	// 폼 서브밋 
 			me.preview();
 			me.nameDuplicateCheck();
 		},
@@ -146,52 +146,6 @@
 			});			
 		},
 		
-		viewAllGroup: function(checkType, type, $viewArea) {
-			$.get("/space/group/search", function(data){
-				if(data.length > 0) {
-					var innerHtml = "";
-
-					$.each(data, function(i) {
-						innerHtml += "<input type=\"checkbox\" name=\""+type+"_group\" value="+data[i].we_group_idx+" data-user-list="+data[i].we_group_name+">";
-
-						if(checkType == "USER") {
-							innerHtml += "<span class=\""+type+"GroupList\" data-group-idx="+data[i].we_group_idx+" style=\"cursor:pointer;\">"+data[i].we_group_name+"</span>";
-						}else{
-							innerHtml += data[i].we_group_name;
-						}
-					});
-
-					$viewArea.html(innerHtml);
-					$viewArea.css("display","block");
-				}
-			},"json");
-		},
-		userSelect: function() {
-			var me = this;
-
-			$(document).on("click", ".viewGroupList", function(e) {
-				var groupIdx = $(e.target).data("groupIdx");
-				me.viewUserList($(e.target), "view", groupIdx);
-			});
-
-			$(document).on("click", ".editGroupList", function(e) {
-				var groupIdx = $(e.target).data("groupIdx");
-				me.viewUserList($(e.target), "edit", groupIdx);
-			});
-		},
-		viewUserList: function($target, type, groupIdx) {
-			$.get("/space/user/search",  { groupIdx: groupIdx }, function(data){
-				if(data.length > 0) {
-					var innerHtml = "";
-
-					$.each(data, function(i) {
-						innerHtml += "<br><input type=\"checkbox\" name=\""+type+"_user\" value="+data[i].weUserIdx+" data-user-list="+data[i].weUserName+">"+data[i].weUserName+"";
-					});
-
-					$target.after(innerHtml);
-				}
-			},"json");
-		},
 		writeFormSubmit: function() {
 			var me = this;
 

@@ -183,6 +183,7 @@
 	ON c.we_user_idx = e.we_user_idx
 	</select>
 
+<!-- 
 	<select id="SpaceManage.getUserAuthorityList" resultType="java.util.HashMap">
 	SELECT c.we_user_idx
          , c.we_group_name
@@ -197,6 +198,7 @@
          , we_group_name
 	FROM we_group_info
 	</select>
+ -->
 
 	<select id="SpaceManage.getMyGroupAuthorityList" parameterType="int" resultType="java.util.HashMap">
 	SELECT a.we_group_idx
