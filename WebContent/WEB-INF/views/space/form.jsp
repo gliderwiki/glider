@@ -41,8 +41,6 @@
 							</label>
 						</p>
 					</div>
-					<div class="space" id="exposed_warning" style="display:block;">
-					</div>
 					<div class="box">
 					<h3>공간 권한 지정 : 페이지 생성, 수정 권한을 할당할 수 있습니다</h3>
 					<div class="box-group fst">
@@ -62,8 +60,6 @@
 						<div id="selectedViewAuthorityArea" style="display:none">
 						</div>
 					</div>
-					<div class="space" id="view_warning" style="display:block;">
-					</div>
 					<div class="box-group">
 						<h4 class="tit">공간의 페이지를 생성, 수정할 수 있는 그룹</h4>
 						<span class="item">
@@ -78,8 +74,6 @@
 							<form:radiobutton path="we_edit_privacy" value="USER" data-space-idx="${WeSpace.we_space_idx}" />
 							<label for="edit3">구성원선택</label>
 						</span>
-					</div>
-					<div class="space" id="edit_warning" style="display:block;">
 					</div>
 				</div>
 				<button type="submit" id="formSubmitBtn" style="display:none;">수정하기</button>
@@ -118,14 +112,14 @@
 <script type="text/javascript" src="/resource/libs/jquery/jquery.form.js"></script>
 <script type="text/javascript" src="/resource/libs/jquery/jquery.validate.js"></script>
 <script type="text/javascript" src="/resource/glider/space/spaceService.js"></script>
-<script type="text/javascript" src="/resource/libs/plugin/jquery-group-user-layer.js"></script>
+<script type="text/javascript" src="/resource/libs/plugin/jquery-user-list-layer.js"></script>
 <script type="text/javascript" src="/resource/libs/plugin/jquery-group-info-layer.js"></script>
 <script type="text/javascript" src="/resource/libs/jquery/jquery.dateFormat-1.0.js"></script>
 <script type='text/javascript' src='/dwr/engine.js'></script>
 <script type='text/javascript' src='/dwr/interface/CommonService.js'></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	var write = new GliderWiki.Space.Write($(".edit"),'${adminName}').create();
+	var write = new GliderWiki.Space.Write($(".edit"),'${adminName}', '${loginUser.weUserIdx}').create();
 });
 </script>
 </js:scripts>
