@@ -4,7 +4,7 @@
 	GliderWiki.namespace("Space");
 
 	GliderWiki.Space.Write = Class.extend({
-		init: function($writeArea, $loginUserName) {
+		init: function($writeArea, $loginUserName, $userIdx) {
 			var me = this;
 			me.$writeArea = $writeArea;
 			me.$writeForm = $("#WeSpace", me.$writeArea);
@@ -12,19 +12,19 @@
 			me.$editAuthorityBtn = $("input:radio[name=we_edit_privacy]", me.$writeArea);
 			me.$weSpaceIdx = $("#we_space_idx", me.$writeForm);
 			me.$loginUserName = $loginUserName;
+			me.$userIdx = $userIdx;
 			me.$method = $("#_method", me.$writeForm);
 			me.$viewData = $("#we_view_data", me.$writeForm);
 			me.$viewName = $("#we_view_name", me.$writeForm);
 			me.$editData = $("#we_edit_data", me.$writeForm);
 			me.$editName = $("#we_edit_name", me.$writeForm);
-			
 		},
 		create: function() {
 			var me = this;
 
-			me.uploadTempFile();
-			me.checkGroup();
-			me.checkExposed();
+			me.uploadTempFile();	// 이미지 업로드 (미리보기)
+			me.checkGroup();		// 그룹 조회 권한, 수정 권한 
+			me.checkExposed();		// 정보 공개에 따른 라디오버튼 비활성화 
 			me.userSelect();
 			me.writeFormSubmit();
 			me.preview();
@@ -59,35 +59,46 @@
 		},
 		checkGroup: function() {
 			var me = this;
-
+		
+			console.log("me.$userIdx : "  + me.$userIdx);
+			
+			if(me.$userIdx == undefined) { 
+				GliderWiki.alert("알림","로그인 정보가 없습니다.");
+				$("#okBtn").on("click", function() {
+					history.back();
+				});	
+			}
+			
 			// 공간 조회 권한 
 			me.$viewAuthorityBtn.click(function() {
-				console.log("me.$loginUserIdx; : "  +me.$loginUserIdx);
+				
 				var checkType = $(":input:radio[name=we_view_privacy]:checked").val();
 
 				console.log("checkType : " + checkType);  // GROUP, USER
 				
 				if(checkType != 'ALLGROUP') {
+					me.$viewData.val("");
+					me.$viewName.val("");
+					
 					// 공간 번호가 있을 경우 공간정보 수정화면임 
 					if(me.$weSpaceIdx.val().length > 0) {
 						var spaceIdx = $(this).data("spaceIdx");
 
 						window.open("/space/"+checkType.toLowerCase()+"/"+spaceIdx+"/selectList?authorityType=view", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
 					}else{
+						
 						if(checkType == 'GROUP') {
-							CommonService.getGroupList(me.$loginUserIdx, callBackWeGroupList);
+							CommonService.getGroupList(me.$userIdx, callBackViewGroupList);
 						} else if(checkType == 'USER') {
 							var userNick = "";		// 닉네임
 							var userEmail = "";		// 이메일
 							var userName ="";		// 이름
 
-							CommonService.getWeUserList(me.$loginUserIdx, userNick, userEmail, userName, callBackWeUserList);
+							CommonService.getWeUserList(me.$userIdx, userNick, userEmail, userName, callBackViewUserList);
 						}
 							//window.open("/space/"+checkType.toLowerCase()+"/list?authorityType=view", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
 					}
 
-					me.$viewData.val("");
-					me.$viewName.val("");
 				}
 			});
 
@@ -96,18 +107,26 @@
 				console.log("$editAuthorityBtn");
 				var checkType = $(":input:radio[name=we_edit_privacy]:checked").val();
 				console.log("checkType : " + checkType);  // GROUP, USER
-				console.log("me.$loginUserIdx; : "  +me.$loginUserIdx);
 				if(checkType != 'ALLGROUP') {
+					me.$editData.val("");
+					me.$editName.val("");					
+					
 					if(me.$weSpaceIdx.val().length > 0) {
 						var spaceIdx = $(this).data("spaceIdx");
 
 						window.open("/space/"+checkType.toLowerCase()+"/"+spaceIdx+"/selectList?authorityType=edit", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
 					}else{
-						window.open("/space/"+checkType.toLowerCase()+"/list?authorityType=edit", "", "scrollbars=no,toolbar=no,resizable=no,width=452, height=420");
-					}
+						//window.open("/space/"+checkType.toLowerCase()+"/list?authorityType=edit", "", "scrollbars=no,toolbar=no,resizable=no,width=452, height=420");
+						if(checkType == 'GROUP') {
+							CommonService.getGroupList(me.$userIdx, callBackEditGroupList);
+						} else if(checkType == 'USER') {
+							var userNick = "";		// 닉네임
+							var userEmail = "";		// 이메일
+							var userName ="";		// 이름
 
-					me.$editData.val("");
-					me.$editName.val("");
+							CommonService.getWeUserList(me.$userIdx, userNick, userEmail, userName, callBackEditUserList);
+						}
+					}
 				}
 			});
 		},
@@ -176,48 +195,43 @@
 		writeFormSubmit: function() {
 			var me = this;
 
-			var msg = { required: "*"};
 			me.$writeForm.validate({
 				submitHandler:function(form) {
-					var exposedWarning = $("#exposed_warning", me.$writeForm);
-					var viewWarning = $("#view_warning", me.$writeForm);
-					var editWarning = $("#edit_warning", me.$writeForm);
-
 					//공간생성일때 공간이름 중복체크를 했는지 여부 체크
 					var nameCheckFlag = $("#spaceNameCheck").val();
-					if(GliderWiki.Utils.isEmpty(me.$weSpaceIdx.val()) && nameCheckFlag == 0) {
-						GliderWiki.alert("에러메세지","공간이름 중복체크를 하셔야 합니다.");
-						return false;
-					}
-
+					var spaceName = $("#we_space_name", me.$writeForm).val();
+					var spaceDesc = $("#we_space_desc", me.$writeForm).val();
 					var exposed = $(":input:radio[name=we_space_exposed]:checked").val();
 					var viewCheckType = $(":input:radio[name=we_view_privacy]:checked").val();
 					var editCheckType = $(":input:radio[name=we_edit_privacy]:checked").val();
 
-					if(GliderWiki.Utils.isEmpty(exposed)) {
-						var warningHtml = "<label generated=\"true\" style=\"padding-left: 15px; font-size: 11px; color: #ff6e27; background: url(/resource/glider/front/images/ico-warning.png) no-repeat 0 1px;\">";
-						warningHtml += "공간 Privacy를 선택하세요.";
-						warningHtml += "</label>";
-
-						exposedWarning.html(warningHtml);
+					if(GliderWiki.Utils.isEmpty(spaceName)) {					
+						GliderWiki.alert("알림","공간 제목을 입력하세요.");
+						return false;
+					}
+					
+					if(GliderWiki.Utils.isEmpty(me.$weSpaceIdx.val()) && nameCheckFlag == 0) {
+						GliderWiki.alert("알림","공간이름 중복체크를 하셔야 합니다.");
+						return false;
+					}
+					
+					if(GliderWiki.Utils.isEmpty(spaceDesc)) {					
+						GliderWiki.alert("알림","공간 설명을 입력하세요.");
+						return false;
+					}
+					
+					if(GliderWiki.Utils.isEmpty(exposed)) {					
+						GliderWiki.alert("알림","공간 Privacy를 선택하세요.");
 						return false;
 					}
 
 					if(GliderWiki.Utils.isEmpty(viewCheckType)) {
-						var warningHtml = "<label generated=\"true\" style=\"padding-left: 15px; font-size: 11px; color: #ff6e27; background: url(/resource/glider/front/images/ico-warning.png) no-repeat 0 1px;\">";
-						warningHtml += "공간보기 권한을 선택하세요.";
-						warningHtml += "</label>";
-
-						viewWarning.html(warningHtml);
+						GliderWiki.alert("알림","공간보기 권한을 선택하세요.");
 						return false;
 					}
 
 					if(GliderWiki.Utils.isEmpty(editCheckType)) {
-						var warningHtml = "<label generated=\"true\" style=\"padding-left: 15px; font-size: 11px; color: #ff6e27; background: url(/resource/glider/front/images/ico-warning.png) no-repeat 0 1px;\">";
-						warningHtml += "공간수정 권한을 선택하세요.";
-						warningHtml += "</label>";
-
-						editWarning.html(warningHtml);
+						GliderWiki.alert("알림","공간수정 권한을 선택하세요.");
 						return false;
 					}
 
@@ -233,19 +247,19 @@
 
 					//그룹 혹은 구성원을 선택했다면 그 세부사항도 선택했는지 체크함
 					if(me.GroupAndUserSelectedCheck("view", viewCheckType)) {
-						GliderWiki.alert("에러메세지","그룹 혹은 구성원을 선택해야 합니다.");
+						GliderWiki.alert("알림","그룹 혹은 구성원을 선택해야 합니다.");
 						return false;
 					}
 
 					if(me.GroupAndUserSelectedCheck("edit", editCheckType)) {
-						GliderWiki.alert("에러메세지","그룹 혹은 구성원을 선택해야 합니다.");
+						GliderWiki.alert("알림","그룹 혹은 구성원을 선택해야 합니다.");
 						return false;
 					}
 
 					//이미지 업로드 여부 체크(저장할때만)
 					if(GliderWiki.Utils.isEmpty(me.$weSpaceIdx.val())) {
 						if($("#uploadFile").val().length < 1) {
-							GliderWiki.alert("에러메세지","공간이미지를 올려야 합니다.");
+							GliderWiki.alert("알림","공간 이미지를 업로드 하세요.");
 							return false;
 						}
 					}
@@ -255,15 +269,8 @@
 					}
 
 					form.submit();
-				},
-				rules: {
-					we_space_name : { required: true },
-					we_space_desc : { required: true }
-				},
-				messages: {
-					we_space_name : "공간이름을 입력하세요",
-					we_space_desc : "공간설명을 입력하세요"
 				}
+				
 			});
 
 			$(document).on("click", ".spaceCreate", function() {
@@ -362,6 +369,7 @@
 
 				if(GliderWiki.Utils.isEmpty(spaceName)) {
 					GliderWiki.alert("에러메세지","공간이름을 입력하세요.");
+					return false;
 				}
 
 				$.post("/space/nameDuplicateCheck", {spaceName:spaceName}, function(data){
@@ -608,43 +616,59 @@
 		}
 	}
 	
-	function callBackWeUserList(obj) {
+	// 조회 권한 사용자 목록 보기  
+	function callBackViewUserList(obj) {
 		var weUserList = eval(obj);
 
 		if(weUserList != null) {
-			$.groupLayer({
-				'userList' : weUserList,
-				'type'     : 'invite'
+			$.userListLayer({
+				'userList'     : weUserList,
+				'authorityType': 'view',
+				'type'         : 'user'
 			});
 		}
 	}
 
-	function inviteUserCallBack(arrayCheckId) {
-
-		var spaceIdx = "${spaceInfo.spaceIdx}";
-
-		if(GliderWiki.confirm('알림', '선택한 사용자를 초대하겠습니까?', function(){
-			$.post("/space/inviteRequest", {arrUserIdx:arrayCheckId,spaceIdx:spaceIdx}, function(data){
-
-				$(".groupWrap").remove();
-
-				if(data == 'SUCCESS') {
-					GliderWiki.alert("동료초대 결과","동료초대에 성공하였습니다.");
-				}else{
-					GliderWiki.alert("동료초대 결과","동료초대가 되지 않았습니다.");
-				}
-			});
-		}));
-	}
 	
-	function callBackWeGroupList(obj) {
+	// 조회 권한 그룹 목록 보기 
+	function callBackViewGroupList(obj) {
 		var weGroupList = eval(obj);
 
 		if(weGroupList != null) {
 			$.groupInfoLayer({
-				'weGroupList' : weGroupList,
-				'type'     : 'groupInfo'
+				'weGroupList'  : weGroupList,
+				'authorityType': 'view',
+				'type'         : 'groupInfo'
 			});
 		}
 	}
+	
+	
+	// 수정 권한 사용자 목록 보기  
+	function callBackEditUserList(obj) {
+		var weUserList = eval(obj);
+
+		if(weUserList != null) {
+			$.userListLayer({
+				'userList'     : weUserList,
+				'authorityType': 'edit',
+				'type'         : 'user'
+			});
+		}
+	}
+	
+	// 수정 권한 그룹 목록 보기 
+	function callBackEditGroupList(obj) {
+		var weGroupList = eval(obj);
+
+		if(weGroupList != null) {
+			$.groupInfoLayer({
+				'weGroupList'  : weGroupList,
+				'authorityType': 'edit',
+				'type'         : 'groupInfo'
+			});
+		}
+	}
+	
+	
 })(jQuery);
