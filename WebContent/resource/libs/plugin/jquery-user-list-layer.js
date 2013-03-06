@@ -33,7 +33,24 @@
 			resourceHtml	+= "	<tbody>";
 			for (var i = 0 ; i < listSize ; i++){
 				resourceHtml	+= "		<tr>";
-				resourceHtml	+= "			<td class=\"first\"><input type=\"checkbox\" name=\"user_idx\" value=\""+list[i].we_user_idx+"\" id=\"check_"+list[i].we_user_idx+"\"  title=\""+list[i].we_user_nick+"\" />"+list[i].we_user_id+"</td>";
+				if(checkType == 'update') {	// 공간 정보 수정일 경우 기 선택 된 사항 checked 처리 
+					if(authorityType == 'view') {
+						if(list[i].we_view_permit == 0) {
+							resourceHtml	+= "<td class=\"first\"><input type=\"checkbox\" name=\"user_idx\" value=\""+list[i].we_user_idx+"\" id=\"check_"+list[i].we_user_idx+"\"  title=\""+list[i].we_user_nick+"\" />"+list[i].we_user_id+"</td>";
+						} else {
+							resourceHtml	+= "<td class=\"first\"><input type=\"checkbox\" name=\"user_idx\" value=\""+list[i].we_user_idx+"\" id=\"check_"+list[i].we_user_idx+"\"  title=\""+list[i].we_user_nick+"\" checked />"+list[i].we_user_id+"</td>";
+						}
+					} else if(authorityType == 'edit') {
+						if(list[i].we_insert_permit == 0) {
+							resourceHtml	+= "<td class=\"first\"><input type=\"checkbox\" name=\"user_idx\" value=\""+list[i].we_user_idx+"\" id=\"check_"+list[i].we_user_idx+"\"  title=\""+list[i].we_user_nick+"\" />"+list[i].we_user_id+"</td>";
+						} else {
+							resourceHtml	+= "<td class=\"first\"><input type=\"checkbox\" name=\"user_idx\" value=\""+list[i].we_user_idx+"\" id=\"check_"+list[i].we_user_idx+"\"  title=\""+list[i].we_user_nick+"\" checked />"+list[i].we_user_id+"</td>";
+						}
+					}
+				} else {
+					resourceHtml	+= "<td class=\"first\"><input type=\"checkbox\" name=\"user_idx\" value=\""+list[i].we_user_idx+"\" id=\"check_"+list[i].we_user_idx+"\"  title=\""+list[i].we_user_nick+"\" />"+list[i].we_user_id+"</td>";
+				}
+				
 				resourceHtml	+= "			<td class=\"name\">"+list[i].we_user_nick+"</td>";
 				resourceHtml	+= "			<td class=\"name\">"+$.format.date(list[i].we_user_join_date, "yyyy.MM.dd")+"</td>";
 				resourceHtml	+= "			<td class=\"name\">"+list[i].we_user_name+"</td>";

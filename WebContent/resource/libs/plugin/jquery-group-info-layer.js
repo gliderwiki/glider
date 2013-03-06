@@ -38,12 +38,30 @@
 				} else {
 					group_type = "사용자 생성 그룹";
 				}
-				resourceHtml	+= "		<tr>";
-				resourceHtml	+= "			<td class=\"first\"><input type=\"checkbox\" name=\"group_idx\" value=\""+list[i].we_group_idx+"\" id=\"check_"+list[i].we_group_idx+"\"  title=\""+list[i].we_group_name+"\" />"+list[i].we_group_name+"</td>";
-				resourceHtml	+= "			<td class=\"name\">"+list[i].we_user_nick+"</td>";
-				resourceHtml	+= "			<td class=\"name\">"+group_type+"</td>";
-				resourceHtml	+= "			<td class=\"name\">"+$.format.date(list[i].we_ins_date, "yyyy.MM.dd")+"</td>";
-				resourceHtml	+= "		</tr>";
+				resourceHtml	+= "	<tr>";
+				
+				if(checkType == 'update' && authorityType == 'view') {		// 공간 정보 수정일 경우 기 선택 된 사항 checked 처리 
+					
+					if(list[i].we_view_permit == '1') {
+						console.log("permit "+list[i].we_view_permit+" = " + list[i].we_group_idx);
+						resourceHtml	+= "<td class=\"first\"><input type=\"checkbox\" name=\"group_idx\" value=\""+list[i].we_group_idx+"\" id=\"check_"+list[i].we_group_idx+"\"  title=\""+list[i].we_group_name+"\" checked />"+list[i].we_group_name+"</td>";
+					} else {
+						console.log("-permit "+list[i].we_view_permit+" = " + list[i].we_group_idx);
+						resourceHtml	+= "<td class=\"first\"><input type=\"checkbox\" name=\"group_idx\" value=\""+list[i].we_group_idx+"\" id=\"check_"+list[i].we_group_idx+"\"  title=\""+list[i].we_group_name+"\" />"+list[i].we_group_name+"</td>";
+					}
+				} else if(checkType == 'update' && authorityType == 'edit') {
+					if(list[i].we_insert_permit == '1') {
+						resourceHtml	+= "<td class=\"first\"><input type=\"checkbox\" name=\"group_idx\" value=\""+list[i].we_group_idx+"\" id=\"check_"+list[i].we_group_idx+"\"  title=\""+list[i].we_group_name+"\" checked />"+list[i].we_group_name+"</td>";
+					} else {
+						resourceHtml	+= "<td class=\"first\"><input type=\"checkbox\" name=\"group_idx\" value=\""+list[i].we_group_idx+"\" id=\"check_"+list[i].we_group_idx+"\"  title=\""+list[i].we_group_name+"\" />"+list[i].we_group_name+"</td>";
+					}
+				} else {
+					resourceHtml	+= "<td class=\"first\"><input type=\"checkbox\" name=\"group_idx\" value=\""+list[i].we_group_idx+"\" id=\"check_"+list[i].we_group_idx+"\"  title=\""+list[i].we_group_name+"\" />"+list[i].we_group_name+"</td>";
+				}
+				resourceHtml	+= "	<td class=\"name\">"+list[i].we_user_nick+"</td>";
+				resourceHtml	+= "	<td class=\"name\">"+group_type+"</td>";
+				resourceHtml	+= "	<td class=\"name\">"+$.format.date(list[i].we_ins_date, "yyyy.MM.dd")+"</td>";
+				resourceHtml	+= "	</tr>";
 			}
 			resourceHtml	+= "	</tbody>";
 			resourceHtml	+= "	</table>";
