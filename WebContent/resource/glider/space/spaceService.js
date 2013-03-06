@@ -83,10 +83,14 @@
 					// 공간 번호가 있을 경우 공간정보 수정화면임 
 					if(me.$weSpaceIdx.val().length > 0) {
 						var spaceIdx = $(this).data("spaceIdx");
-
-						window.open("/space/"+checkType.toLowerCase()+"/"+spaceIdx+"/selectList?authorityType=view", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
+						// 수정일 경우 옵션 값을 변경한 후 호출한다.
+						if(checkType == 'GROUP') {
+							spaceService.groupSelectedList(spaceIdx, callBackUpdateViewGroupList);
+						} else if(checkType == 'USER') {
+							spaceService.userSelectedList(spaceIdx, callBackUpdateViewUserList);
+						}						
+						//window.open("/space/"+checkType.toLowerCase()+"/"+spaceIdx+"/selectList?authorityType=view", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
 					}else{
-						
 						if(checkType == 'GROUP') {
 							CommonService.getGroupList(me.$userIdx, callBackViewGroupList);
 						} else if(checkType == 'USER') {
@@ -96,7 +100,7 @@
 
 							CommonService.getWeUserList(me.$userIdx, userNick, userEmail, userName, callBackViewUserList);
 						}
-							//window.open("/space/"+checkType.toLowerCase()+"/list?authorityType=view", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
+						//window.open("/space/"+checkType.toLowerCase()+"/list?authorityType=view", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
 					}
 
 				}
@@ -114,7 +118,13 @@
 					if(me.$weSpaceIdx.val().length > 0) {
 						var spaceIdx = $(this).data("spaceIdx");
 
-						window.open("/space/"+checkType.toLowerCase()+"/"+spaceIdx+"/selectList?authorityType=edit", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
+						if(checkType == 'GROUP') {
+							spaceService.groupSelectedList(spaceIdx, callBackUpdateEditGroupList);
+						} else if(checkType == 'USER') {
+							spaceService.userSelectedList(spaceIdx, callBackUpdateEditUserList);
+						}
+						
+						//window.open("/space/"+checkType.toLowerCase()+"/"+spaceIdx+"/selectList?authorityType=edit", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
 					}else{
 						//window.open("/space/"+checkType.toLowerCase()+"/list?authorityType=edit", "", "scrollbars=no,toolbar=no,resizable=no,width=452, height=420");
 						if(checkType == 'GROUP') {
@@ -601,7 +611,7 @@
 	// 수정 권한 사용자 목록 보기  
 	function callBackEditUserList(obj) {
 		var weUserList = eval(obj);
-
+		console.log("weUserList : " +weUserList);
 		if(weUserList != null) {
 			$.userListLayer({
 				'userList'     : weUserList,
@@ -625,4 +635,59 @@
 	}
 	
 	
+	// 공간정보 수정시 조회 권한 사용자 목록 보기  
+	function callBackUpdateViewUserList(obj) {
+		var weUserList = eval(obj);
+
+		if(weUserList != null) {
+			$.userListLayer({
+				'userList'     : weUserList,
+				'authorityType': 'view',
+				'type'         : 'update'
+			});
+		}
+	}
+
+	
+	// 공간정보 수정시 조회 권한 그룹 목록 보기 
+	function callBackUpdateViewGroupList(obj) {
+		var weGroupList = eval(obj);
+
+		if(weGroupList != null) {
+			$.groupInfoLayer({
+				'weGroupList'  : weGroupList,
+				'authorityType': 'view',
+				'type'         : 'update'
+			});
+		}
+	}
+	
+	
+	// 공간정보 수정시 수정 권한 사용자 목록 보기  
+	function callBackUpdateEditUserList(obj) {
+		var weUserList = eval(obj);
+		console.log("weUserList : " +weUserList);
+		if(weUserList != null) {
+			$.userListLayer({
+				'userList'     : weUserList,
+				'authorityType': 'edit',
+				'type'         : 'update'
+			});
+		}
+	}
+	
+	// 공간정보 수정시 수정 권한 그룹 목록 보기 
+	function callBackUpdateEditGroupList(obj) {
+		var weGroupList = eval(obj);
+
+		if(weGroupList != null) {
+			$.groupInfoLayer({
+				'weGroupList'  : weGroupList,
+				'authorityType': 'edit',
+				'type'         : 'update'
+			});
+		}
+	}
+	
+		
 })(jQuery);
