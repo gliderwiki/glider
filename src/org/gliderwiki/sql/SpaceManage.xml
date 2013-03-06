@@ -171,9 +171,13 @@
 	</select>
 
 	<select id="SpaceManage.getMyUserAuthorityList" parameterType="int" resultType="java.util.HashMap">
-	SELECT c.we_user_idx
+	SELECT /* 회원 목록 조회 SpaceManage.getMyUserAuthorityList */
+	       c.we_user_idx
          , c.we_group_name
          , e.we_user_name
+         , e.we_user_id
+         , e.we_user_nick
+         , e.we_user_join_date
          , CAST(IFNULL(d.we_insert_permit,0) AS CHAR) AS we_insert_permit
          , CAST(IFNULL(d.we_view_permit,0) AS CHAR) AS we_view_permit
 	FROM  (SELECT a.we_group_idx, a.we_user_idx, b.we_group_name FROM we_group_user a, we_group_info b WHERE  a.we_group_idx = b.we_group_idx)  c
@@ -181,6 +185,7 @@
 	ON c.we_user_idx = d.we_user_idx
 	INNER JOIN we_user e
 	ON c.we_user_idx = e.we_user_idx
+	ORDER BY c.we_user_idx
 	</select>
 
 <!-- 
@@ -201,12 +206,18 @@
  -->
 
 	<select id="SpaceManage.getMyGroupAuthorityList" parameterType="int" resultType="java.util.HashMap">
-	SELECT a.we_group_idx
+	SELECT /* 조직 목록 조회 SpaceManage.getMyGroupAuthorityList */ 
+	       a.we_group_idx
          , a.we_group_name
+         , a.we_group_type 
+	 	 , a.we_group_owner
+	 	 , a.we_ins_date
+         , (SELECT c.we_user_nick FROM we_user c WHERE c.we_user_idx = a.we_group_owner) AS we_user_nick
          , CAST(IFNULL(b.we_insert_permit,0) AS CHAR) AS we_insert_permit
          , CAST(IFNULL(b.we_view_permit,0) AS CHAR) AS we_view_permit
 	FROM we_group_info a LEFT JOIN (SELECT we_group_idx, we_insert_permit, we_edit_permit, we_view_permit FROM we_space_group WHERE we_space_idx=#{userIdx,jdbcType=NUMERIC}) b
 	ON a.we_group_idx = b.we_group_idx
+	ORDER BY a.we_group_idx
 	</select>
 
 	<select id="SpaceManage.getAllSpaceList" parameterType="int" resultType="java.util.HashMap">

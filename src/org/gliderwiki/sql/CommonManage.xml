@@ -237,7 +237,7 @@
 		AND     we_use_yn = 'Y'
 	</select>
 	
-	<!-- 선택된 태그의 목록을 조회한다.  -->
+	<!-- 그룹 목록을 조회한다.  -->
 	<select id="CommonManage.getGroupList" resultType="weGroupInfo">
 	SELECT /* CommonManage.getGroupList - 그룹 리스트 조회  */ we_group_idx
 	     , we_group_code
