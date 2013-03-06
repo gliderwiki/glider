@@ -117,6 +117,7 @@
 <script type="text/javascript" src="/resource/libs/jquery/jquery.dateFormat-1.0.js"></script>
 <script type='text/javascript' src='/dwr/engine.js'></script>
 <script type='text/javascript' src='/dwr/interface/CommonService.js'></script>
+<script type='text/javascript' src='/dwr/interface/spaceService.js'></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	var write = new GliderWiki.Space.Write($(".edit"),'${adminName}', '${loginUser.weUserIdx}').create();
