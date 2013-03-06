@@ -62,6 +62,7 @@
 	<beans:bean id="UserAlarmService" class="org.gliderwiki.web.user.service.UserAlarmServiceImpl"></beans:bean>
 	<beans:bean id="UserActionService" class="org.gliderwiki.web.user.service.UserActionServiceImpl"></beans:bean>
 	<beans:bean id="CommonService" class="org.gliderwiki.web.wiki.common.service.CommonServiceImpl"></beans:bean>
+	<beans:bean id="spaceService" class="org.gliderwiki.web.space.service.SpaceService"></beans:bean>
 	<beans:bean id="WikiFunctionService" class="org.gliderwiki.web.wiki.parser.service.WikiFunctionServiceImpl"></beans:bean>
 	<beans:bean id="AdminGroupService" class="org.gliderwiki.admin.service.AdminGroupServiceImpl"></beans:bean>
 	<beans:bean id="AdminMenuService" class="org.gliderwiki.admin.service.AdminMenuServiceImpl"></beans:bean>
