@@ -310,6 +310,7 @@ public class SpaceController {
 	@RequestMapping(value = "/group/{spaceIdx}/selectList", method = RequestMethod.GET)
 	public String groupSelectedList(@RequestParam(value = "authorityType") String type,
 			@PathVariable("spaceIdx") int spaceIdx, ModelMap model) {
+		logger.debug("### 공간에 속한 그룹 조회 authorityType: " + type);
 		List<Map<String, Object>> myGroupSelectedList = spaceService.groupSelectedList(spaceIdx);
 
 		model.addAttribute("list", myGroupSelectedList);
@@ -328,6 +329,7 @@ public class SpaceController {
 	@RequestMapping(value = "/user/{spaceIdx}/selectList", method = RequestMethod.GET)
 	public String userSelectedList(@RequestParam(value = "authorityType") String type,
 			@PathVariable("spaceIdx") int spaceIdx, ModelMap model) {
+		logger.debug("### 공간에 속한 사용자 조회 authorityType: " + type);
 		List<Map<String, Object>> myUserSelectedList = spaceService.userSelectedList(spaceIdx);
 
 		model.addAttribute("list", myUserSelectedList);

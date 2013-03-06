@@ -18,6 +18,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.directwebremoting.annotations.RemoteMethod;
+import org.directwebremoting.annotations.RemoteProxy;
 import org.gliderwiki.framework.exception.GliderwikiException;
 import org.gliderwiki.framework.exception.ResourceNotFoundException;
 import org.gliderwiki.framework.util.DateUtil;
@@ -60,6 +62,7 @@ import com.google.common.collect.Maps;
  *
  */
 @Service("spaceService")
+@RemoteProxy(name = "spaceService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class SpaceService {
 	Logger logger = LoggerFactory.getLogger(SpaceService.class);
@@ -497,12 +500,16 @@ public class SpaceService {
 		return entityService.getRowEntity(weSpace);
 	}
 
+	@RemoteMethod
 	public List<Map<String, Object>> groupSelectedList(int spaceIdx) {
+		logger.debug("##groupSelectedList");
 		return spaceDao.groupSelectedList(spaceIdx);
 
 	}
 
+	@RemoteMethod
 	public List<Map<String, Object>> userSelectedList(int spaceIdx) {
+		logger.debug("##userSelectedList");
 		return spaceDao.userSelectedList(spaceIdx);
 	}
 
