@@ -30,6 +30,7 @@ import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
 import org.gliderwiki.framework.util.GliderFileUtils;
 import org.gliderwiki.framework.util.StringUtil;
+import org.gliderwiki.util.GliderTagPaserUtil;
 import org.gliderwiki.util.RequestManager;
 import org.gliderwiki.util.WikiProdectStatus;
 import org.gliderwiki.web.common.DownLoadAction;
@@ -316,7 +317,6 @@ public class WikiController {
 		}
 		
 		// TODO 조회 사용자 insert 해야 함
-
 		model.addAttribute("weWiki", weWiki);
 		model.addAttribute("tagList", tagList);
 		model.addAttribute("noteList", noteList);
@@ -468,7 +468,7 @@ public class WikiController {
 			return "redirect:/wiki/" + wikiIdx;
 		}
 
-		model.addAttribute("weWiki", wikiForm);
+		model.addAttribute("wikiForm", wikiForm);
 		model.addAttribute("editMode", "edit");
 		model.addAttribute("weTag", weTag);
 		model.addAttribute("fileList", fileList);

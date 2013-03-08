@@ -54,6 +54,8 @@ public class GliderTagParserMethodSpecialTag {
 				// syntax 내용을 잘라내어 보관한다.
 				String syntax = GliderTagPaserUtil.getFirstTag(str, patternTxt);
 				syntax = GliderTagPaserUtil.getFirstReturnTag(syntax, patternTxt, "$2");
+				syntax = syntax.replaceAll("<", "&lt;");
+				syntax = syntax.replaceAll(">", "&gt;");
 				syntaxList.add(syntax);
 				
 				// 처리한 syntax을 초기화 시킨다. 
@@ -69,6 +71,50 @@ public class GliderTagParserMethodSpecialTag {
 		
 		return str;
 	}
+	
+	/**
+	 * syntax 태그의 내용에 <, > 태그를 변환하여 리턴한다.
+	 * 1. falg는 syntax의 처음호출인지 마지막 호출인지 파악. ( flag == true 처음, flag == false 마지막)
+	 * 2. 처음호출시에는 syntax 안에 내용을 잘라서 보관
+	 * 3. 마지막호출시에는 따로 보관한 내용을 syntax 다시 넣어준다.
+	 * @param str
+	 * @param falg
+	 * @return
+	 */
+	public String getSYNTAX_TO_HTML(String str, Boolean falg ){
+		String patternTxt = null;
+		
+		if( falg ){
+			patternTxt = "(\\[syntax\\])([\\w\\W]*?)(\\[syntax\\])";
+		}else{
+			patternTxt = "(\\[SONJSsyntax\\])([\\w\\W]*?)(\\[SONJSsyntax\\])";
+		}
+		
+		Integer syntaxCnt = 0;
+		while( GliderTagPaserUtil.getMatchFind(str, patternTxt) ){
+			
+			if( falg ){
+				// syntax 내용을 잘라내어 보관한다.
+				String syntax = GliderTagPaserUtil.getFirstTag(str, patternTxt);
+				syntax = GliderTagPaserUtil.getFirstReturnTag(syntax, patternTxt, "$2");
+				syntax = syntax.replaceAll("<", "&lt;");
+				syntax = syntax.replaceAll(">", "&gt;");
+				syntaxList.add(syntax);
+				
+				// 처리한 syntax을 초기화 시킨다. 
+				str = GliderTagPaserUtil.replaceFirstTag(str, patternTxt, "[SONJSsyntax][SONJSsyntax]");
+				
+			}else{
+				// syntax 내용을 다시 붙여 넣는다.  
+				str = GliderTagPaserUtil.replaceFirstTag(str, patternTxt, "[syntax]"+syntaxList.get(syntaxCnt).toString()+"[syntax]");
+				syntaxCnt++;
+			}
+			
+		}
+		
+		return str;
+	}
+	
 	
 	public String getLINE(String str){
 		str = linePaser(str, "#");

@@ -207,7 +207,7 @@ public class GliderTagParserMethodBasicTag {
 	
 	public String getBR(String str){
 		
-		String[] brArray = str.split("\r\n");
+		/*String[] brArray = str.split("\r\n");
 		str = "";
 		
 		for(int i=0; i< brArray.length; i++){
@@ -217,7 +217,32 @@ public class GliderTagParserMethodBasicTag {
 				str += brArray[i]+"\n";
 			}
 		}
-		str = str + "\r\n";
+		str = str + "\r\n";*/
+		str = GliderTagPaserUtil.HTMLBREncode(str);
+		return str;
+	}
+	
+	public String getHTML_TAG(String str){
+		
+		str = str.replaceAll("<html>", "&lt;html&gt;");
+		str = str.replaceAll("</html>", "&lt;/html&gt;");
+		str = str.replaceAll("<body>", "&lt;body&gt;");
+		str = str.replaceAll("</body>", "&lt;/body&gt;");
+		str = str.replaceAll("</body>", "&lt;/body&gt;");
+		str = str.replaceAll("<head>", "&lt;head&gt;");
+		str = str.replaceAll("</head>", "&lt;/head&gt;");
+		str = str.replaceAll("<title>", "&lt;title&gt;");
+		str = str.replaceAll("</title>", "&lt;/title&gt;");
+		str = str.replaceAll("<meta", "&lt;meta");
+		str = str.replaceAll("<link", "&lt;link");
+		str = str.replaceAll("<script", "&lt;script");
+		str = str.replaceAll("</script>", "&lt;/script&gt;");
+		str = str.replaceAll("<div", "&lt;div");
+		str = str.replaceAll("</div>", "&lt;/div&gt;");
+		str = str.replaceAll("<form", "&lt;form");
+		str = str.replaceAll("</form>", "&lt;/form&gt;");
+		str = str.replaceAll("<footer", "&lt;footer");
+		str = str.replaceAll("</footer>", "&lt;/footer>");
 		
 		return str;
 	}

@@ -70,7 +70,8 @@ public class WikiTagController {
 		try {
 			param.put("result", "SUCCESS");
 			param.put("status", SystemConst.CALL_SUCCESS);
-			param.put("wikiMarkup", resultMap.get("htmltag").toString().replaceAll("\r\n", "\r\n<br class=\"br\"/>\r\n"));
+			//param.put("wikiMarkup", resultMap.get("htmltag").toString().replaceAll("\r\n", "\r\n<br class=\"br\"/>\r\n"));
+			param.put("wikiMarkup", resultMap.get("htmltag").toString());
 			param.put("wikiTitle", "미리보기");
 			param.put("wikiRevision", "0");
 			param.put("weWikiIdx", "0");

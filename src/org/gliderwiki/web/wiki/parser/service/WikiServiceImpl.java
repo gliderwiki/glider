@@ -23,6 +23,7 @@ import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
 import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.util.GliderTagParser;
+import org.gliderwiki.util.GliderTagPaserUtil;
 import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.FavorityType;
 import org.gliderwiki.web.domain.WeFavorite;
@@ -148,9 +149,10 @@ public class WikiServiceImpl implements WikiService {
 				weWiki.setWe_wiki_parent_idx(nextIdx); // 현재 입력되는 IDX와 같은 값을
 														// 넣어준다.
 			}
-			weWiki.setWe_wiki_markup(resultMap.get("htmltag").toString()
-					.replaceAll("\r\n", "\r\n<br class=\"br\"/>\r\n"));
-			
+			//weWiki.setWe_wiki_markup(resultMap.get("htmltag").toString().replaceAll("\r\n", "\r\n<br class=\"br\"/>\r\n"));
+			weWiki.setWe_wiki_markup(resultMap.get("htmltag").toString() );
+			weWiki.setWe_wiki_text( GliderTagPaserUtil.replaceHtmlToParsing( weWiki.getWe_wiki_text().toString() )  );
+
 			result = entityService.insertEntity(weWiki);
 
 			if(result > 0) {
@@ -706,10 +708,11 @@ public class WikiServiceImpl implements WikiService {
 			int revision = originalWiki.getWe_wiki_revision() + 1;
 
 			// 업데이트시 추가적으로 필요한 세팅
-			originalWiki.setWe_wiki_markup(resultMap.get("htmltag").toString()
-					.replaceAll("\r\n", "\r\n<br class=\"br\"/>\r\n"));
+			//originalWiki.setWe_wiki_markup(resultMap.get("htmltag").toString().replaceAll("\r\n", "\r\n<br class=\"br\"/>\r\n"));
+			originalWiki.setWe_wiki_markup( resultMap.get("htmltag").toString() );
 			originalWiki.setWe_wiki_title(weWiki.getWe_wiki_title());
-			originalWiki.setWe_wiki_text(weWiki.getWe_wiki_text());
+			originalWiki.setWe_wiki_text( GliderTagPaserUtil.replaceHtmlToParsing( weWiki.getWe_wiki_text().toString() )  );
+			
 			originalWiki.setWe_upd_date(new Date());
 			originalWiki.setWe_upd_user(loginUser.getWeUserIdx());
 			originalWiki.setWe_edit_text(StringUtil.strNullToSpace(request.getParameter("weEditText"),
