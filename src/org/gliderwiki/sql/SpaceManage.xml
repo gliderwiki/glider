@@ -174,13 +174,15 @@
 	SELECT c.we_user_idx
          , c.we_group_name
          , e.we_user_name
-         , CAST(IFNULL(d.we_insert_permit,0) AS CHAR) AS we_insert_permit
-         , CAST(IFNULL(d.we_view_permit,0) AS CHAR) AS we_view_permit
+         , MAX(CAST(IFNULL(d.we_insert_permit,0) AS CHAR)) AS we_insert_permit
+         , MAX(CAST(IFNULL(d.we_view_permit,0) AS CHAR)) AS we_view_permit
 	FROM  (SELECT a.we_group_idx, a.we_user_idx, b.we_group_name FROM we_group_user a, we_group_info b WHERE  a.we_group_idx = b.we_group_idx)  c
 	LEFT JOIN (SELECT we_user_idx, we_insert_permit, we_edit_permit, we_view_permit FROM we_space_user WHERE we_space_idx = #{userIdx,jdbcType=NUMERIC}) d
 	ON c.we_user_idx = d.we_user_idx
 	INNER JOIN we_user e
-	ON c.we_user_idx = e.we_user_idx
+	ON  c.we_user_idx = e.we_user_idx
+	AND e.we_user_auth_yn = 'Y'
+	GROUP BY we_user_idx, we_group_name, we_user_name
 	</select>
 
 <!-- 
@@ -203,10 +205,11 @@
 	<select id="SpaceManage.getMyGroupAuthorityList" parameterType="int" resultType="java.util.HashMap">
 	SELECT a.we_group_idx
          , a.we_group_name
-         , CAST(IFNULL(b.we_insert_permit,0) AS CHAR) AS we_insert_permit
-         , CAST(IFNULL(b.we_view_permit,0) AS CHAR) AS we_view_permit
+         , MAX(CAST(IFNULL(b.we_insert_permit,0) AS CHAR)) AS we_insert_permit
+         , MAX(CAST(IFNULL(b.we_view_permit,0) AS CHAR)) AS we_view_permit
 	FROM we_group_info a LEFT JOIN (SELECT we_group_idx, we_insert_permit, we_edit_permit, we_view_permit FROM we_space_group WHERE we_space_idx=#{userIdx,jdbcType=NUMERIC}) b
 	ON a.we_group_idx = b.we_group_idx
+	GROUP BY we_group_idx, we_group_name
 	</select>
 
 	<select id="SpaceManage.getAllSpaceList" parameterType="int" resultType="java.util.HashMap">
