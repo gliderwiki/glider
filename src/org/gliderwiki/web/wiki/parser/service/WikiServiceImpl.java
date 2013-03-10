@@ -150,7 +150,7 @@ public class WikiServiceImpl implements WikiService {
 														// 넣어준다.
 			}
 			//weWiki.setWe_wiki_markup(resultMap.get("htmltag").toString().replaceAll("\r\n", "\r\n<br class=\"br\"/>\r\n"));
-			weWiki.setWe_wiki_markup(resultMap.get("htmltag").toString() );
+			weWiki.setWe_wiki_markup( resultMap.get("htmltag").toString() );
 			weWiki.setWe_wiki_text( GliderTagPaserUtil.replaceHtmlToParsing( weWiki.getWe_wiki_text().toString() )  );
 
 			result = entityService.insertEntity(weWiki);
@@ -581,8 +581,8 @@ public class WikiServiceImpl implements WikiService {
 
 			note.setWe_wiki_idx(nextIdx);
 			note.setWe_wiki_revision(revision); // 최초 저장시 리비전은 무조 1임
-			note.setWe_wiki_note_name((String) tagMap.get("tag"));
-			note.setWe_wiki_note_desc((String) tagMap.get("tagVal"));
+			note.setWe_wiki_note_name((String) tagMap.get("tagName"));
+			note.setWe_wiki_note_desc((String) tagMap.get("tagDesc"));
 			note.setWe_use_yn("Y");
 
 			logger.debug("###################   noteList    : " + noteList.toString());
