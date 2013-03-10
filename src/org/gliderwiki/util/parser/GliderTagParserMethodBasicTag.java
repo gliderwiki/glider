@@ -234,11 +234,9 @@ public class GliderTagParserMethodBasicTag {
 		str = str.replaceAll("<title>", "&lt;title&gt;");
 		str = str.replaceAll("</title>", "&lt;/title&gt;");
 		str = str.replaceAll("<meta", "&lt;meta");
-		str = str.replaceAll("<link", "&lt;link");
-		str = str.replaceAll("<script", "&lt;script");
-		str = str.replaceAll("</script>", "&lt;/script&gt;");
-		str = str.replaceAll("<div", "&lt;div");
-		str = str.replaceAll("</div>", "&lt;/div&gt;");
+		//str = str.replaceAll("<link", "&lt;link");
+		//str = str.replaceAll("<script", "&lt;script");
+		//str = str.replaceAll("</script>", "&lt;/script&gt;");
 		str = str.replaceAll("<form", "&lt;form");
 		str = str.replaceAll("</form>", "&lt;/form&gt;");
 		str = str.replaceAll("<footer", "&lt;footer");

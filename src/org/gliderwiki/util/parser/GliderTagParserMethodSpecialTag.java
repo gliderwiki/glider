@@ -143,27 +143,29 @@ public class GliderTagParserMethodSpecialTag {
 				  				+ "function graph"+graphCnt+"(){\n"
 								+ "var data" +graphCnt+ " = [\n"
 								+ parsingTxt + "\n"
-								+ "]\n";
+								+ "];\n";
 			
 			if ( !"".equals(pie) ){
 				graphHtml = "<div id='"+pie+"'></div>\n"
 						+ graphHtml;
-				pie = "\\\\\\$(\"#"+pie+"\").pieChart(data" +graphCnt+ ",300,\"pie\"); \n";
+				pie = "&#36;(\"#"+pie+"\").pieChart(data" +graphCnt+ ",300,\"pie\"); \n";
 
 			}
 			if( !"".equals(bar) ){
 				graphHtml = "<div id='"+bar+"'></div>\n"
 						+ graphHtml;
-				bar = "\\\\\\$(\"#"+bar+"\").pieChart(data" +graphCnt+ ",300,\"bar\"); \n";
+				bar = "&#36;(\"#"+bar+"\").pieChart(data" +graphCnt+ ",300,\"bar\"); \n";
 				
 			}
 			graphHtml = graphHtml
 						+ pie
 						+ bar
-						+ ");\n";
+						+ "};\n";
+			graphHtml += "</script>";
+			graphHtml = graphHtml.replaceAll("\r\n", "\n");
 			
 			str = GliderTagPaserUtil.replaceFirstTag(str, patternTxt, graphHtml, Pattern.DOTALL);
-			
+			str = str.replaceAll("[&][#]36;", "\\$");
 		}
 		this.graphCnt = graphCnt;
 		

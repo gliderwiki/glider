@@ -48,8 +48,8 @@ public class GliderTagParserMethodBoxTag {
 			String html = "$2<a href=\"#note-"+cnt+"\"><sup id=\"note-sub-"+cnt+"\">"+cnt+"</sup></a>";
 			
 			str = GliderTagPaserUtil.replaceFirstTag(str, patternTxt, html);
-			tagMap.put("tagUrl", tag);
-			tagMap.put("tagTitle", tagComment);
+			tagMap.put("tagName", tag);
+			tagMap.put("tagDesc", tagComment);
 			noteTagList.add(tagMap);
 		}
 		return str;
