@@ -159,46 +159,61 @@ public class LoginController {
 
 
 	@RequestMapping(value="/registUser", method = RequestMethod.POST)
-	@ResponseBody
-	public JsonResponse registUser(@ModelAttribute("joinForm") WeUser weUser, BindingResult result,
+	public ModelAndView registUser(@RequestParam(value = "we_user_id") String we_user_id,
+			@RequestParam(value = "we_user_name") String we_user_name,
+			@RequestParam(value = "we_user_nick") String we_user_nick,
+			@RequestParam(value = "we_user_pwd") String we_user_pwd,
 			HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
-		logger.debug("### 회원가입 넘어온값 : " + weUser.toString());
-		JsonResponse res = new JsonResponse();
-
+		logger.debug("### 회원가입 넘어온값 we_user_id: " + we_user_id);
+		logger.debug("### 회원가입 넘어온값 we_user_name: " + we_user_name);
+		logger.debug("### 회원가입 넘어온값 we_user_nick: " + we_user_nick);
+		logger.debug("### 회원가입 넘어온값 we_user_pwd: " + we_user_pwd);
 		//TODOList 아이디가 존재하는지 체크
 
 		//Key 생성
 		String passKey = StringUtil.stringBuffersChars(128);		// 128
-
 		logger.debug("passKey {} " , passKey);
 
-		String password = loginService.getEncryptPassword(passKey, weUser.getWe_user_pwd());
-
+		String password = loginService.getEncryptPassword(passKey, we_user_pwd);
 		logger.debug("password {} " , password);		// 암호화 된 값
 
 		String temp = String.valueOf(System.nanoTime());
-		
 		String randomKey = temp.substring(temp.length() -8, temp.length()-4);
 		
+		WeUser weUser = new WeUser();
 		// 회원 가입 저장
 		weUser.setWe_user_key(passKey);					// 패스워드 키 세팅
 		weUser.setWe_user_pwd(password);				// 비밀번호 
 		weUser.setWe_user_join_date(new Date());		// 기본값 세팅
 		weUser.setWe_user_auth(randomKey);				// 인증전송 값 
-
+		weUser.setWe_user_id(we_user_id);
+		weUser.setWe_user_name(we_user_name);
+		weUser.setWe_user_pwd(we_user_pwd);
+		weUser.setWe_user_nick(we_user_nick);
+		
 		int rtnResult = 0;
+		Map<String, Object> param = new HashMap<String, Object>();
 		try {
 			rtnResult = loginService.sendMailAuth(weUser, request);
+			
+			param.put("result", "SUCCESS");
+			param.put("status", SystemConst.CALL_SUCCESS);
+			
 		} catch (Exception e) {
+			
+			param.put("result", "FAIL");
+			param.put("status", SystemConst.CALL_FAIL);
+			
 			// 익셉션일 경우 Log 적재 - 추후 어드민에서 재전송 가능하도록
-			logger.error("메일 전송 에러", e.getCause());
+			logger.debug("======메일 전송 에러", e.getCause());
 			e.printStackTrace();
 		}
 
-
-		res.setResult(rtnResult);
-
-		return res;
+		logger.debug("### 최종 : " + rtnResult);
+		param.put("rtnResult", rtnResult);
+		
+		logger.debug("param : "  +param.toString());
+		return new ModelAndView("json_").addObject("param", param);
 	}
 
 	

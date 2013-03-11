@@ -206,22 +206,26 @@ public class LoginServiceImpl implements LoginService {
 						logger.debug("### UnsupportedEncodingException : " + e.getCause());
 						logger.info("***회원가입 Exception " + e.getCause());
 						tx.rollback(status);
+						throw new GliderwikiException(e.getCause());
 					} catch (MessagingException e) {
 						result = -4;
 						logger.debug("### MessagingException : " + e.getCause());
 						logger.info("***회원가입 Exception " + e.getCause());
 						tx.rollback(status);
+						throw new GliderwikiException(e.getCause());
 					}
 
 				} else {
 					result = 0;
 					logger.info("회원가입 Error - WE_PROFILE 테이블 저장 실패  (result=" + result+"}");
 					tx.rollback(status);
+					throw new GliderwikiException("메일 전송 실패!");
 				}
 			} else {
 				result = -1;
 				logger.info("회원가입 Error - WE_USER 테이블 저장 실패  (result=" + result+"}");
 				tx.rollback(status);
+				throw new GliderwikiException("DB 저장 실패");
 			}
 
 
@@ -230,6 +234,7 @@ public class LoginServiceImpl implements LoginService {
 			// 익셉션 처리 로직 확인
 			logger.info("***회원가입 Exception " + e.getCause());
 			tx.rollback(status);
+			throw new GliderwikiException("회원 DB 저장 실패");
 		}
 		logger.debug("###result : "+ result);
 		return result;
