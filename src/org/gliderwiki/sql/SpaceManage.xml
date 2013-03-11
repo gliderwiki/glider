@@ -186,22 +186,6 @@
 	GROUP BY we_user_idx, we_group_name, we_user_name
 	</select>
 
-<!-- 
-	<select id="SpaceManage.getUserAuthorityList" resultType="java.util.HashMap">
-	SELECT c.we_user_idx
-         , c.we_group_name
-         , e.we_user_name
-    FROM  (SELECT a.we_group_idx, a.we_user_idx, b.we_group_name FROM we_group_user a, we_group_info b WHERE  a.we_group_idx = b.we_group_idx)  c
-	INNER JOIN we_user e
-	ON c.we_user_idx = e.we_user_idx
-	</select>
-
-	<select id="SpaceManage.getGroupAuthorityList" resultType="java.util.HashMap">
-	SELECT we_group_idx
-         , we_group_name
-	FROM we_group_info
-	</select>
- -->
 
 	<select id="SpaceManage.getMyGroupAuthorityList" parameterType="int" resultType="java.util.HashMap">
 	SELECT a.we_group_idx
