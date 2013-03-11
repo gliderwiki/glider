@@ -12,6 +12,9 @@ package org.gliderwiki.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.gliderwiki.util.parser.GliderTagParserMethodBasicTag;
+import org.gliderwiki.util.parser.GliderTagParserMethodSpecialTag;
+
 /**
  * @author ganji
  *
@@ -38,7 +41,7 @@ public class GliderTagPaserUtil {
 	{
 		str = str.replaceAll("<", "&lt;");
 		str = str.replaceAll(">", "&gt;");
-		str = str.replaceAll("&", "&amp;");
+		//str = str.replaceAll("&", "&amp;");
 	    return str;
 	}
 	
@@ -213,6 +216,16 @@ public class GliderTagPaserUtil {
 		Pattern pattern = Pattern.compile(patternTxt, flags);
 		Matcher match = pattern.matcher(str);
 		return match.find();
+	}
+	
+	public static String replaceHtmlToParsing(String str){
+		GliderTagParserMethodBasicTag basic = new GliderTagParserMethodBasicTag();
+		GliderTagParserMethodSpecialTag tag = new GliderTagParserMethodSpecialTag();
+		
+		str = tag.getSYNTAX_TO_HTML(str, true);
+		str = basic.getHTML_TAG(str);
+		str = tag.getSYNTAX_TO_HTML(str, false);
+		return str;
 	}
 	
 	

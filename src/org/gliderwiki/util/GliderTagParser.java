@@ -40,7 +40,7 @@ public class GliderTagParser {
 		
 		Map<String, Object> parsingMap = new HashMap<String, Object>();
 		
-		parsingMap.put("htmltag", str);
+		parsingMap.put("htmltag", GliderTagPaserUtil.replaceHtmlToParsing( str ) );
 		parsingMap.put("linkTagList", basic.linkTagList );
 		parsingMap.put("noteTagList", box.noteTagList);
 		parsingMap.put("h1TagList", special.h1TagList);
@@ -196,9 +196,9 @@ public class GliderTagParser {
 		list.add(EsCharacter.H1);
 		list.add(EsCharacter.LINE);
 		list.add(EsCharacter.TABLE);
-		list.add(EsCharacter.SYNTAXAFTER);
-		
+
 		list.add(EsCharacter.BR);
+		list.add(EsCharacter.SYNTAXAFTER);
 		
 		return list;
 	}

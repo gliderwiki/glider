@@ -237,5 +237,17 @@
 		AND     we_use_yn = 'Y'
 	</select>
 	
-
+	<!-- 그룹 목록을 조회한다.  -->
+	<select id="CommonManage.getGroupList" resultType="weGroupInfo">
+	SELECT /* CommonManage.getGroupList - 그룹 리스트 조회  */ we_group_idx
+	     , we_group_code
+	     , we_group_name
+	     , we_group_type 
+	     , we_group_owner
+	     , we_ins_date
+	     , (SELECT a.we_user_nick FROM we_user a WHERE a.we_user_idx = b.we_group_owner) AS we_user_nick
+	 FROM WE_GROUP_INFO b
+	WHERE we_use_yn = #{we_use_yn}
+	</select>
+	
 </mapper>

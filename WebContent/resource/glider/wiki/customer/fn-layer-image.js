@@ -37,7 +37,9 @@
 			_tag : {
 				_pre : '[!',
 				_split : '|',
-				_post : ']'
+				_post : ']',
+				_align : '[!a',
+				_size :  '[!s'
 			},
 	};
 	/**
@@ -176,8 +178,11 @@
 						alert("업로드된 이미지가 존재 하지 않습니다.");
 						return false;
 					}
-					
-					var imgLink = G_IMAGE._tag._pre + G_IMAGE._tag._split + _url + G_IMAGE._tag._split + _title + G_IMAGE._tag._split + _align  + G_IMAGE._tag._split + _width + G_IMAGE._tag._split + _height + G_IMAGE._tag._post;
+					//[!|http://asdf.com|aaa][!a|left][!s|30|40][!]
+					var imgLink = G_IMAGE._tag._pre + G_IMAGE._tag._split + _url + G_IMAGE._tag._split + _title + G_IMAGE._tag._post
+								+ G_IMAGE._tag._align + G_IMAGE._tag._split + _align + G_IMAGE._tag._post
+								+ G_IMAGE._tag._size + G_IMAGE._tag._split + _width + G_IMAGE._tag._split + _height + G_IMAGE._tag._post
+								+ G_IMAGE._tag._pre + G_IMAGE._tag._post ;
 					
 					$.textInsert(G_IMAGE.textEditor, imgLink, "", "");
 					$("#" + G_IMAGE.tempLayer ).empty();

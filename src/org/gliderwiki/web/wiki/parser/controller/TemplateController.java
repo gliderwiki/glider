@@ -148,7 +148,8 @@ public class TemplateController {
 		domain.setWe_template_name(wikiForm.getWe_wiki_title());
 		domain.setWe_template_type("MARKUP");
 		domain.setWe_template_text(wikiForm.getWe_wiki_text());
-		domain.setWe_template_markup(resultMap.get("htmltag").toString().replaceAll("\r\n", "\r\n<br class=\"br\"/>\r\n"));
+		//domain.setWe_template_markup(resultMap.get("htmltag").toString().replaceAll("\r\n", "\r\n<br class=\"br\"/>\r\n"));
+		domain.setWe_template_markup(resultMap.get("htmltag").toString());
 		domain.setWe_use_yn("Y");
 		
 		logger.debug("#####################################");

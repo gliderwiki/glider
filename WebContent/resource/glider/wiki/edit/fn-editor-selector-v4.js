@@ -31,6 +31,7 @@
 	 * var text = sel.text;
 	 */
 	jQuery.textLocation = function(textEditor){
+		textEditor = document.getElementById("wikiEditor");
 		var start = 0;					// 시작점
 		var end = 0;					// 종료점 
 		var normalizedValue = '';		// 특수문자를 처리한 일반 텍스트 
@@ -40,8 +41,12 @@
 		var endRange = '';
 		var targetText = '';
 		var textLength = 0;
+		
 		if(document.selection) {  // IE
 			range = document.selection.createRange();
+			$.print('range : ' + range);
+			$.print('range.parentElement() : ' + range.parentElement());
+			$.print('textEditor : ' + textEditor);
 	        if (range && range.parentElement() == textEditor) {
 	            len = textEditor.value.length;
 	            normalizedValue = textEditor.value.replace(/\r\n/g, "\n");		// 개행문자 치환 후 일반문자 
@@ -224,6 +229,3 @@
     
 	
 })(jQuery);
-
-
-

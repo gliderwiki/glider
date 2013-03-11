@@ -10,11 +10,11 @@
 	<!-- 답변 위키 글타래의 제일 작은 depth값  -->
 	<select id="WikiManage.getMinDepthIdx" parameterType="weWiki" resultType="java.lang.String">
 	<![CDATA[
-		SELECT min(we_wiki_depth_idx) as depthIdx
+		SELECT min(we_wiki_order_idx) as orderIdx
 		  FROM we_wiki
 		 WHERE we_wiki_parent_idx = #{we_wiki_parent_idx}
-		   AND we_wiki_depth_idx > #{we_wiki_depth_idx}
-		   AND we_wiki_order_idx <= #{we_wiki_order_idx}
+		   AND we_wiki_order_idx > #{we_wiki_order_idx}
+		   AND we_wiki_depth_idx <= #{we_wiki_depth_idx}
 	]]>
 	</select>
 
@@ -22,19 +22,19 @@
 	<!-- 답변 위키 글타래의 순번증가   -->
 	<select id="WikiManage.getMaxDepthIdx" parameterType="weWiki" resultType="java.lang.String">
 	<![CDATA[
-		SELECT max(we_wiki_depth_idx) + 1 as depthIdx  /* WikiManage.getMaxDepthIdx  */
+		SELECT IFNULL(max(we_wiki_order_idx),0) + 1 as depthIdx  /* WikiManage.getMaxDepthIdx  */
 		  FROM we_wiki
      	WHERE we_wiki_parent_idx = #{we_wiki_parent_idx}
 	]]>
 	</select>
 
-	<!-- 자신이 속할 글 타래의 Order_idx 값을 증가시키고, 그 중 가장 작은값을 order_idx 로 세팅한다. -->
-	<update id="WikiManage.updateParentOrderIdx" parameterType="weUser">
+	<!-- 자신이 속할 글 타래의 depth_idx 값을 증가시키고, 그 중 가장 작은값을 order_idx 로 세팅한다. -->
+	<update id="WikiManage.updateParentDepthIdx" parameterType="weUser">
 	<![CDATA[
-		UPDATE we_wiki /* WikiManage.updateParentOrderIdx - 자신이 속할 글 타래의 depth 값을 증가 */
-		SET    we_wiki_depth_idx = we_wiki_depth_idx+1
+		UPDATE we_wiki /* WikiManage.updateParentDepthIdx - 자신이 속할 글 타래의 depth 값을 증가 */
+		SET    we_wiki_order_idx = we_wiki_order_idx+1
 	    WHERE  we_wiki_parent_idx = #{we_wiki_parent_idx}
-	    AND    we_wiki_depth_idx > #{we_wiki_depth_idx}
+	    AND    we_wiki_order_idx >= #{we_wiki_order_idx}
 	]]>
 	</update>
 
@@ -44,6 +44,13 @@
 		       IFNULL(MAX(LAST_INSERT_ID(we_wiki_idx)) + 1, 1) as wikiIdx
   		FROM we_wiki
 	</select>
+	
+	<!-- 현재 입력된 Wiki_idx조회  -->
+	<select id="WikiManage.getCurrentWikiIdx" resultType="Integer">
+		SELECT IFNULL(MAX(LAST_INSERT_ID(we_wiki_idx)), 1) as wikiIdx 
+		FROM   we_wiki
+	</select>	
+	
 
 	<insert id="WikiManage.insertWeWikiBak" parameterType="org.gliderwiki.web.domain.WeWikiBak">
 		<!-- 리비전 교체하면 BAK 테이블에 기존 데이터 저장 -->
@@ -89,83 +96,40 @@
 
 
 	<select id="WikiManage.getWikiList"  parameterType="weWiki" resultType="weWiki">
-		SELECT    /* WikiManage.getWikiList -  공간에 속한 전체 위키를 제목  정렬 조건으로  조회한다. */
-				  T2.RNUM AS row_num
-				, we_wiki_idx
-				, CONCAT(LPAD(' ' , (CASE T1.WE_WIKI_ORDER_IDX WHEN 0 THEN 0
-                  ELSE T1.WE_WIKI_ORDER_IDX * 2 END) ,' ') , T1.WE_WIKI_TITLE) we_wiki_title
-				, T1.we_space_idx
-				, T1.we_wiki_parent_idx
-				, T1.we_wiki_order_idx
-				, T1.we_wiki_depth_idx
-				, T1.we_wiki_text
-				, T1.we_wiki_markup
-				, T1.we_wiki_revision
-				, T1.we_wiki_status
-				, T1.we_wiki_quota
-				, T1.we_wiki_url
-				, T1.we_wiki_agree
-				, T1.we_wiki_view_cnt
-				, T1.we_wiki_prev
-				, T1.we_wiki_next
-				, T1.we_user_ip
-				, T1.we_wiki_protect
-				, T1.we_edit_text
-				, T1.we_use_yn
-				, T1.we_edit_yn
-				, T1.we_ins_user
-				, T1.we_ins_date
-				, T1.we_upd_user
-				, T1.we_upd_date
-				, T1.we_user_nick
-				FROM
-				    (SELECT
-				        a.we_wiki_idx,
-				        a.we_space_idx,
-				        a.we_wiki_parent_idx,
-				        a.we_wiki_order_idx,
-				        a.we_wiki_depth_idx,
-				        a.we_wiki_title,
-				        a.we_wiki_text,
-				        a.we_wiki_markup,
-				        a.we_wiki_revision,
-				        a.we_wiki_status,
-				        a.we_wiki_quota,
-				        a.we_wiki_url,
-				        a.we_wiki_agree,
-				        a.we_wiki_view_cnt,
-				        a.we_wiki_prev,
-				        a.we_wiki_next,
-				        a.we_user_ip,
-				        a.we_wiki_protect,
-				        a.we_edit_text,
-				        a.we_use_yn,
-				        a.we_edit_yn,
-				        a.we_ins_user,
-				        a.we_ins_date,
-				        a.we_upd_user,
-				        a.we_upd_date,
-				        b.we_user_nick
-				    FROM
-				        WE_WIKI a
-				    INNER JOIN WE_USER b
-				    ON a.we_ins_user = b.we_user_idx
-				    WHERE we_space_idx = #{we_space_idx}
-				    AND we_use_yn = #{we_use_yn}
-				    ) T1
-				   LEFT OUTER JOIN
-				    (SELECT @RNUM := @RNUM + 1 RNUM
-				    ,      WE_WIKI_PARENT_IDX, WE_WIKI_ORDER_IDX
-				    ,      WE_WIKI_TITLE
-				    FROM WE_WIKI T1,
-				        (SELECT @RNUM := 0 FROM DUAL) T2
-				    WHERE T1.we_space_idx = #{we_space_idx}
-				    AND T1.we_use_yn = #{we_use_yn}
-				    AND T1.WE_WIKI_DEPTH_IDX =0
-				    ORDER BY T1.WE_WIKI_TITLE
-				    ) T2
-				   ON T1. WE_WIKI_PARENT_IDX = T2.WE_WIKI_PARENT_IDX
-				ORDER BY T2.RNUM ASC, T1. WE_WIKI_PARENT_IDX ASC ,T1.WE_WIKI_ORDER_IDX ASC, T1.WE_WIKI_TITLE
+		SELECT /* WikiManage.getWikiList - 공간 메인 전체 위키 조회 */
+		        a.we_wiki_idx,
+		        a.we_space_idx,
+		        a.we_wiki_parent_idx,
+		        a.we_wiki_order_idx,
+		        a.we_wiki_depth_idx,
+		        CONCAT(LPAD(' ' , (CASE a.WE_WIKI_DEPTH_IDX WHEN 0 THEN 0
+               	ELSE a.WE_WIKI_DEPTH_IDX * 2 END) ,' ') , a.WE_WIKI_TITLE) we_wiki_title,
+		        a.we_wiki_text,
+		        a.we_wiki_markup,
+		        a.we_wiki_revision,
+		        a.we_wiki_status,
+		        a.we_wiki_quota,
+		        a.we_wiki_url,
+		        a.we_wiki_agree,
+		        a.we_wiki_view_cnt,
+		        a.we_wiki_prev,
+		        a.we_wiki_next,
+		        a.we_user_ip,
+		        a.we_wiki_protect,
+		        a.we_edit_text,
+		        a.we_use_yn,
+		        a.we_edit_yn,
+		        a.we_ins_user,
+		        a.we_ins_date,
+		        a.we_upd_user,
+		        a.we_upd_date,
+		        b.we_user_nick
+		FROM    WE_WIKI a
+		INNER   JOIN WE_USER b
+		ON      a.we_ins_user = b.we_user_idx
+		WHERE   we_space_idx = #{we_space_idx}
+		AND     we_use_yn = #{we_use_yn}
+		ORDER BY we_wiki_parent_idx, we_wiki_order_idx 
 	</select>
 
 	<insert id="WikiManage.insertArrayFileList" parameterType="java.util.HashMap">

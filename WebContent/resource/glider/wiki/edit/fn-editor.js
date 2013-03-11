@@ -17,8 +17,13 @@
 			// 현재 블럭 위치에 지정된 태그를 감싼다. Textarea, btn-object, btn-data 
 			$.appendTag(textEditor, $me, data);
 		} else if(data.mode == 'insert') {
-			// 현재 커서 위치에 지정된 태그를 추가한다.  
+			// 현재 커서 위치에 지정된 태그를 추가한다.
 			$.insertTag(textEditor, $me, data);
+		} else if(data.mode == 'font') {
+			$.appendTag(textEditor, $me, data);
+		} else if(data.mode == 'color') {
+  
+			$.layer_select.color.dropdownColor(textEditor, $me, data);
 		} else if(data.mode == 'layer') {
 			// 현재 커서 위치에 레이어 입력 태그를 추가한다.
 			var $layer = $.makeLayer.getLayer( data.type );
