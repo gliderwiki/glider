@@ -11,11 +11,14 @@ package org.gliderwiki.web.vo;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 /**
  * @author ganji
  *
  */
-public class JsonResponse implements Serializable{
+public class JsonResponse implements Serializable {
 
 	private static final long serialVersionUID = 5599194014834036299L;
 
@@ -47,8 +50,10 @@ public class JsonResponse implements Serializable{
 	public void setResponse(ResultStatusInfo response) {
 		this.response = response;
 	}
-
-
+	
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
 
 	public static class ResultStatusInfo implements Serializable{
 		
