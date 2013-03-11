@@ -62,9 +62,7 @@
 	$(document).ready(function() {
 		var checkId = 0;
 		var checkNickName = 0;
-		// Ajax 폼 
-		$("#joinForm").ajaxForm(RegistUserCallBack);
-
+		
 		$("#we_user_id").focusout(function() {
 			var userId = $("#we_user_id").val();
 			
@@ -198,15 +196,56 @@
 			return;
 		} else {
 			$.loadingBar();
-			//파일전송
-			var frm;
-			frm = $('#joinForm');
-			frm.attr("action", "/registUser");
-			frm.submit();
+			
+			
+			$.ajax({
+				type:"POST"
+				,url:"/registUser"
+				,data:{we_user_id:$("#we_user_id").val(),
+					   we_user_name:$("#we_user_name").val(),
+					   we_user_nick:$("#we_user_nick").val(), 
+					   we_user_pwd:$("#we_user_pwd").val()}
+				,dataType:"json"
+				,success:function(rtnObj){
+					console.log("success : " + rtnObj);
+					if(rtnObj.result == 'SUCCESS') {
+						if (data.rtnResult == 1) {
+							$.loadingBar.fadeOut();
+							GliderWiki.alert('회원가입 완료', '입력한 메일주소로 인증페이지가 전송되었습니다.\n메일을 확인하여 인증을 거친 후 로그인 하세요.');
+							$("#okBtn").on("click", function() {
+								$(location).attr('href',"/index");
+							});				
+						} else if (data.rtnResult == -3) {
+							$.loadingBar.fadeOut();
+							GliderWiki.alert('회원가입 에러', '결과['+data.result+'] - 회원 메일 인증에 문제가 발생하였습니다.\n관리자에게 문의하세요.');
+							$(location).attr('href',"/index");
+						} else if (data.rtnResult == -4) {
+							$.loadingBar.fadeOut();
+							GliderWiki.alert('회원가입 에러','결과['+data.result+'] - 인증 메일 전송중 메일 서버 연결이 제대로 되지 않아 에러가 발생했습니다.\n다시 시도하세요.');
+						} else {
+							$.loadingBar.fadeOut();
+							GliderWiki.alert('회원가입 에러','결과['+data.result.rtnResult+'] - 회원 정보 저장이 제대로 되지 않았습니다.\n관리자에게 문의하세요.');
+						}
+					} else {
+						$.loadingBar.fadeOut();
+						GliderWiki.alert("에러","서버 저장시 에러가 발생하였습니다. 관리자에게 문의하세요.");
+						return;
+					}
+				},
+				error:function(rtnObj){
+					console.log("error : " + rtnObj);
+					$.loadingBar.fadeOut();
+					GliderWiki.alert("에러","통신에러가 발생했습니다. 메일 전송이 제대로 이뤄지지 않았습니다.");
+					return;
+				}
+			});
 		}
 	}
 
+	/*
 	function RegistUserCallBack(data, status) {
+		console.log("### data : " + data);
+		console.log("### status : " + status);
 		if (status == 'success') {
 			if (data.result == 1) {
 				$.loadingBar.fadeOut();
@@ -232,6 +271,7 @@
 			GliderWiki.alert('회원가입 에러','통신에러가 발생하였습니다.');
 		}
 	}
+	*/
 	
 	function emailCheck(values) {
 		var regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
