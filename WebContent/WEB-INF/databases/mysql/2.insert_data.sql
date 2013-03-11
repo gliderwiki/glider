@@ -78,87 +78,6 @@ insert into `we_meta_info` (`WE_META_TYPE`, `WE_META_DOMAIN`, `WE_META_DESC`, `W
 
 
 
-/**
- * Target Table : WE_GROUP_INFO 
- * DESC : 글라이더 기본 그룹을 생성한다. 
- * Ver : 1.0
- * Auth : Yion LEE
- * Modify : 
- * Update Date : 
- * Create Date : 2012-09-17
- */
-INSERT INTO `we_group_info` (`WE_GROUP_CODE`, `WE_GROUP_NAME`, `WE_GROUP_TYPE`, `WE_REQUIRED_YN`, `WE_GROUP_OWNER`, `WE_GROUP_INFO`, `WE_USE_YN`,`WE_INS_USER`, `WE_INS_DATE`)
-VALUES ('REQUIRED-01', '기본그룹', '1', 'Y', '1', '글라이더 위키 기본 그룹(삭제불가) ', 'Y', 1 ,NOW());
-
-
-/**
- * Target Table : WE_USER 
- * DESC : 글라이더 기본 사용자를  생성한다. (어드민) 
- * Ver : 1.0
- * Auth : Yion LEE
- * Modify : 
- * Update Date : 
- * Create Date : 2012-09-21
- */
-
-INSERT INTO `we_user` 
-	(`WE_USER_IDX`, 
-	`WE_USER_ID`, 
-	`WE_USER_NAME`, 
-	`WE_USER_NICK`, 
-	`WE_USER_KEY`, 
-	`WE_USER_PWD`, 
-	`WE_USER_JOIN_DATE`, 
-	`WE_USER_AUTH_YN`, 
-	`WE_USER_AUTH_DATE`
-	)
-	VALUES
-	(1, 
-	'gliderwiki@gliderwiki.org', 
-	'어드민', 
-	'영자님!', 
-	'PtNMgeFxWJrdQZKbPRWlxYePZVKMSvtsaEJrHgUlFFDPbJDdAlDuGZhyNQxanazPwBpBGJZjLIGZyLHKMHYkLEAMmocDojGfQuLjWDnQsZDxYZxqNBsDtdPvtITOsghU', -- 암호화키
-	'iaKY69aOyQA=', -- 1111
-	NOW(),
-	'Y', 
-	NOW()
-	);
-
-	
-/**
- * Target Table : WE_PROFILE
- * DESC : 글라이더 유저의  프로필 데이터를  생성한다. (어드민) 
- * Ver : 1.0
- * Auth : Yion LEE
- * Modify : 
- * Update Date : 
- * Create Date : 2012-09-21
- */
-INSERT INTO .`we_profile` 
-	(`WE_USER_IDX`, 
-	`WE_USER_EMAIL`, 
-	`WE_USER_SITE`, 
-	`WE_AWAY_YN`, 
-	`WE_GRADE`, 
-	`WE_TECH_YN`, 
-	`WE_POINT`, 
-	`WE_VISIT_DATE`, 
-	`WE_INS_DATE`, 
-	`WE_NOTI_CHECKED`
-	)
-	VALUES
-	(1, 
-	'gliderwiki@gliderwiki.com', 
-	'http://www.gliderwiki.org', 
-	'N', 
-	9, 
-	'Y', 
-	'1', 
-	NOW(), 
-	NOW(), 
-	'Y'
-	);
-	
 
 /**
  * Target Table : WE_SPACE 
@@ -250,6 +169,93 @@ INSERT INTO `we_function`
 	
 	
 
+/**
+ * Target Table : WE_GROUP_INFO 
+ * DESC : 글라이더 기본 그룹을 생성한다. 
+ * Ver : 1.0
+ * Auth : Yion LEE
+ * Modify : 
+ * Update Date : 
+ * Create Date : 2012-09-17
+ */
+INSERT INTO `we_group_info` (`WE_GROUP_CODE`, `WE_GROUP_NAME`, `WE_GROUP_TYPE`, `WE_REQUIRED_YN`, `WE_GROUP_OWNER`, `WE_GROUP_INFO`, `WE_USE_YN`,`WE_INS_USER`, `WE_INS_DATE`)
+VALUES ('REQUIRED-01', '기본그룹', '1', 'Y', '1', '글라이더 위키 기본 그룹(삭제불가) ', 'Y', 1 ,NOW());
+
+/**
+ * 어드민은 기본 그룹에 포함된다. 
+ */
+INSERT INTO `we_group_user` (`WE_GROUP_IDX`, `WE_USER_IDX`, `WE_USE_YN`, `WE_INS_DATE`, `WE_INS_USER`)
+VALUES ('1', '1', 'Y', NOW(), 1);
+
+
+/**
+ * Target Table : WE_USER 
+ * DESC : 글라이더 기본 사용자를  생성한다. (어드민) - TODOList 추후 삭제 : 어드민은 인스톨시의 데이터로 생성되어야 한다. 
+ * Ver : 1.0
+ * Auth : Yion LEE
+ * Modify : 
+ * Update Date : 
+ * Create Date : 2012-09-21
+ */
+
+INSERT INTO `we_user` 
+	(`WE_USER_IDX`, 
+	`WE_USER_ID`, 
+	`WE_USER_NAME`, 
+	`WE_USER_NICK`, 
+	`WE_USER_KEY`, 
+	`WE_USER_PWD`, 
+	`WE_USER_JOIN_DATE`, 
+	`WE_USER_AUTH_YN`, 
+	`WE_USER_AUTH_DATE`
+	)
+	VALUES
+	(1, 
+	'gliderwiki@gliderwiki.org', 
+	'어드민', 
+	'영자님!', 
+	'PtNMgeFxWJrdQZKbPRWlxYePZVKMSvtsaEJrHgUlFFDPbJDdAlDuGZhyNQxanazPwBpBGJZjLIGZyLHKMHYkLEAMmocDojGfQuLjWDnQsZDxYZxqNBsDtdPvtITOsghU', -- 암호화키
+	'iaKY69aOyQA=', -- 1111
+	NOW(),
+	'Y', 
+	NOW()
+	);
+
+	
+/**
+ * Target Table : WE_PROFILE
+ * DESC : 글라이더 유저의  프로필 데이터를  생성한다. (어드민) - TODOList 추후 삭제 : 어드민은 인스톨시의 데이터로 생성되어야 한다. 
+ * Ver : 1.0
+ * Auth : Yion LEE
+ * Modify : 
+ * Update Date : 
+ * Create Date : 2012-09-21
+ */
+INSERT INTO .`we_profile` 
+	(`WE_USER_IDX`, 
+	`WE_USER_EMAIL`, 
+	`WE_USER_SITE`, 
+	`WE_AWAY_YN`, 
+	`WE_GRADE`, 
+	`WE_TECH_YN`, 
+	`WE_POINT`, 
+	`WE_VISIT_DATE`, 
+	`WE_INS_DATE`, 
+	`WE_NOTI_CHECKED`
+	)
+	VALUES
+	(1, 
+	'gliderwiki@gliderwiki.com', 
+	'http://www.gliderwiki.org', 
+	'N', 
+	9, 
+	'Y', 
+	'1', 
+	NOW(), 
+	NOW(), 
+	'Y'
+	);
+	
 
 
 
