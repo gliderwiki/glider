@@ -10,7 +10,8 @@
 			_form : {
 				_id : 'imgForm',
 				_fileNm : 'file',
-				_uploadBtn : 'img_upload'
+				_uploadBtn : 'img_upload',
+				_urlId : 'imgUrl'
 			},
 			_class : {
 				_align : 'img_align',
@@ -140,6 +141,7 @@
 				
 				// 타입-웹사진에서 프리뷰 기능
 				$("#" + G_IMAGE._id._preview).click(function (e) {
+					console.info(e);
 					e.preventDefault();
 					_url = $("#"+G_IMAGE._form._urlId).val();
 					
@@ -148,9 +150,10 @@
 						$("#"+G_IMAGE._form._urlId).focus();
 						return false;
 					}
-					
+					console.info(_url);
 					var imgPreview = $("<img>").attr("src", _url).css({height:"500px", width:"500px"});
-					$(".preview",'.' + G_IMAGE.classNm).html(imgPreview);
+					console.info(imgPreview);
+					$(".preview").html(imgPreview);
 				});
 				
 				// 타입에 따른 블록 변경
@@ -211,11 +214,11 @@
 						
 						
 						var fileSrc = jsonStr.thumbPath+jsonStr.thumbName;
-						
 						// 섬네일을 출력한 후 리사이징 한다.
 						
 						var imgPreview = $("<img>").attr("src", "/resource/real"+fileSrc).css({height:"500px", width:"500px"});
-						$(".preview",'.' + G_IMAGE.classNm).html(imgPreview);
+						console.info(imgPreview);
+						$(".preview" ).html(imgPreview);
 						
 						$("#" + G_IMAGE._form._urlId).val("/resource/real"+fileSrc);
 					} else {

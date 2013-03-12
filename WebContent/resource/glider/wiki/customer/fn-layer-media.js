@@ -81,7 +81,7 @@
 						return false;
 					}
 					var embed = '<embed src="' + _url + '"> </embed>';
-					$('.preview', '.mediaWrap').html(embed);
+					$('.preview').html(embed);
 				});
 				
 				//확인버튼 click
@@ -98,13 +98,13 @@
 						return false;
 					}
 					
-					var embed = '<embed src="' + _url + '" hidden = "false" ';
+					var embed = '<embed type="application/x-shockwave-flash"  src="' + _url + '" ';
 					
 					if ( typeof _width !== 'undefined' && $.trim(_width) !== '' ) {
-						embed += ' width = "'+ _width +'" ';
+						embed += ' width="'+ _width +'" ';
 					}
 					if ( typeof _height !== 'undefined' && $.trim(_height) !== '' ) {
-						embed += ' height = "'+ _height +'" ';
+						embed += ' height="'+ _height +'" ';
 					}
 					embed += '></embed>';
 					$.textInsert(G_MEDIA.textEditor, embed, "", "");
