@@ -17,7 +17,7 @@
 	    }
 	    return { start: start, end: end };
 	};
-	
+
 	/**
 	 * @description : textarea 의 블럭 시작점과 종료점, 그 사이의 문자열을 리턴한다. 
 	 * @param : textEditor( object - textarea ID )
@@ -31,7 +31,7 @@
 	 * var text = sel.text;
 	 */
 	jQuery.textLocation = function(textEditor){
-		textEditor = document.getElementById("wikiEditor");
+		document.wikiForm.we_wiki_text.focus();
 		var start = 0;					// 시작점
 		var end = 0;					// 종료점 
 		var normalizedValue = '';		// 특수문자를 처리한 일반 텍스트 
@@ -40,9 +40,13 @@
 		var len = '';
 		var endRange = '';
 		var targetText = '';
-		var textLength = 0;
-		
-		if(document.selection) {  // IE
+
+		if (typeof textEditor.selectionStart == "number" && typeof textEditor.selectionEnd == "number") {
+			$.print('FF CR');
+			start = textEditor.selectionStart;
+			end = textEditor.selectionEnd; 
+			targetText = textEditor.value.substring(start, end);
+	    } else {	// IE
 			range = document.selection.createRange();
 			$.print('range : ' + range);
 			$.print('range.parentElement() : ' + range.parentElement());
@@ -51,20 +55,20 @@
 	            len = textEditor.value.length;
 	            normalizedValue = textEditor.value.replace(/\r\n/g, "\n");		// 개행문자 치환 후 일반문자 
 	            $.print('normalizedValue : ' + normalizedValue);
-	            
+
 	            textInputRange = textEditor.createTextRange();           
 	            textInputRange.moveToBookmark(range.getBookmark());
-	            
+
 	            endRange = textEditor.createTextRange();
 	            endRange.collapse(false);
-	
+
 	            // 라인피드가 있을 경우 선택된 text의 길이는 IE에서 +1 이 된다. 
 	            if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1) {
 	                start = end = len;
 	            } else {
 	                start = -textInputRange.moveStart("character", -len);
 	                start += normalizedValue.slice(0, start).split("\n").length - 1;
-	
+
 	                if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1) {
 	                    end = len;
 	                } else {
@@ -72,15 +76,16 @@
 	                    end += normalizedValue.slice(0, end).split("\n").length - 1;
 	                }
 	            }
+	            
+	            $.print('start : ' + start);
+	            $.print('end : ' + end);
+	            
+	            
 	            targetText = textEditor.value.substring(start, end);
-	            textLength : targetText.length;
+	            
 	        }
-		} else {
-			len =  textEditor.value.length;
-			start = textEditor.selectionStart;
-			end = textEditor.selectionEnd; 
-			targetText = textEditor.value.substring(start, end);
-	    }
+		} 
+		
 		return {
 			start : start,
 			end : end,
@@ -88,8 +93,8 @@
 			textLength : targetText.length
 		};
 	};
-	
-	
+
+
    	/**
 	 * @description : 현재 위키에 지정된 text를 삽입한다 
 	 * @param : textEditor( object - textarea ID )
@@ -105,7 +110,7 @@
 	 */
 	jQuery.textInsert = function(textEditor, before, center, after) {
 		var textValue = before + center + after;
-		
+
         if (document.selection) { //IE
             textEditor.focus();
             var sel = document.selection.createRange();
@@ -138,13 +143,13 @@
 	 * $.rangeTag(editor, 시작지점, 종료지점);
 	 */
 	jQuery.rangeTag = function(textEditor, start, end){
-		
+
 	    if (textEditor.setSelectionRange) {		// FF, CROME
 	        textEditor.setSelectionRange(start, end);			
 	    } else {  	
 	        if(textEditor.createTextRange) {	// IE
 	        	textEditor.focus();
-	        	
+
 	        	var offsets = $.adjustOffsets(textEditor, start, end);
                 var range = textEditor.createTextRange();
                 var startCharMove = $.offsetToRangeCharacterMove(textEditor, offsets.start);
@@ -159,7 +164,7 @@
 	        } 
 	    }
 	};
-	
+
 	/**
 	 * @description : 블럭 영역안의 글자를 지정된 문자열로 바꾼다. 
 	 * @param : textEditor( object - textarea ID )
@@ -174,7 +179,7 @@
 	    var sel = $.textLocation(textEditor);
 	    var val = textEditor.value;
 	    var end = text.length - sel.textLength;	// 대체 문자열 길이 만큼 블럭을 재지정해야 한다. 
-	  
+
 	    textEditor.value = val.slice(0, sel.start) + text + val.slice(sel.end);
 	    $.rangeTag(textEditor, sel.start, sel.end + end); 
 	};
@@ -194,10 +199,12 @@
 	jQuery.appendTag = function(textEditor, $me, data) {
         var sel = $.textLocation(textEditor);
         var val = textEditor.value;
-        
-        $.print("sel.start : " + sel.start);
         $.print("sel.end : " + sel.end);
         $.print("sel.text : " + sel.text);
+        
+        $.print("appendTag val : " + val);
+        $.print("sel.start : " + sel.start);
+        
         
         // 블럭이 없는 경우 현재 커서에서 태그를 삽입 한다. 
         if(sel.start == 0 && sel.end == 0) {
@@ -227,5 +234,5 @@
     	$.textInsert(textEditor, data.before, "", "");
     };
     
-	
+
 })(jQuery);
