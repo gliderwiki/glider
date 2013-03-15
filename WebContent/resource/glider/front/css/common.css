@@ -212,7 +212,7 @@ ul.navi li { display: inline-block; }
 
 .list .user .name { display: inline-block; overflow: hidden; width: 100%; }
 
-.list .info { overflow: hidden; width: 50px; text-align: right; }
+.list .info { overflow: hidden; width: 40px; text-align: right; }
 
 .list.type1 > li { padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #e5e5e5; }
 

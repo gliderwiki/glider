@@ -16,13 +16,13 @@
 
 .dashboard .body-cont .col-2 .list.type1 > li { padding-top: 0; padding-bottom: 0; }
 
-.dashboard .body-cont .col-2 .col-main { float: left; width: 466px; }
+.dashboard .body-cont .col-2 .col-main { float: left; width: 496px; }
 
 .dashboard .body-cont .col-2 .col-main .tit-sec { color: #a13853; }
 
-.dashboard .body-cont .col-2 .col-main .list.type1 .title { width: 250px; }
+.dashboard .body-cont .col-2 .col-main .list.type1 .title { width: 300px; }
 
-.dashboard .body-cont .col-2 .col-main .list.type1 .time { width: 80px; }
+.dashboard .body-cont .col-2 .col-main .list.type1 .time { width: 70px; }
 
 .dashboard .body-cont .col-2 .col-main .list.type1 .user { width: 80px; }
 
