@@ -19,7 +19,7 @@
 
 
 		<div class="editarea">
-		<form:form modelAttribute="wikiForm" method="POST" action="${actionUrl}" enctype="multipart/form-data">
+		<form:form modelAttribute="wikiForm" name="wikiForm" method="POST" action="${actionUrl}" enctype="multipart/form-data">
 		<input type="hidden" id="isUpload" name="isUpload" title="파일업로드확인" value=""/>
 		<form:hidden path="we_wiki_idx"/>
 		<form:hidden path="we_space_idx"/>
@@ -45,86 +45,86 @@
 						<div class="e-toolbar">
 							<ul class="e-tb-group">
 								<li class="e-tb-btn undo disabled" title="실행취소">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn redo disabled" title="다시실행">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn copy disabled" title="복사">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn cut disabled" title="잘라내기">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn paste disabled" title="붙여넣기">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn table" title="표만들기" data-mode="layer" data-type="table">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn select-all" title="필드" data-mode="append" data-before="[field|타이틀]" data-center=""  data-after="[field]">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn note" title="각주" data-mode="append" data-before="[note|" data-center="각주"  data-after="#설명]">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-clr"></li>
 								<li class="e-tb-btn hr" title="구분선" data-mode="insert" data-before="[hr]" data-center=""  data-after="">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn link" title="링크" data-mode="layer" data-type="link">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn image" title="이미지" data-mode="layer" data-type="image">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn flash" title="플래시" data-mode="layer" data-type="flash">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn media" title="미디어" data-mode="layer" data-type="media">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn chart" title="차트" data-mode="layer" data-type="chart">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn alert" title="주의" data-mode="append" data-before="[alert]" data-center=" " data-after="[alert]">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn info" title="정보" data-mode="append" data-before="[info]"  data-center=" "  data-after="[info]">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 							</ul>
 							<div class="e-tb-bar"></div>
 							<ul class="e-tb-group">
 								<!-- value="굵게" id="bold" data-mode="append" data-before="**" data-center=" " data-after="**"  -->
-								<li class="e-tb-btn bold" title="굵게" data-mode="append" data-before="**" data-center=" " data-after="**">
-									<i class="e-tb-icon"></i>
+								<li class="e-tb-btn bold" title="굵게" data-mode="append" data-before="**" data-center=" " data-after="**" >
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn italic" title="이탤릭" data-mode="append" data-before="//" 	data-center=" "   data-after="//">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn underline" title="밑줄" data-mode="append" data-before="__" 	data-center=" "  data-after="__">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn strike" title="취소선" data-mode="append" data-before="[d]"  data-center=" " data-after="[d]">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn sub" title="아래첨자" data-mode="append" data-before="[sb]"  data-center=" " 	data-after="[sb]">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn sup" title="위첨자" data-mode="append" data-before="[sp]"  data-center=" "  data-after="[sp]">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn colorlayer font-color" title="글자색" data-mode="color" data-before="color"  data-center=" "  data-after="color">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 									<i class="e-tb-color" style="background-color:#faa"></i>
 								</li>
 								<li class="e-tb-btn colorlayer bg-color" title="배경색" data-mode="color" data-before="bg"  data-center=" "  data-after="bg">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 									<i class="e-tb-color" style="background-color:#afa"></i>
 								</li>
 								<li class="e-tb-btn colorlayer box-bg-color" title="박스배경색" data-mode="color" data-before="box"  data-center=" "  data-after="box">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 									<i class="e-tb-color" style="background-color:#aaf"></i>
 								</li>
 								<li class="e-tb-clr"></li>
@@ -243,36 +243,37 @@
 							<div class="e-tb-bar"></div>
 							<ul class="e-tb-group">
 								<li class="e-tb-btn align-left" title="왼쪽정렬" data-mode="append" data-before="[align:left]" data-center=""  data-after="[align]">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn align-center" title="중앙정렬" data-mode="append" data-before="[align:center]" data-center=""  data-after="[align]">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn align-right" title="오른쪽정렬" data-mode="append" data-before="[align:right]" data-center=""  data-after="[align]">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn align-justify" title="균등정렬" data-mode="append" data-before="[align:justify]" data-center=""  data-after="[align]">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-clr"></li>
 								<li class="e-tb-btn list-ol" title="숫자순번" data-mode="insert" data-before="--" data-center=""  data-after="">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn list-ul" title="사각순번" data-mode="insert" data-before="##" data-center=""  data-after="">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn indent" title="들여쓰기">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn outdent" title="내어쓰기">
-									<i class="e-tb-icon"></i>
+									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 							</ul>
 						</div>
 						<div class="e-textarea">
-							<div class="e-">
-							</div>
-							<textarea id="wikiEditor" name="we_wiki_text"><c:if test="${fn:length(wikiForm.we_wiki_text) gt 0}">${wikiForm.we_wiki_text}</c:if></textarea>
+							<textarea id="wikiEditor" name="we_wiki_text"><c:if test="${fn:length(wikiForm.we_wiki_text) gt 0}">${wikiForm.we_wiki_text}</c:if>1234567890
+1234567890
+							
+							</textarea>
 						</div>
 					</div>
 				</div>
@@ -641,23 +642,23 @@
 <script type="text/javascript" src="/resource/glider/wiki/edit/fn.editor.layer.js"></script>
 
 <script type="text/javascript">
-	var wikiEditor = $("#wikiEditor").get(0);
-	var $toolbars = $(".e-toolbar");
-	
-	var tempLayer = "temp-layer";
-	$.makeLayer.init();
-	$.makeLayer.addLayer ( $.layer_link, "link" );
-	$.makeLayer.addLayer ( $.layer_image, "image" );
-	$.makeLayer.addLayer ( $.layer_flash, "flash" );
-	$.makeLayer.addLayer ( $.layer_media, "media" );
-	$.makeLayer.addLayer ( $.layer_chart, "chart" );
+var wikiEditor = document.getElementById("wikiEditor");		// [object HTMLTextAreaElement]
+var $toolbars = $(".e-toolbar");
+
+var tempLayer = "temp-layer";
+$.makeLayer.init();
+$.makeLayer.addLayer ( $.layer_link, "link" );
+$.makeLayer.addLayer ( $.layer_image, "image" );
+$.makeLayer.addLayer ( $.layer_flash, "flash" );
+$.makeLayer.addLayer ( $.layer_media, "media" );
+$.makeLayer.addLayer ( $.layer_chart, "chart" );
 		
 $(function(){
 
 	$toolbars.on("click",".e-tb-btn",function(event){
 		var $me = $(this);
 		var markup = $me.data();
-		var wikiEditor = document.getElementById("wikiEditor");		// [object HTMLTextAreaElement]
+		
 		$.editorAction(wikiEditor, $me, markup, tempLayer);
 		//$.editorAction(wikiEditor.get(0), $me, markup, tempLayer);
 
@@ -716,24 +717,8 @@ $(function(){
 			
 		});
 	});
-});
-
-
-var setIeSelectText = function ( beforeText, afterText, centerText ) {
-	var ctrl = document.getElementById('wikiEditor');
-	ctrl.focus();
-
-	var selectedText = document.selection.createRange();
-	var newText = selectedText.text;
 	
-	if(selectedText.text == '' || selectedText.text == null){
-		newText = centerText;
-	}
-	newText = beforeText+''+newText+''+afterText;
-
-	selectedText.text = newText;
-	 			
-};
-
+	
+});
 </script>
 </js:scripts>
