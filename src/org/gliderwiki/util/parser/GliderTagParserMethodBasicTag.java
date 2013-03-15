@@ -76,7 +76,7 @@ public class GliderTagParserMethodBasicTag {
 			if( title == null || "".equals(title) ){
 				title = url;
 			}
-			String html = "<a href=\""+url+"\">"+title+"</a>";
+			String html = "<a href=\""+url+"\" target=\"_blink\">"+title+"</a>";
 			
 			str = GliderTagPaserUtil.replaceFirstTag(str, patternTxt, html);
 			tagMap.put("tagUrl", url);
@@ -149,7 +149,7 @@ public class GliderTagParserMethodBasicTag {
 			String contents = GliderTagPaserUtil.getFirstReturnTag(parserTag, patternTxt, "$2");
 			
 			String font = null; 
-			if( "돋음".equals(fontTxt) ){
+			if( "돋움".equals(fontTxt) ){
 				font = "dotum";
 			}else if( "굴림".equals(fontTxt) ){
 				font = "gulim";
@@ -159,7 +159,7 @@ public class GliderTagParserMethodBasicTag {
 				font = "batang";
 			}
 			
-			String html = "<span style=\"font-family:'"+fontTxt+"','"+font+"'\">"+contents+"</span>";
+			String html = "<span style=\"font-family:'"+fontTxt+"','"+font+"'\">"+contents+"\r\n</span>";
 			str = GliderTagPaserUtil.replaceFirstTag(str, patternTxt, html);
 		}
 		
@@ -167,7 +167,7 @@ public class GliderTagParserMethodBasicTag {
 	}
 	
 	public String getFONTSIZE(String str){
-		str = GliderTagPaserUtil.replaceAllTag(str, "\\[size\\|(.*?)\\]([\\w\\W]+?)\\[size\\]", "<span style=\"font-size: $1px;\">$2</span>");
+		str = GliderTagPaserUtil.replaceAllTag(str, "\\[size\\|(.*?)\\]([\\w\\W]+?)\\[size\\]", "<span style=\"font-size: $1px;\">$2\r\n</span>");
 		return str;
 	}
 	

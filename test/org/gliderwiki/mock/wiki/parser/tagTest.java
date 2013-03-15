@@ -28,6 +28,13 @@ import org.slf4j.LoggerFactory;
 public class tagTest {
 	Logger logger = LoggerFactory.getLogger(tagTest.class);
 	GliderTagParserTest gtp = new GliderTagParserTest();
+	
+	@Test
+	public void tt(){
+		String aa = "\"ASDasd\"  ";
+		System.out.println( aa.replaceAll("\"", "&#34;") );
+	}
+	
 	/*
 	@Test
 	public void test(){

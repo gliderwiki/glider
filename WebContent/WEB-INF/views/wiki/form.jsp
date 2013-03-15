@@ -270,10 +270,7 @@
 							</ul>
 						</div>
 						<div class="e-textarea">
-							<textarea id="wikiEditor" name="we_wiki_text"><c:if test="${fn:length(wikiForm.we_wiki_text) gt 0}">${wikiForm.we_wiki_text}</c:if>1234567890
-1234567890
-							
-							</textarea>
+							<textarea id="wikiEditor" name="we_wiki_text"><c:if test="${fn:length(wikiForm.we_wiki_text) gt 0}">${wikiForm.we_wiki_text}</c:if></textarea>
 						</div>
 					</div>
 				</div>

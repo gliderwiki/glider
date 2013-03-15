@@ -185,22 +185,22 @@ public class GliderTagParserMethodSpecialTag {
 			patternTxt = "(h1\\.(\\s{0,}))(.*)?";
 			if( GliderTagPaserUtil.getMatchFind(htagStr[i], patternTxt) ){
 				hTagMap.put("tag", "h1" );
-				hTagMap.put("tagVal", GliderTagPaserUtil.getFirstReturnTag(htagStr[i], patternTxt, "$3") );
-				htagStr[i] = GliderTagPaserUtil.replaceFirstTag(htagStr[i], patternTxt, "<h2><a id=\"$3\" name=\"$3\">$3</a></h2>");
+				hTagMap.put("tagVal", GliderTagPaserUtil.getFirstReturnTag(htagStr[i], patternTxt, "$3").trim().replaceAll("\"", "&#34;") );
+				htagStr[i] = GliderTagPaserUtil.replaceFirstTag(htagStr[i], patternTxt, "<h2><a id=\""+hTagMap.get("tagVal")+"\" name=\""+hTagMap.get("tagVal")+"\">$3</a></h2>");
 			}
 			
 			patternTxt = "(h2\\.(\\s{0,}))(.*)?";
 			if( GliderTagPaserUtil.getMatchFind(htagStr[i], patternTxt) ){
 				hTagMap.put("tag", "h2" );
-				hTagMap.put("tagVal", GliderTagPaserUtil.getFirstReturnTag(htagStr[i], patternTxt, "$3") );
-				htagStr[i] = GliderTagPaserUtil.replaceFirstTag(htagStr[i], patternTxt, "<h3><a id=\"$3\" name=\"$3\">$3</a></h3>");
+				hTagMap.put("tagVal", GliderTagPaserUtil.getFirstReturnTag(htagStr[i], patternTxt, "$3").trim().replaceAll("\"", "&#34;") );
+				htagStr[i] = GliderTagPaserUtil.replaceFirstTag(htagStr[i], patternTxt, "<h3><a id=\""+hTagMap.get("tagVal")+"\" name=\""+hTagMap.get("tagVal")+"\">$3</a></h3>");
 			}
 			
 			patternTxt = "(h3\\.(\\s{0,}))(.*)?";
 			if( GliderTagPaserUtil.getMatchFind(htagStr[i], patternTxt) ){
 				hTagMap.put("tag", "h3" );
-				hTagMap.put("tagVal", GliderTagPaserUtil.getFirstReturnTag(htagStr[i], patternTxt, "$3") );
-				htagStr[i] = GliderTagPaserUtil.replaceFirstTag(htagStr[i], patternTxt, "<h4><a id=\"$3\" name=\"$3\">$3</a></h4>");
+				hTagMap.put("tagVal", GliderTagPaserUtil.getFirstReturnTag(htagStr[i], patternTxt, "$3").trim().replaceAll("\"", "&#34;") );
+				htagStr[i] = GliderTagPaserUtil.replaceFirstTag(htagStr[i], patternTxt, "<h4><a id=\""+hTagMap.get("tagVal")+"\" name=\""+hTagMap.get("tagVal")+"\">$3</a></h4>");
 			}
 			
 			if( !hTagMap.isEmpty() ){
