@@ -80,7 +80,7 @@
 						$("#"+G_MEDIA._id._url).focus();
 						return false;
 					}
-					var embed = '<embed src="' + _url + '"> </embed>';
+					var embed = '<iframe frameborder="0" allowfullscreen  src="' + _url + '"> </iframe>';
 					$('.preview').html(embed);
 				});
 				
@@ -97,8 +97,7 @@
 						$("#"+G_MEDIA._id._url).focus();
 						return false;
 					}
-					
-					var embed = '<embed type="application/x-shockwave-flash"  src="' + _url + '" ';
+					var embed = '<iframe frameborder="0" allowfullscreen  src="' + _url + '" ';
 					
 					if ( typeof _width !== 'undefined' && $.trim(_width) !== '' ) {
 						embed += ' width="'+ _width +'" ';
@@ -106,7 +105,8 @@
 					if ( typeof _height !== 'undefined' && $.trim(_height) !== '' ) {
 						embed += ' height="'+ _height +'" ';
 					}
-					embed += '></embed>';
+					embed += '></iframe>';
+					
 					$.textInsert(G_MEDIA.textEditor, embed, "", "");
 					
 					$("#" + G_MEDIA.tempLayer ).empty();
