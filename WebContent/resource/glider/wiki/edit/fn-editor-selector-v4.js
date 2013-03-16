@@ -90,7 +90,8 @@
 			start : start,
 			end : end,
 			text : targetText,
-			textLength : targetText.length
+			textLength : targetText.length,
+			range : document.selection.createRange()
 		};
 	};
 
@@ -108,15 +109,17 @@
 	 * var sel = $.textLocation(editor);
 	 * $.textInsert(textEditor, data.before, data.center, data.after);
 	 */
-	jQuery.textInsert = function(textEditor, before, center, after) {
+	jQuery.textInsert = function(textEditor, before, center, after, range) {
 		var textValue = before + center + after;
 
         if (document.selection) { //IE
             textEditor.focus();
-            var sel = document.selection.createRange();
+            //var sel = document.selection.createRange();
+            sel = range;
             sel.text = textValue;
             return;
         } else if (textEditor.selectionStart || textEditor.selectionStart == '0') { // FF, CROME
+        	$.print("son2 jQuery.textInsert : FF, CROME");
             var startPos = textEditor.selectionStart;
             var endPos = textEditor.selectionEnd;
             textEditor.value = textEditor.value.substring(0, startPos) + textValue + textEditor.value.substring(endPos, textEditor.value.length);
@@ -125,6 +128,7 @@
             textEditor.selectionEnd = startPos + textValue.length;
         }
         else {
+        	$.print("son2 jQuery.textInsert : else");
             textEditor.value += textArea.value;
             textEditor.focus();
         }

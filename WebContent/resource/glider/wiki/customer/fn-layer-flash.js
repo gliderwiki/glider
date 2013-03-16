@@ -4,6 +4,7 @@
 	var G_FLASH = {
 			textEditor : '',
 			tempLayer : '',
+			range : '',
 			wrapLayer : 'wrap_layer',						/* layer의 최상위 class */
 			layerClass : 'layer-wiki',						/* layer의 className */
 			layerStyle : 'style="left:100px;top:100px"',	/* layer-wiki의 inline style */
@@ -22,6 +23,7 @@
 	jQuery.layer_flash = function(params){
 		G_FLASH.textEditor = params.textEditor;
 		G_FLASH.tempLayer = params.tempLayer;
+		G_FLASH.range	  = params.range;
 		
 		var resourceHtml = [
 		        			'<div class="loadingWrap" id="loadingWrap">' +
@@ -107,7 +109,7 @@
 						embed += ' height="'+ _height +'" ';
 					}
 					embed += '></embed>';
-					$.textInsert(G_FLASH.textEditor, embed, "", "");
+					$.textInsert(G_FLASH.textEditor, embed, "", "", G_FLASH.range);
 					
 					$("#" + G_FLASH.tempLayer ).empty();
 				});

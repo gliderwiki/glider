@@ -4,7 +4,8 @@
 			row : 0,
 			cel : 0,
 			textEditor : '',
-			tempLayer : ''
+			tempLayer : '',
+			range : ''
 	};
 	/**
 	 * 사용자 프로필 레이어 팝업을 출력한다. 
@@ -12,6 +13,7 @@
 	jQuery.layer_table = function(params){
 		G_TABLE.textEditor = params.textEditor;
 		G_TABLE.tempLayer = params.tempLayer;
+		G_TABLE.range	  = params.range;
 		
 		if($('#loadLayer').length){
 			return false;
@@ -131,7 +133,7 @@
 						});
 					});
 					
-					$.textInsert(G_TABLE.textEditor, markupHtml, "", "");
+					$.textInsert(G_TABLE.textEditor, markupHtml, "", "", G_TABLE.range);
 					
 					$("#" + G_TABLE.tempLayer ).empty();
 					return false; 

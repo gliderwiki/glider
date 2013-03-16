@@ -59,7 +59,7 @@
 								<li class="e-tb-btn paste disabled" title="붙여넣기">
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
-								<li class="e-tb-btn table" title="표만들기" data-mode="layer" data-type="table">
+								<li class="e-tb-btn table" title="표만들기" data-mode="layer" data-type="table" unselectable="on">
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn select-all" title="필드" data-mode="append" data-before="[field|타이틀]" data-center=""  data-after="[field]">
@@ -121,118 +121,118 @@
 								</li>
 								<li class="e-tb-btn colorlayer bg-color" title="배경색" data-mode="color" data-before="bg"  data-center=" "  data-after="bg">
 									<i class="e-tb-icon" unselectable="on"></i>
-									<i class="e-tb-color" style="background-color:#afa"></i>
+									<i class="e-tb-color" unselectable="on" style="background-color:#afa"></i>
 								</li>
 								<li class="e-tb-btn colorlayer box-bg-color" title="박스배경색" data-mode="color" data-before="box"  data-center=" "  data-after="box">
 									<i class="e-tb-icon" unselectable="on"></i>
-									<i class="e-tb-color" style="background-color:#aaf"></i>
+									<i class="e-tb-color" unselectable="on" style="background-color:#aaf"></i>
 								</li>
 								<li class="e-tb-clr"></li>
 								<li class="e-tb-select font-family">
-									<span class="e-tb-select-txt" style="font-family:dotum;" id="selectFont" title="selectFont">글자체</span>
-									<i class="e-tb-select-box">
+									<span class="e-tb-select-txt" style="font-family:dotum;" id="selectFont" title="selectFont" unselectable="on">글자체</span>
+									<i class="e-tb-select-box" unselectable="on">
 										<i class="e-tb-select-arr"></i>
 									</i>
 									<div class="e-tb-select-layer" style="display:none;">
 										<ul>
 											<li>
-												<a data-mode="font" data-before="[font|돋움]" data-center=" "  data-after=" [font]">
-													<span style="font-family:'돋움', dotum;">돋움</span>
+												<a data-mode="font" data-before="[font|돋움]" data-center=" "  data-after=" [font]" unselectable="on">
+													<span style="font-family:'돋움', dotum;" unselectable="on">돋움</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[font|굴림]" data-center=" "  data-after=" [font]">
-													<span style="font-family:'굴림', gulim;">굴림</span>
+												<a data-mode="font" data-before="[font|굴림]" data-center=" "  data-after=" [font]" unselectable="on">
+													<span style="font-family:'굴림', gulim;" unselectable="on">굴림</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[font|궁서]" data-center=" "  data-after=" [font]">
-													<span style="font-family:'궁서', gungsuh;">궁서</span>
+												<a data-mode="font" data-before="[font|궁서]" data-center=" "  data-after=" [font]" unselectable="on">
+													<span style="font-family:'궁서', gungsuh;" unselectable="on">궁서</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[font|바탕]" data-center=" "  data-after=" [font]">
-													<span style="font-family:'바탕', batang;">바탕</span>
+												<a data-mode="font" data-before="[font|바탕]" data-center=" "  data-after=" [font]" unselectable="on">
+													<span style="font-family:'바탕', batang;" unselectable="on">바탕</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[font|Arial]" data-center=" "  data-after=" [font]">
-													<span style="font-family: Arial; -webkit-user-select: none; ">Arial</span>
+												<a data-mode="font" data-before="[font|Arial]" data-center=" "  data-after=" [font]" unselectable="on">
+													<span style="font-family: Arial; -webkit-user-select: none; " unselectable="on">Arial</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[font|Comic Sans MS]" data-center=" "  data-after=" [font]">
-													<span style="font-family: 'Comic Sans MS'; -webkit-user-select: none; ">Comic Sans MS</span>
+												<a data-mode="font" data-before="[font|Comic Sans MS]" data-center=" "  data-after=" [font]" unselectable="on">
+													<span style="font-family: 'Comic Sans MS'; -webkit-user-select: none; " unselectable="on">Comic Sans MS</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[font|Courier New]" data-center=" "  data-after=" [font]">
-													<span style="font-family: 'Courier New'; -webkit-user-select: none; ">Courier New</span>
+												<a data-mode="font" data-before="[font|Courier New]" data-center=" "  data-after=" [font]" unselectable="on">
+													<span style="font-family: 'Courier New'; -webkit-user-select: none; " unselectable="on">Courier New</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[font|Georgia]" data-center=" "  data-after=" [font]">
-													<span style="font-family: Georgia; -webkit-user-select: none; ">Georgia</span>
+												<a data-mode="font" data-before="[font|Georgia]" data-center=" "  data-after=" [font]" unselectable="on">
+													<span style="font-family: Georgia; -webkit-user-select: none; " unselectable="on">Georgia</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[font|Tahoma]" data-center=" "  data-after=" [font]">
-													<span style="font-family: Tahoma; -webkit-user-select: none; ">Tahoma</span>
+												<a data-mode="font" data-before="[font|Tahoma]" data-center=" "  data-after=" [font]" unselectable="on">
+													<span style="font-family: Tahoma; -webkit-user-select: none; " unselectable="on">Tahoma</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[font|Verdana]" data-center=" "  data-after=" [font]">
-													<span style="font-family: Verdana; -webkit-user-select: none; ">Verdana</span>
+												<a data-mode="font" data-before="[font|Verdana]" data-center=" "  data-after=" [font]" unselectable="on">
+													<span style="font-family: Verdana; -webkit-user-select: none; " unselectable="on">Verdana</span>
 												</a>
 											</li>
 										</ul>
 									</div>
 								</li>
 								<li class="e-tb-select font-size">
-									<span class="e-tb-select-txt" id="selectSize" title="selectSize">글자크기(12)</span>
-									<i class="e-tb-select-box">
+									<span class="e-tb-select-txt" id="selectSize" title="selectSize" unselectable="on">글자크기(12)</span>
+									<i class="e-tb-select-box" unselectable="on">
 										<i class="e-tb-select-arr"></i>
 									</i>
 									<div class="e-tb-select-layer" style="display:none;">
 										<ul>
 											<li>
-												<a data-mode="font" data-before="[size|11]" data-center=" "  data-after=" [size]">
-													<span style="font-size:11px;">11px</span>
+												<a data-mode="font" data-before="[size|11]" data-center=" "  data-after=" [size]" unselectable="on">
+													<span style="font-size:11px;" unselectable="on">11px</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[size|12]" data-center=" "  data-after=" [size]">
-													<span style="font-size:12px;">12px</span>
+												<a data-mode="font" data-before="[size|12]" data-center=" "  data-after=" [size]" unselectable="on">
+													<span style="font-size:12px;" unselectable="on">12px</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[size|14]" data-center=" "  data-after=" [size]">
-													<span style="font-size:14px;">14px</span>
+												<a data-mode="font" data-before="[size|14]" data-center=" "  data-after=" [size]" unselectable="on">
+													<span style="font-size:14px;" unselectable="on">14px</span>
 												</a>
 											</li>
 											<li>
-												<a data-mode="font" data-before="[size|18]" data-center=" "  data-after=" [size]">
-													<span style="font-size:18px;">18px</span>
+												<a data-mode="font" data-before="[size|18]" data-center=" "  data-after=" [size]" unselectable="on">
+													<span style="font-size:18px;" unselectable="on">18px</span>
 												</a>
 											</li>
 										</ul>
 									</div>
 								</li>
 								<li class="e-tb-select style">
-									<span class="e-tb-select-txt" id="selectStyle" title="selectStyle">스타일</span>
-									<i class="e-tb-select-box">
+									<span class="e-tb-select-txt" id="selectStyle" title="selectStyle" unselectable="on">스타일</span>
+									<i class="e-tb-select-box" unselectable="on">
 										<i class="e-tb-select-arr"></i>
 									</i>
 									<div class="e-tb-select-layer" style="display:none;">
 										<ul>
 											<li>
-												<a data-mode="font" data-before="h1. " data-center=""  data-after="">
+												<a data-mode="font" data-before="h1. " data-center=""  data-after="" unselectable="on">
 													<h1 style="padding-top:5px">h1. 큰 헤드라인</h1>
 												</a>
-												<a data-mode="font" data-before="h2. " data-center=""  data-after="">
+												<a data-mode="font" data-before="h2. " data-center=""  data-after="" unselectable="on">
 													<h2 style="padding-top:5px">h2. 중간 헤드라인</h2>
 												</a>
-												<a data-mode="font" data-before="h3. " data-center=""  data-after="">
+												<a data-mode="font" data-before="h3. " data-center=""  data-after="" unselectable="on">
 													<h3 style="padding-top:1px">h3. 작은 헤드라인</h3>
 												</a>
 											</li>
@@ -655,7 +655,7 @@ $(function(){
 	$toolbars.on("click",".e-tb-btn",function(event){
 		var $me = $(this);
 		var markup = $me.data();
-		
+		$.print("son1");
 		$.editorAction(wikiEditor, $me, markup, tempLayer);
 		//$.editorAction(wikiEditor.get(0), $me, markup, tempLayer);
 

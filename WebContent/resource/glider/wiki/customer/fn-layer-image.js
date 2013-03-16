@@ -3,6 +3,7 @@
 	var G_IMAGE = {
 			textEditor : '',
 			tempLayer : '',
+			range : '',
 			wrapLayer : 'wrap_layer',						/* layer의 최상위 class */
 			layerClass : 'layer-wiki',						/* layer의 className */
 			layerStyle : 'style="left:100px;top:100px"',	/* layer-wiki의 inline style */
@@ -49,6 +50,7 @@
 	jQuery.layer_image = function(params){
 		G_IMAGE.textEditor = params.textEditor;
 		G_IMAGE.tempLayer = params.tempLayer;
+		G_IMAGE.range	  = params.range;
 		
 		var resourceHtml = [
 	        			'<div class="loadingWrap" id="loadingWrap">' +
@@ -187,7 +189,7 @@
 								+ G_IMAGE._tag._size + G_IMAGE._tag._split + _width + G_IMAGE._tag._split + _height + G_IMAGE._tag._post
 								+ G_IMAGE._tag._pre + G_IMAGE._tag._post ;
 					
-					$.textInsert(G_IMAGE.textEditor, imgLink, "", "");
+					$.textInsert(G_IMAGE.textEditor, imgLink, "", "", G_IMAGE.range);
 					$("#" + G_IMAGE.tempLayer ).empty();
 				});
 				

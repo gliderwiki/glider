@@ -4,6 +4,7 @@
 	var G_MEDIA = {
 			textEditor : '',
 			tempLayer : '',
+			range : '',
 			wrapLayer : 'wrap_layer',						/* layer의 최상위 class */
 			layerClass : 'layer-wiki',						/* layer의 className */
 			layerStyle : 'style="left:100px;top:100px"',	/* layer-wiki의 inline style */
@@ -22,6 +23,7 @@
 	jQuery.layer_media = function(params){
 		G_MEDIA.textEditor = params.textEditor;
 		G_MEDIA.tempLayer = params.tempLayer;
+		G_MEDIA.range	  = params.range;
 		
 		var resourceHtml = [
 		        			'<div class="loadingWrap" id="loadLayer">' +
@@ -107,7 +109,7 @@
 					}
 					embed += '></iframe>';
 					
-					$.textInsert(G_MEDIA.textEditor, embed, "", "");
+					$.textInsert(G_MEDIA.textEditor, embed, "", "", G_MEDIA.range);
 					
 					$("#" + G_MEDIA.tempLayer ).empty();
 				});
