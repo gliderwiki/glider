@@ -226,14 +226,14 @@
 									<div class="e-tb-select-layer" style="display:none;">
 										<ul>
 											<li>
-												<a data-mode="font" data-before="h1. " data-center=" "  data-after="" unselectable="on">
-													<h1 style="padding-top:5px">h1. 큰 헤드라인</h1>
+												<a data-mode="font" data-before="h1. " data-center=""  data-after="" unselectable="on">
+													<h1 style="padding-top:5px" unselectable="on">h1. 큰 헤드라인</h1>
 												</a>
-												<a data-mode="font" data-before="h2. " data-center=" "  data-after="" unselectable="on">
-													<h2 style="padding-top:5px">h2. 중간 헤드라인</h2>
+												<a data-mode="font" data-before="h2. " data-center=""  data-after="" unselectable="on">
+													<h2 style="padding-top:5px" unselectable="on">h2. 중간 헤드라인</h2>
 												</a>
-												<a data-mode="font" data-before="h3. " data-center=" "  data-after="" unselectable="on">
-													<h3 style="padding-top:1px">h3. 작은 헤드라인</h3>
+												<a data-mode="font" data-before="h3. " data-center=""  data-after="" unselectable="on">
+													<h3 style="padding-top:1px" unselectable="on">h3. 작은 헤드라인</h3>
 												</a>
 											</li>
 										</ul>
