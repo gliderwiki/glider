@@ -119,8 +119,9 @@
             	currentPos.text = currentPos.text.charAt(currentPos.text.length - 1) == ' ' ? textValue + ' ' : textValue;
             	currentPos.select();
             }else{
-            	textEditor.value = textValue;
-            	textEditor.select();
+            	textEditor.focus();
+                var sel = document.selection.createRange();
+                sel.text = textValue;
         	}
             return;
         } else if (textEditor.selectionStart || textEditor.selectionStart == '0') { // FF, CROME
