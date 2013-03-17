@@ -18,7 +18,7 @@
 			$.appendTag(textEditor, $me, data);
 		} else if(data.mode == 'insert') {
 			// 현재 커서 위치에 지정된 태그를 추가한다.
-			$.insertTag(textEditor, $me, data);
+			$.appendTag(textEditor, $me, data);
 		} else if(data.mode == 'font') {
 			$.appendTag(textEditor, $me, data);
 		} else if(data.mode == 'color') {
