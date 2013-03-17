@@ -12,8 +12,7 @@
 			rowId : 'table_row',
 			cellId : 'table_cell',
 			textEditor : '',
-			tempLayer : '',
-			range : ''
+			tempLayer : ''
 	};
 	
 	/**
@@ -22,7 +21,6 @@
 	jQuery.layer_chart = function(params){
 		G_CHART.textEditor = params.textEditor;
 		G_CHART.tempLayer = params.tempLayer;
-		G_CHART.range	  = params.range;
 		
 		var resourceHtml = [
 		        			'<div class="loadingWrap" id="loadingWrap">' +
@@ -145,7 +143,7 @@
 					chartHtml += chartType + '[' + $.layer_chart.event.randomString() + '] \n';
 					chartHtml += G_CHART.__tag + '\n';
 					
-					$.textInsert(G_CHART.textEditor, chartHtml, "", "", G_CHART.range);
+					$.textInsert(G_CHART.textEditor, chartHtml, "", "" );
 					
 					$("#" + G_CHART.tempLayer ).empty();
 					return false; 

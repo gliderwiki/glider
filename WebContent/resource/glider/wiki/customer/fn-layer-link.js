@@ -4,7 +4,6 @@
 	var G_LINK = {
 			textEditor : '',
 			tempLayer : '',
-			range : '',
 			__start : '[@:',
 			__division : '|',
 			__end : ']',
@@ -16,7 +15,6 @@
 	jQuery.layer_link = function(params){
 		G_LINK.textEditor = params.textEditor;
 		G_LINK.tempLayer = params.tempLayer;
-		G_LINK.range	  = params.range;
 		
 		var resourceHtml = [
 		        			'<div class="loadingWrap" id="loadingWrap">' +
@@ -110,7 +108,7 @@
 					}
 					linkHtml += G_LINK.__end;
 					
-					$.textInsert(G_LINK.textEditor, linkHtml, "", "", G_LINK.range);
+					$.textInsert(G_LINK.textEditor, linkHtml, "", "" );
 					$("#" + G_LINK.tempLayer ).empty();
 				});
 				

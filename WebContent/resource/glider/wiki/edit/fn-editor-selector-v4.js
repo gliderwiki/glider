@@ -109,14 +109,20 @@
 	 * var sel = $.textLocation(editor);
 	 * $.textInsert(textEditor, data.before, data.center, data.after);
 	 */
-	jQuery.textInsert = function(textEditor, before, center, after, range) {
+	jQuery.textInsert = function(textEditor, before, center, after ) {
 		var textValue = before + center + after;
 
         if (document.selection) { //IE
-            textEditor.focus();
-            //var sel = document.selection.createRange();
-            sel = range;
-            sel.text = textValue;
+            if (textEditor.createTextRange && textEditor.currentPos) {
+            	$.print("son2 textEditor.createTextRange : " + textEditor.createTextRange);
+            	$.print("son2 textEditor.currentPos : " + textEditor.currentPos);
+            	var currentPos = textEditor.currentPos;
+            	currentPos.text = currentPos.text.charAt(currentPos.text.length - 1) == ' ' ? textValue + ' ' : textValue;
+            	currentPos.select();
+            }else{
+            	textEditor.value = textValue;
+            	textEditor.select();
+        	}
             return;
         } else if (textEditor.selectionStart || textEditor.selectionStart == '0') { // FF, CROME
         	$.print("son2 jQuery.textInsert : FF, CROME");
