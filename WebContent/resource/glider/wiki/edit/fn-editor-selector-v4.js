@@ -90,8 +90,7 @@
 			start : start,
 			end : end,
 			text : targetText,
-			textLength : targetText.length,
-			range : document.selection.createRange()
+			textLength : targetText.length
 		};
 	};
 

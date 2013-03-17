@@ -25,8 +25,9 @@
 			$.layer_select.color.dropdownColor(textEditor, $me, data);
 		} else if(data.mode == 'layer') {
 			// 현재 커서 위치에 레이어 입력 태그를 추가한다.
-			textEditor.currentPos = document.selection.createRange().duplicate();
-			
+			if (document.selection) { //IE
+				textEditor.currentPos = document.selection.createRange().duplicate();	
+			}
 			var $layer = $.makeLayer.getLayer( data.type );
 			$layer({
 				'textEditor' : textEditor,
