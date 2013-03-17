@@ -324,15 +324,15 @@ public class GliderTagParserMethodSpecialTag {
 		for( int i=0; i<strLine.length; i++ ){
 			beforePattern = afterPattern;
 			
-			if( GliderTagPaserUtil.getMatchFind(strLine[i], lvl3) ){
+			if( GliderTagPaserUtil.getMatchFind(strLine[i], "(^"+lvl3+")(.*)") ){
 				afterPattern = lvl3;
 				strLine[i] = GliderTagPaserUtil.getFirstReturnTag(strLine[i], "(^"+lvl3+")(.*)", "<li class=\"lv3\">$2</li>");
 				
-			}else if( GliderTagPaserUtil.getMatchFind(strLine[i], lvl2) ){
+			}else if( GliderTagPaserUtil.getMatchFind(strLine[i], "(^"+lvl2+")(.*)") ){
 				afterPattern = lvl2;
 				strLine[i] = GliderTagPaserUtil.getFirstReturnTag(strLine[i], "(^"+lvl2+")(.*)", "<li class=\"lv2\">$2</li>");
 				
-			}else if( GliderTagPaserUtil.getMatchFind(strLine[i], lvl1) ){
+			}else if( GliderTagPaserUtil.getMatchFind(strLine[i], "(^"+lvl1+")(.*)") ){
 				afterPattern = lvl1;
 				strLine[i] = GliderTagPaserUtil.getFirstReturnTag(strLine[i], "(^"+lvl1+")(.*)", "<li class=\"lv1\">$2</li>");
 			}else{
