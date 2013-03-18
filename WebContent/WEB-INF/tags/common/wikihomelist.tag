@@ -11,10 +11,10 @@
 <c:otherwise>
 	<c:forEach items="${wikiList}" var="list" varStatus="stat">
    		<li>
-			<div class="title">
+			<div class="title_index">
 				<a href="/wiki/${list.we_wiki_idx}">${gf:cut(list.we_wiki_title,35)}</a>
 			</div>
-			<div class="info">
+			<div class="info_index">
 				조회 ${list.we_wiki_view_cnt}
 			</div>
 		</li>
