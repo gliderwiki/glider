@@ -48,6 +48,8 @@
 
 .main .body-cont .wrap-box .left .box .list .title { width: 380px; }
 
+.main .body-cont .wrap-box .left .box .list .title_index { width: 390px; }
+
 .main .body-cont .wrap-box .left .box .list .info { float: right; }
 
 .main .body-cont .wrap-box .left .box .link-more { position: absolute; right: 0; top: 10px; text-decoration: none; color: #666; }
