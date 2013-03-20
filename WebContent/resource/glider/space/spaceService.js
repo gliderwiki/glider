@@ -60,7 +60,7 @@
 		checkGroup: function() {
 			var me = this;
 		
-			console.log("me.$userIdx : "  + me.$userIdx);
+			//console.log("me.$userIdx : "  + me.$userIdx);
 			
 			if(me.$userIdx == undefined) { 
 				GliderWiki.alert("알림","로그인 정보가 없습니다.");
@@ -74,7 +74,7 @@
 				
 				var checkType = $(":input:radio[name=we_view_privacy]:checked").val();
 
-				console.log("checkType : " + checkType);  // GROUP, USER
+				//console.log("checkType : " + checkType);  // GROUP, USER
 				
 				if(checkType != 'ALLGROUP') {
 					me.$viewData.val("");
@@ -108,9 +108,9 @@
 
 			// 공간 수정 권한 
 			me.$editAuthorityBtn.click(function() {
-				console.log("$editAuthorityBtn");
+				//console.log("$editAuthorityBtn");
 				var checkType = $(":input:radio[name=we_edit_privacy]:checked").val();
-				console.log("checkType : " + checkType);  // GROUP, USER
+				//console.log("checkType : " + checkType);  // GROUP, USER
 				if(checkType != 'ALLGROUP') {
 					me.$editData.val("");
 					me.$editName.val("");					
@@ -143,7 +143,7 @@
 		checkExposed : function() {
 			$("input[name=we_space_exposed]").live("click", function() {	
 				var exposed =  $(this).val();
-				console.log("val = " + exposed)
+				//console.log("val = " + exposed)
 				if(exposed == 'N') {
 					$("#we_view_privacy1").attr("disabled", true);
 					$("#we_edit_privacy1").attr("disabled", true);
@@ -611,7 +611,7 @@
 	// 수정 권한 사용자 목록 보기  
 	function callBackEditUserList(obj) {
 		var weUserList = eval(obj);
-		console.log("weUserList : " +weUserList);
+		//console.log("weUserList : " +weUserList);
 		if(weUserList != null) {
 			$.userListLayer({
 				'userList'     : weUserList,
@@ -666,7 +666,7 @@
 	// 공간정보 수정시 수정 권한 사용자 목록 보기  
 	function callBackUpdateEditUserList(obj) {
 		var weUserList = eval(obj);
-		console.log("weUserList : " +weUserList);
+		//console.log("weUserList : " +weUserList);
 		if(weUserList != null) {
 			$.userListLayer({
 				'userList'     : weUserList,
