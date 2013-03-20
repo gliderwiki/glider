@@ -91,15 +91,15 @@
 			return this.title;			
 		}).get().join(',');
 		
-		console.log("resultData : " + resultData);
-		console.log("resultName : " + resultName);
+		//console.log("resultData : " + resultData);
+		//console.log("resultName : " + resultName);
 		var authorityType = $(this).attr("title"); 
 		if(resultData == '' || resultData == null) {
 			GliderWiki.alert("알림","구성원을 선택하세요"); 
 			return;
 		}
 		
-		console.log("authorityType : "  +authorityType);
+		//console.log("authorityType : "  +authorityType);
 		
 		if(authorityType == 'view') {	// 조회권한 
 			WeSpace.we_view_data.value = resultData;
@@ -109,9 +109,9 @@
 			WeSpace.we_edit_name.value = resultName;
 		}
 		
-		console.log("#authorityType : " +authorityType);
-		console.log($("#we_view_data").val());
-		console.log($("#we_view_name").val());
+		//console.log("#authorityType : " +authorityType);
+		//console.log($("#we_view_data").val());
+		//console.log($("#we_view_name").val());
 		$.userListLayer.hide();
 		
 	});
