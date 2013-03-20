@@ -393,8 +393,8 @@
 			,data:{"userIdx":userIdx,"startRow":rowCount,"endRow":endRow}
 			,dataType:"json"
 			,success:function(rtnObj){					
-				console.log("rtnObj : " + rtnObj);
-				console.log("type : " + type);				
+				//console.log("rtnObj : " + rtnObj);
+				//console.log("type : " + type);				
 				if(rtnObj.result == '1'){
 					callBackRecentWiki(rtnObj, type);
 				} else if(rtnObj.result == '0'){
