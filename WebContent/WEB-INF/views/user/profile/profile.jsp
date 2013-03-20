@@ -46,17 +46,17 @@
 						<strong class="tit">비밀번호 변경하기</strong>
 						<div class="wrap-row">
 							<div class="row">
-								<strong class="lab">이전 비밀번호</strong>
+								<strong class="lab"> 이전 비밀번호</strong>
 								<input type="password" id="userPassword" name="userPassword" title="비밀번호입력" value=""/>
 								<span class="txt">현재 로그인 비밀번호를 입력하세요</span>
 							</div>
 							<div class="row">
-								<strong class="lab">새 비밀번호</strong>
+								<strong class="lab"> 새 비밀번호</strong>
 								<input type="password" id="weUserPwd" name="weUserPwd" title="비밀번호입력" value=""/>
 								<span class="txt">새롭게 적용 비밀번호를 입력하세요</span>
 							</div>
 							<div class="row">
-								<strong class="lab">비밀번호 확인</strong>
+								<strong class="lab"> 비밀번호 확인</strong>
 								<input type="password" id="userPassCheck" name="userPassCheck" title="비밀번호입력" value=""/>
 								<span class="txt">새 비밀번호를 다시 한번 입력하세요</span>
 							</div>

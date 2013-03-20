@@ -226,7 +226,7 @@ function inviteUserCallBack(arrayCheckId) {
 
 
 function downloadFileServer(we_file_idx, real_name){
-	GliderWiki.confirm("확인", real_name + " 파일을 지금 다운로드 하겠습니까?", function () {
+	GliderWiki.confirm("확인", real_name + " 파일을 다운로드 하겠습니까?", function () {
 		$('#downloadForm input[name=we_file_idx]').val(we_file_idx);
 		$("#downloadForm").attr("target", "fileDownload");
 		$("#downloadForm").attr("action", "/wiki/download").submit();		
