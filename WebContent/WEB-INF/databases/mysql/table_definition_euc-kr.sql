@@ -27,7 +27,7 @@ CREATE TABLE WE_ADD_FRIEND (
 	WE_ADD_DATE DATETIME COMMENT '추가일',
 	WE_DEL_DATE DATETIME COMMENT '삭제일',
 	WE_USE_YN CHAR(1) COMMENT '사용여부'
-) COMMENT = '관심인맥 : 관심을 맺은 사용자의 글 작성된 내역을 확인할 수 있다.' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) COMMENT = '관심인맥' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 알람 목록 
@@ -45,7 +45,7 @@ CREATE TABLE WE_ALARM_INFO (
 	WE_INS_DATE DATETIME COMMENT '입력일',
 	WE_INS_USER INT(13) COMMENT '입력자',
 	PRIMARY KEY (WE_ALARM_IDX)
-) ENGINE = InnoDB COMMENT = '사용자액션알람 : 각종 이벤트에 메일 혹은 SMS로 알림을 전송한다.' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '사용자액션알람' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 사이트전체 배너관리
@@ -62,7 +62,7 @@ CREATE TABLE WE_BANNER (
 	WE_INS_DATE DATETIME COMMENT '입력일',
 	WE_INS_USER INT(13) COMMENT '입력자',
 	PRIMARY KEY (WE_BANNER_IDX)
-) COMMENT = '위키배너관리 : 사이트전체 배너관리' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) COMMENT = '위키배너관리' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 게시판 
@@ -114,7 +114,7 @@ CREATE TABLE WE_FAVORITE (
 	WE_USE_YN CHAR(1) NOT NULL COMMENT '사용여부 ',
 	WE_ADD_DATE DATETIME COMMENT '추가일',
 	WE_DEL_DATE DATETIME COMMENT '삭제일'
-) COMMENT = '즐겨찾기 : 즐겨찾기 정보.' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) COMMENT = '즐겨찾기' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 파일 업로드 관리
@@ -132,7 +132,7 @@ CREATE TABLE WE_FILE (
 	WE_INS_DATE DATETIME COMMENT '입력일',
 	WE_INS_USER INT(13) COMMENT '입력자',
 	PRIMARY KEY (WE_FILE_IDX)
-) ENGINE = InnoDB COMMENT = '첨부파일관리 : 파일 업로드 관리' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '첨부파일관리' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 그룹 조직 정보 
@@ -150,7 +150,7 @@ CREATE TABLE WE_GROUP_INFO (
 	WE_UPD_USER INT(13) COMMENT '수정자',
 	WE_UPD_DATE DATETIME COMMENT '수정일',
 	PRIMARY KEY (WE_GROUP_IDX)
-) ENGINE = InnoDB COMMENT = '그룹정보 : 사용자가 생성하는 그룹 및 회사의 그룹 정보를 저장한다.' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '그룹정보' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 그룹에 속한 사용자 
@@ -180,7 +180,7 @@ CREATE TABLE WE_LICENSE (
 	WE_LICENSE_GRADE CHAR(1) COMMENT '라이센스등급  : O:오픈소스, C:커머셜라이센스, B:중형, E:대형, S:대학, P:개인, T:테스트',
 	WE_LICENSE_ITEM_CODE CHAR(1) COMMENT '라이센스적용제품코드  : W:WIKI, I:ISSUE TRACKER, S:배포툴 ',
 	PRIMARY KEY (WE_LICENSE_IDX)
-) COMMENT = '글라이더 라이센스 정보 : 글라이더의 라이센스를 관리한다.' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) COMMENT = '글라이더 라이센스 정보' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 공간 및 위키 로그 기록 (조직과 사용자)
@@ -192,7 +192,7 @@ CREATE TABLE WE_LOG (
 	WE_INS_DATE DATETIME COMMENT '입력일',
 	WE_INS_USER INT(13) COMMENT '입력자',
 	PRIMARY KEY (WE_LOG_IDX)
-) ENGINE = InnoDB COMMENT = '사이트로그 : 공간 및 위키 로그 기록 (조직과 사용자)' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '사이트로그' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 마크업 태그 목록 활용 
@@ -237,7 +237,7 @@ CREATE TABLE WE_META_INFO (
 	WE_META_TABLE_KEY VARCHAR(30) COMMENT '메타테이블키 : 메타테이블키',
 	WE_USE_YN CHAR(1) NOT NULL COMMENT '사용여부',
 	PRIMARY KEY (WE_META_IDX)
-) ENGINE = InnoDB COMMENT = '위키메타정보 : 위키메타정보 위키 알람 이벤트시 메타 정보를 기준으로 보내기 때문에 기준 업무별로 미리 정' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '위키메타정보' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 -- 사용자 프로필 정보 
 CREATE TABLE WE_PROFILE (
@@ -273,7 +273,7 @@ CREATE TABLE WE_SEND_MAIL (
 	WE_INS_DATE DATETIME COMMENT '입력일',
 	WE_UPD_DATE DATETIME COMMENT '수정일',
 	PRIMARY KEY (WE_MAIL_IDX)
-) ENGINE = InnoDB COMMENT = '메일전송내역 : 회원가입시 메일 전송 내역을 기록한다.' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '메일전송내역' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 -- 공간 
 CREATE TABLE WE_SPACE (
@@ -328,7 +328,7 @@ CREATE TABLE WE_SPACE_JOIN (
 	WE_INS_DATE DATETIME NOT NULL COMMENT '입력일',
 	WE_INS_USER INT(13) COMMENT '신청자',
 	PRIMARY KEY (WE_SPACE_JOIN_IDX)
-) ENGINE = InnoDB COMMENT = '공간참여신청 : 비공개위키 혹은 그룹위키일 경우 참여신청을 할 수 있다.' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '공간참여신청' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 -- 공간 접근 사용자 권한 
 CREATE TABLE WE_SPACE_USER (
@@ -354,7 +354,7 @@ CREATE TABLE WE_TEMPLATE (
 	WE_UPD_USER INT(13) COMMENT '수정자',
 	WE_UPD_DATE DATETIME COMMENT '수정일',
 	PRIMARY KEY (WE_TEMPLATE_IDX)
-) ENGINE = InnoDB COMMENT = '템플릿정보 : 사용자 정의 및 기본 템플릿 페이지 정보' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '템플릿정보' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 회원 메인 정보 
@@ -370,7 +370,7 @@ CREATE TABLE WE_USER (
 	WE_USER_AUTH_YN CHAR(1) DEFAULT 'N' COMMENT '회원인증여부',
 	WE_USER_AUTH_DATE DATETIME COMMENT '인증일',
 	PRIMARY KEY (WE_USER_IDX)
-) ENGINE = InnoDB COMMENT = '회원기본 : 가입시 필요한 최소 사항' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '회원기본' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 -- 사용자 선택 알람 
 CREATE TABLE WE_USER_ALARM (
@@ -379,7 +379,7 @@ CREATE TABLE WE_USER_ALARM (
 	WE_USE_YN CHAR(1) DEFAULT 'Y' COMMENT '사용여부',
 	WE_INS_DATE DATETIME COMMENT '입력일',
 	WE_INS_USER INT(13) COMMENT '입력자'
-) ENGINE = InnoDB COMMENT = '사용자선택알람 : 도메인별 사용자가 선택한 알람 항목 적재. USER_IDX 와 USE_YN 이 INDEX로' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '사용자선택알람' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 사용자의 직위 코드
@@ -390,7 +390,7 @@ CREATE TABLE WE_USER_JOB (
 	WE_USE_YN CHAR(1) COMMENT '사용여부',
 	WE_USER_IDX INT(13) COMMENT '회원순번 : 회원순번',
 	PRIMARY KEY (WE_USER_POSITION_IDX)
-) ENGINE = InnoDB COMMENT = '직위코드 : 사용자의 직위 코드' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '직위코드' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 사용자 직급 테이블
@@ -401,7 +401,7 @@ CREATE TABLE WE_USER_POSITION (
 	WE_USE_YN CHAR(1) COMMENT '사용여부',
 	WE_USER_IDX INT(13) COMMENT '회원순번 : 회원순번',
 	PRIMARY KEY (WE_USER_POSITION_IDX)
-) ENGINE = InnoDB COMMENT = '직급코드 : 사용자 직급 테이블' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '직급코드' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- WIKI 정보 
@@ -432,7 +432,7 @@ CREATE TABLE WE_WIKI (
 	WE_UPD_DATE DATETIME COMMENT '수정일',
 	WE_EDIT_YN CHAR(1) COMMENT '위키 편집 가능여부 : 위키 편집 가능여부 Y, N',
 	PRIMARY KEY (WE_WIKI_IDX)
-) COMMENT = '위키기본정보 : WIKI 작성정보를 저장한다.' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) COMMENT = '위키기본정보' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 위키 공감 사용자
@@ -440,7 +440,7 @@ CREATE TABLE WE_WIKI_AGREE (
 	WE_VIEW_DATE DATETIME NOT NULL COMMENT '조회일',
 	WE_USER_IDX INT(13) NOT NULL COMMENT '회원순번 : 회원순번',
 	WE_WIKI_IDX INT(7) NOT NULL COMMENT '위키번호 : 위키번호'
-) COMMENT = '위키공감사용자 : 위키 공감 사용자' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) COMMENT = '위키공감사용자' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- WIKI 리비전정보를 저장한다.
@@ -462,7 +462,7 @@ CREATE TABLE WE_WIKI_BAK (
 	WE_UPD_DATE DATETIME COMMENT '수정일',
 	WE_MOV_DATE DATETIME COMMENT '이동일',
 	UNIQUE (WE_BAK_IDX, WE_WIKI_IDX)
-) ENGINE = InnoDB COMMENT = '위키기본리비전정보 : WIKI 리비전정보를 저장한다.' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '위키기본리비전정보' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 위키 댓글 
@@ -554,7 +554,7 @@ CREATE TABLE WE_WIKI_SUMMARY (
 	WE_SUMMARY_TITLE VARCHAR(400) COMMENT '요약대상제목',
 	WE_USE_YN CHAR(1) COMMENT '사용여부',
 	PRIMARY KEY (WE_SUMMARY_IDX)
-) ENGINE = InnoDB COMMENT = '컨텐츠요약서머리 : 위키 컨텐츠의 패러그래프 및 헤드 타이틀 서머리' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '컨텐츠요약서머리' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 위키 키워드
@@ -566,7 +566,7 @@ CREATE TABLE WE_WIKI_TAG (
 	WE_INS_DATE DATETIME NOT NULL COMMENT '입력일',
 	WE_USE_YN CHAR(1) NOT NULL COMMENT '사용여부',
 	PRIMARY KEY (WE_WIKI_TAG_IDX)
-) ENGINE = InnoDB COMMENT = '위키태그 : 위키 태그를 저장한다.' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) ENGINE = InnoDB COMMENT = '위키태그' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 -- 위키 조회 사용자 목록 
@@ -574,7 +574,7 @@ CREATE TABLE WE_WIKI_VIEWER (
 	WE_USER_IDX INT(13) NOT NULL COMMENT '회원순번 : 회원순번',
 	WE_WIKI_IDX INT(7) NOT NULL COMMENT '위키번호 : 위키번호',
 	WE_VIEW_DATE DATETIME COMMENT '조회일'
-) COMMENT = '위키조회사용자 : 위키를 조회한 각 사용자 정보' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
+) COMMENT = '위키조회사용자' DEFAULT CHARACTER SET euckr COLLATE euckr_korean_ci; 
 
 
 
