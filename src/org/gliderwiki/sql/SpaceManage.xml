@@ -175,6 +175,9 @@
 	SELECT c.we_user_idx
          , c.we_group_name
          , e.we_user_name
+         , e.we_user_nick
+         , e.we_user_id
+         , e.we_user_join_date
          , MAX(CAST(IFNULL(d.we_insert_permit,0) AS CHAR)) AS we_insert_permit
          , MAX(CAST(IFNULL(d.we_view_permit,0) AS CHAR)) AS we_view_permit
 	FROM  (SELECT a.we_group_idx, a.we_user_idx, b.we_group_name FROM we_group_user a, we_group_info b WHERE  a.we_group_idx = b.we_group_idx)  c
@@ -183,18 +186,21 @@
 	INNER JOIN we_user e
 	ON  c.we_user_idx = e.we_user_idx
 	AND e.we_user_auth_yn = 'Y'
-	GROUP BY we_user_idx, we_group_name, we_user_name
+	GROUP BY we_user_idx, we_group_name, we_user_name, we_user_nick, we_user_id, we_user_join_date
 	</select>
 
 
 	<select id="SpaceManage.getMyGroupAuthorityList" parameterType="int" resultType="java.util.HashMap">
 	SELECT a.we_group_idx
          , a.we_group_name
+         , a.we_group_owner
+	 	 , a.we_ins_date
+	 	 ,(SELECT c.we_user_nick FROM we_user c WHERE c.we_user_idx = a.we_group_owner) AS we_user_nick
          , MAX(CAST(IFNULL(b.we_insert_permit,0) AS CHAR)) AS we_insert_permit
          , MAX(CAST(IFNULL(b.we_view_permit,0) AS CHAR)) AS we_view_permit
 	FROM we_group_info a LEFT JOIN (SELECT we_group_idx, we_insert_permit, we_edit_permit, we_view_permit FROM we_space_group WHERE we_space_idx=#{userIdx,jdbcType=NUMERIC}) b
 	ON a.we_group_idx = b.we_group_idx
-	GROUP BY we_group_idx, we_group_name
+	GROUP BY we_group_idx, we_group_name, we_group_type, we_group_owner, we_ins_date, we_user_nick
 	</select>
 	
 

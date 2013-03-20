@@ -904,6 +904,7 @@ public class WikiController {
 		TempUploadVo tempFile = null;
 		Map<String, String> param = new HashMap<String, String>();
 		// 파일 객체, 사용자 아이디, 오늘날짜, 파일 업로드 사이즈
+		
 		try {
 			tempFile = FileUploader.uploadTempFile(fileVo.getFile(), svcPath, weUserIdx, today, maxSize);
 		} catch (FilePermitMsgException e) {
