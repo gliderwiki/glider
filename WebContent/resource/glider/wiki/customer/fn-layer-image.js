@@ -141,7 +141,7 @@
 				
 				// 타입-웹사진에서 프리뷰 기능
 				$("#" + G_IMAGE._id._preview).click(function (e) {
-					console.info(e);
+					//console.info(e);
 					e.preventDefault();
 					_url = $("#"+G_IMAGE._form._urlId).val();
 					
@@ -150,9 +150,9 @@
 						$("#"+G_IMAGE._form._urlId).focus();
 						return false;
 					}
-					console.info(_url);
+					//console.info(_url);
 					var imgPreview = $("<img>").attr("src", _url).css({height:"500px", width:"500px"});
-					console.info(imgPreview);
+					//console.info(imgPreview);
 					$(".preview").html(imgPreview);
 				});
 				
@@ -217,7 +217,7 @@
 						// 섬네일을 출력한 후 리사이징 한다.
 						
 						var imgPreview = $("<img>").attr("src", "/resource/real"+fileSrc).css({height:"500px", width:"500px"});
-						console.info(imgPreview);
+						//console.info(imgPreview);
 						$(".preview" ).html(imgPreview);
 						
 						$("#" + G_IMAGE._form._urlId).val("/resource/real"+fileSrc);
