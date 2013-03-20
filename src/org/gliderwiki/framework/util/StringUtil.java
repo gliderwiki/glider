@@ -341,7 +341,6 @@ public class StringUtil {
 			buffer.append(chars[random.nextInt(chars.length)]);
 		}
 
-		System.out.println("buffer.toString() :" + buffer.toString());
 		return buffer.toString();
 	}
 
