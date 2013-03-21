@@ -84,12 +84,12 @@ public class DownloadController {
 		logger.debug("### weInstallUser :" + weInstallUser.toString());
 		
 		int rtnResult = 0;
-		//TODO List 테이블에 저장 
+		//TODOList 테이블에 저장 
 		if(weInstallUser.getWe_email() == null || "".equals(weInstallUser.getWe_email())
 				|| weInstallUser.getWe_active_key() == null || "".equals(weInstallUser.getWe_active_key())) {
 			throw new GliderwikiException("올바른 접근이 아닙니다.");
 		}
-		//TODO List DB에서 현재 파일 명 조회 
+		//TODOList DB에서 현재 파일 명 조회 
 		String fileName = "downloadPack-0226.zip";
 		
 		try {
