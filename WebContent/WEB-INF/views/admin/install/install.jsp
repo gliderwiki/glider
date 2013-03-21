@@ -226,7 +226,7 @@
 		});		
 
 		$("#dataSave").live("click", function() {
-
+			var charType = $(':radio[name="charType"]:checked').val();
 			var adminMailId = $("#adminMailId").val();
 			var adminpass = $("#adminpass").val();
 			var adminSite = $("#adminSite").val();
@@ -264,7 +264,7 @@
 					,url:"/admin/install/loadData"
 					,data:{"adminMailId":adminMailId,"adminpass":adminpass,
 						   "adminSite":adminSite,"userMail":userMail,
-						   "activeKey":activeKey}
+						   "activeKey":activeKey, "charType":charType}
 				    ,dataType:"json"
 				    ,success:function(rtnObj){	
 				   		var state = rtnObj.result;
