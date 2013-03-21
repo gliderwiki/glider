@@ -669,10 +669,14 @@ public class WikiController {
 			 * 넣어준다. 등록자, 등록자 닉네임, 알람 지시타입, 타겟 사용자, 위키 정보, 공간 정보
 			 */
 			logger.debug("### 알람 추가 시작");
-			int count = commonService.requestAlarmInfo(loginUser.getWeUserIdx(), loginUser.getWeUserNick(),
-					SystemConst.WIKI_EDIT, wikiForm.getWe_ins_user(), wikiForm.getWe_wiki_idx(),
-					weSpace.getWe_space_idx());
-			logger.debug("### 알람 추가 끝 : {} ", count);
+			int count = 0;
+			if(loginUser.getWeUserIdx() != wikiForm.getWe_ins_user()) {
+				count = commonService.requestAlarmInfo(loginUser.getWeUserIdx(), loginUser.getWeUserNick(),
+						SystemConst.WIKI_EDIT, wikiForm.getWe_ins_user(), wikiForm.getWe_wiki_idx(),
+						weSpace.getWe_space_idx());
+				logger.debug("### 알람 추가 끝 : {} ", count);
+			}
+			
 
 			result.setMessage("위키 수정되었습니다.");
 			result.setRedirectUrl("/space/main/" + wikiForm.getWe_space_idx());
