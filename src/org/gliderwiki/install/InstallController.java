@@ -18,6 +18,7 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
@@ -106,7 +107,13 @@ public class InstallController {
 	@RequestMapping(value="/admin/install", method = RequestMethod.GET)
 	public ModelAndView installMain(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		logger.debug("### installMain "); // = Step1
+		HttpSession session = request.getSession();
 		
+		
+		if(session != null) {
+			logger.debug("session is not null");
+			session.invalidate();
+		}
 		String domain = CommonUtil.getClientDomain(request);
 		
 		
@@ -224,7 +231,13 @@ public class InstallController {
 		String strKor =  request.getParameter("strKor");  //strKor
 		//String temp =  request.getParameter("strKor");  //strKor
 		//String strKor = new String( temp.getBytes("ISO-8859-1"),"UTF-8");
-				
+		String enc = "";
+		if(charType.startsWith("euc")) { 
+			enc = "EUC_KR";
+		} else {
+			enc = "UTF8";
+		}
+		
 		logger.debug("strKor : " + strKor);
 		
 		int result = 0;
@@ -232,8 +245,11 @@ public class InstallController {
 		String tableInitPath = request.getSession().getServletContext().getRealPath(SystemConst.MYSQL_DB_PATH);
 
 		// 테이블 이름 로드 - 드랍할 경우 대비   
-		LoadTableData crateTable = new LoadTableData(tableInitPath);
+		LoadTableData crateTable = new LoadTableData();
+		
+		String encoding = crateTable.LoadTableData(tableInitPath, enc);
 		logger.debug("###### 테이블 가져온다 : " + crateTable.getAllTables());
+		logger.debug("###encoding : "  +encoding);
 		
 		SingleDatasourceDao singleDao = new SingleDatasourceDao();
 		
@@ -257,14 +273,12 @@ public class InstallController {
 		
 		tableSize = crateTable.getAllTables().size();
 		
-		
-		
 		Map<String, Object> param = new HashMap<String, Object>();
-		
 		
 		param.put("result", result);
 		param.put("resultStr", resultStr);
 		param.put("tableSize", tableSize);
+		param.put("encoding", encoding);
 		
 		modelAndView.setViewName("admin/install/install");
 		return new ModelAndView("json_").addObject("param", param);
@@ -281,30 +295,44 @@ public class InstallController {
 	@RequestMapping(value="/admin/install/dropTables", method = RequestMethod.GET)
 	public ModelAndView dropTables(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		logger.debug("### dropTables ");
+		String charType = request.getParameter("charType");  //CREATE할 테이블 타입 
+		logger.debug("charType : " + charType);
+		String enc = "";
+		if(charType.startsWith("euc")) { 
+			enc = "EUC_KR";
+		} else {
+			enc = "UTF8";
+		}
+		
 		Map<String, Object> param = new HashMap<String, Object>();
+		
 		
 		String tableInitPath = request.getSession().getServletContext().getRealPath(SystemConst.MYSQL_DB_PATH);
 		// 테이블 이름 로드 하기  
-		LoadTableData crateTable = new LoadTableData(tableInitPath);
-		logger.debug("###### 테이블 가져온다 : " + crateTable.getAllTables());
+		LoadTableData createTable = new LoadTableData();
 		
-		
+		String encoding = createTable.LoadTableData(tableInitPath, enc);
+		logger.debug("$$encoding : "  +encoding);
+		logger.debug("###### 테이블 가져온다 : " + createTable.getAllTables());
 		SingleDatasourceDao singleDao = new SingleDatasourceDao();
 		
 		
+		
 		// 드랍 버튼 클릭시 스키마에 존재하는 생성 테이블들을 삭제해준다. 
-		int result = singleDao.dropTables(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), this.getJdbcSchema(), crateTable.getAllTables());		
+		int result = singleDao.dropTables(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), this.getJdbcSchema(), createTable.getAllTables());		
 
-		int tableSize = crateTable.getAllTables().size();
+		int tableSize = createTable.getAllTables().size();
 		
 		logger.debug("### 리턴 result : " + result);
 		logger.debug("### 리턴 tableSize : " + tableSize);
 		
 		if(result > 0){
 			param.put("result", result);
+			param.put("encoding", encoding);
 			param.put("tableSize", tableSize);
 		} else {
 			param.put("result", result);
+			param.put("encoding", encoding);
 			param.put("tableSize", tableSize);
 		}
 		
