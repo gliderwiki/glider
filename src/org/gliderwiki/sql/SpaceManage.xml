@@ -363,6 +363,7 @@
 	INNER JOIN we_wiki b
 	ON a.we_wiki_idx = b.we_wiki_idx
 	WHERE b.we_space_idx=#{spaceIdx}
+	AND   a.we_use_yn = 'Y'
 	order by we_file_idx desc
 	limit 0, 5;
 	</select>
