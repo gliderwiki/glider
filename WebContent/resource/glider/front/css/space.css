@@ -118,15 +118,15 @@
 
 .body-cont.space .main .list.type1.upload > li > div { display: table-cell; float: none; }
 
-.body-cont.space .main .list.type1.upload .title { width: 200px; }
+.body-cont.space .main .list.type1.upload .title { width: 208px; }
 
 .body-cont.space .main .list.type1.upload .title img { margin-right: 3px; }
 
-.body-cont.space .main .list.type1.upload .time { width: 70px; text-align: center;}
+.body-cont.space .main .list.type1.upload .time { width: 65px; text-align: right;}
 
 .body-cont.space .main .list.type1.upload .name { width: 77px; text-align: center;}
 
-.body-cont.space .main .list.type1.upload .info { text-align: left; width: 50px;}
+.body-cont.space .main .list.type1.upload .info { text-align: center; width: 50px;}
 
 .body-cont.space .main .list.type3 .user { width: 120px; }
 
