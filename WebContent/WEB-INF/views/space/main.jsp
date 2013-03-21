@@ -98,8 +98,8 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 						<c:forEach items="${fileList}" var="list" varStatus="stat">
 						<li>
 							<div class="title">
-								<img src="/resource/glider/front/images/file/ic_file_${fn:toUpperCase(list.we_file_type)}.jpg">
-								<a style="cursor:pointer" name="targetFiles" onclick="javascript:downloadFileServer('${list.we_file_idx }', '${list.we_file_real_name }');" title="${list.we_file_real_name }">${gf:cut(list.we_file_real_name,16)}</a>
+								<img src="/resource/glider/front/images/file/ic_file_${fn:toUpperCase(list.we_file_type)}.jpg" width="22">
+								<a style="cursor:pointer" name="targetFiles" onclick="javascript:downloadFileServer('${list.we_file_idx }', '${list.we_file_real_name }');" title="${list.we_file_real_name }">${gf:cut(list.we_file_real_name,14)}</a>
 							</div>
 							<div class="time">
 								${gf:articleDate(list.we_ins_date,'yyyy.MM.dd')}
@@ -139,7 +139,7 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 		</c:if>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_USER') and leastLevel(3)">
-		<c:if test="${spaceInfo.adminUserIdx == loginUser.weUserIdx}">
+		<c:if test="${spaceInfo.adminUserIdx == loginUser.weUserIdx && spaceInfo.viewPrivacy != 'ALLGROUP'}">
 			<a style="cursor:pointer" role="button" class="btn" id="invite" data-space-idx="${spaceInfo.spaceIdx}">사용자초대하기</a>
 		</c:if>
 	</sec:authorize>
@@ -194,8 +194,6 @@ $(document).ready(function() {
 
 	function callBackWeUserList(obj) {
 		var weUserList = eval(obj);
-
-
 		if(weUserList != null) {
 			$.groupLayer({
 				'userList' : weUserList,

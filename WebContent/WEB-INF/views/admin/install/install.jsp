@@ -357,15 +357,15 @@
 		inHtml += " <table>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> JDBC URL </span></td>";
-		inHtml += "     	<td><input type=\"text\" name=\"jdbc_url\" id=\"jdbc_url\"  class=\"wide\" value=\"jdbc:mysql://14.63.225.165:3306/wiki3\" ></td>"; 
+		inHtml += "     	<td><input type=\"text\" name=\"jdbc_url\" id=\"jdbc_url\"  class=\"wide\" value=\"jdbc:mysql://127.0.0.1:3306/wiki\" ></td>"; 
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> User ID </span></td>";
-		inHtml += "     	<td><input type=\"text\" name=\"jdbc_id\" id=\"jdbc_id\" class=\"wide\" value=\"wiki3\" ></td>";
+		inHtml += "     	<td><input type=\"text\" name=\"jdbc_id\" id=\"jdbc_id\" class=\"wide\" value=\"glider\" ></td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> User Password </span></td>";
-		inHtml += "     	<td><input type=\"password\" name=\"jdbc_pw\" id=\"jdbc_pw\"  class=\"wide\" value=\"\" ></td>";
+		inHtml += "     	<td><input type=\"password\" name=\"jdbc_pw\" id=\"jdbc_pw\"  class=\"wide\" value=\"glider\" ></td>";
 		inHtml += " 	</tr>";
 		inHtml += " </table>";
 		inHtml += "<br>JDBC 정보가 올바로 입력되었다면 아래 연동 테스트 버튼을 클릭하여 JDBC 연동이 정상적으로 수행되는지 확인해 주세요. <br/>";

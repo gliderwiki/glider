@@ -19,7 +19,6 @@ $(document).ready(function() {
 		TempService.getListTemp(callBackTempList);
 	});
 	
-	//TODO List 
 	// 다중 객체 리스트 조회 하기 추가할 예정 
 });
 

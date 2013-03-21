@@ -27,8 +27,12 @@
 		String userHome = System.getProperty("user.home");						// 사용자홈 디렉토리  <br/>
 		String userName = System.getProperty("user.name");						// 사용자계정  <br/>
 		String fileEncoding = System.getProperty("file.encoding");				// 파일인코딩 <br/>
+		String enc = new java.io.OutputStreamWriter(System.out).getEncoding();  // 기본인코딩<br/>
+		String res = response.getCharacterEncoding();							// res인코딩<br/>
+		String req = request.getCharacterEncoding();							// req인코딩<br/>
 		String tmpDir = System.getProperty("java.io.tmpdir");					// 임시경로 <br/>
 		Locale loc = Locale.getDefault();										// 로케일 <br/>
+		
 		=========================================================================<br/>
 		<br/>
 		- 자바 버전             : ${jvm}		<br />
@@ -47,6 +51,8 @@
 		- 사용자계정            : ${userName}	<br />
 		- 파일인코딩            : ${fileEncoding}	<br />
 		- 기본 인코딩            : ${enc}	<br />
+		- 응답 인코딩            : ${res}	<br />
+		- 요청 인코딩            : ${req}	<br />
 		- 임시경로            : ${tmpDir}	<br />
 		- 로케일                : ${loc}	<br /><br /><br />
 		

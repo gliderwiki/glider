@@ -90,8 +90,10 @@
 				});
 
 				$.form.get("/wiki/diff/${wikiIdx}" + rev);
-			}
-			else {
+			} else if (checkCount > 2) {
+				GliderWiki.alert("경고", "선택한 문서가 많습니다.\n버전비교는 서로 다른 두개의 문서만 비교할 수 있습니다.");
+				return false;
+			} else {
 				GliderWiki.alert("경고", "버전을 비교할 대상 위키 문서를 선택하세요.");
 				$("input[name=chk]").attr("checked", false);	// 모든 체크박스 해제
 				return false;
