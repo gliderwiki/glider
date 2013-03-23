@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/views/common/include/tags.jspf" %><%@
 taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
-<html>
-<head>
-</head>
-<body>
-
 <section class="contents " role="main">
 	<div class="wrap-cont">
 		<h2 class="tit-cont">게시판 목록</h2>
@@ -22,10 +17,10 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 						<button type="button" class="btn-submit" id="searchBbs">검색</button>
 					</form>
 				</div>
-				<table class="list">
+				<table class="list" style="table-layout:fixed;" >
 					<colgroup>
 						<col style="width:80px;" />
-						<col style="width:auto;" />
+						<col style="width:428px;" />
 						<col style="width:100px;" />
 						<col style="width:100px;" />
 						<col style="width:80px;" />
@@ -50,7 +45,7 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 						<tr>
 							<td>${((nowPage-1)*10)+row.count}</td>
 							<td class="title">
-								<a href="/space/${spaceIdx}/board/${list.we_bbs_idx}">${list.we_bbs_title}</a>
+								<a href="/space/${spaceIdx}/board/${list.we_bbs_idx}">${list.we_bbs_title} (${list.row_num})</a>
 							</td>
 							<td>${list.we_ins_name}</td>
 							<td>${gf:articleDate(list.we_ins_date,'yyyy.MM.dd')}</td>
@@ -112,5 +107,3 @@ $(document).ready(function() {
 
 </script>
 </js:scripts>
-</body>
-</html>

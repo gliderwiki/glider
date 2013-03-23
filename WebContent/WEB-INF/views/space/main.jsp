@@ -37,7 +37,14 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 								<c:forEach begin="1" end="${wikiList.we_wiki_depth_idx}">
 								&nbsp;&nbsp;&nbsp;
 								</c:forEach>
-								<a href="/wiki/${wikiList.we_wiki_idx}">${wikiList.we_wiki_title}</a>
+								<c:choose>
+								<c:when test="${wikiList.row_num eq 0}">
+								<a href="/wiki/${wikiList.we_wiki_idx}">${wikiList.we_wiki_title} (0)</a>
+								</c:when>
+								<c:otherwise>
+								<a href="/wiki/${wikiList.we_wiki_idx}">${gf:cut(wikiList.we_wiki_title,25)} (${wikiList.row_num})</a>
+								</c:otherwise>
+								</c:choose>
 							</div>
 							<div class="user" style="text-align: center; width:90px">
 								<span class="name" style="text-align: center;">
@@ -68,7 +75,7 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 						<c:forEach items="${boardList}" var="boardList" varStatus="stat">
 						<li>
 							<div class="title">
-								<a href="/space/${spaceInfo.spaceIdx}/board/${boardList.we_bbs_idx}">${boardList.we_bbs_title}</a>
+								<a href="/space/${spaceInfo.spaceIdx}/board/${boardList.we_bbs_idx}">${boardList.we_bbs_title} (${boardList.row_num})</a>
 							</div>
 						</li>
 						</c:forEach>
