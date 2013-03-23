@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.gliderwiki.framework.exception.AuthenticationNotException;
 import org.gliderwiki.framework.exception.PasswordMismatchException;
 import org.gliderwiki.framework.exception.UserNotFoundException;
+import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.web.domain.WeUser;
 import org.gliderwiki.web.login.service.LoginService;
 import org.gliderwiki.web.vo.MemberSessionVo;
@@ -37,8 +38,7 @@ public class UserIdPasswordAuthenticationService implements AuthenticationServic
 	MessageSourceAccessor messages;
 
 	@Override
-	public void login(String userId, String password) throws Throwable, UserNotFoundException,
-			PasswordMismatchException {
+	public void login(String userId, String password) throws Throwable, UserNotFoundException, AuthenticationNotException, 	PasswordMismatchException {
 		if (StringUtils.isEmpty(userId)) {
 			throw new UserNotFoundException(messages.getMessage("account.authenticationFailure"));
 		}
@@ -55,7 +55,7 @@ public class UserIdPasswordAuthenticationService implements AuthenticationServic
 		String passKey = result.getWeUserKey();
 		String pwd = loginService.getEncryptPassword(passKey, weUser.getWe_user_pwd());
 
-		if (result.getWeUserAuthYn().equals("Y")) {
+		if (StringUtil.strNull(result.getWeUserAuthYn()).equals("Y")) {
 			if (!result.getWeUserPwd().equals(pwd)) {
 				throw new PasswordMismatchException(messages.getMessage("account.passwordmismatch"));
 			}

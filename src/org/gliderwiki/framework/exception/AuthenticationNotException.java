@@ -13,10 +13,9 @@ package org.gliderwiki.framework.exception;
  * @author bluepoet
  *
  */
-public class AuthenticationNotException extends Exception {
-	public AuthenticationNotException() {
-		super();
-	}
+public class AuthenticationNotException extends RuntimeException {
+
+	private static final long serialVersionUID = 1L;
 
 	public AuthenticationNotException(String message, Throwable cause) {
 		super(message, cause);

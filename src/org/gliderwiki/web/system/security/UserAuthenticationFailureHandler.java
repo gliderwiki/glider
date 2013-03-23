@@ -42,8 +42,7 @@ public class UserAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 		if (entryUrl == null) {
 			entryUrl = request.getHeader("Referer");
 		}
-		String forwardUrl = request
-				.getParameter(AbstractAuthenticationTargetUrlRequestHandler.DEFAULT_TARGET_PARAMETER);
+		String forwardUrl = request.getParameter(AbstractAuthenticationTargetUrlRequestHandler.DEFAULT_TARGET_PARAMETER);
 
 		logger.debug("login Error Message: {}", exception.getMessage(), exception);
 		saveException(request, exception);
