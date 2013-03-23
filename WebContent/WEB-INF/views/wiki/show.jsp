@@ -309,8 +309,6 @@ pageContext.setAttribute("cr", "\r");
 		// 댓글 저장 		
 		$("#commentInsert").bind("click", function(e){
 			e.preventDefault();
-			
-		
 			var isGuest = "${loginUser.guest}";
 			var noSpam = $("#noSpam").val();
 			var randomKey = $("#randomKey").val();
@@ -319,7 +317,9 @@ pageContext.setAttribute("cr", "\r");
 			console.log("#isGuest : " + isGuest);
 			
 			if(checkValid(isGuest, text, noSpam, randomKey)) {
-				$("#WeWikiComment").submit();	
+				GliderWiki.confirm('확인 ', '작성한 글을 저장하겠습니까?',  function() { 
+					$("#WeWikiComment").submit();	
+				});					
 			}
 			
 		});

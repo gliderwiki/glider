@@ -11,7 +11,6 @@
 
 			${template.we_template_markup }
 
-			
 			<br class="br"/><br class="br"/>
 			<div class="util" id="utilArea">
 				<div class="info">
