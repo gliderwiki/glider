@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/views/common/include/tags.jspf" %>
-<link rel="stylesheet" href="/resource/glider/admin/css/admin.css" />
+
 <section class="contents " role="main">
 	<div class="wrap-cont">
 		<h2 class="tit-cont">공간정보 보기</h2>
