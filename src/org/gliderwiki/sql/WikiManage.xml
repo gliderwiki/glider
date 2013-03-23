@@ -123,7 +123,8 @@
 		        a.we_ins_date,
 		        a.we_upd_user,
 		        a.we_upd_date,
-		        b.we_user_nick
+		        b.we_user_nick,
+		        (select count(*) from we_wiki_comment c where we_use_yn = 'Y' and a.we_wiki_idx = c.we_wiki_idx) as row_num
 		FROM    WE_WIKI a
 		INNER   JOIN WE_USER b
 		ON      a.we_ins_user = b.we_user_idx
