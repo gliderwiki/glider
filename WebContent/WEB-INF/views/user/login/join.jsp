@@ -17,7 +17,7 @@
 						<input type="text" id="we_user_id" name="we_user_id" title="아이디입력" />
 					</div>
 					<p class="lab">
-						<span class="tit-sub">이름</span>을 입력하세요. 비밀 번호가 기억나지 않을 경우 이름을 통해 찾을 수 있습니다.
+						<span class="tit-sub">이름</span>을 입력하세요. 아이디 혹은 비밀번호가 기억나지 않을 경우 이름을 통해 찾을 수 있습니다.
 					</p>
 					<div class="row">
 						<input type="text" id="we_user_name" name="we_user_name" title="이름입력"/>
