@@ -80,6 +80,7 @@ taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 		</div>
 		<div class="col-sub">
 			<div class="box">
+			<!-- 내가 속한 모든 공지사항을 조회한다.  -->
 				<h3 class="tit-sec">최근 공지사항</h3>
 				<ul class="list type1" id="recentNotice">
 					<c:choose>
