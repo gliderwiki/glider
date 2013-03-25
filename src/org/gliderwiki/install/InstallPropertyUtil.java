@@ -189,21 +189,18 @@ public class InstallPropertyUtil {
 			logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
 			// 파일을 생성한다.
-			prop.store(new FileOutputStream(configPath + "/config.properties"),
-					null);
+			prop.store(new FileOutputStream(configPath + "/config.properties"), null);
 
 			Set<Object> keySet = prop.keySet();
 			Iterator<Object> iterator = keySet.iterator();
 
 			while (iterator.hasNext()) {
 				String key = (String) iterator.next();
-				logger.info("##Property Key, Values : " + key + "="
-						+ prop.getProperty((String) key));
+				logger.info("##Property Key, Values : " + key + "=" + prop.getProperty((String) key));
 			}
 
 			logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-			logger.info("✚ System create config properties in " + configPath
-					+ " Finish !");
+			logger.info("✚ System create config properties in " + configPath	+ " Finish !");
 			logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
 			// 정상적으로 처리 되었을때 return 되는 값 입니다.
