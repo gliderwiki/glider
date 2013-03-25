@@ -22,7 +22,7 @@ taglib prefix="space" tagdir="/WEB-INF/tags/space" %>
 	</div>
 	<div class="body-cont space" style="padding: 46px 45px; ">
 		<div class="main">
-			<div class="col left" style="width:440px">
+			<div class="col left" style="width:460px">
 				<div class="box">
 					<h3 class="tit-sec">
 						<em>${spaceInfo.spaceName}</em> 기본정보
