@@ -90,7 +90,7 @@
 
 .wiki .viewer .info table { margin: 0; }
 
-.wiki .edit { margin: -20px -50px; background-color: #f5f5f5; *zoom: 1; }
+.wiki .edit { margin: -20px -20px; background-color: #f5f5f5; *zoom: 1; }
 
 .wiki .edit:before, .wiki .edit:after { content: ''; display: table; }
 
