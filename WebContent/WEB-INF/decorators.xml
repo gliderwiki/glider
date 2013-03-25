@@ -5,7 +5,6 @@
 		<pattern>/admin/*</pattern>
 		<pattern>/resource/*</pattern>
 		<pattern>/authUser/*</pattern>
-		<pattern>/space/*/*/selectList*</pattern>
 		<pattern>/space/*/list*</pattern>
 		<pattern>/wiki/pdf/*</pattern>
 		<pattern>/service/*/*</pattern>
