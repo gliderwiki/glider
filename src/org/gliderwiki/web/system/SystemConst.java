@@ -76,5 +76,7 @@ public class SystemConst {
 	
 	public static final String CONFIG_NAME = "config.properties";
 	
+	public static final String INIT_NAME = "init.properties";
+	
 	public static final String SERVER_DOMAIN = "http://www.gliderwiki.org";
 }
