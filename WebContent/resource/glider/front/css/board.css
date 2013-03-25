@@ -46,9 +46,9 @@
 
 .body-cont.board .view-board .wrap-btn .btn { margin: 0 10px; }
 
-.body-cont.board .view-board .form-cmt { padding: 20px 20px 0; border: 1px solid #e1e1e1; background-color: #efefef; }
+.body-cont.board .view-board .form-cmt { padding: 20px 40px 0; border: 1px solid #e1e1e1; background-color: #efefef; }
 
-.body-cont.board .view-board .form-cmt table { width: 700px; margin-bottom: 10px; }
+.body-cont.board .view-board .form-cmt table { width: 750px; margin-bottom: 10px; }
 
 .body-cont.board .view-board .form-cmt table th, .body-cont.board .view-board .form-cmt table td { padding-bottom: 10px; }
 
@@ -64,7 +64,7 @@
 
 .body-cont.board .view-board .form-cmt textarea { display: block; width: 550px; height: 150px; margin-bottom: 10px; }
 
-.body-cont.board .view-board .list-cmt { list-style: none; margin: 40px 0 0; padding: 0; }
+.body-cont.board .view-board .list-cmt { list-style: none; margin: 20px 0 0; padding: 0; }
 
 .body-cont.board .view-board .list-cmt a { color: #666; text-decoration: none; }
 
@@ -84,7 +84,7 @@
 
 .body-cont.board .view-board .list-cmt .head .util .btn-del { background: url(/resource/glider/front/images/board/btn-del.gif) no-repeat; }
 
-.body-cont.board .view-board .list-cmt .content { padding: 10px 20px; }
+.body-cont.board .view-board .list-cmt .content { padding: 10px 20px; word-wrap :break-word}
 
 .body-cont.board .write-board table { width: 100%; margin-bottom: 10px; }
 

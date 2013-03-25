@@ -50,13 +50,13 @@
 
 .body-cont.space .all .list.type1 { border-top: 2px solid #719CC8; width: 100%; }
 
-.body-cont.space .all .list.type1 .title { width: 398px; padding-right: 20px;  }
+.body-cont.space .all .list.type1 .title { width: 438px; padding-right: 20px;  }
 
-.body-cont.space .all .list.type1 .time { width: 140px; }
+.body-cont.space .all .list.type1 .time { width: 120px; }
 
 .body-cont.space .all .list.type1 .user { width: 100px; }
 
-.body-cont.space .all .list.type1 .active { width: 110px; padding-right: 10px; }
+.body-cont.space .all .list.type1 .active { width: 90px; padding-right: 10px; }
 
 .body-cont.space .all .list.type1 .info { width: 50px; }
 
