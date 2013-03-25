@@ -23,7 +23,7 @@ pageContext.setAttribute("cr", "\r");
 		<h2 class="tit-cont">${weWiki.we_wiki_title }</h2>
 
 		<div class="body-cont wiki" id="wikiViewArea">
-			<article class="viewer">
+			<article class="viewer" style="word-wrap :break-word">
 			<c:if test="${!empty summaryList}">
 				<div class="index" id="contentsLayer">
 					<div class="inner">
