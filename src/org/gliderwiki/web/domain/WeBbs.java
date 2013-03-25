@@ -61,6 +61,10 @@ public class WeBbs implements Serializable {
 	@Column(name = "we_hit_count")
 	private Integer we_hit_count;
 
+	private Integer row_num;
+	
+	
+
 	public WeBbs() {}
 
 	public WeBbs(Integer we_space_idx) {
@@ -247,4 +251,20 @@ public class WeBbs implements Serializable {
 	public void setWe_hit_count(Integer we_hit_count) {
 		this.we_hit_count = we_hit_count;
 	}
+		
+	/**
+	 * @return the row_num
+	 */
+	public Integer getRow_num() {
+		return row_num;
+	}
+
+	/**
+	 * @param row_num the row_num to set
+	 */
+	public void setRow_num(Integer row_num) {
+		this.row_num = row_num;
+	}
+	
+	
 }

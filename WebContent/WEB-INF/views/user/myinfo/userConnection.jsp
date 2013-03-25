@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/common/include/tags.jspf" %>
-<link rel="stylesheet" href="/resource/glider/admin/css/admin.css" />
 <section class="contents " role="main">
 	<div class="wrap-cont">
 		

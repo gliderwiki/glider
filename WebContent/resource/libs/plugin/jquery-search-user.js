@@ -152,18 +152,16 @@
 		} else {
 			$.loadingBar();
 			$.post("/findIdPassword", {userId:userId, weUserNick:weUserNick}, function(rtnObj){
-				var jResult = eval("("+rtnObj+")");
-				
-				if(jResult != null) {
-					if(jResult.rtnCode  == '1') {
+				if(rtnObj != null) {
+					if(rtnObj.rtnCode  == '1' || rtnObj.rtnCode  == '2') {
 						// 비밀번호 전송 완료
 						$("#resultPassword").html("");
-						$("#resultPassword").html(jResult.rtnMsg);
+						$("#resultPassword").html(rtnObj.rtnMsg);
 						$.loadingBar.fadeOut();
 					} else  {
 						// 에러 처리
 						$("#resultPassword").html("");
-						$("#resultPassword").html(jResult.rtnMsg);
+						$("#resultPassword").html(rtnObj.rtnMsg);
 						$.loadingBar.fadeOut();
 					}
 				} else {

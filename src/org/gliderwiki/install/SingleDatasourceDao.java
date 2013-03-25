@@ -99,14 +99,14 @@ public class SingleDatasourceDao {
 	 * @param allTables
 	 * @return
 	 */
-	public int createTables(String jdbc_url, String jdbc_id, String jdbc_pw, String schema, String charType, Map allTables, String tableInitPath) { 
+	public int createTables(String jdbc_url, String jdbc_id, String jdbc_pw, String schema, String charType, Map allTables, String tableInitPath, String enc) { 
 		// 커넥션 
 		SingleConnectionDataSource ds = this.singleConnectionDS(jdbc_url, jdbc_id, jdbc_pw);
 		
 		int result = 0;
 		
 		try {
-			result = this.runCreateTableScript(ds, tableInitPath, charType, allTables, schema);
+			result = this.runCreateTableScript(ds, tableInitPath, charType, allTables, schema, enc);
 			ds.destroy();
 		} catch (Exception e) {
 			logger.debug("!! 테이블 생성중 에러 발생");
@@ -124,12 +124,13 @@ public class SingleDatasourceDao {
 	 * @param tableInitPath
 	 * @return
 	 */
-	private int runCreateTableScript(SingleConnectionDataSource ds,	String tableInitPath, String charType, Map allTables, String schema) throws IOException, SQLException {
+	private int runCreateTableScript(SingleConnectionDataSource ds,	String tableInitPath, String charType, Map allTables, String schema, String enc) throws IOException, SQLException {
 		StringBuffer command = null;
 		int result = 0;
-		InputStream ins = null;
+		FileInputStream fis = null;
+		InputStreamReader ins = null;
 		BufferedReader reader = null;
-		
+
 		boolean stopOnError = false;	// 에러 발생 여부 
 		
 		String sqlFileName = "";
@@ -144,8 +145,15 @@ public class SingleDatasourceDao {
 		}
 		
 		try {
-			ins = new FileInputStream(tableInitPath+sqlFileName);
-			reader = new BufferedReader(new InputStreamReader(ins));
+			
+			fis = new FileInputStream(tableInitPath+sqlFileName);
+			ins = new InputStreamReader(fis, enc);
+			logger.info("##############################");
+			logger.info("RUN Table FILE encoding : " + ins.getEncoding());
+			logger.info("##############################");
+			
+			reader = new BufferedReader(ins);
+			
 			String line = null;
 			
 			while(true) {
@@ -290,7 +298,7 @@ public class SingleDatasourceDao {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public int insertInitTableData(String jdbc_url, String jdbc_id, String jdbc_pw, WeUser weUser, WeProfile weProfile, String tableInitPath) throws SQLException {
+	public int insertInitTableData(String jdbc_url, String jdbc_id, String jdbc_pw, WeUser weUser, WeProfile weProfile, String tableInitPath, String enc) throws SQLException {
 		SingleConnectionDataSource ds = this.singleConnectionDS(jdbc_url, jdbc_id, jdbc_pw);
 		
 		int result = 0;
@@ -305,7 +313,7 @@ public class SingleDatasourceDao {
 			if(userDataSet == 1) {
 				try {
 					// 기본 데이터들을 테이블에 저장한다. TODOLIST : 공지사항 및 Static pages 정보들을 추가해야 한다. 
-					insertDataResult = this.runInsertScript(ds, tableInitPath);		
+					insertDataResult = this.runInsertScript(ds, tableInitPath, enc);		
 					ds.getConnection().commit();		// 기본 데이터 완료 후 커밋 
 					result = 1;
 				} catch (Exception e) {
@@ -378,20 +386,27 @@ public class SingleDatasourceDao {
 	 * @param tableInitPath
 	 * @return
 	 */
-	private int runInsertScript(SingleConnectionDataSource ds, String tableInitPath) throws IOException, SQLException {
+	private int runInsertScript(SingleConnectionDataSource ds, String tableInitPath, String enc) throws IOException, SQLException {
 		StringBuffer command = null;
 		int result = 0;
-		InputStream ins = null;
-		BufferedReader reader = null;
 		
+		FileInputStream fis = null;
+		InputStreamReader ins = null;
+		BufferedReader reader = null;
 		boolean stopOnError = false;	// 에러 발생 여부 
 		
 		String sqlFileName = "/data_insert.sql";
 		
-		
 		try {
-			ins = new FileInputStream(tableInitPath+sqlFileName);
-			reader = new BufferedReader(new InputStreamReader(ins));
+			
+			fis = new FileInputStream(tableInitPath+sqlFileName);
+			ins = new InputStreamReader(fis, enc);
+			logger.info("##############################");
+			logger.info("RUN DATA FILE encoding : " + ins.getEncoding());
+			logger.info("##############################");
+			
+			reader = new BufferedReader(ins);
+			
 			String line = null;
 			
 			while(true) {

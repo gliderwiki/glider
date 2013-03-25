@@ -80,7 +80,8 @@ public class GliderwikiAuthenticationProvider implements AuthenticationProvider,
 		} catch (PasswordMismatchException e) {
 			throw new BadCredentialsException(e.getMessage(), e);
 		} catch(AuthenticationNotException e) {
-			throw new BadCredentialsException(e.getMessage(), e);
+			logger.debug("#### AuthenticationNotException : " + e.getMessage());
+			throw new AuthenticationNotException(e.getMessage(), e);
 		} catch (Throwable e) {
 			throw new GliderwikiException("사용자정보 조회중 오류", e);
 		}

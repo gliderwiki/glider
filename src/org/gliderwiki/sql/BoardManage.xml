@@ -15,7 +15,8 @@
 		,  we_ins_date
 		,  we_ins_name
 		,  we_hit_count
-	FROM we_bbs
+		,  (select count(*) from we_bbs_comment c where we_use_yn = 'Y' and a.we_bbs_idx = c.we_bbs_idx) as row_num
+	FROM we_bbs a
 	WHERE we_space_idx = #{spaceIdx}
 	AND   we_use_yn='Y'
 	ORDER BY we_bbs_idx DESC

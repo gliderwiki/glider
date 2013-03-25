@@ -53,13 +53,13 @@
 									} else {
 				
 										System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-										System.out.println("? getMessage : " + exceptions.getMessage());
+										System.out.println("getMessage : " + exceptions.getMessage());
 										System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-										System.out.println("? getStackTrace : " + exceptions.getStackTrace());				
+										System.out.println("getStackTrace : " + exceptions.getStackTrace());				
 										System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 										out.println("Message :  Root cause is - <B>" + exceptions.getCause() + "</B>");
 										out.println("<BR><BR>");
-										out.println("? Exception Occured!! Check the server trace log for more information.");
+										out.println("Exception Occured!! Check the server trace log for more information.");
 									}
 								} else {
 									out.println("No error information available");

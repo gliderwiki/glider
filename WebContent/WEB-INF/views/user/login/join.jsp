@@ -17,7 +17,7 @@
 						<input type="text" id="we_user_id" name="we_user_id" title="아이디입력" />
 					</div>
 					<p class="lab">
-						<span class="tit-sub">이름</span>을 입력하세요. 이메일 아이디가 기억나지 않을 경우 이름을 통해 찾을 수 있습니다.
+						<span class="tit-sub">이름</span>을 입력하세요. 아이디 혹은 비밀번호가 기억나지 않을 경우 이름을 통해 찾을 수 있습니다.
 					</p>
 					<div class="row">
 						<input type="text" id="we_user_name" name="we_user_name" title="이름입력"/>
@@ -134,8 +134,8 @@
 		$("#we_user_pwd").focusout(function() {
 			var userPassword = $("#we_user_pwd").val();
 			$("#errorPassCheck").remove("");
-			if(userPassword == '') { 
-				$("#we_user_pwd").after(" <label class=\"error\" id=\"errorPassCheck\">비밀번호를 입력하세요.</label>");
+			if(userPassword == '' || userPassword.length < 6) { 
+				$("#we_user_pwd").after(" <label class=\"error\" id=\"errorPassCheck\">비밀번호를 6자리 이상 입력하세요.</label>");
 				return;
 			}
 		});
@@ -185,7 +185,7 @@
 		} else if ($("#we_user_nick").val() == "") {
 			GliderWiki.alert('회원가입 에러', '닉네임을 입력하세요. 닉네임은 로그인 후 변경할 수 있으며, 글 작성시 노출됩니다.');
 			return;
-		} else if ($("#we_user_pwd").val() == "") {
+		} else if ($("#we_user_pwd").val() == "" || $("#we_user_pwd").val().length < 6) {
 			GliderWiki.alert('회원가입 에러','비밀번호를 입력하세요. 보안을 위해 문자와 숫자 조합으로 6자리 이상을 권장합니다.');
 			return;
 		} else if ($("#userPassCheck").val() == "") {
@@ -209,22 +209,22 @@
 				,success:function(rtnObj){
 					console.log("success : " + rtnObj);
 					if(rtnObj.result == 'SUCCESS') {
-						if (data.rtnResult == 1) {
+						if (rtnObj.rtnResult == 1) {
 							$.loadingBar.fadeOut();
 							GliderWiki.alert('회원가입 완료', '입력한 메일주소로 인증페이지가 전송되었습니다.\n메일을 확인하여 인증을 거친 후 로그인 하세요.');
 							$("#okBtn").on("click", function() {
 								$(location).attr('href',"/index");
 							});				
-						} else if (data.rtnResult == -3) {
+						} else if (rtnObj.rtnResult == -3) {
 							$.loadingBar.fadeOut();
-							GliderWiki.alert('회원가입 에러', '결과['+data.result+'] - 회원 메일 인증에 문제가 발생하였습니다.\n관리자에게 문의하세요.');
+							GliderWiki.alert('회원가입 에러', '결과['+rtnObj.result+'] - 회원 메일 인증에 문제가 발생하였습니다.\n관리자에게 문의하세요.');
 							$(location).attr('href',"/index");
-						} else if (data.rtnResult == -4) {
+						} else if (rtnObj.rtnResult == -4) {
 							$.loadingBar.fadeOut();
-							GliderWiki.alert('회원가입 에러','결과['+data.result+'] - 인증 메일 전송중 메일 서버 연결이 제대로 되지 않아 에러가 발생했습니다.\n다시 시도하세요.');
+							GliderWiki.alert('회원가입 에러','결과['+rtnObj.result+'] - 인증 메일 전송중 메일 서버 연결이 제대로 되지 않아 에러가 발생했습니다.\n다시 시도하세요.');
 						} else {
 							$.loadingBar.fadeOut();
-							GliderWiki.alert('회원가입 에러','결과['+data.result.rtnResult+'] - 회원 정보 저장이 제대로 되지 않았습니다.\n관리자에게 문의하세요.');
+							GliderWiki.alert('회원가입 에러','결과['+rtnObj.result.rtnResult+'] - 회원 정보 저장이 제대로 되지 않았습니다.\n관리자에게 문의하세요.');
 						}
 					} else {
 						$.loadingBar.fadeOut();

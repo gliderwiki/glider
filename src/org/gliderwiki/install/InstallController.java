@@ -9,16 +9,12 @@
  */
 package org.gliderwiki.install;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
@@ -26,15 +22,13 @@ import org.gliderwiki.framework.util.SecretKeyPBECipher;
 import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.util.CommonUtil;
 import org.gliderwiki.util.SendMailSMTP;
-import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeProfile;
 import org.gliderwiki.web.domain.WeUser;
 import org.gliderwiki.web.system.SystemConst;
 import org.gliderwiki.web.vo.TempUploadVo;
-import org.gliderwiki.web.wiki.common.service.CommonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +46,8 @@ public class InstallController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	public InstallController() {
+	}
 	
 	private String jdbcUrl;
 	
@@ -95,9 +91,10 @@ public class InstallController {
 		this.jdbcSchema = jdbcSchema;
 	}
 
-
+	
 
 	/**
+	 * TODOLIST install yn 여부 따져서 접근 허용 여부 판단해야 함 
 	 * @param request
 	 * @param response
 	 * @param modelAndView
@@ -107,13 +104,13 @@ public class InstallController {
 	@RequestMapping(value="/admin/install", method = RequestMethod.GET)
 	public ModelAndView installMain(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		logger.debug("### installMain "); // = Step1
-		HttpSession session = request.getSession();
 		
 		
-		if(session != null) {
-			logger.debug("session is not null");
-			session.invalidate();
+		if(SecurityContextHolder.getContext().getAuthentication() != null) {
+			SecurityContextHolder.getContext().setAuthentication(null);
 		}
+		
+		
 		String domain = CommonUtil.getClientDomain(request);
 		
 		
@@ -255,7 +252,7 @@ public class InstallController {
 		
 		try {
 			// 캐릭터 셋 타입에 따라 다른 테이블형태를 create 한다. 
-			result = singleDao.createTables(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), this.getJdbcSchema(), charType, crateTable.getAllTables(), tableInitPath);
+			result = singleDao.createTables(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), this.getJdbcSchema(), charType, crateTable.getAllTables(), tableInitPath, enc);
 		} catch (Exception e) {
 			result = -1;
 		}
@@ -352,6 +349,16 @@ public class InstallController {
 	 */
 	@RequestMapping(value="/admin/install/loadData", method = RequestMethod.POST)
 	public ModelAndView loadData(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+		logger.debug("### loadData ");
+		
+		String charType = request.getParameter("charType");  //CREATE할 테이블 타입 
+		logger.debug("charType : " + charType);
+		String enc = "";
+		if(charType.startsWith("euc")) { 
+			enc = "EUC_KR";
+		} else {
+			enc = "UTF8";
+		}
 		
 		//TODOLIST : restClient를 이용하여 글라이더 서버에 관련 데이터를 전송해야 한다. 
 		String adminMailId  = request.getParameter("adminMailId"); // 관리자 로그인 메일주소(ID)
@@ -392,7 +399,7 @@ public class InstallController {
 			SingleDatasourceDao singleDao = new SingleDatasourceDao();
 			
 			// 어드민 사용자와 기본 데이터들을 저장한다. 
-			result = singleDao.insertInitTableData(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), weUser, weProfile, tableInitPath); 
+			result = singleDao.insertInitTableData(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), weUser, weProfile, tableInitPath, enc); 
 			
 		} catch(Exception e) {
 			result = -1;
@@ -478,6 +485,7 @@ public class InstallController {
 
 	
 	/**
+	 * TODOLIST 메일 전송 완료 후 앞단에서 버튼 클릭시 인스톨 여부 기록하여 더 이상 접근 못하도록 막아야 함 
 	 * @param request
 	 * @param response
 	 * @param modelAndView

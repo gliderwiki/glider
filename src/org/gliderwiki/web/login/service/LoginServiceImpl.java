@@ -348,7 +348,7 @@ public class LoginServiceImpl implements LoginService {
 				try {
 					SendMailSMTP sender = new SendMailSMTP();
 					result = sender.sendSimpleMail(targetID, emailTitle, emailMsgTxt, request);
-					resultBean.setRtnMsg("* 비밀번호가  정상적으로 전송 되었습니다.");
+					resultBean.setRtnMsg("* 비밀번호가 입력한 메일주소로 전송 되었습니다.");
 					resultBean.setRtnResult(1);
 					return resultBean;
 				} catch (UnsupportedEncodingException e) {
