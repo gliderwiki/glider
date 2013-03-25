@@ -452,8 +452,6 @@ public class InstallController {
 	@RequestMapping(value = "/admin/installUpload", method = RequestMethod.POST)
 	public ModelAndView profileUpload(@ModelAttribute("frmFile") TempUploadVo fileVo,
 			HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView)  throws Throwable {
-		logger.debug("##root path : " + request.getServletContext().getRealPath("/"));
-		logger.debug("##request.getSession() : " + request.getSession().getServletContext().getRealPath("/resource/temp/"));
 		String svcPath = request.getSession().getServletContext().getRealPath("/resource/temp/");
 		String svcRealPath = request.getSession().getServletContext().getRealPath("/resource/real/");
 		String svcDataPath = request.getSession().getServletContext().getRealPath("/resource/data/");
@@ -530,15 +528,6 @@ public class InstallController {
 		
 		// /WEB-INF/spring/properties/config 하위 디렉토리에 mail.properties 파일을 저장한다. 
 		String configPath = request.getSession().getServletContext().getRealPath(SystemConst.PROPERTY_FULL_PATH + "config");
-		
-		logger.debug("### 원래 패스워드 :" + mailUserPassword);
-		logger.debug("### testUserMail :" + testUserMail);
-		logger.debug("### mailUserId :" + mailUserId);
-		logger.debug("### smtpHostName :" + smtpHostName);
-		logger.debug("### smtpServerPort :" + smtpServerPort);
-		logger.debug("### mailCharset :" + mailCharset);
-		logger.debug("### siteDomain :" + siteDomain);
-		logger.debug("### siteOwner :" + siteOwner);
 		
 		// 패스워드 암호화 
 		String passwd = SecretKeyPBECipher.setUserPassword(mailUserPassword, mailUserKey);
