@@ -58,7 +58,6 @@
 		            		'			</div>',
 		            		'		</div>',
 		            		'	</section>',
-		            		'	<div class="bg"></div>',
 		            		'	</div>',
 		            		'	</div>',
 		            		'</div>',
