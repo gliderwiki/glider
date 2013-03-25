@@ -169,7 +169,7 @@ pageContext.setAttribute("cr", "\r");
 			<a href="/space/main/${weWiki.we_space_idx}" class="btn">공간메인목록</a>
 		</div>	
 
-		<div class="body-cont board" style="margin-top:25px;border-top:1px solid #D8D8D8">
+		<div class="body-cont board" style="padding: 36px 65px 35px 65px; margin-top:25px;border-top:1px solid #D8D8D8">
 			<div class="view-board">
 			
 				<div class="form-cmt" id="_comment">
@@ -178,10 +178,10 @@ pageContext.setAttribute("cr", "\r");
 					<input type="hidden" name="weWikiIdx" id="weWikiIdx" />
 						<table>
 							<colgroup>
-								<col style="width:15%;" />
-								<col style="width:35%;" />
-								<col style="width:15%;" />
-								<col style="width:35%;" />
+								<col style="width:20%;" />
+								<col style="width:30%;" />
+								<col style="width:20%;" />
+								<col style="width:30%;" />
 							</colgroup>
 							<tbody>
 								<tr>
