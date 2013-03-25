@@ -8,7 +8,7 @@
 
 .body-cont.board .list-board .list { width: 100%; border-top: 2px solid #7dabc0; border-bottom: 1px solid #d8d8d8; }
 
-.body-cont.board .list-board .list th, .body-cont.board .list-board .list td { padding-top: 7px; padding-bottom: 8px; text-align: center; }
+.body-cont.board .list-board .list th, .body-cont.board .list-board .list td { padding-top: 7px; padding-bottom: 8px; text-align: center; white-space : nowrap ; text-overflow : ellipsis;overflow : hidden }
 
 .body-cont.board .list-board .list a { color: #666; text-decoration: none; }
 
@@ -16,7 +16,7 @@
 
 .body-cont.board .list-board .list thead th { border-bottom: 1px solid #c4c4c4; background-color: #f5f5f5; }
 
-.body-cont.board .list-board .list .title { padding-left: 8px; text-align: left; }
+.body-cont.board .list-board .list .title { padding-left: 8px; text-align: left; white-space : nowrap; text-overflow : ellipsis;overflow : hidden }
 
 .body-cont.board .list-board .list .title:before { display: none; }
 

@@ -488,13 +488,13 @@ body { background-color: #f5f5f5; }
 
 .wrap_layer .layer .wrap_btn .btn:first-child { margin-left: 0; }
 
-.layer-select { width: 435px; background-color: #fff; }
+.layer-select { width: 580px; background-color: #fff; }
 
 .layer-select .tit { margin: 0 20px; padding: 10px 0; border-bottom: 2px solid #5d92af; font-size: 18px; color: #666; }
 
 .layer-select .cont { overflow-y: auto; max-height: 270px; margin: 20px; border-bottom: 1px solid #e9e9e9; }
 
-.layer-select .cont table { width: 100%; }
+.layer-select .cont table { width: 100%; font-size: 12px;font-family: "돋움" }
 
 .layer-select .cont table thead { color: #fff; background-color: #a4a4a4; }
 
@@ -515,7 +515,7 @@ body { background-color: #f5f5f5; }
 .layer-select .wrap-btn .btn:first-child { margin-left: 0; }
 
 /* loading */
-.loadingWrap, .profileWrap, .searchWrap, .mediaWrap, .previewWrap { position: fixed; top: 0; left: 0; width: 100%; height: 100%;  z-index: 10000;}
+.loadingWrap, .profileWrap, .searchWrap, .mediaWrap, .previewWrap, .groupWrap { position: fixed; top: 0; left: 0; width: 100%; height: 100%;  z-index: 10000;}
 .loadingBg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; opacity: .5; filter: alpha(opacity=50); z-index: 6500; }
 #loading { position: absolute; top: 50%; left: 50%; width: 32px; height: auto; margin: -32px 0 0 -32px; background: none; z-index: 6500; }
 #load_prof { position: absolute; width: 500px; height: auto; margin: -12px 0 0 -12px; background: none; z-index: 6500; }
@@ -524,4 +524,18 @@ body { background-color: #f5f5f5; }
 #load_image { position: absolute; top: 12%; left: 27%; width: 500px; height: auto; margin: -12px 0 0 -12px; background: none; z-index: 6500; }
 #load_editor_chart { position: absolute; top: 20%; left: 20%; width: 500px; height: auto; margin: -12px 0 0 -12px; background: none; z-index: 6500; }
 #load_preview { position: absolute;  margin: -12px 0 0 -12px; background: none; z-index: 6500; }
+
+
+
+
+/* loading */
+#groupDiv{position:absolute; width:580px; height:auto; margin:-12px 0 0 -12px; background:none; z-index:6500;border:5px solid #157EB7 }
+
+
+/* loading */
+.loadingWrap, .profileWrap, .previewWrap{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index:10000 }
+.loadingBg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; opacity: .5; filter: alpha(opacity=50); z-index: 6500; }
+#loading { position: absolute; top: 50%; left: 50%; width: 32px; height: auto; margin: -32px 0 0 -32px; background: none; z-index: 6500; }
+#load_prof { position: absolute; width: 500px; height: auto; margin: -12px 0 0 -12px; background: none; z-index: 6500; }
+#load_preview { position: absolute; top: 12%; left: 16%;  margin: -12px 0 0 -12px; background: none; z-index: 6500; }
 
