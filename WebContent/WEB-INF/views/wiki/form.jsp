@@ -655,10 +655,8 @@ $(function(){
 	$toolbars.on("click",".e-tb-btn",function(event){
 		var $me = $(this);
 		var markup = $me.data();
-		$.print("son1");
 		$.editorAction(wikiEditor, $me, markup, tempLayer);
 		//$.editorAction(wikiEditor.get(0), $me, markup, tempLayer);
-
 		return false; 
 	});
 	
