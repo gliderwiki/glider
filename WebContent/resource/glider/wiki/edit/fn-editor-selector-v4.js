@@ -42,20 +42,14 @@
 		var targetText = '';
 
 		if (typeof textEditor.selectionStart == "number" && typeof textEditor.selectionEnd == "number") {
-			$.print('FF CR');
 			start = textEditor.selectionStart;
 			end = textEditor.selectionEnd; 
 			targetText = textEditor.value.substring(start, end);
 	    } else {	// IE
 			range = document.selection.createRange();
-			$.print('range : ' + range);
-			$.print('range.parentElement() : ' + range.parentElement());
-			$.print('textEditor : ' + textEditor);
 	        if (range && range.parentElement() == textEditor) {
 	            len = textEditor.value.length;
 	            normalizedValue = textEditor.value.replace(/\r\n/g, "\n");		// 개행문자 치환 후 일반문자 
-	            $.print('normalizedValue : ' + normalizedValue);
-
 	            textInputRange = textEditor.createTextRange();           
 	            textInputRange.moveToBookmark(range.getBookmark());
 
@@ -77,12 +71,7 @@
 	                }
 	            }
 	            
-	            $.print('start : ' + start);
-	            $.print('end : ' + end);
-	            
-	            
 	            targetText = textEditor.value.substring(start, end);
-	            
 	        }
 		} 
 		
@@ -113,8 +102,6 @@
 
         if (document.selection) { //IE
             if (textEditor.createTextRange && textEditor.currentPos) {
-            	$.print("son2 textEditor.createTextRange : " + textEditor.createTextRange);
-            	$.print("son2 textEditor.currentPos : " + textEditor.currentPos);
             	var currentPos = textEditor.currentPos;
             	currentPos.text = currentPos.text.charAt(currentPos.text.length - 1) == ' ' ? textValue + ' ' : textValue;
             	currentPos.select();
@@ -125,7 +112,6 @@
         	}
             return;
         } else if (textEditor.selectionStart || textEditor.selectionStart == '0') { // FF, CROME
-        	$.print("son2 jQuery.textInsert : FF, CROME");
             var startPos = textEditor.selectionStart;
             var endPos = textEditor.selectionEnd;
             textEditor.value = textEditor.value.substring(0, startPos) + textValue + textEditor.value.substring(endPos, textEditor.value.length);
@@ -134,7 +120,6 @@
             textEditor.selectionEnd = startPos + textValue.length;
         }
         else {
-        	$.print("son2 jQuery.textInsert : else");
             textEditor.value += textArea.value;
             textEditor.focus();
         }
@@ -209,12 +194,6 @@
 	jQuery.appendTag = function(textEditor, $me, data) {
         var sel = $.textLocation(textEditor);
         var val = textEditor.value;
-        $.print("sel.end : " + sel.end);
-        $.print("sel.text : " + sel.text);
-        
-        $.print("appendTag val : " + val);
-        $.print("sel.start : " + sel.start);
-        
         
         // 블럭이 없는 경우 현재 커서에서 태그를 삽입 한다. 
         if(sel.start == 0 && sel.end == 0) {
