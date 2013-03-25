@@ -89,7 +89,6 @@
 						} else if(checkType == 'USER') {
 							spaceService.userSelectedList(spaceIdx, callBackUpdateViewUserList);
 						}						
-						//window.open("/space/"+checkType.toLowerCase()+"/"+spaceIdx+"/selectList?authorityType=view", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
 					}else{
 						if(checkType == 'GROUP') {
 							CommonService.getGroupList(me.$userIdx, callBackViewGroupList);
@@ -100,7 +99,6 @@
 
 							CommonService.getWeUserList(me.$userIdx, userNick, userEmail, userName, callBackViewUserList);
 						}
-						//window.open("/space/"+checkType.toLowerCase()+"/list?authorityType=view", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
 					}
 
 				}
@@ -124,9 +122,7 @@
 							spaceService.userSelectedList(spaceIdx, callBackUpdateEditUserList);
 						}
 						
-						//window.open("/space/"+checkType.toLowerCase()+"/"+spaceIdx+"/selectList?authorityType=edit", "", "scrollbars=no,toolbar=no,resizable=no,width=435, height=445");
 					}else{
-						//window.open("/space/"+checkType.toLowerCase()+"/list?authorityType=edit", "", "scrollbars=no,toolbar=no,resizable=no,width=452, height=420");
 						if(checkType == 'GROUP') {
 							CommonService.getGroupList(me.$userIdx, callBackEditGroupList);
 						} else if(checkType == 'USER') {
