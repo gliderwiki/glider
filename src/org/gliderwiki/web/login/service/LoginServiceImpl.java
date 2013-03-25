@@ -145,7 +145,6 @@ public class LoginServiceImpl implements LoginService {
 			WeUser currentUser = (WeUser)entityService.getRowEntity(weUser);
 
 
-			//TODOLIST 트랜잭션 시작 이전에 WE_SEND_MAIL 테이블에 적재한다.
 			sendMail = new WeSendMail(weUser.getWe_user_idx(), "0", "WE_USER_JOIN_AUTH_MAIL");
 			sendMail.setWe_log_param(weUser.toString());
 			sendMail.setWe_ins_date(new Date());

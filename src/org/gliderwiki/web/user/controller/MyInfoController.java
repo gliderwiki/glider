@@ -140,7 +140,6 @@ public class MyInfoController {
 		//업로드 날짜 및 파일명 구성
 		String today = DateUtil.getToday();
 
-		//TODOLIST : 세션에서 가져온다. 일단 테스트용으로 사용자 순번 1을 통해 등록한다.
 		String weUserIdx = loginUser.getWeUserIdx().toString();
 		String weUserId = loginUser.getWeUserId();
 
@@ -390,7 +389,6 @@ public class MyInfoController {
 	public ModelAndView userSpace(@LoginUser MemberSessionVo loginUser, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		List<Integer> wikiSpaceIdxList = new ArrayList<Integer>();
 
-		//TODOLIST
 		// 가입 신청 내역
 		WeSpaceJoin joinDomain = new WeSpaceJoin();
 		joinDomain.setWe_user_idx(loginUser.getWeUserIdx());
@@ -424,7 +422,6 @@ public class MyInfoController {
 
 		}
 		
-		//TODOLIST
 		// 초대받은 내역
 		joinDomain.setWe_join_type(JoinType.INVITE);
 		// 최근 한달간의 초대받은 내역 을 조회한다.

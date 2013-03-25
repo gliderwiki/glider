@@ -901,7 +901,6 @@ public class WikiController {
 		// 업로드 날짜 및 파일명 구성
 		String today = DateUtil.getToday();
 
-		// TODOLIST : 세션에서 가져온다. 일단 테스트용으로 사용자 순번 1을 통해 등록한다.
 		String weUserIdx = Integer.toString(loginUser.getWeUserIdx());
 
 		double maxSize = Double.parseDouble(uploadMaxSize);
@@ -993,7 +992,6 @@ public class WikiController {
 		// 업로드 날짜 및 파일명 구성
 		String today = DateUtil.getToday();
 
-		// TODOLIST : 세션에서 가져온다. 일단 테스트용으로 사용자 순번 1을 통해 등록한다.
 		String weUserIdx = Integer.toString(loginUser.getWeUserIdx());
 
 		double maxSize = Double.parseDouble(uploadMaxSize);

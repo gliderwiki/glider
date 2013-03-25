@@ -64,7 +64,6 @@ import org.springframework.web.servlet.ModelAndView;
  * Service 명명 규칙 : 업무명 + Service,  업무명 + ServiceImpl 의 형태로 작성한다.
  * Dao 명명 규칙 : 업무명 + Dao,  업무명 + DaoImpl 의 형태로 작성한다.
  * target = new String( target.getBytes("ISO-8859-1"),"UTF-8");
- * TODOLIST : 사용하지 않는 일부 메소드 삭제 해야 함 
  */
 
 @Controller
@@ -169,86 +168,6 @@ public class CommonController {
 		return modelAndView;
 	}
 
-	/**
-	 * 파일업로드 페이지 이동
-	 *
-	 * @param request
-	 * @param response
-	 * @param modelAndView
-	 * @return
-	 */
-	@RequestMapping(value = "/UploadFile", method = RequestMethod.GET)
-	public ModelAndView uploadFileView(ModelAndView modelAndView) {
-
-		modelAndView.setViewName("temp/fileUpload");
-
-		return modelAndView;
-	}
-
-	/**
-	 * 파일업로드
-	 *
-	 * @param uploadFileVo
-	 * @param result
-	 * @param modelAndView
-	 * @return
-	 */
-	@RequestMapping(value = "/UploadFile", method = RequestMethod.POST)
-	public ModelAndView uploadFile(@ModelAttribute("concat") UploadFileVo uploadFileVo, BindingResult result,
-			ModelAndView modelAndView) {
-
-		MultipartFile file = uploadFileVo.getFileData();
-
-
-		File f = new File(
-				"D:\\develop2\\01.NightHawk\\NightHawk-workspace\\NightHawk\\WebContent\\resource\\sample\\temp\\"
-						+ file.getOriginalFilename());
-
-		try {
-			file.transferTo(f);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		modelAndView.setViewName("temp/fileUpload");
-
-		return modelAndView;
-	}
-
-	/**
-	 * 파일업로드
-	 *
-	 * @param uploadFileVo
-	 * @param result
-	 * @param modelAndView
-	 * @return
-	 */
-	@RequestMapping(value = "/multiUploadFile", method = RequestMethod.POST)
-	public void multiUploadFile(@ModelAttribute("concat") UploadFileVo uploadFileVo, BindingResult result) {
-
-		/*
-		 * MultipartFile file = uploadFileVo.getFileData();
-		 *
-		 * System.out.println("파일이름 :"+file.getName());
-		 * System.out.println("파일크기 :"+file.getSize());
-		 * System.out.println("파일존재 :"+file.isEmpty());
-		 * System.out.println("파일이름 :"+file.getOriginalFilename());
-		 *
-		 * File f = new File(
-		 * "D:\\develop2\\01.NightHawk\\NightHawk-workspace\\NightHawk\\WebContent\\resource\\sample\\temp\\"
-		 * +file.getOriginalFilename());
-		 *
-		 * try{ file.transferTo(f); System.out.println("파일업로드 완료"); }catch
-		 * (IllegalStateException e) { e.printStackTrace(); }catch (Exception e)
-		 * { e.printStackTrace(); }
-		 */
-	}
-
-	@RequestMapping(value = "/upload", method = RequestMethod.GET)
-	public String uploadForm(ModelMap map) {
-		return "upload/uploadForm";
-	}
 
 	/**
 	 * 멀티파일 업로드 메서드
@@ -302,72 +221,6 @@ public class CommonController {
 		return "upload/uploadForm";
 	}
 
-	/**
-	 * 파일다운로드, 파일 패스는 자기 로컬패스에 있는 파일로 지정해서 테스트하세요
-	 *
-	 * @param request
-	 * @param response
-	 * @throws IOException
-	 
-	@RequestMapping(value = "/download", method = RequestMethod.GET)
-	public void download(HttpServletRequest request, HttpServletResponse response, String fileName) throws IOException {
-		logger.debug("다운로드 파일 이름 : " + fileName);
-		GliderFileUtils.downloadFile(request, response,
-				new File(request.getSession().getServletContext().getRealPath("/resource/temp/" + fileName)),
-				AttachmentType.DOWNLOAD);
-	}
-	 */
-	/**
-	 * 이미지 업로드 파일 미리보기용
-	 *
-	 * @param request
-	 * @param response
-	 * @throws IOException
-	 */
-	@RequestMapping(value = "/attachments/{fileName}", method = RequestMethod.GET)
-	public void imgPreView(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable("fileName") String fileName, @RequestParam("ext") String ext) throws IOException {
-		GliderFileUtils.downloadFile(request, response, new File(request.getSession().getServletContext().getRealPath("/resource/temp/" + fileName+"."+ext)),
-				AttachmentType.VIEW);
-	}
-
-	@RequestMapping(value = "/ajax/preUpload", method = RequestMethod.POST)
-	public void preImgUpload(HttpServletRequest request, Model model) throws IOException {
-		logger.debug("root path : " + request.getServletContext().getRealPath("/"));
-		String rootPath = request.getServletContext().getRealPath("/");
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-
-		String userAgent = request.getHeader("User-Agent");
-
-		logger.debug("userAgent : " + userAgent);
-
-		List<MultipartFile> files = multipartRequest.getFiles("uploadFile");
-		MultipartFile tempUploadFile = null;
-
-		if (userAgent.indexOf("MSIE") > -1) { // MS IE (보통은 6.x 이상 가정)
-			tempUploadFile = files.get(files.size() - 2);
-
-			logger.debug("tempUploadFile : " + tempUploadFile);
-		} else { // 모질라나 오페라,크롬
-			tempUploadFile = files.get(files.size() - 1);
-		}
-		logger.debug("미리보기 파일 이름 : " + tempUploadFile.getOriginalFilename());
-
-		// File targetTempFile =
-		// GliderFileUtils.getRootDestFile("/temp/"+tempUploadFile.getOriginalFilename());
-		File targetTempFile = new File(rootPath + "/resource/temp/" + tempUploadFile.getOriginalFilename());
-
-		try {
-			tempUploadFile.transferTo(targetTempFile);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@RequestMapping(value = "/temp/dwrtest", method = RequestMethod.GET)
-	public String dwr(ModelMap map) {
-		return "temp/dwr/dwrtest";
-	}
 
 	/**
 	 * 파일업로드 페이지 이동
@@ -385,31 +238,7 @@ public class CommonController {
 		return modelAndView;
 	}
 
-	/**
-	 * 에디터 히스토리
-	 *
-	 * @return
-	 */
-	@RequestMapping(value = "/editor", method = { RequestMethod.GET, RequestMethod.POST })
-	public String editorHistoryList() {
-		logger.debug("welcome @ /editorHistory");
-		return "temp/editor/editorHistory";
-	}
-
-	/**
-	 * 에디터 버젼
-	 *
-	 * @return
-	 */
-	@RequestMapping(value = "/editor/{version}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String editorV01(@PathVariable("version") int version) {
-		String versionName = "v";
-		if(version < 10){
-			versionName +="0";
-		}
-		return "temp/editor/"+versionName+ version;
-	}
-
+	
 	@RequestMapping(value = "/calendar", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView calendar(ModelAndView modelAndView) {
 		modelAndView.setViewName("calendar/calendar");

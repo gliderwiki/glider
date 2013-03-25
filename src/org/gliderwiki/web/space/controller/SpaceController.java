@@ -306,7 +306,7 @@ public class SpaceController {
 	 * @param spaceIdx
 	 * @param model
 	 * @return
-	 */
+	 
 	@RequestMapping(value = "/group/{spaceIdx}/selectList", method = RequestMethod.GET)
 	public String groupSelectedList(@RequestParam(value = "authorityType") String type,
 			@PathVariable("spaceIdx") int spaceIdx, ModelMap model) {
@@ -318,14 +318,15 @@ public class SpaceController {
 
 		return "/space/popup/groupList";
 	}
-
+	*/
+	
 	/**
 	 * 공간에 속한 사용자 목록을 조회한다. (공간정보 수정)
 	 * @param type
 	 * @param spaceIdx
 	 * @param model
 	 * @return
-	 */
+	 
 	@RequestMapping(value = "/user/{spaceIdx}/selectList", method = RequestMethod.GET)
 	public String userSelectedList(@RequestParam(value = "authorityType") String type,
 			@PathVariable("spaceIdx") int spaceIdx, ModelMap model) {
@@ -337,6 +338,7 @@ public class SpaceController {
 
 		return "/space/popup/userList";
 	}
+	*/
 
 	/* 공간 조회, 수정 권한 지정 - 사용안함 
 	@RequestMapping(value = "/group/list", method = RequestMethod.GET)
