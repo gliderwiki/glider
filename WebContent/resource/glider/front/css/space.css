@@ -1,3 +1,5 @@
+.wrap-cont { margin: 0 auto; width: 980px; }
+
 .body-cont.space .edit h3, .body-cont.space .view h3 { height: 21px; margin: 0 0 10px; padding-left: 25px; font-size: 14px; background: url(/resource/glider/front/images/ico-balloon.png) no-repeat; }
 
 .body-cont.space .box { margin-top: 30px; }
@@ -112,7 +114,7 @@
 
 .body-cont.space .main .tit-sec em { font-style: normal; color: #a13853; }
 
-.body-cont.space .main .list.type1.info .title { width: 260px; }
+.body-cont.space .main .list.type1.info .title { width: 280px; }
 
 .body-cont.space .main .list.type1.info .time { width: 90px; }
 
