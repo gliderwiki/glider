@@ -125,6 +125,7 @@ public class InstallController {
 		
 		String installYn = status.getProperty("install.status");
 		
+		
 		logger.info("#### installYn : "  +installYn);
 		if(installYn.equals("Y")) {
 			logger.info("글라이더 시스템에 접근할 수 없습니다.\n" +
