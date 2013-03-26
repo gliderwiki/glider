@@ -21,10 +21,11 @@
 		<div class="body-cont">
 		<div class="num">Step1. Installer 설명 및 동의 </div> <br/><br/>
 		<input type="hidden" name="domain" id="domain" value="${domain }" />
-		GLiDERWiki™ 는  GLiDER Opensource Team 이 기업 환경에 적합한 지식정보 공유 및 축적을 위한 협업 플랫폼으로 개발한 오픈소스 입니다.<br/>
-		GLiDERWiki™ 는 손쉽게 사용자들이 Wiki를 설치 할 수 있도록 Web 기반의 Installer 를 제공합니다.<br />
-		사용자의 어드민 정보, DB 연동 정보등을 토대로 서비스 운영에  필요한 항목들을 순서대로 설치하게 됩니다.	<br />
-		아래의 항목을 반드시 읽어보신 후 설치 하시기 바랍니다.
+		GLiDERWiki™ 는 기업 환경에 적합한 지식·정보 공유 및 축적을 위한 오픈소스 협업 툴입니다.<br/>
+		GLiDERWiki™ 는 손쉽게 사용자들이  설치 할 수 있도록 Web 기반의 Installer 를 제공합니다.<br />
+		자세한 설치 방법은 <a href="http://www.gliderwiki.org/space/main/2" target="_blank">GLiDERWiki™의 사용안내 페이지</a>를 참고하시기 바랍니다. 
+		사용자의 DB 연동 정보·어드민 정보·메일 전송 정보 등을 토대로 서비스 운영에  필요한 항목들을 순서대로 설정하게 됩니다.	<br />
+		아래의 항목을 반드시 읽어보신 후 <b>[다음]</b>을 클릭하여 설치하기 바랍니다.
 		<br/>
 		<ul>
 			<li>
@@ -34,11 +35,11 @@
 			커뮤니티 버전은 GLiDERWiki™ 웹 어플리케이션의 하단의  Copyright를 수정하거나 삭제할 수 없습니다.<br/>
 			</li>
 			<li>
-			본 설치 패키지는 사용자의 설치용이성을 위해 제공되는 화면으로 서버의 스펙이나 관련 어플리케이션의 버전에 따라 설치가 지원되지 않을 수도 있습니다. 이런 경우 수동으로 설치하셔도 무방합니다.<br/>
+			본 설치 패키지는 사용자의 설치용이성을 위해 제공되는 화면으로 서버의 스펙이나 관련 어플리케이션의 버전에 따라 설치가 지원되지 않을 수도 있습니다. 이런 경우 수동으로 설치하셔도 무방합니다. <a href="http://www.gliderwiki.org/space/main/2" target="_blank">[수동 설치 방법 보기]</a><br/>
 			</li>
 			<li>
 			지원되는 서버 환경은 Linux(데비안 계열, 레드햇 계열)과 윈도우즈 서버입니다. 
-			DB는 MySQL 5.x 버전이며, Application Server는 Tomcat 7.x, JDK는 1.6이상 버전에서 동작합니다.	자세한 지원 스펙에 대해서는 <a href="http://www.gliderwiki.org" target="_blank">GLiDERWiki™의 홈페이지</a>를 통해 확인 가능합니다.			
+			DB는 MySQL 5.x 버전이며, Application Server는 Tomcat 7.x, JDK는 1.6이상 버전에서 동작합니다.	자세한 지원 스펙에 대해서는 <a href="http://www.gliderwiki.org" target="_blank">GLiDERWiki™의 홈페이지</a>를 통해 문의 하시기 바랍니다.			
 			</li>
 			<li>
 			본 패키지를 설치하기 위해서는 GLiDERWiki™ 의 홈페이지에서 다운로드 및 이메일 인증을 거쳐야 합니다.<br/>
@@ -47,7 +48,6 @@
 			<li>
 			GLiDERWiki™은 오픈소스팀 글라이더에서 개발한 GLiDERWiki™ 웹 어플리케이션 오픈소스의 고유 트레이드 마크 입니다.<br/>설치 지원 및 사용법 교육에 대한 문의는  <a href="http://www.gliderwiki.org" target="_blank">GLiDERWiki™의 홈페이지</a>를 참조하세요.
 			</li>
-
 		</ul>
 		위의 항목에 동의를 하시면 다음 버튼을 눌러 설치를 진행하세요.
 		</div>
@@ -78,7 +78,6 @@
 		$("#install").bind("click", function() {
 			// 최초 스텝 - 서버 기본 정보 입력 받는 프로세스 
 			setAdminInfoLayer("step_1");
-			
 			// 엥커 이동 
 			gotoAnchor("step_1");
 		});
@@ -270,7 +269,7 @@
 				   		var state = rtnObj.result;
 					   	if (state == 1) {
 					    	alert("기본 데이터가 저장 되었습니다. 다음 단계를 진행하세요.");
-					    	// TODO 생성된 액티븍키와 사용자 등록 이메일을 잠궈야 한다. 추후 테스트 메일 전송 후 서버에 전송한다. 
+					    	// TODOLIST 생성된 액티브키와 사용자 등록 이메일을 잠궈야 한다. 추후 테스트 메일 전송 후 서버에 전송한다. 
 					    	isDataSave = true;
 					    	dropTableDisableForm();
 					    } else if(state == -2){
@@ -291,15 +290,6 @@
 			setAdminInfoLayer("step_4");		
 			gotoAnchor("step_4");	
 		});
-
-		// 이전으로 되돌아가기 
-		$("div[name=prev]").live("click", function(e) {
-			alert('이전단계에서 다시 세팅 하시겠습니까?');
-			var id =  $(this).attr('id');
-			var val =  $(this).attr('title');
-			gotoAnchor(val);						
-		});
-		
 		
 		$("#next_step_1").bind("click", function() {
 			// 최초 스텝 - 서버 기본 정보 입력 받는 프로세스 
@@ -328,7 +318,6 @@
 			//alert(sysinfo);	
 		}
 		else {
-			
 			//$("#next_step_1").hide();
 			//alert("installer가 지원되지 않는 시스템 환경입니다.\r\n관리자와 문의  수동으로 설치 하시기 바랍니다.");
 			//location = "/"; //추후 위키사이트로 링크를 합니다.
@@ -345,8 +334,6 @@
 	 * step_1 - JDBC 정보 저장 
 	 */
 	function setAdminInfoLayer(id){ 
-		clearThis(id);
-
 		var inHtml = "";
 		inHtml += "<div class=\"wrap-cont\" id=\""+id+"\" >";
 		inHtml += "	<h2 class=\"tit-next\" >DB정보 입력</h2>";
@@ -369,9 +356,9 @@
 		inHtml += " 	</tr>";
 		inHtml += " </table>";
 		inHtml += "<br>JDBC 정보가 올바로 입력되었다면 아래 연동 테스트 버튼을 클릭하여 JDBC 연동이 정상적으로 수행되는지 확인해 주세요. <br/>";
-		inHtml += "JDBC의 연결정보가 올바로 되었다면  <b>'JDBC 연결 테스트가 정상적으로 처리 되었습니다'</b> 라는  메세지가 출력이 됩니다. <br/>";
+		inHtml += "JDBC의 연결정보가 올바로 되었다면  <b>'[JDBC 연결 테스트가 정상적으로 처리 되었습니다]'</b> 라는  메세지가 출력이 됩니다. <br/>";
 		inHtml += "	만약, 오류 메세지가 나타나면  MySQL JDBC 연동이 제대로 되지 않은 경우 입니다.<br/>";
-		inHtml += "	이런 경우 계정 및 주소, 사용자 정보등을 다시 확인하여 시도해보시고, 그래도 되지 않으면 서버의(호스팅) 관리자를 통하여 방화벽이나 다른 조치사항이 있어야 하는지 확인 한 후 다시 인스톨 하셔야 합니다.  연동 테스트 클릭 후 다음을 진행하세요.<br/>";
+		inHtml += "	이런 경우 계정 및 주소, 사용자 정보등을 다시 확인하여 시도해보시고, 그래도 되지 않으면 서버의(호스팅) 관리자를 통하여 방화벽이나 다른 조치사항이 있어야 하는지 확인 한 후 다시 인스톨 하셔야 합니다. <BR>아래 연동 테스트 버튼을 클릭한 후  다음을 진행하세요.<br/>";
 		inHtml += " <div style=\"text-align: center; padding-top:10px\"><button type=\"button\" id=\"linkTest\" name=\"linkTest\" class=\"btn-wide\">연동테스트</button></div>";
 		inHtml += "</div>";
 		inHtml += "<div class=\"foot-cont\">";
@@ -388,7 +375,6 @@
 	 * step_2 - 테이블 및 기초 데이터 생성 
 	 */
 	function setAdminInfoLayer2(id){ 
-		clearThis(id);
 		var inHtml = "";
 
 		inHtml += "<div class=\"wrap-cont\" id=\""+id+"\" >";
@@ -608,7 +594,12 @@
 	 * 현재 클릭한 레이어를 삭제한다. 
 	 */ 
 	function clearThis(id) {
-		$("#"+id).remove();
+		if(confirm('이전단계에서 다시 세팅 하시겠습니까?')) {
+			var id =  $(this).attr('id');
+			var val =  $(this).attr('title');
+			gotoAnchor(val);
+			$("#"+id).remove();
+		}
 	}
 
 		
