@@ -17,9 +17,6 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gliderwiki.framework.exception.GliderwikiException;
-import org.gliderwiki.framework.exception.MsgException;
-import org.gliderwiki.framework.exception.UserNotFoundException;
 import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
 import org.gliderwiki.framework.util.SecretKeyPBECipher;
@@ -33,8 +30,6 @@ import org.gliderwiki.web.system.SystemConst;
 import org.gliderwiki.web.vo.TempUploadVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -99,12 +94,6 @@ public class InstallController {
 	}
 
 	
-	@Autowired
-	MessageSourceAccessor messages;
-
-	
-	
-
 	/**
 	 * install.status = N 일 경우 인스톨러 접근을 허용한다.   
 	 * @param request

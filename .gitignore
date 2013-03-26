@@ -4,6 +4,8 @@
 # exclude package - ignore all files in the directory #
 build/
 test/
+.settings/
+.metadata/
 
 # exclude pattern #
 *.db
