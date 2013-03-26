@@ -1,2 +1,10 @@
-/build
-/test
+# exclude classes resource #
+*.class
+
+# exclude package - ignore all files in the directory #
+build/
+test/
+
+# exclude pattern #
+*.db
+
