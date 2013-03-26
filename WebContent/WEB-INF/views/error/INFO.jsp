@@ -17,11 +17,10 @@
 <body>
 <section class="contents " role="main">
 	<div class="wrap-cont">
-		<h2 class="tit-cont">글라이더 시스템에 접근할 수 없습니다</h2>
+		<h2 class="tit-cont">${title }</h2>
 			<div class="body-cont">
-				<div class="box-error">
-				이미 GLiDER™ Wiki가 설치 되어 있으므로 현재 페이지에 접근 할 수 없습니다.
-				<BR>설정 변경 및 재설치는 GLiDER™ Wiki의 공식 웹 사이트(http://www.gliderwiki.org)에 문의 하여 주시기 바랍니다.
+				<div class="box-error" style="font-size:14px">
+				${message }
 				</div>
 			</div>
 		<div class="foot-cont">
