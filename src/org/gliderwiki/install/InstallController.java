@@ -173,7 +173,7 @@ public class InstallController {
 		result = ds.selectInfoJDBC(jdbc_url, jdbc_id, jdbc_pw);
 
     	logger.debug("***********************");
-    	logger.debug("JDBC Connection Result   : "  + result);
+    	logger.debug("JDBC Connection Result : "  + result);
     	logger.debug("***********************");
      
     	Map<String, Object> param = new HashMap<String, Object>();
@@ -189,8 +189,6 @@ public class InstallController {
     		
     		logger.debug("###startSchema : " +startSchema);
     		logger.debug("###endSchema : " +endSchema);
-    		
-    		
     		// DB스키마 명을 세팅한다. 
     		String schema = jdbc_url.substring(startSchema+1, endSchema);
     		
@@ -328,7 +326,6 @@ public class InstallController {
 		
 		String encoding = createTable.LoadTableData(tableInitPath, enc);
 		logger.debug("$$encoding : "  +encoding);
-		logger.debug("###### 테이블 가져온다 : " + createTable.getAllTables());
 		SingleDatasourceDao singleDao = new SingleDatasourceDao();
 		
 		
