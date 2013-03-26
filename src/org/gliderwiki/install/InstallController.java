@@ -118,7 +118,15 @@ public class InstallController {
 			logger.info("글라이더 시스템에 접근할 수 없습니다.\n" +
 					"이미 GLiDER™ Wiki가 설치 되었습니다. " +
 					"설정 변경 및 재설치는 GLiDER™ Wiki의 공식 웹 사이트(http://www.gliderwiki.org)에 문의 하여 주시기 바랍니다");
-			modelAndView.setViewName("admin/install/installError");
+			
+			String title = "글라이더 시스템에 접근할 수 없습니다";
+			String message = "글라이더 시스템에 접근할 수 없습니다.<BR>" +
+					"이미 GLiDER™ Wiki가 설치 되었습니다.<BR>" +
+					"설정 변경 및 재설치는 GLiDER™ Wiki의 공식 웹 사이트(<a href=\"http://www.gliderwiki.org\" target=\"_blank\">http://www.gliderwiki.org</a>)에 문의 하여 주시기 바랍니다";
+			
+			modelAndView.addObject("title", title);
+			modelAndView.addObject("message", message);
+			modelAndView.setViewName("error/INFO");
 			return modelAndView;			
 		}
 		String domain = CommonUtil.getClientDomain(request);
