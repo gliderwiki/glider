@@ -122,9 +122,7 @@ public class InstallController {
 		
 		String initPath = request.getSession().getServletContext().getRealPath(SystemConst.PROPERTY_FULL_PATH + "config");
 		Properties status = PropertyUtil.getPropertyInfo(initPath, SystemConst.INIT_NAME);
-		
 		String installYn = status.getProperty("install.status");
-		
 		
 		logger.info("#### installYn : "  +installYn);
 		if(installYn.equals("Y")) {
