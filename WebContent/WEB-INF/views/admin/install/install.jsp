@@ -77,7 +77,7 @@
 		 */ 
 		$("#install").bind("click", function() {
 			// 최초 스텝 - 서버 기본 정보 입력 받는 프로세스 
-			setAdminInfoLayer("step_1");
+			setJdbcConfig("step_1");
 			// 엥커 이동 
 			gotoAnchor("step_1");
 		});
@@ -216,13 +216,7 @@
 			$("#activeKey").attr('disabled',true);
 		}
 		
-		/**
-		 * DB 접속 정보 연동 후 다음 액션 
-		 */ 
-		$("#next_step_2").bind("click", function() {
-			setAdminInfoLayer("step_3");
-			gotoAnchor("step_3");
-		});		
+		
 
 		$("#dataSave").live("click", function() {
 			var charType = $(':radio[name="charType"]:checked').val();
@@ -258,44 +252,57 @@
 				return;
 			} 
 			
+			$.loadingBar();
 			$.ajax({
-					type:"POST"
-					,url:"/admin/install/loadData"
-					,data:{"adminMailId":adminMailId,"adminpass":adminpass,
-						   "adminSite":adminSite,"userMail":userMail,
-						   "activeKey":activeKey, "charType":charType}
-				    ,dataType:"json"
-				    ,success:function(rtnObj){	
-				   		var state = rtnObj.result;
-					   	if (state == 1) {
-					    	alert("기본 데이터가 저장 되었습니다. 다음 단계를 진행하세요.");
-					    	// TODOLIST 생성된 액티브키와 사용자 등록 이메일을 잠궈야 한다. 추후 테스트 메일 전송 후 서버에 전송한다. 
-					    	isDataSave = true;
-					    	dropTableDisableForm();
-					    } else if(state == -2){
-					    	isDataSave = false;
-					    	alert("기본 데이터 저장시 오류가 발생하였습니다. 입력 정보를 확인 한 후 다시 시도 하세요.");
-					    } else if(state == -1){
-					    	isDataSave = false;
-					    	alert("테이블 생성 및 기본 데이터 저장이 되지 않았습니다. 테이블 리셋 후 생성 부터 다시 시도하세요.");
-					    }
+				type:"POST"
+				,url:"/admin/install/loadData"
+				,data:{"adminMailId":adminMailId,"adminpass":adminpass,
+					   "adminSite":adminSite,"userMail":userMail,
+					   "activeKey":activeKey, "charType":charType}
+			    ,dataType:"json"
+			    ,success:function(rtnObj){	
+			   		var state = rtnObj.result;
+				   	if (state == 1) {
+				    	alert("기본 데이터가 저장 되었습니다. 다음 단계를 진행하세요.");
+				    	// TODOLIST 생성된 액티브키와 사용자 등록 이메일을 잠궈야 한다. 추후 테스트 메일 전송 후 서버에 전송한다. 
+				    	isDataSave = true;
+				    	dropTableDisableForm();
+				    	$.loadingBar.fadeOut();
+				    } else if(state == -2){
+				    	isDataSave = false;
+				    	alert("기본 데이터 저장시 오류가 발생하였습니다. 입력 정보를 확인 한 후 다시 시도 하세요.");
+				    	$.loadingBar.fadeOut()
+				    } else if(state == -1){
+				    	isDataSave = false;
+				    	alert("테이블 생성 및 기본 데이터 저장이 되지 않았습니다. 테이블 리셋 후 생성 부터 다시 시도하세요.");
+				    	$.loadingBar.fadeOut()
 				    }
-				});
-		  });
-		
-		/**
-		 * Table생성 및 기본 데이터 생성 후 다음 액션  
-		 */
-		$("#next_step_3").bind("click", function() {
-			setAdminInfoLayer("step_4");		
-			gotoAnchor("step_4");	
+			    }
+			});
 		});
 		
+		/*
+		 * JDBC 연동 정보 레이어
+		 */
 		$("#next_step_1").bind("click", function() {
-			// 최초 스텝 - 서버 기본 정보 입력 받는 프로세스 
-			setAdminInfoLayer2("step_2");			
-			// 엥커 이동 
+			setCreateData("step_2");			
 			gotoAnchor("step_2");
+		});
+		
+		/**
+		 * 테이블 스키마 및 데이터 세팅 레이어 
+		 */ 
+		$("#next_step_2").bind("click", function() {
+			setJdbcConfig("step_3");
+			gotoAnchor("step_3");
+		});	
+		
+		/**
+		 * 이미지 업로드 레이어 
+		 */
+		$("#next_step_3").bind("click", function() {
+			setJdbcConfig("step_4");		
+			gotoAnchor("step_4");	
 		});
 		
 	});
@@ -333,7 +340,7 @@
 	/*
 	 * step_1 - JDBC 정보 저장 
 	 */
-	function setAdminInfoLayer(id){ 
+	function setJdbcConfig(id){ 
 		var inHtml = "";
 		inHtml += "<div class=\"wrap-cont\" id=\""+id+"\" >";
 		inHtml += "	<h2 class=\"tit-next\" >DB정보 입력</h2>";
@@ -344,25 +351,25 @@
 		inHtml += " <table>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> JDBC URL </span></td>";
-		inHtml += "     	<td><input type=\"text\" name=\"jdbc_url\" id=\"jdbc_url\"  class=\"wide\" value=\"jdbc:mysql://127.0.0.1:3306/wiki\" ></td>"; 
+		inHtml += "     	<td><input type=\"text\" name=\"jdbc_url\" id=\"jdbc_url\"  class=\"wide\" value=\"\" ></td>"; 
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> User ID </span></td>";
-		inHtml += "     	<td><input type=\"text\" name=\"jdbc_id\" id=\"jdbc_id\" class=\"wide\" value=\"glider\" ></td>";
+		inHtml += "     	<td><input type=\"text\" name=\"jdbc_id\" id=\"jdbc_id\" class=\"wide\" value=\"\" ></td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> User Password </span></td>";
-		inHtml += "     	<td><input type=\"password\" name=\"jdbc_pw\" id=\"jdbc_pw\"  class=\"wide\" value=\"glider\" ></td>";
+		inHtml += "     	<td><input type=\"password\" name=\"jdbc_pw\" id=\"jdbc_pw\"  class=\"wide\" value=\"\" ></td>";
 		inHtml += " 	</tr>";
 		inHtml += " </table>";
 		inHtml += "<br>JDBC 정보가 올바로 입력되었다면 아래 연동 테스트 버튼을 클릭하여 JDBC 연동이 정상적으로 수행되는지 확인해 주세요. <br/>";
-		inHtml += "JDBC의 연결정보가 올바로 되었다면  <b>'[JDBC 연결 테스트가 정상적으로 처리 되었습니다]'</b> 라는  메세지가 출력이 됩니다. <br/>";
+		inHtml += "JDBC의 연결정보가 올바로 되었다면  <b><font color=\"red\">'[JDBC 연결 테스트가 정상적으로 처리 되었습니다]'</font></b> 라는  메세지가 출력이 됩니다. <br/>";
 		inHtml += "	만약, 오류 메세지가 나타나면  MySQL JDBC 연동이 제대로 되지 않은 경우 입니다.<br/>";
 		inHtml += "	이런 경우 계정 및 주소, 사용자 정보등을 다시 확인하여 시도해보시고, 그래도 되지 않으면 서버의(호스팅) 관리자를 통하여 방화벽이나 다른 조치사항이 있어야 하는지 확인 한 후 다시 인스톨 하셔야 합니다. <BR>아래 연동 테스트 버튼을 클릭한 후  다음을 진행하세요.<br/>";
 		inHtml += " <div style=\"text-align: center; padding-top:10px\"><button type=\"button\" id=\"linkTest\" name=\"linkTest\" class=\"btn-wide\">연동테스트</button></div>";
 		inHtml += "</div>";
 		inHtml += "<div class=\"foot-cont\">";
-		inHtml += "		<div name=\"prev\" id=\"prev_step_0\" onclick=\"clearThis('"+id+"')\" title=\"step_0\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">이전</div>";
+		inHtml += "		<div name=\"prev\" id=\"prev_step_0\" onclick=\"clearPrevious('"+id+"', 'step_0')\" title=\"step_0\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">이전</div>";
 		inHtml += "		<div name=\"next\" id=\"next_step_1\" onclick=\"nextStep('step_2')\" title=\""+id+"\" role=\"button\" class=\"btn\" style=\"cursor:pointer\" >다음</div>";
 		inHtml += "	</div>";
 		inHtml += "</div>";
@@ -374,7 +381,7 @@
 	/*
 	 * step_2 - 테이블 및 기초 데이터 생성 
 	 */
-	function setAdminInfoLayer2(id){ 
+	function setCreateData(id){ 
 		var inHtml = "";
 
 		inHtml += "<div class=\"wrap-cont\" id=\""+id+"\" >";
@@ -382,13 +389,13 @@
 		inHtml += "	<div class=\"body-cont\" style=\"height:430px;\">";
 		inHtml += " <div class=\"num\">Step3. Table 및 기본 데이터 설정 저장 </div><br/>"; 
 		inHtml += "	GLiDERWiki™를 이용하기 위한 테이블 및 기본 데이터를 생성합니다. 캐릭터 셋 정보를 선택 한 후 테이블 생성 버튼을 클릭하세요.";
-		inHtml += "	관리자 계정은 어드민 모드에 접속하기 위한 사용자 계정이며, Active Key와 이메일 정보는 GLiDERWiki™ 다운로드 할 때 입력한 메일 정보와 해당 메일로 전송된 Active Key를 입력하시면 됩니다.<br/>";	
+		inHtml += "	<u>관리자 계정은 어드민 모드에 접속하기 위한 Login ID이며, Active Key와 이메일 정보는 GLiDERWiki™ 다운로드 할 때 입력한 메일 정보와 해당 메일로 전송된 Active Key를 입력</u>하시면 됩니다.<br/>";	
 		inHtml += " <ul>";
-		inHtml += "		<li>캐릭터 셋을 선택 한 후 테이블 생성 버튼을 통하여 테이블이 정상적으로 생성되면 화면에 <b>[한글 데이터 정상]</b>이 출력이 됩니다.</li>";
+		inHtml += "		<li>캐릭터 셋을 선택 한 후 테이블 생성 버튼을 통하여 테이블이 정상적으로 생성되면 화면에 <b><font color='red'>[한글 데이터 정상]</font></b>이 출력이 됩니다.</li>";
 		inHtml += "		<li>한글이 정상적으로 보이지 않는다면 리셋 버튼을 클릭한 후 다시 캐릭터 셋 정보를 변경하세요 (예: utf-8  > euc-kr 캐릭터셋 변경)</li>";
 		inHtml += " 	<li>GLiDERWiki™ 은 기본 캐릭터(utf-8) 셋과 utf8_unicode_ci , euc-kr 타입의 캐릭터 셋을 지원합니다.</li>";
 		inHtml += " 	<li>캐릭터셋 변경 후 테스트를 수행하였음에도 한글이 깨지면 서버의 관리자에게 UTF-8이나 EUC-KR 타입의 DB 설정을 요청하셔야 합니다.<br> 이 경우 테이블을 리셋한 후 Step1 단계부터 다시 진행하셔야 합니다. </li>";
-		inHtml += " 	<li>보안상 비밀번호 암호화 되어 보관되고 초기화를 지원하지 않으므로 패스워드를 잊어버리지 않도록 확실히 기억할 수 있는 비밀번호를 넣어주세요. 패스워드 분실시에는 DB에 다이렉트 접근하여 update 해주셔야 합니다.</li>";
+		inHtml += " 	<li>보안상 비밀번호 암호화 되어 보관되고 비밀번호 초기화를 지원하지 않으므로 패스워드를 잊어버리지 않도록 확실히 기억할 수 있는 비밀번호를 넣어주세요. 패스워드 분실시에는 DB에 다이렉트 접근하여 update 해주셔야 합니다.</li>";
 		inHtml += " </ul>";
 		inHtml += " <table style=\"width:820px\">";
 		inHtml += " 	<tr>";
@@ -405,7 +412,7 @@
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td width=\"180\"><b>관리자 Login 이메일</b></td>";
-		inHtml += "     	<td width=\"270\"><input type=\"text\" id=\"adminMailId\" name=\"adminMailId\" size=\"20\" style=\"\" value=\"gliderwiki@gliderwiki.org\" disabled></td>";
+		inHtml += "     	<td width=\"270\"><input type=\"text\" id=\"adminMailId\" name=\"adminMailId\" size=\"20\" style=\"\" value=\"\" disabled></td>";
 		inHtml += "     	<td width=\"150\"><b>관리자 Login Password</b></td>";
 		inHtml += "     	<td width=\"210\"><input type=\"password\" id=\"adminpass\" name=\"adminpass\" size=\"20\" style=\"\" disabled></td>";
 		inHtml += " 	</tr>";
@@ -417,13 +424,13 @@
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><b>Active Key</b></td>";
-		inHtml += "     	<td colspan=\"3\"><input type=\"text\" id=\"activeKey\" name=\"activeKey\" size=\"90\" style=\"\" value=\"DFtzHGKKiFbdVlVktfrAaCFTNypBvKPOqTinLgyjCIHfJPgWwIaYuvEhxrnKkZiPaFvorJeLXUcQjrsdFDuTsIRxwzTkQQkkRGjvcjtghEIczyZZrAbihhPPChFSoQAE\"disabled></td>";
+		inHtml += "     	<td colspan=\"3\"><input type=\"text\" id=\"activeKey\" name=\"activeKey\" size=\"90\" style=\"\" value=\"\"disabled></td>";
 		inHtml += " 	</tr>";
 		inHtml += " </table>";
 		inHtml += " <div style=\"text-align: center\"><button type=\"button\" id=\"dataSave\" name=\"dataSave\" class=\"btn-wide\">데이터저장</button></div>";
 		inHtml += "	</div>";
 		inHtml += "	<div class=\"foot-cont\">";
-		inHtml += "		<div name=\"prev\" id=\"prev_step_1\" onclick=\"clearThis('"+id+"')\" title=\"step_1\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">이전</div>";
+		inHtml += "		<div name=\"prev\" id=\"prev_step_1\" onclick=\"clearPrevious('"+id+"', 'step_1')\" title=\"step_1\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">이전</div>";
 		inHtml += "		<div name=\"next\" id=\"next_step_2\" onclick=\"nextStep('step_3')\" title=\""+id+"\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">다음</div>";
 		inHtml += "	</div>";
 		inHtml += "</div>";
@@ -435,8 +442,7 @@
 	/*
 	 * step_3 - 이미지 정보 저장 
 	 */
-	function setAdminInfoLayer3(id){ 
-		clearThis(id);	
+	function setImagePermisson(id){ 
 		var inHtml = "";
 		
 		inHtml += "<div class=\"wrap-cont\" id=\""+id+"\">";
@@ -444,9 +450,9 @@
 		inHtml += "	<h2 class=\"tit-next\">Image Upload 테스트</h2>";
 		inHtml += "	<div class=\"body-cont\" style=\"height:410px;\">";  
 		inHtml += " <div class=\"num\">Step4. Image preview 테스트 </div><br/>"; 
-		inHtml += "	GLiDERWiki™ 의 파일 업로드 및 이미지 미리보기 기능을 지원하기 위하여 디렉토리 권한(퍼미션)을 변경하여야 합니다.<br/>";
+		inHtml += "	GLiDERWiki™ 의 파일 업로드 및 이미지 미리보기 기능을 지원하기 위하여 디렉토리 권한(퍼미션) 변경 작업을 수행합니다.<br/>";
 		inHtml += "	파일 업로드와 이미지 미리보기 및 섬네일 기능을 지원하는지 여부를 확인 하기 위해서  아래 파일 첨부 폼에 이미지 파일(png, jpg, gif등)<br/>"; 
-		inHtml += "	을 선택 하여 업로드 버튼을 클릭하시기 바랍니다.<br/><br/>";
+		inHtml += "	을 선택 하여 업로드 버튼을 클릭하시기 바랍니다. 만약, 업로드 실패 메세지가 출력된다면 다시 한번 시도 해주세요.<br/><br/>";
 		inHtml += " <span class=\"box-img\">";
 		inHtml += " 	<img id=\"preImg\" src=\"\" alt=\"\" />";
 		inHtml += " </span>";
@@ -463,7 +469,7 @@
 		inHtml += " </div>";
 		inHtml += "	</div>";
 		inHtml += "	<div class=\"foot-cont\">";
-		inHtml += "		<div name=\"prev\" id=\"prev_step_2\" onclick=\"clearThis('"+id+"')\" title=\"step_3\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">이전</div>";
+		inHtml += "		<div name=\"prev\" id=\"prev_step_2\" onclick=\"clearPrevious('"+id+"', 'step_3')\" title=\"step_3\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">이전</div>";
 		inHtml += "		<div name=\"next\" id=\"next_step_3\" onclick=\"nextStep('step_4')\" title=\""+id+"\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">다음</div>";
 		inHtml += "	</div>";
 		inHtml += "</form>";
@@ -476,8 +482,7 @@
 	/*
 	 * step_4 - SMTP 전송 메일 설정 
 	 */
-	function setAdminInfoLayer4(id){ 
-		clearThis(id);
+	function setSmtpConfig(id){ 
 		var domain = $("#domain").val();
 		var inHtml = "";
 		var adminSite = $("#adminSite").val();
@@ -487,13 +492,13 @@
 		inHtml += " <div class=\"num\">Step5. 메일 전송 계정 설정 </div><br/>";
 
 		inHtml += " GLiDERWiki™ 은 회원 가입시, 스팸 유저를 필터링하기 위해서 메일로 회원 인증 절차를 거치도록 지원합니다. <br/>";
-		inHtml += " 메일 전송 기능은 알람 시스템과 연동되므로 반드시 설정되어야 합니다. SMTP 전송 서버가 없을 경우 우선 구글 G메일 계정으로 설정 하신 후 관리자 모드에서 SMTP 서버로 변경 할 수 있습니다. <b>G메일 전송 테스트</b> 후 다음단계를 진행하세요.<br/>";
+		inHtml += " 메일 전송 기능은 알람 시스템과 연동되므로 반드시 설정되어야 합니다. SMTP 전송 서버가 없을 경우 우선 구글 gmail 계정으로 설정 하신 후 관리자 모드에서 SMTP 서버로 변경 할 수 있습니다. <b>gmail 전송 테스트</b> 후 다음단계를 진행하세요.<br/>";
 
 		inHtml += " <table>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td>Mail UserID </td>";
 		inHtml += "     	<td><input type=\"text\" size=\"30\" id=\"mailUserId\" name=\"mailUserId\" value=\"glider.wiki@gmail.com\"></td>";
-		inHtml += "     	<td>전송 계정으로 사용할 G메일 주소 입력</td>";
+		inHtml += "     	<td>전송 계정으로 사용할 gmail 주소 입력</td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td>Mail Password </td>";
@@ -538,7 +543,7 @@
 
 		inHtml += "	</div>";
 		inHtml += "<div class=\"foot-cont\">";
-		inHtml += "    <div name=\"prev\" id=\"prev_step_3\" onclick=\"clearThis('"+id+"')\" title=\"step_4\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">이전</div>";
+		inHtml += "    <div name=\"prev\" id=\"prev_step_3\" onclick=\"clearPrevious('"+id+"', 'step_4')\" title=\"step_4\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">이전</div>";
 		inHtml += "    <div name=\"next\" id=\"main_4\" onclick=\"sendTestMail();\" title=\""+id+"\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">전송테스트</div>";
 		inHtml += "    <div name=\"next\" id=\"next_step_4\" onclick=\"nextStep('step_5')\" title=\""+id+"\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">다음</div>";
 		inHtml += "</div>";
@@ -552,8 +557,7 @@
 	 * step_5 - 어드민 정보 저장  	
 	 */
 	
-	function setAdminInfoLayer5(id){ 
-		clearThis(id);
+	function setComplete(id){ 
 		var inHtml = "";
 		var domain = $("#domain").val();
 		
@@ -593,11 +597,9 @@
 	/*
 	 * 현재 클릭한 레이어를 삭제한다. 
 	 */ 
-	function clearThis(id) {
+	function clearPrevious(id, title) {
 		if(confirm('이전단계에서 다시 세팅 하시겠습니까?')) {
-			var id =  $(this).attr('id');
-			var val =  $(this).attr('title');
-			gotoAnchor(val);
+			gotoAnchor(title);
 			$("#"+id).remove();
 		}
 	}
@@ -699,30 +701,28 @@
 		var ids = id.split("_")[1];
 		if (ids == 2) {
 			if(isConnect) {
-				setAdminInfoLayer2(id);	
+				setCreateData(id);	
 			} else {
 				alert('Step.2 연동 테스트를 거친 후 다음 단계로 이동할 수 있습니다.');
 				return;
 			}
-			
 		} else if (ids == 3) {
 			if(isDataSave) {
-				setAdminInfoLayer3(id);	
+				setImagePermisson(id);	
 			} else {
 				alert('Step.3 Table 생성 및 Data 저장 후  다음 단계로 이동할 수 있습니다.\n테이블이 정상적으로 생성되었다면 데이터 저장 버튼을 클릭하세요.');
 				return;
 			}
-			
 		} else if (ids == 4) {
 			if(isUpload) {
-				setAdminInfoLayer4(id);			
+				setSmtpConfig(id);			
 			} else {
 				alert('Step.4 이미지 프리뷰 테스트 후 다음 단계로 이동할 수 있습니다.');
 				return;
 			}
 		} else if (ids == 5) {
 			if(isSendMail) {
-				setAdminInfoLayer5(id);			
+				setComplete(id);			
 			} else {
 				alert('Step.5 메일 전송 및 계정 설정 테스트 후 다음 단계로 이동할 수 있습니다.');
 				return;
