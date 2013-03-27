@@ -375,7 +375,7 @@ public class InstallController {
 			enc = "UTF8";
 		}
 		
-		//TODOLIST : restClient를 이용하여 글라이더 서버에 관련 데이터를 전송해야 한다. 
+		
 		String adminMailId  = request.getParameter("adminMailId"); // 관리자 로그인 메일주소(ID)
 		String adminpass 	= request.getParameter("adminpass");   // 관리자 로그인 비밀번
 		String adminSite 	= request.getParameter("adminSite");   // 시스템 도메인 주
@@ -415,6 +415,9 @@ public class InstallController {
 			
 			// 어드민 사용자와 기본 데이터들을 저장한다. 
 			result = singleDao.insertInitTableData(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), weUser, weProfile, tableInitPath, enc); 
+			
+			//TODOLIST : restClient를 이용하여 글라이더 서버에 관련 데이터를 전송해야 한다. 
+						
 			
 		} catch(Exception e) {
 			result = -1;
