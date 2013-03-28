@@ -417,7 +417,7 @@
 		inHtml += "     	<td width=\"210\"><input type=\"password\" id=\"adminpass\" name=\"adminpass\" size=\"20\" style=\"\" disabled></td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
-		inHtml += "     	<td><b>사이트 명</b></td>";
+		inHtml += "     	<td><b>사이트 도메인 명</b></td>";
 		inHtml += "     	<td><input type=\"text\" size=\"20\" id=\"adminSite\" name=\"adminSite\" style=\"\" disabled></td>";
 		inHtml += "     	<td><b>사용자 등록 이메일</b></td>";
 		inHtml += "     	<td><input type=\"text\" size=\"20\" id=\"userMail\" name=\"userMail\" style=\"\" disabled></td>";
