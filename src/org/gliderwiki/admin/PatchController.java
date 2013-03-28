@@ -61,7 +61,7 @@ public class PatchController {
 	
 	// 글라이더 위키의 파일 서버 접속 
 	public static final String REST_SERVER_URL = "http://localhost:8080";
-	//public static final String REST_SERVER_URL = "http://localhost";
+	//public static final String REST_SERVER_URL = "http://gliderwiki.org";
 	
 	
 	/**
