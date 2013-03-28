@@ -40,6 +40,7 @@
 		<typeAlias type="org.gliderwiki.web.domain.WeTemplate" alias="weTemplate" />
 		<typeAlias type="org.gliderwiki.web.domain.WeFunction" alias="weFunction" />
 		<typeAlias type="org.gliderwiki.web.domain.WePatch" alias="wePatch" />
+		<typeAlias type="org.gliderwiki.web.domain.WeInstallUser" alias="weInstallUser" />
 	</typeAliases>
 
 	<!--======= Difinition of MAPPER Path =======-->
