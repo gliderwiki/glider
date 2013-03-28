@@ -632,4 +632,13 @@
 		ORDER BY we_bbs_idx DESC
 	</select>
 	
+	
+	<select id="AdminManage.getInstallUserInfo" resultType="weInstallUser">
+		SELECT 	*
+		FROM    we_install_user 
+		WHERE 	we_email = #{we_email}
+		AND 	we_active_key = #{we_active_key}
+	</select>
+	
+	
 </mapper>
