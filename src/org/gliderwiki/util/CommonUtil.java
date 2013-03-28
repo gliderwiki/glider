@@ -29,7 +29,7 @@ public class CommonUtil {
 		logger.debug("##getProtocol : " + getProtocol);
 		String getDomain = request.getServerName();
 		logger.debug("##getDomain : " + getDomain);
-		String getPort = Integer.toString(request.getServerPort());		
+		String getPort = Integer.toString(request.getServerPort());	
 		String domain = getProtocol + "://" + getDomain + ":" + getPort + path	+ "/";
 		logger.debug("##domain : " + domain );
 		return domain;
