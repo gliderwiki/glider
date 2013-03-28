@@ -10,6 +10,7 @@
 package org.gliderwiki.install;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -24,17 +25,23 @@ import org.gliderwiki.framework.util.StringUtil;
 import org.gliderwiki.util.CommonUtil;
 import org.gliderwiki.util.PropertyUtil;
 import org.gliderwiki.util.SendMailSMTP;
+import org.gliderwiki.web.domain.WeInstallUser;
 import org.gliderwiki.web.domain.WeProfile;
 import org.gliderwiki.web.domain.WeUser;
 import org.gliderwiki.web.system.SystemConst;
+import org.gliderwiki.web.vo.PatchInfoVo;
 import org.gliderwiki.web.vo.TempUploadVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -47,6 +54,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class InstallController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired
+    private RestTemplate restTemplate;
+	
+	public static final String REST_SERVER_URL = "http://localhost:8080";
+	//public static final String REST_SERVER_URL = "http://gliderwiki.org
+	
 	
 	public InstallController() {
 	}
@@ -378,9 +392,9 @@ public class InstallController {
 		
 		String adminMailId  = request.getParameter("adminMailId"); // 관리자 로그인 메일주소(ID)
 		String adminpass 	= request.getParameter("adminpass");   // 관리자 로그인 비밀번
-		String adminSite 	= request.getParameter("adminSite");   // 시스템 도메인 주
-		String userMail 	= request.getParameter("userMail");    // 정보를 전달 받을 메일주
-		String activeKey 	= request.getParameter("activeKey");   // 활성화를 위한 라이센스 
+		String adminSite 	= request.getParameter("adminSite");   // 시스템 도메인 주소
+		String userMail 	= request.getParameter("userMail");    // 등록  메일주소 
+		String activeKey 	= request.getParameter("activeKey");   // 활성화를 위한 액티브 키  
 		
 		logger.debug("adminMailId : " + adminMailId);
 		logger.debug("adminpass : " + adminpass);
@@ -389,9 +403,6 @@ public class InstallController {
 		logger.debug("activeKey :" + activeKey);
 		
 		String tableInitPath = request.getSession().getServletContext().getRealPath(SystemConst.MYSQL_DB_PATH);
-		
-		
-		//TODO activeKey를 Gliderwiki.org 에 Rest로 전송해야 한다. 
 		
 		int result = 0;
 		
@@ -417,7 +428,20 @@ public class InstallController {
 			result = singleDao.insertInitTableData(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), weUser, weProfile, tableInitPath, enc); 
 			
 			//TODOLIST : restClient를 이용하여 글라이더 서버에 관련 데이터를 전송해야 한다. 
-						
+			WeInstallUser installUserVo = new WeInstallUser();
+			
+			installUserVo.setWe_active_key(activeKey);	// 액티브 키
+			installUserVo.setWe_auth_date(new Date());	// 인증일
+			installUserVo.setWe_auth_yn("Y");			// 인증여부 
+			installUserVo.setWe_domain(adminSite);		// 사이트명 
+			installUserVo.setWe_email(userMail);		// 이메일 
+			
+			HttpEntity<WeInstallUser> entity = new HttpEntity<WeInstallUser>(installUserVo);
+			String restUrl = REST_SERVER_URL + "/service/installAuthUser";
+			ResponseEntity<WeInstallUser> entityResponse = restTemplate.postForEntity(restUrl, entity, WeInstallUser.class);
+			
+			WeInstallUser restVo = entityResponse.getBody();
+			logger.debug("###restVo : " + restVo.toString());		
 			
 		} catch(Exception e) {
 			result = -1;
