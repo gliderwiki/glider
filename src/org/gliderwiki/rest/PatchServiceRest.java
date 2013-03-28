@@ -12,6 +12,7 @@ package org.gliderwiki.rest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.servlet.ServletOutputStream;
@@ -20,7 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.gliderwiki.rest.service.PatchService;
 import org.gliderwiki.util.PropertyUtil;
+import org.gliderwiki.web.common.service.EntityService;
 import org.gliderwiki.web.domain.WeFunction;
+import org.gliderwiki.web.domain.WeInstallUser;
 import org.gliderwiki.web.domain.WePatch;
 import org.gliderwiki.web.system.SystemConst;
 import org.gliderwiki.web.vo.PatchInfoVo;
@@ -44,6 +47,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PatchServiceRest {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@SuppressWarnings("rawtypes")
+	@Autowired
+	private EntityService entityService;
 	
 	@Autowired
 	private PatchService patchService;
@@ -211,5 +218,41 @@ public class PatchServiceRest {
 	public @ResponseBody WePatch patchInfo(@PathVariable("functionIdx") String functionIdx, @RequestBody WePatch wePatchModel, HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		WePatch domain = patchService.getWePatchInfo(wePatchModel);
 		return domain;
+	}
+	
+	
+	/**
+	 * 사용자 인스톨 정보를 저장 혹은 수정 한다.
+	 * 사용자 정보는 기본적으로 다운로드 받을 때 저장이 되지만 다른 정보로 인스톨 할 경우 그냥 insert 하고, 
+	 * 정보가 있을 경우에는 update 처리 한다. 
+	 * @param installVo
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Throwable
+	 */
+	@RequestMapping(method=RequestMethod.POST, value="/installAuthUser")
+	public @ResponseBody WeInstallUser installAuthUser(@RequestBody WeInstallUser installVo, HttpServletRequest request, HttpServletResponse response) throws Throwable {
+		logger.debug("## Rest Call :  " + installVo.toString());
+		// 사용자 정보 인증 - 액티브 키와 유저 메일로  건수가 있는지 조회한 후 있으면 update, 없으면 insert를 수행한다. 
+		
+		WeInstallUser installUser = patchService.getInstallUserInfo(installVo);
+		
+		if(installUser == null ) {
+			// 다운로드 정보가 없으므로 새로 저장함  
+			installVo.setWe_install_date(new Date());
+			installVo.setWe_company("undefined");
+			installVo.setWe_new_yn("Y");
+			entityService.insertEntity(installVo);
+			
+			return installVo;
+		} else {
+			// update
+			installUser.setWe_auth_date(new Date());
+			installUser.setWe_auth_yn("Y");
+			entityService.updateEntity(installUser);
+			
+			return installUser;
+		}
 	}
 }

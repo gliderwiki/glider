@@ -12,6 +12,7 @@ package org.gliderwiki.rest.dao;
 import java.util.List;
 
 import org.gliderwiki.web.domain.WeFunction;
+import org.gliderwiki.web.domain.WeInstallUser;
 import org.gliderwiki.web.domain.WePatch;
 
 
@@ -29,4 +30,10 @@ public interface PatchServiceDao {
 	 * @return
 	 */
 	WePatch getWePatchInfo(WePatch wePatchModel) throws Throwable;
+
+	/**
+	 * @param installVo
+	 * @return
+	 */
+	WeInstallUser getInstallUserInfo(WeInstallUser installVo) throws Throwable;
 }

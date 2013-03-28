@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.gliderwiki.rest.dao.PatchServiceDao;
 import org.gliderwiki.web.domain.WeFunction;
+import org.gliderwiki.web.domain.WeInstallUser;
 import org.gliderwiki.web.domain.WePatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,11 @@ public class PatchServiceImpl implements PatchService {
 	@Override
 	public WePatch getWePatchInfo(WePatch wePatchModel) throws Throwable {
 		return patchServiceDao.getWePatchInfo(wePatchModel);
+	}
+
+	@Override
+	public WeInstallUser getInstallUserInfo(WeInstallUser installVo) throws Throwable {
+		return patchServiceDao.getInstallUserInfo(installVo);
 	}
 
 }

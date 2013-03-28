@@ -12,6 +12,7 @@ package org.gliderwiki.rest.service;
 import java.util.List;
 
 import org.gliderwiki.web.domain.WeFunction;
+import org.gliderwiki.web.domain.WeInstallUser;
 import org.gliderwiki.web.domain.WePatch;
 
 
@@ -29,4 +30,11 @@ public interface PatchService {
 	 * @return
 	 */
 	WePatch getWePatchInfo(WePatch wePatchModel) throws Throwable;
+
+	/**
+	 * 인스톨 사용자인지 조회한다. 
+	 * @param installVo
+	 * @return
+	 */
+	WeInstallUser getInstallUserInfo(WeInstallUser installVo) throws Throwable;
 }
