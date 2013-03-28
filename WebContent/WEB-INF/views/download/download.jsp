@@ -16,7 +16,7 @@
 						<input type="text" id="we_email" name="we_email" value="" class="inp-dup"/>
 					</div>
 					<div class="box">
-						<h3>글라이더 위키를 적용하고자 하는 사이트 주소를 입력하세요.</h3>
+						<h3>글라이더 위키를 적용하고자 하는 사이트 도메인 주소를 입력하세요.</h3>
 						<input type="text" id="we_domain" name="we_domain" value="" class="inp-dup"/>
 					</div>
 					<div class="box">
