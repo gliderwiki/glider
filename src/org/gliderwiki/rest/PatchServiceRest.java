@@ -243,6 +243,7 @@ public class PatchServiceRest {
 			installVo.setWe_install_date(new Date());
 			installVo.setWe_company("undefined");
 			installVo.setWe_new_yn("Y");
+			installVo.setWe_use_purpose("6");
 			entityService.insertEntity(installVo);
 			
 			return installVo;
