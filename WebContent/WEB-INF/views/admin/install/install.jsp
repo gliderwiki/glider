@@ -503,7 +503,7 @@
 		inHtml += " 	<tr>";
 		inHtml += "     	<td>Mail Password </td>";
 		inHtml += "     	<td><input type=\"password\" size=\"30\" id=\"mailUserPassword\" name=\"mailUserPassword\"></td>";
-		inHtml += "     	<td>G메일의 비밀번호 입력</td>";
+		inHtml += "     	<td>gmail의 비밀번호 입력</td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td>SMTP Host Name </td>";
