@@ -76,9 +76,9 @@ taglib prefix="gf" uri="http://www.gliderwiki.org/gftags"%>
 									<thead>
 										<tr>
 											<td class="check"></td>
-											<th class="title">그룹명</th>
-											<th class="admin">그룹타입</th>
-											<th class="admin">관리자</th>
+											<th class="title" width="200px">그룹명</th>
+											<th class="admin" width="80px">그룹타입</th>
+											<th class="admin" width="110px">관리자</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -92,9 +92,9 @@ taglib prefix="gf" uri="http://www.gliderwiki.org/gftags"%>
 											<td class="check">
 												<input type="checkbox" name="groupAllCheck" id="checkGroup_${groupList.weGroupIdx }"  value="${groupList.weGroupIdx }" disabled/>
 											</td>
-											<td class="title"><a href="javascript:groupUserView('${groupList.weGroupIdx }', '${groupList.weGroupName }');">${groupList.weGroupName }</a></td>
-											<td class="admin">${groupList.weGroupType }</td>
-											<td class="admin">${groupList.weUserNick }</td>
+											<td class="title" width="200px"><a href="javascript:groupUserView('${groupList.weGroupIdx }', '${groupList.weGroupName }');">${groupList.weGroupName }</a></td>
+											<td class="admin" width="80px">${groupList.weGroupType }</td>
+											<td class="admin" width="110px">${groupList.weUserNick }</td>
 										</tr>
 										</c:forEach>
 										</c:otherwise>
@@ -118,27 +118,16 @@ taglib prefix="gf" uri="http://www.gliderwiki.org/gftags"%>
 									<thead>
 										<tr>
 											<td class="check"></td>
-											<th class="tit_id">회원아이디</th> 
-											<th class="admin">닉네임</th>
-											<th class="admin">적용일</th>
+											<th class="tit_id" width="150px">회원아이디</th> 
+											<th class="admin" width="100px">닉네임</th>
+											<th class="admin" width="150px">적용일</th>
 										</tr>
 									</thead>
 									<tbody id="groupUserList">
 										<tr>
 											<td colspan="4">그룹에 속한 사용자가 없습니다.</td>
 										</tr>
-										<!--  
-										<tr>
-											<td class="check">
-												<input type="checkbox" />
-											</td>
-											<td class="title">공간1</td>
-											<td class="admin">이남희</td>
-											<td class="admin">이남희</td>
-										</tr>
-										 -->
-										
-										
+									
 									</tbody>
 								</table>
 								<div class="wrap-btn">
@@ -187,7 +176,7 @@ $(document).ready(function() {
 		var group_admin_idx = $("#group_admin_idx").val();	// 순번
 		
 		
-		var user_idx = "1";				// 등록자 (admin)
+		var user_idx = ${adminUserIdx};				// 등록자 (admin)
 		// DWR 호출
 		if(checkForm(group_name, group_type, group_info, group_admin, group_admin_idx)) { 
 			AdminGroupService.insertGroupInfoDWR(group_name, group_type, group_info, group_admin_idx, user_idx, callBackGroupInfo);		
@@ -202,7 +191,7 @@ $(document).ready(function() {
 		var group_admin_idx = $("#group_admin_idx").val();	// 순번
 		
 		
-		var user_idx = "1";				// 등록자 (admin)
+		var user_idx = ${adminUserIdx};				// 등록자 (admin)
 		// DWR 호출
 		if(checkForm(group_name, group_type, group_info, group_admin, group_admin_idx)) { 
 			AdminGroupService.insertGroupInfoDWR(group_name, group_type, group_info, group_admin_idx, user_idx, callBackGroupInfo);		
@@ -272,7 +261,7 @@ $(document).ready(function() {
 		var group_idx = $("#group_idx").val();				// 그룹순번 
 		
 		
-		var user_idx = "1";				// 등록자 (admin)
+		var user_idx = ${adminUserIdx};				// 등록자 (admin)
 		// DWR 호출
 		if(checkForm(group_name, group_type, group_info, group_admin, group_admin_idx)) { 
 			AdminGroupService.updateGroupInfoDWR(group_idx, group_name, group_type, group_info, group_admin_idx, user_idx, callBackUpdateGroupInfo);		
@@ -285,7 +274,7 @@ $(document).ready(function() {
 	$("#deleteGroupInfo").click(function() {
 		
 		var checkGroupIdx = $("input[name=groupAllCheck]:checked").val();
-		var user_idx = "1";				// 등록자 (admin)
+		var user_idx = ${adminUserIdx};				// 등록자 (admin)
 		 
 		if(typeof checkGroupIdx == 'undefined') {
 			alert('삭제할 그룹명을 클릭하세요.');
@@ -301,7 +290,7 @@ $(document).ready(function() {
 	 */
 	$("#deleteGroupUser").click(function() {
 		var checkGroupIdx = $("input[name=groupAllCheck]:checked").val();
-		var user_idx = "1";				// 등록자 (admin)
+		var user_idx = ${adminUserIdx};				// 등록자 (admin)
 		 
 		if(typeof checkGroupIdx == 'undefined') {
 			alert('수정할 그룹명을 클릭하세요.');
@@ -319,7 +308,7 @@ $(document).ready(function() {
 		}
 		
 		if(confirm('선택한 사용자를 삭제하시겠습니까?')) {
-			var user_idx = "1";			// 등록자 (admin)
+			var user_idx = ${adminUserIdx};			// 등록자 (admin)
 	 		 
 			AdminGroupService.deleteGroupInUserDWR(checkGroupIdx, checkUsersId, user_idx, callBackGroupUserDelete);
 		}
@@ -364,9 +353,9 @@ function callBackUserList(obj) {
 		for(i=0 ; i < listSize ; i++){
 			inHtml += "<tr class=\"dtlView\">";
 			inHtml += "	   <td class=\"check\"><input type=\"checkbox\" name=\"checkUserGroup\" id=\"groupUser_"+weUserList[i].weUserIdx+"\" value=\""+weUserList[i].weUserIdx+"\" /></td>";
-			inHtml += "	   <td class=\"tit_id\">"+weUserList[i].weUserId+"</td>"; 
-			inHtml += "	   <td class=\"admin\">"+weUserList[i].weUserNick+"</td>";
-			inHtml += "	   <td class=\"admin\">"+$.format.date(weUserList[i].weInsDate, "yyyy.MM.dd hh:mm:ss")+"</td>";
+			inHtml += "	   <td class=\"tit_id\" width=\"150px\">"+weUserList[i].weUserId+"</td>"; 
+			inHtml += "	   <td class=\"admin\" width=\"100px\">"+weUserList[i].weUserNick+"</td>";
+			inHtml += "	   <td class=\"admin\" width=\"150px\">"+$.format.date(weUserList[i].weInsDate, "yyyy.MM.dd hh:mm:ss")+"</td>";
 			inHtml += "</tr>";
 		}
 

@@ -14,6 +14,7 @@
 						<button type="button" class="btn-down" onclick="javascript:downloadFileServer('user_sample.xlsx');">회원샘플.xls</button>
 						<button type="button" class="btn-down" onclick="divOpen()">회원일괄등록</button>
 						<button type="button" class="btn-down" id="awayUser">탈퇴회원보기</button>
+						<button type="button" class="btn-down" style="width: 100px;" id="notAuthUser">미인증회원보기</button>
 					</div>
 					<div id="excelUpload" style="display:none">
 						<form id="frmFile" name="frmFile" method="post" enctype="multipart/form-data">
@@ -23,12 +24,10 @@
 						</form>
 					</div>
 					<br />
-					<div id="previewImg">
-						
-					</div>
 					<div class="box-srch">
 						<form name="weUser" id="weUser"  method="POST" action="/admin/user">
 						<input type="hidden" name="awayYn" id="awayYn" value="" />
+						<input type="hidden" name="authYn" id="authYn" value="" />
 							<table>
 								<tr>
 									<th>닉네임</th>
@@ -71,7 +70,7 @@
 										<c:otherwise>
 											<option value="">선택하세요.</option>
 											<c:forEach items="${groupList }" var="groupList" varStatus="i">
-											<option value="${groupList.weGroupIdx }" title="${groupList.weGroupName }">${groupList.weGroupName } - 관리자:${groupList.weUserNick } </option>
+											<option value="${groupList.weGroupIdx }" title="${groupList.weGroupName }">${groupList.weGroupName } - 관리자 : ${groupList.weUserNick } </option>
 											</c:forEach>
 										</c:otherwise>
 										</c:choose>
@@ -208,7 +207,6 @@ $(document).ready(function() {
 	/**
 	 * 06.회원정보 조회 
 	 */
-	
 	$('a[name="userDetail"]').each(function(i) {
 		var userIdx = "";
 		var attrId = "";
@@ -230,8 +228,6 @@ $(document).ready(function() {
 		var weTechYn = $("#we_tech_yn").val();				// 전문가여부 
 		var wePoint = $("#we_point").val();					// 포인트 
 		
-		
-		
 		AdminGroupService.updateUserProfileInfo(userIdx, weGrade, weTechYn, wePoint, callBackUpdateUserInfo);
 		
 	});
@@ -249,10 +245,20 @@ $(document).ready(function() {
 	 */
 	$("#awayUser").click(function() {
 		$("#awayYn").val("Y");
+		$("#authYn").val("");
 		frm = $('#weUser');
 		frm.submit();
 	});
 	
+	/**
+	 * 미 인증 사용자 조회 
+	 */
+	$("#notAuthUser").click(function() {
+		$("#authYn").val("N");
+		$("#awayYn").val("");
+		frm = $('#weUser');
+		frm.submit();
+	});
 });
 
 function callBackUserDetail(obj) {
@@ -359,7 +365,12 @@ function callBackUserDetail(obj) {
 		inHtml += "    </tr>";
 		inHtml += "	   <tr>";
 		inHtml += "        <th>탈퇴처리</th>";
-		inHtml += "        <td><button type=\"button\" class=\"btn-down\" id=\"weUserAway\">강제탈퇴</button></td>";
+		if(weProfile.we_grade == '9') {
+			inHtml += "        <td></td>";	
+		} else {
+			inHtml += "        <td><button type=\"button\" class=\"btn-down\" id=\"weUserAway\">강제탈퇴</button></td>";	
+		}
+		
 		inHtml += "    </tr>";
 		inHtml += "	   <tr>";
 		inHtml += "        <th>가입그룹목록 </th>";
@@ -401,9 +412,18 @@ function callBackUserGradeList(obj) {
 			inHtml += "	   <td>"+weUserList[i].wePoint+"</td>";
 			inHtml += "	   <td>"+weUserList[i].weUserAuthYn+"</td>";
 			if(weUserList[i].weSendStatus == null) {
-				inHtml += "	   <td><button type=\"button\" class=\"btn-down\" id=\"weUserAway\">강제탈퇴</button></td>";
+				if(weUserList[i].weGrade == '9') {
+					inHtml += "	   <td></td>";
+				} else {
+					inHtml += "	   <td><button type=\"button\" class=\"btn-down\" id=\"weUserAway\">강제탈퇴</button></td>";	
+				}
+				
 			} else {
-				inHtml += "	   <td>"+weUserList[i].weSendStatus+" <button type=\"button\" class=\"btn-down\" id=\"weUserAway\">강제탈퇴</button></td>";		
+				if(weUserList[i].weGrade == '9') {
+					inHtml += "	   <td></td>";
+				} else {
+					inHtml += "	   <td>"+weUserList[i].weSendStatus+" <button type=\"button\" class=\"btn-down\" id=\"weUserAway\">강제탈퇴</button></td>";
+				}
 			}
 			inHtml += "</tr>";
 		
@@ -483,9 +503,6 @@ function FileuploadCallback(data,state){
 			
 			alert('파일 업로드가 완료되었습니다.');
 			var appendPreview = "";
-			//console.log("jsonStr.filePath : " + jsonStr.filePath);
-			//console.log("jsonStr.thumbPath : " + jsonStr.thumbPath);
-			//console.log("jsonStr.thumbName : " + jsonStr.thumbName);
 			var fileSrc = jsonStr.filePath+jsonStr.saveFileName;
 			appendPreview += "<li id='"+jsonStr.saveFileName+"'>"; 
 			appendPreview += jsonStr.realFileName;
@@ -504,24 +521,7 @@ function FileuploadCallback(data,state){
 	}
 }
 
-function delItem(fileIndex, fileName) {
-	//console.log("fileIndex : " + fileIndex);
-	//console.log("fileName : " + fileName);
-	// DB에서 이미지 삭제 처리함. 
-	
-	// 아이 프레임에서 이미지 삭제 
-	hiddenItem();	
-}
 
-/**
-* 이미지 삭제 버튼 후 아이프레임에 이미지 삭제 
-*/
-function hiddenItem() {
-	oFrame = document.getElementById('ifrmView').contentWindow.document;
-	oFrame.open();
-	oFrame.close();
-	ifrmView.document.write(""); 
-}
 //]]>
 </script>
 
