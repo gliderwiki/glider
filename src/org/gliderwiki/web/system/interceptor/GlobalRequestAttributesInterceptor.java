@@ -60,15 +60,18 @@ public class GlobalRequestAttributesInterceptor extends HandlerInterceptorAdapte
 	 */
 	private void addLoginUser(HttpServletRequest request) {
 		MemberSessionVo loginUser = sessionService.getLoginUser();
-
-		logger.debug("loginUser : {}", loginUser);
+		// logger.debug("loginUser : {}", loginUser);
 		request.setAttribute(LOGIN_USER_ATTR_NAME, loginUser);
 
-		if (!loginUser.isGuest()) {
-			logger.debug("alarmChannel : {}", simpleAesStringCipherManager.encrypt(String.format("A_%d", loginUser.getWeUserIdx())));
-			request.setAttribute(LOGIN_USER_CHANNEL_ATTR_NAME, simpleAesStringCipherManager.encrypt(String.format("A_%d", loginUser.getWeUserIdx())));
-			logger.debug("viewAlarm : {}", commonService.realNotiView(loginUser.getWeUserIdx()));
-			request.setAttribute(LOGIN_USER_VIEWALARM_ATTR_NAME, commonService.realNotiView(loginUser.getWeUserIdx()));
+		logger.debug("request.getRequestURI() :  "  +request.getRequestURI());
+		
+		if (!loginUser.isGuest() ) {
+			if(!request.getRequestURI().startsWith("/admin") && !request.getRequestURI().startsWith("/dwr")) {
+				logger.debug("alarmChannel : {}", simpleAesStringCipherManager.encrypt(String.format("A_%d", loginUser.getWeUserIdx())));
+				request.setAttribute(LOGIN_USER_CHANNEL_ATTR_NAME, simpleAesStringCipherManager.encrypt(String.format("A_%d", loginUser.getWeUserIdx())));
+				logger.debug("viewAlarm : {}", commonService.realNotiView(loginUser.getWeUserIdx()));
+				request.setAttribute(LOGIN_USER_VIEWALARM_ATTR_NAME, commonService.realNotiView(loginUser.getWeUserIdx()));
+			}
 		}
 	}
 
