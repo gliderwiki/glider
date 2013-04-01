@@ -167,7 +167,7 @@
 
 	<!-- 실시간알림여부를 조회한다.  -->
 	<select id="CommonManage.realNotiView"  resultType="String">
-	    select /* CommonManage.getSpaceInfoByTagIdx -  실시간알림여부를 조회한다.  */
+	    select /* CommonManage.realNotiView -  실시간알림여부를 조회한다.  */
 	    	   we_noti_checked
 		from we_profile
 		where we_user_idx = #{userIdx}

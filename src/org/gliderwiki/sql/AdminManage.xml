@@ -105,8 +105,12 @@
                       where d.we_user_idx = a.we_user_idx ) as weSendStatus
 		  from we_user a, we_profile b
 		 where a.we_user_idx = b.we_user_idx
+		   <if test="we_away_yn != null and we_away_yn != '' ">
 		   and b.we_away_yn = #{we_away_yn}
+		   </if>
+		   <if test="we_grade != null and we_grade != '' ">
 		   and b.we_grade = #{we_grade}
+		   </if>
 	</select>
 	
 	<!-- 그룹에 속한 회원정보 리스트  조회 -->
@@ -577,9 +581,9 @@
 	</select>
 	
 	
-	<!-- 회원 정보  리스트 조회 : 검색조회 -->
+	<!-- 회원 정보  리스트 조회 : 탈퇴 회원 보기 -->
 	<select id="AdminManage.getUserAwayList" parameterType="weUser" resultType="mailSendUserVo">
-		select /* AdminManage.getUserListMailInfo - 그룹에 속한 사용자 리스트 조회 */
+		select /* AdminManage.getUserAwayList - 그룹에 속한 사용자 리스트 조회 */
 		         a.we_user_idx          as weUserIdx
 		       , a.we_user_name         as weUserName
 		       , a.we_user_id			as weUserId
@@ -602,7 +606,12 @@
                       where d.we_user_idx = a.we_user_idx ) as weSendStatus
 		  from we_user a, we_profile b
 		 where a.we_user_idx = b.we_user_idx
-		   and b.we_away_yn = 'Y'
+		   <if test="weAwayYn != null and weAwayYn != '' ">
+		   and b.we_away_yn = #{weAwayYn}
+		   </if>
+		   <if test="weAuthYn != null and weAuthYn != '' ">
+		   and a.we_user_auth_yn = #{weAuthYn}
+		   </if>
 	</select>
 		
 	<select id="AdminManage.getBbsSearchList" resultType="weBbs">
