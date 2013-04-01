@@ -103,6 +103,7 @@ public class ContentController {
 		List<WeSpace> spaceList = adminSpaceService.getSpaceListMonth(space, month);
 
 		modelAndView.addObject("menu", "2");
+		modelAndView.addObject("menuCode", "3");
 		modelAndView.addObject("spaceList" , spaceList);
 		modelAndView.addObject("spaceSearchList" , spaceSearchList);
 		modelAndView.addObject("spaceSize" , spaceSize);
@@ -114,7 +115,7 @@ public class ContentController {
 
 	@RequestMapping(value="/admin/wiki", method = { RequestMethod.POST, RequestMethod.GET } )
 	public ModelAndView wikiManage(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
-		logger.debug("### 공간관리 ");
+		logger.debug("### 위키 ");
 		String weUserNick = StringUtil.strNull(request.getParameter("we_user_nick"));
 		String weWikiTitle = StringUtil.strNull(request.getParameter("we_wiki_title"));
 		String weWikiText = StringUtil.strNull(request.getParameter("we_wiki_text"));
@@ -132,6 +133,7 @@ public class ContentController {
 		}
 		
 		modelAndView.addObject("menu", "2");
+		modelAndView.addObject("menuCode", "4");
 		modelAndView.addObject("searchWikiList" , searchWikiList);
 		modelAndView.addObject("wikiSize" , wikiSize);
 		modelAndView.addObject("weUserNick" , weUserNick);
@@ -212,6 +214,7 @@ public class ContentController {
 		}
 		
 		modelAndView.addObject("menu", "2");
+		modelAndView.addObject("menuCode", "5");
 		modelAndView.addObject("keywordSize", keywordSize);
 		modelAndView.addObject("keywordList", keywordList);
 		modelAndView.addObject("startRow", startRow);
@@ -244,6 +247,7 @@ public class ContentController {
 
 		
 		modelAndView.addObject("menu", "2");
+		modelAndView.addObject("menuCode", "6");
 		modelAndView.addObject("spaceList" , spaceList);
 		modelAndView.addObject("bbsSize" , bbsSize);
 		modelAndView.addObject("bbsSearchList" , bbsSearchList);

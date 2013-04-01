@@ -101,9 +101,6 @@ public class AdminController {
 	@RequestMapping(value="/admin/index", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		logger.debug("### index ");
-			
-		
-		
 		WeProfile domain = new WeProfile(null, null);
 		domain.setWe_away_yn("N");
 				
@@ -146,7 +143,6 @@ public class AdminController {
 		Date month = DateUtil.getOffsetDateToDate(DateUtil.getToday(), SystemConst.SEACH_MONTH);
 		
 		List<WeSpace> spaceList = adminSpaceService.getSpaceListMonth(space, month);
-		
 		List<WeWiki> wikiList = adminWikiService.getWikiListMonth(month);
 
 		int spaceSize = 0;
@@ -170,12 +166,10 @@ public class AdminController {
 		modelAndView.addObject("intTotalTag", intTotalTag);
 		modelAndView.addObject("intTotalGroup", intTotalGroup);
 		modelAndView.addObject("intTotalWiki", intTotalWiki);
-		modelAndView.addObject("menu", "1");
+		modelAndView.addObject("menu", "0");
 		modelAndView.setViewName("admin/adminIndex");
 		return modelAndView; 
 	}
-	
-		
 	
 }
 

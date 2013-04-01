@@ -9,7 +9,9 @@
  */
 package org.gliderwiki.admin.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.gliderwiki.web.domain.WeProfile;
 import org.gliderwiki.web.domain.WeUser;
@@ -35,10 +37,13 @@ public class AdminUserDaoImpl extends SqlSessionDaoSupport implements AdminUserD
 	}
 	
 	@Override
-	public List<MailSendUserVo> getUserAwayList(WeUser weUser) throws Throwable {
+	public List<MailSendUserVo> getUserAwayList(WeUser weUser, String awayYn) throws Throwable {
+		Map<String, String> mapper = new HashMap<String, String>();
+		mapper.put("weAwayYn", awayYn);
+		mapper.put("weAuthYn", weUser.getWe_user_auth_yn());
 		
 		List<MailSendUserVo> mailSendUserVo = null;
-		mailSendUserVo = (List<MailSendUserVo>) getSqlSession().selectList("AdminManage.getUserListMailInfo", weUser);
+		mailSendUserVo = (List<MailSendUserVo>) getSqlSession().selectList("AdminManage.getUserAwayList", mapper);
 		return mailSendUserVo;
 	}
 
@@ -46,7 +51,7 @@ public class AdminUserDaoImpl extends SqlSessionDaoSupport implements AdminUserD
 	@Override
 	public List<MailSendUserVo> getUserListByGrade(WeProfile domain) throws Throwable {
 		List<MailSendUserVo> mailSendUserVo = null;
-		mailSendUserVo = (List<MailSendUserVo>) getSqlSession().selectList("AdminManage.getUserAwayList", domain);
+		mailSendUserVo = (List<MailSendUserVo>) getSqlSession().selectList("AdminManage.getUserListByGrade", domain);
 		return mailSendUserVo;
 	}
 

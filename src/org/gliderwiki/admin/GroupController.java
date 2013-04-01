@@ -26,7 +26,9 @@ import org.gliderwiki.web.domain.WeGroupInfo;
 import org.gliderwiki.web.domain.WeUser;
 import org.gliderwiki.web.domain.WeWiki;
 import org.gliderwiki.web.system.SystemConst;
+import org.gliderwiki.web.system.argumentresolver.LoginUser;
 import org.gliderwiki.web.vo.MailSendUserVo;
+import org.gliderwiki.web.vo.MemberSessionVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,16 +59,19 @@ public class GroupController {
 	private AdminGroupService adminGroupService;
 	
 	@RequestMapping(value="/admin/group", method = RequestMethod.GET)
-	public ModelAndView groupManage(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
-		logger.debug("### 그룹 관리 ");
+	public ModelAndView groupManage(@LoginUser MemberSessionVo loginUser, 
+			HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+		logger.debug("### 그룹 관리 loginUser :" + loginUser.toString());
 		
 		// 그룹 리스트를 조회한다. 
 		List<WeGroupInfo> groupList = adminGroupService.getGroupInfoList();
  		
 		logger.debug("userList : " + groupList.toString());
 		modelAndView.addObject("menu", "1");
+		modelAndView.addObject("menuCode", "2");
 		modelAndView.addObject("groupList" , groupList);
 		modelAndView.addObject("groupListSize" , groupList.size());
+		modelAndView.addObject("adminUserIdx" , loginUser.getWeUserIdx());
 		modelAndView.setViewName("admin/group/groupMgr");
 		return modelAndView;
 	}
@@ -76,18 +81,20 @@ public class GroupController {
 		logger.debug("### weUser :  " + weUser.toString());
 		
 		String awayYn = StringUtil.strNull(request.getParameter("awayYn"));
+		String authYn = StringUtil.strNull(request.getParameter("authYn"));
+		
+		logger.debug("### awayYn :  " + awayYn);
+		
 		MailSendUserVo mailUserVo = new MailSendUserVo();
 		List<MailSendUserVo> mailUserList = null;
 		
 		
 		// 조회 파라미터가 없을 경우는 조회하지 않는다. 
-		if(weUser.getWe_user_id() != null && weUser.getWe_user_name() != null && weUser.getWe_user_nick() != null) {
+		if(!isParamUser(weUser)) {
 			mailUserList = adminUserService.getUserListMailInfo(weUser); 			
 		} else {
-			if(awayYn.equals("Y")) {
-				logger.debug("#### 탈퇴 회원 보기 !!!");
-				mailUserList = adminUserService.getUserAwayList(weUser);
-			}
+			weUser.setWe_user_auth_yn(authYn);
+			mailUserList = adminUserService.getUserAwayList(weUser, awayYn);
 		}
 		
 		
@@ -107,6 +114,7 @@ public class GroupController {
 		}
  				
 		modelAndView.addObject("menu", "1");
+		modelAndView.addObject("menuCode", "1");
 		modelAndView.addObject("groupList" , groupList);
 		modelAndView.addObject("groupListSize" , groupListSize);
 		modelAndView.addObject("mailUserList" , mailUserList);
@@ -157,5 +165,17 @@ public class GroupController {
 		return new ModelAndView("json_").addObject("param", param);
 	}
 	
-	
+	/**
+	 * @param weUser
+	 * @return
+	 */
+	private boolean isParamUser(WeUser weUser) {
+		if(StringUtil.strNull(weUser.getWe_user_id()).equals("") 
+				&& StringUtil.strNull(weUser.getWe_user_name()).equals("") 
+				&& StringUtil.strNull(weUser.getWe_user_nick()).equals("")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

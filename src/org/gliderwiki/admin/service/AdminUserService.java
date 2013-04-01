@@ -35,7 +35,7 @@ public interface AdminUserService {
 	 * @return
 	 * @throws Throwable
 	 */
-	List<MailSendUserVo> getUserAwayList(WeUser weUser) throws Throwable;
+	List<MailSendUserVo> getUserAwayList(WeUser weUser, String awayYn) throws Throwable;
 
 	/**
 	 * 등급별 사용자 리스트 조회 

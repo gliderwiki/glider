@@ -36,7 +36,7 @@ public interface AdminUserDao {
 	 * @return
 	 * @throws Throwable
 	 */
-	List<MailSendUserVo> getUserAwayList(WeUser weUser) throws Throwable;
+	List<MailSendUserVo> getUserAwayList(WeUser weUser, String awayYn) throws Throwable;
 
 	/**
 	 * @param domain

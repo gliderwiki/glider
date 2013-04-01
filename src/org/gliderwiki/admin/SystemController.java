@@ -79,6 +79,7 @@ public class SystemController {
 		logger.debug("menuList : " + menuList.toString());
 
 		modelAndView.addObject("menu", "3");
+		modelAndView.addObject("menuCode", "9");
 		modelAndView.addObject("menuList" , menuList);
 		modelAndView.setViewName("admin/system/menuMgr");
 		return modelAndView;
@@ -131,6 +132,7 @@ public class SystemController {
 		modelAndView.addObject("siteDomain", siteDomain);
 		modelAndView.addObject("siteOwner", siteOwner);
 		modelAndView.addObject("menu", "3");
+		modelAndView.addObject("menuCode", "7");
 		modelAndView.setViewName("admin/system/mailMgr");
 		return modelAndView;
 	}
@@ -256,6 +258,7 @@ public class SystemController {
 	@RequestMapping(value="/admin/filter", method = RequestMethod.GET)
 	public String adminFilter(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Throwable {
 		model.addAttribute("menu", "3");
+		model.addAttribute("menuCode", "8");
 		model.addAttribute("restrictList", entityService.getListEntity(new WeAccess()));
 
 		return "/admin/system/filterMgr";

@@ -58,8 +58,8 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	}
 
 	@Override
-	public List<MailSendUserVo> getUserAwayList(WeUser weUser) throws Throwable {
-		return adminUserDao.getUserAwayList(weUser);
+	public List<MailSendUserVo> getUserAwayList(WeUser weUser, String awayYn) throws Throwable {
+		return adminUserDao.getUserAwayList(weUser, awayYn);
 	}
 	
 

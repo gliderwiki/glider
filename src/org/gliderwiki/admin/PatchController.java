@@ -123,6 +123,7 @@ public class PatchController {
 		
 		
 		modelAndView.addObject("menu", "4");
+		modelAndView.addObject("menuCode", "10");
 		modelAndView.addObject("serverVersion", patch.getWeServerVerionInfo());
 		modelAndView.addObject("clientVersion", clientVersion);
 		modelAndView.addObject("list", list);
@@ -359,6 +360,7 @@ public class PatchController {
 		
 		logger.debug("### activeKey: " + activeKey);
 		modelAndView.addObject("menu", "4");
+		modelAndView.addObject("menuCode", "11");
 		modelAndView.addObject("activeKey", activeKey);
 		modelAndView.setViewName("admin/extension/licenseMgr");
 		return modelAndView; 
@@ -416,6 +418,7 @@ public class PatchController {
 		
 		
 		modelAndView.addObject("menu", "4");
+		modelAndView.addObject("menuCode", "12");
 		modelAndView.addObject("serverVersion", patch.getWeServerVerionInfo());
 		modelAndView.addObject("clientVersion", clientVersion);
 		modelAndView.addObject("list", list);

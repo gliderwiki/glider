@@ -94,8 +94,22 @@ public class AdminGroupServiceImpl implements AdminGroupService {
 			result =  entityService.insertEntity(entityGroupInfo);
 			
 			if(result == 1) {
+				
+				
 				entityGroupInfo.setWe_ins_date(null);
 				resultInfo = (WeGroupInfo) entityService.getRowEntity(entityGroupInfo);
+				
+				// 그룹생성시 그룹의 관리자는 그룹 사용자 테이블에 저장 되어야 한다. 
+				WeGroupUser groupUser = new WeGroupUser();
+				
+				groupUser.setWe_group_idx(resultInfo.getWe_group_idx().toString());
+				groupUser.setWe_ins_date(new Date());
+				groupUser.setWe_use_yn("Y");
+				groupUser.setWe_user_idx(adminIdx);
+				groupUser.setWe_ins_user(Integer.parseInt(userIdx));
+				
+				entityService.insertEntity(groupUser);
+				
 			}
 			resultBean.setRtnMsg("처리 되었습니다.");
 			resultBean.setRtnResult(resultInfo.getWe_group_idx());		// 생성된 그룹 인덱스를 넘겨준다.  
