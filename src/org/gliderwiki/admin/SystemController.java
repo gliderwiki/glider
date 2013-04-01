@@ -64,15 +64,13 @@ public class SystemController {
 
 	@RequestMapping(value="/admin/menu", method = RequestMethod.GET)
 	public ModelAndView menuManage(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
-		logger.debug("### 메뉴 관리 ");
+		logger.debug("###TODOLIST 메뉴 관리 추후 다운로드 버전에서 삭제 할 예정 (menuMgr.jsp");
 
 		// 최상단 메뉴 목록을 조회한다.
 		WeMenu menuEntity = new WeMenu();
 		menuEntity.setWe_use_yn("Y");
 		menuEntity.setWe_menu_depth(1);				// 1뎁스
 		menuEntity.setWe_menu_type("S");			// 시스템 메뉴만 조회
-
-
 
 		List<WeMenu> menuList = entityService.getListEntityOrdered(menuEntity, "we_menu_order_idx");
 
