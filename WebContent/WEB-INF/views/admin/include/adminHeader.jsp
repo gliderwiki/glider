@@ -63,14 +63,17 @@
 							<li><a href="/admin/mail" <c:if test="${menuCode eq '7'}"> class="active" </c:if>>전송 메일 계정설정</a></li>
 							<li class="bar">|</li>
 							<li><a href="/admin/filter" <c:if test="${menuCode eq '8'}"> class="active" </c:if>>접근 제어</a></li>
+							<!-- 
 							<li class="bar">|</li>
 							<li><a href="/admin/menu" <c:if test="${menuCode eq '9'}"> class="active" </c:if>>메뉴 관리</a></li>
+							 -->
 						</c:when>
 						<c:when test="${menu == 4}">
 							<li><a href="/admin/patch" <c:if test="${menuCode eq '10'}"> class="active" </c:if>>GLiDER™ 패치 정보</a></li>
-							<!-- -->
+							<!--
 							<li class="bar">|</li>
 							<li><a href="/admin/license" <c:if test="${menuCode eq '11'}"> class="active" </c:if>>라이센스 정보</a></li>
+							 -->
 							<li class="bar">|</li>
 							<li><a href="/admin/extension" <c:if test="${menuCode eq '12'}"> class="active" </c:if>>확장기능 관리</a></li>
 							 
