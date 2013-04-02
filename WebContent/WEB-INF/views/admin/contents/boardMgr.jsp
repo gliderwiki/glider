@@ -51,7 +51,7 @@
 										<select id="spaceInfoList" title="공간정보목록" STYLE="width:400px;">
 											<option value="">공간을 선택하세요.</option>
 											<c:forEach items="${spaceList }" var="spaceList" varStatus="stat">
-											<option value="${spaceList.we_space_idx}">${spaceList.we_space_name }</option>
+											<option value="${spaceList.we_space_idx}" <c:if test="${spaceIdx eq spaceList.we_space_idx}">selected</c:if>>${spaceList.we_space_name }</option>
 									        </c:forEach>
 										</select>
 									</td>
@@ -65,8 +65,8 @@
 				<table class="tbl-result">
 					<thead>
 						<tr>
-							<th>번호</th>
-							<th>제목</th>
+							<th width="50px">번호</th>
+							<th width="480px">제목</th>
 							<th>작성자</th>
 							<th>입력일</th>
 							<th>조회수</th>
@@ -82,7 +82,7 @@
 							<c:forEach items="${bbsSearchList }" var="bbsSearchList" varStatus="i">
 							<tr>
 								<td>${bbsSearchList.we_bbs_idx }</td>
-								<td style="text-align:left"><a href="javascript:getContent('${bbsSearchList.we_bbs_idx }')">${gf:cut(bbsSearchList.we_bbs_title ,50)} </a></td>
+								<td style="text-align:left"><a href="javascript:getContent('${bbsSearchList.we_bbs_idx }')">${gf:cut(bbsSearchList.we_bbs_title ,50)} (${bbsSearchList.row_num }) </a></td>
 								<td>${bbsSearchList.we_ins_name }</td>
 								<td>${gf:articleDate(bbsSearchList.we_ins_date,'yyyy.MM.dd')}</td>
 								<td>${bbsSearchList.we_hit_count }</td>
@@ -136,7 +136,6 @@ $(document).ready(function() {
 		var frm;
 		frm = $('#weBbs'); 
 		frm.submit(); 
-		
 	});
 	
 });
