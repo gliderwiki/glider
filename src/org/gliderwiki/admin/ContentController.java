@@ -250,6 +250,10 @@ public class ContentController {
 		modelAndView.addObject("menuCode", "6");
 		modelAndView.addObject("spaceList" , spaceList);
 		modelAndView.addObject("bbsSize" , bbsSize);
+		modelAndView.addObject("spaceIdx" , weBbs.getWe_space_idx());
+		modelAndView.addObject("weUserNick" , weBbs.getWe_ins_name());
+		modelAndView.addObject("weWikiTitle" , weBbs.getWe_bbs_title());
+		modelAndView.addObject("weWikiText" , weBbs.getWe_bbs_text());
 		modelAndView.addObject("bbsSearchList" , bbsSearchList);
 		modelAndView.setViewName("admin/contents/boardMgr");
 		return modelAndView; 
