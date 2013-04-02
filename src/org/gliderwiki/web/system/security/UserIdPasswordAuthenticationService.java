@@ -43,10 +43,6 @@ public class UserIdPasswordAuthenticationService implements AuthenticationServic
 
 	@Override
 	public void login(String userId, String password) throws Throwable, UserNotFoundException, AuthenticationNotException, 	PasswordMismatchException {
-		logger.debug("#####################################");
-		logger.debug("여긴 언제 들어오는거냐~~~");
-		logger.debug("#####################################");
-		
 		if (StringUtils.isEmpty(userId)) {
 			throw new UserNotFoundException(messages.getMessage("account.authenticationFailure"));
 		}
