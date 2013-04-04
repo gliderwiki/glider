@@ -156,6 +156,11 @@ public class GliderTagParser {
 			
 		case BR:
 			str = basic.getBR(str);
+			break;
+			
+		case INDENT:
+			str = basic.getINDENT(str);
+			break;
 			
 		default:
 			break; 
@@ -177,6 +182,7 @@ public class GliderTagParser {
 		list.add(EsCharacter.SUBERSCRIPT);
 		list.add(EsCharacter.SUPERSCRIPT);
 		list.add(EsCharacter.STRIKE);
+		list.add(EsCharacter.INDENT);
 		list.add(EsCharacter.HIPERLINK);
 		list.add(EsCharacter.IMG);
 		list.add(EsCharacter.BACKGROUND);
@@ -204,7 +210,7 @@ public class GliderTagParser {
 	}
 	
 	private enum EsCharacter {
-		BOLD, ITALIC, UNDERLINING, STRIKE, SUPERSCRIPT, SUBERSCRIPT, HIPERLINK, 
+		BOLD, ITALIC, UNDERLINING, STRIKE, SUPERSCRIPT, SUBERSCRIPT, HIPERLINK, INDENT, 
 		H1, NOTE, SYNTAXAFTER, SYNTAXBEFORE, LINE, IMG, ALERT, FIELD, INFO, TABLE,
 		GRAPH, COLOR, BACKGROUND, FONT, FONTSIZE, FONTALIGN, BOX, HR, BR
 		

@@ -50,13 +50,13 @@
 								<li class="e-tb-btn redo disabled" title="다시실행">
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
-								<li class="e-tb-btn copy disabled" title="복사">
+								<li class="e-tb-btn copy disabled" title="복사" data-mode="rich" data-type="copy">
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
-								<li class="e-tb-btn cut disabled" title="잘라내기">
+								<li class="e-tb-btn cut disabled" title="잘라내기" data-mode="rich" data-type="cut">
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
-								<li class="e-tb-btn paste disabled" title="붙여넣기">
+								<li class="e-tb-btn paste disabled" title="붙여넣기" data-mode="rich" data-type="paste">
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn table" title="표만들기" data-mode="layer" data-type="table" unselectable="on">
@@ -261,7 +261,7 @@
 								<li class="e-tb-btn list-ul" title="사각순번" data-mode="insert" data-before="##" data-center=""  data-after="">
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
-								<li class="e-tb-btn indent" title="들여쓰기">
+								<li class="e-tb-btn indent" title="들여쓰기" data-mode="append" data-before="[it]" data-center="" data-after="[it]" >
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn outdent" title="내어쓰기">
@@ -270,6 +270,7 @@
 							</ul>
 						</div>
 						<div class="e-textarea">
+							<div id='richHidden' style='display:none'></div>
 							<textarea id="wikiEditor" name="we_wiki_text"><c:if test="${fn:length(wikiForm.we_wiki_text) gt 0}">${wikiForm.we_wiki_text}</c:if></textarea>
 						</div>
 					</div>
@@ -637,6 +638,8 @@
 <script type="text/javascript" src="/resource/glider/wiki/edit/fn-editor-util.js"></script>
 <script type="text/javascript" src="/resource/glider/wiki/edit/fn-editor.js"></script>
 <script type="text/javascript" src="/resource/glider/wiki/edit/fn.editor.layer.js"></script>
+<script type="text/javascript" src="/resource/glider/wiki/edit/fn-editor-rich.js"></script>
+
 
 <script type="text/javascript">
 var wikiEditor = document.getElementById("wikiEditor");		// [object HTMLTextAreaElement]

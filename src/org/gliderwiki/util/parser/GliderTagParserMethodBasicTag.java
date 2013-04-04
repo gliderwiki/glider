@@ -58,6 +58,11 @@ public class GliderTagParserMethodBasicTag {
 		str = GliderTagPaserUtil.replaceAllTag(str, "\\[d\\]([\\w\\W]+?)\\[d\\]", "<del>$1</del>");
 		return str;
 	}
+	
+	public String getINDENT(String str){
+		str = GliderTagPaserUtil.replaceAllTag(str, "\\[it\\]([\\w\\W]+?)\\[it\\]", "<blockquote>$1</blockquote>");
+		return str;
+	}
 
 	public String getHIPERLINK(String str){
 		String patternTxt = "\\[(@:)(.*?)(\\|(.*?))?\\]";

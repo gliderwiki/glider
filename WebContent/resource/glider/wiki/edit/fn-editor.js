@@ -29,6 +29,9 @@
 				'textEditor' : textEditor,
 				'tempLayer' : tempLayer
 			});
+		} else if(data.mode == 'rich') {
+			$.richEditTag(textEditor, $me, data);
+			
 		}
     };
     
