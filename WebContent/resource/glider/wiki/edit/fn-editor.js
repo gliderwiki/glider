@@ -30,8 +30,12 @@
 				'tempLayer' : tempLayer
 			});
 		} else if(data.mode == 'rich') {
-			$.richEditTag(textEditor, $me, data);
 			
+			if( data.type == "undo" || data.type == "redo" ){
+				document.execCommand( data.type, false, null );
+			}else{
+				$.richEditTag(textEditor, $me, data);	
+			}
 		}
     };
     
