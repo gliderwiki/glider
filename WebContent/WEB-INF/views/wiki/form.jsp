@@ -44,10 +44,10 @@
 						</div>
 						<div class="e-toolbar">
 							<ul class="e-tb-group">
-								<li class="e-tb-btn undo disabled" title="실행취소">
+								<li class="e-tb-btn undo disabled" title="실행취소" data-mode="rich" data-type="undo">
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
-								<li class="e-tb-btn redo disabled" title="다시실행">
+								<li class="e-tb-btn redo disabled" title="다시실행" data-mode="rich" data-type="redo">
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 								<li class="e-tb-btn copy disabled" title="복사" data-mode="rich" data-type="copy">
@@ -272,6 +272,7 @@
 						<div class="e-textarea">
 							<div id='richHidden' style='display:none'></div>
 							<textarea id="wikiEditor" name="we_wiki_text"><c:if test="${fn:length(wikiForm.we_wiki_text) gt 0}">${wikiForm.we_wiki_text}</c:if></textarea>
+							<!-- <div id="wikiEditor" contenteditable="true"><p>Lorem ipsum</p></div> -->
 						</div>
 					</div>
 				</div>
