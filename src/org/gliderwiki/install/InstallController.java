@@ -58,8 +58,8 @@ public class InstallController {
 	@Autowired
     private RestTemplate restTemplate;
 	
-	public static final String REST_SERVER_URL = "http://localhost:8080";
-	//public static final String REST_SERVER_URL = "http://gliderwiki.org
+	//public static final String REST_SERVER_URL = "http://localhost:8080";
+	public static final String REST_SERVER_URL = "http://gliderwiki.org";
 	
 	
 	public InstallController() {
