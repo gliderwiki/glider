@@ -44,7 +44,7 @@ insert into we_menu (WE_MENU_NAME, WE_MENU_ORDER_IDX, WE_MENU_PARENT_IDX, WE_MEN
 -- 타이틀 메뉴 위키관리
 insert into we_menu (WE_MENU_NAME, WE_MENU_ORDER_IDX, WE_MENU_PARENT_IDX, WE_MENU_DEPTH, WE_MENU_URL, WE_USE_YN, WE_MENU_TYPE, WE_ACCESS_LEVEL, WE_MENU_GROUP) values('공간메인','1','11','1','/space/main/','Y','T','1','WIKI'); 
 insert into we_menu (WE_MENU_NAME, WE_MENU_ORDER_IDX, WE_MENU_PARENT_IDX, WE_MENU_DEPTH, WE_MENU_URL, WE_USE_YN, WE_MENU_TYPE, WE_ACCESS_LEVEL, WE_MENU_GROUP) values('변경내역','2','11','1','/wiki/engine/','Y','T','1','WIKI');
-insert into we_menu (WE_MENU_NAME, WE_MENU_ORDER_IDX, WE_MENU_PARENT_IDX, WE_MENU_DEPTH, WE_MENU_URL, WE_USE_YN, WE_MENU_TYPE, WE_ACCESS_LEVEL, WE_MENU_GROUP) values('EXPORT PDF','3','11','1','/exp/pdf/','Y','T','1','WIKI');
+insert into we_menu (WE_MENU_NAME, WE_MENU_ORDER_IDX, WE_MENU_PARENT_IDX, WE_MENU_DEPTH, WE_MENU_URL, WE_USE_YN, WE_MENU_TYPE, WE_ACCESS_LEVEL, WE_MENU_GROUP) values('EXPORT PDF','3','11','1','/exp/pdf/','N','T','1','WIKI');
 insert into we_menu (WE_MENU_NAME, WE_MENU_ORDER_IDX, WE_MENU_PARENT_IDX, WE_MENU_DEPTH, WE_MENU_URL, WE_USE_YN, WE_MENU_TYPE, WE_ACCESS_LEVEL, WE_MENU_GROUP) values('위키마크업활용','4','11','1','javascript:void(null);','Y','T','1','WIKI');
 
 -- 사용자 알람 선택 종류 기본데이터를 저장한다.
