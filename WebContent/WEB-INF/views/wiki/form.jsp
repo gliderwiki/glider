@@ -261,10 +261,10 @@
 								<li class="e-tb-btn list-ul" title="사각순번" data-mode="insert" data-before="##" data-center=""  data-after="">
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
-								<li class="e-tb-btn indent" title="들여쓰기" data-mode="append" data-before="[it]" data-center="" data-after="[it]" >
+								<li class="e-tb-btn indent" title="들여쓰기" data-mode="append" data-before="[t]" data-center="" data-after="[t]" >
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
-								<li class="e-tb-btn outdent" title="내어쓰기">
+								<li class="e-tb-btn outdent" title="내어쓰기" data-mode="rich" data-type="outdent">
 									<i class="e-tb-icon" unselectable="on"></i>
 								</li>
 							</ul>

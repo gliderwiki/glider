@@ -39,8 +39,8 @@
 				_pre : '[!',
 				_split : '|',
 				_post : ']',
-				_align : '[!a',
-				_size :  '[!s'
+				_size :  '[!s',
+				_align : '[align'					
 			},
 	};
 	/**
@@ -182,10 +182,11 @@
 						return false;
 					}
 					//[!|http://asdf.com|aaa][!a|left][!s|30|40][!]
-					var imgLink = G_IMAGE._tag._pre + G_IMAGE._tag._split + _url + G_IMAGE._tag._split + _title + G_IMAGE._tag._post
-								+ G_IMAGE._tag._align + G_IMAGE._tag._split + _align + G_IMAGE._tag._post
+					var imgLink = G_IMAGE._tag._align + ":" +  _align + G_IMAGE._tag._post
+								+ _align + G_IMAGE._tag._pre + G_IMAGE._tag._split + _url + G_IMAGE._tag._split + _title + G_IMAGE._tag._post
 								+ G_IMAGE._tag._size + G_IMAGE._tag._split + _width + G_IMAGE._tag._split + _height + G_IMAGE._tag._post
-								+ G_IMAGE._tag._pre + G_IMAGE._tag._post ;
+								+ G_IMAGE._tag._pre + G_IMAGE._tag._post
+								+ G_IMAGE._tag._align + G_IMAGE._tag._post ;
 					
 					$.textInsert(G_IMAGE.textEditor, imgLink, "", "" );
 					$("#" + G_IMAGE.tempLayer ).empty();
