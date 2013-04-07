@@ -55,7 +55,6 @@ public class InstallPropertyUtil {
 
 			logger.debug("file : " + file.toString());
 	
-			
 			logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 			logger.info("✚ System create jdbc properties in " + jdbcPath + " Start !");
 			logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");		
@@ -71,8 +70,6 @@ public class InstallPropertyUtil {
 			logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 			logger.info("✚ System create jdbc properties in " + jdbcPath + " Finish!");
 			logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");		
-			
-			
 			// 정상적으로 처리 되었을때 return 되는 값 입니다.
 			result = 1;
 

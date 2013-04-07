@@ -44,6 +44,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mysql.jdbc.StringUtils;
+
 
 
 /**
@@ -180,7 +182,7 @@ public class InstallController {
 		logger.debug("### jdbc_id " + jdbc_id);
 		logger.debug("### jdbc_pw " + jdbc_pw);
 		
-    	/* 생성된 DB Information Properties의 정보로 DB Select를 해온다.*/
+    		/* 생성된 DB Information Properties의 정보로 DB Select를 해온다.*/
     	int result = 0;
     	
     	SingleDatasourceDao ds = new SingleDatasourceDao();
@@ -218,24 +220,44 @@ public class InstallController {
     		
     		logger.debug("jdbcPath : " + jdbcPath);
     		logger.debug("##root path : " + request.getServletContext().getRealPath("/"));
-
     		
     		InstallPropertyUtil property = new InstallPropertyUtil();
     		
     		// DB Information Properties 쓰기 (jdbc.properties)
     		result = property.CreateJDBCProperties(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), jdbcPath);
-    		
-    		if( result == 1) {
-    			param.put("result", "SUCCESS"); //OK
-    			param.put("status", result); //1
+    		MySQLVariable variables = new MySQLVariable();
+    		if(result == 1) {
+    			SingleDatasourceDao singleDao = new SingleDatasourceDao();
+    			
+    			try {
+    				variables = singleDao.checkVariables(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword());
+    			} catch (Exception e) {
+    				e.getMessage();
+    			}
+    			
+    			
+    			if(StringUtil.nullToDate(variables.getValue()).equals("1")) {
+    				param.put("result", "SUCCESS"); 
+        			param.put("status", "1");
+    			} else {
+    				param.put("result", "SUCCESS"); 
+        			param.put("status", "-3");   				
+    			}
     		} else {
-    			param.put("result", "FAIL"); //OK
-    			param.put("status", result); //-1
+    				// 프로퍼티 에러 -1 
+    			param.put("result", "FAIL"); 
+    			param.put("status", result); 
     		}
-
     	} else {
+    		/*
+			 * MySQL이 연결 안될 경우 
+			 * org.springframework.jdbc.CannotGetJdbcConnectionException: Could not get JDBC Connection; 
+			 * nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+			 * 와 같은 에러가 발생함 
+			 * SQLException 일 경우 대부분 아이디 // 패스워드가 잘못된 경우임 
+			 */
     		param.put("result", "FAIL"); //OK
-			param.put("status", result); 	 //-2
+			param.put("status", result); //-2
     	}
     	
 		modelAndView.setViewName("admin/install/install");
@@ -280,17 +302,22 @@ public class InstallController {
 		
 		SingleDatasourceDao singleDao = new SingleDatasourceDao();
 		
+		String rtnMsg = "";
 		try {
-			// 캐릭터 셋 타입에 따라 다른 테이블형태를 create 한다. 
-			result = singleDao.createTables(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), this.getJdbcSchema(), charType, crateTable.getAllTables(), tableInitPath, enc);
+			// 캐릭터 셋 타입에 따라 다른 테이블형태를 create 한다.  
+			rtnMsg = singleDao.createTables(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), 
+											this.getJdbcSchema(), charType, crateTable.getAllTables(), tableInitPath, enc);
+			result = 1;
 		} catch (Exception e) {
 			result = -1;
+			rtnMsg = e.getMessage();
 		}
 		
-		
 		logger.debug("###테이블생성 result : " + result);
+		logger.debug("###테이블생성 rtnMsg : " + rtnMsg);
+		
 		String resultStr = "";
-		if(result != -1) {
+		if(StringUtil.strNull(rtnMsg).equals("1")) {
 			// 테이블에 테스트 데이터를 인서트 한 후 정상적으로 출력되는지 확인한다.
 			singleDao.insertLogToKor(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), this.getJdbcSchema(), strKor);
 			resultStr = singleDao.selectKorLog(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword());			
@@ -302,8 +329,9 @@ public class InstallController {
 		
 		Map<String, Object> param = new HashMap<String, Object>();
 		
-		param.put("result", result);
 		param.put("resultStr", resultStr);
+		param.put("rtnMsg", rtnMsg);
+		param.put("result", result);
 		param.put("tableSize", tableSize);
 		param.put("encoding", encoding);
 		
@@ -389,7 +417,6 @@ public class InstallController {
 			enc = "UTF8";
 		}
 		
-		
 		String adminMailId  = request.getParameter("adminMailId"); // 관리자 로그인 메일주소(ID)
 		String adminpass 	= request.getParameter("adminpass");   // 관리자 로그인 비밀번
 		String adminSite 	= request.getParameter("adminSite");   // 시스템 도메인 주소
@@ -441,7 +468,7 @@ public class InstallController {
 			ResponseEntity<WeInstallUser> entityResponse = restTemplate.postForEntity(restUrl, entity, WeInstallUser.class);
 			
 			WeInstallUser restVo = entityResponse.getBody();
-			logger.debug("###restVo : " + restVo.toString());		
+			logger.debug("###restVo : " + restVo.toString());
 			
 		} catch(Exception e) {
 			result = -1;
@@ -451,7 +478,6 @@ public class InstallController {
 		
 
 		Map<String, Object> param = new HashMap<String, Object>();
-		
 		param.put("result", result+"");
 
 		
@@ -487,7 +513,6 @@ public class InstallController {
 			ShellCommands.execute("chmod -R 755 " + svcRealPath);
 			ShellCommands.execute("chmod -R 755 " + svcDataPath);
 		}
-		
 
 		//업로드 날짜 및 파일명 구성
 		String today = DateUtil.getToday();
@@ -538,7 +563,7 @@ public class InstallController {
 		String testUserMail	= StringUtil.strNull(request.getParameter("testUserMail"));
 		String mailUserId 		= StringUtil.strNull(request.getParameter("mailUserId"));
 		String mailUserPassword = StringUtil.strNull(request.getParameter("mailUserPassword"));
-		String mailUserKey 		= StringUtil.strNull(request.getParameter("mailUserKey"));
+		String mailUserKey 		= StringUtil.strNull(request.getParameter("mailUserKey"));		// mailUserKey
 		String smtpHostName 	= StringUtil.strNull(request.getParameter("smtpHostName"));
 		String smtpServerPort   = StringUtil.strNull(request.getParameter("smtpServerPort"));
 		String mailCharset 		= StringUtil.strNull(request.getParameter("mailCharset"));

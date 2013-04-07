@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 
 /**
@@ -70,7 +71,7 @@ public class SingleDatasourceDao {
 
 		try {
 			jt = new JdbcTemplate(ds);
-			count = jt.queryForInt("SELECT 1");  			
+			count = jt.queryForInt("SELECT 1 from dual");  			
 			logger.debug("### count : " + count);
 			ds.destroy();
 		} catch (Exception e) {
@@ -99,24 +100,25 @@ public class SingleDatasourceDao {
 	 * @param allTables
 	 * @return
 	 */
-	public int createTables(String jdbc_url, String jdbc_id, String jdbc_pw, String schema, String charType, Map allTables, String tableInitPath, String enc) { 
+	public String createTables(String jdbc_url, String jdbc_id, String jdbc_pw, String schema, 
+			String charType, Map allTables, String tableInitPath, String enc) throws Throwable { 
 		// 커넥션 
 		SingleConnectionDataSource ds = this.singleConnectionDS(jdbc_url, jdbc_id, jdbc_pw);
 		
-		int result = 0;
+		String resultMsg = "";
 		
 		try {
-			result = this.runCreateTableScript(ds, tableInitPath, charType, allTables, schema, enc);
+			resultMsg = this.runCreateTableScript(ds, tableInitPath, charType, allTables, schema, enc);
 			ds.destroy();
 		} catch (Exception e) {
-			logger.debug("!! 테이블 생성중 에러 발생");
 			ds.destroy();
+			resultMsg = e.getMessage();
 			e.printStackTrace();
 		} finally {
 			ds.destroy();
 		}
 		
-		return result;
+		return resultMsg;
 	}
 	
 	/**
@@ -124,7 +126,8 @@ public class SingleDatasourceDao {
 	 * @param tableInitPath
 	 * @return
 	 */
-	private int runCreateTableScript(SingleConnectionDataSource ds,	String tableInitPath, String charType, Map allTables, String schema, String enc) throws IOException, SQLException {
+	private String runCreateTableScript(SingleConnectionDataSource ds,	String tableInitPath, 
+			String charType, Map allTables, String schema, String enc) throws IOException, SQLException {
 		StringBuffer command = null;
 		int result = 0;
 		FileInputStream fis = null;
@@ -134,7 +137,7 @@ public class SingleDatasourceDao {
 		boolean stopOnError = false;	// 에러 발생 여부 
 		
 		String sqlFileName = "";
-		
+		String resultMsg = "";
 		logger.debug("#charType : " + charType);
 		if(charType.equals("utf-8")) { 
 			sqlFileName = "/table_definition_utf-8.sql";
@@ -201,21 +204,21 @@ public class SingleDatasourceDao {
 					break;
 				}
 			}
-			
+			resultMsg = "1";
 		} catch (IOException e) {
-	    	result = -1;
 	    	if(reader != null) {
 				reader.close();
 			}
 	    	this.dropTables(ds, allTables, schema);
 	        logger.error("Error executing IOException: " + command);
+	        resultMsg =  "-1";	// IOE
 	        e.printStackTrace();
 	    } catch (Exception e) {
-	    	result = -1;
 	    	if(reader != null) {
 				reader.close();
 			}
 	    	this.dropTables(ds, allTables, schema);
+	    	resultMsg = "-2";	// SQLE
 	        logger.error("Error executing Exception: " + command);
 	        e.printStackTrace();
 	    } finally {
@@ -223,7 +226,7 @@ public class SingleDatasourceDao {
 				reader.close();
 			}
 	    }
-		return result;
+		return resultMsg;
 	}
 
 
@@ -273,11 +276,12 @@ public class SingleDatasourceDao {
 		
 		try {
 			jt = new JdbcTemplate(ds);
+			
 			for(int index = 0; index < tableSize; index ++) {
-				jt.update("DROP TABLE IF EXISTS " + allTables.get(index));
+				String sqlDrop = "DROP TABLE IF EXISTS " + allTables.get(index);
+				jt.update(sqlDrop);
 				result++;
 			}
-			
 		} catch (Exception e) { 
 			logger.debug("Table drop error!!!");
 			result = -1;
@@ -556,6 +560,7 @@ public class SingleDatasourceDao {
 		JdbcTemplate jt = null;
 
 		try {
+			
 			jt = new JdbcTemplate(ds);
 			String sql  = "SELECT WE_LOG_DESC from we_log ";
 			result = jt.queryForObject(sql, String.class);  			
@@ -563,12 +568,59 @@ public class SingleDatasourceDao {
 		} catch (Exception e) {
 			logger.debug("#################  DB 연결 Exception !!!!  ##################");
 			logger.error("::message ==== " + e.getMessage());
+			result = e.getMessage();
 			e.printStackTrace();
 		} finally {
 			ds.destroy();
 		}
 	
 		return result;
+	}
+	
+	/**
+	 * MySQL 에서 대소문자 쿼리가 동작하는지 확인 한다 
+	 * @param jdbcUrl
+	 * @param jdbcId
+	 * @param jdbcPassword
+	 * @return
+	 */
+	public MySQLVariable checkVariables(String jdbcUrl, String jdbcId, String jdbcPassword) throws Throwable {
+
+		String result = "";
+		SingleConnectionDataSource ds = this.singleConnectionDS(jdbcUrl, jdbcId, jdbcPassword);
+		
+		logger.debug("Datasource Connection : " + ds.toString());
+		logger.debug("################# DB 연결 ##################");
+		
+		MySQLVariable vars = null;
+		try {
+			java.sql.Statement stat = ds.getConnection().createStatement(); 
+			
+			// 시스템 변수를 조회한다. 
+			String sql  = "SHOW VARIABLES LIKE 'lower_case_table_names'";
+			stat.execute(sql);
+			java.sql.ResultSet rs = stat.getResultSet();
+			int rowCount = 0;
+			while(rs.next()) {
+				vars = new MySQLVariable();
+				vars.setVariable_name(rs.getString(1));
+				vars.setValue(rs.getString(2));
+		        logger.debug("### MySQL Variables : " + rs.getString(1) + " - " + rs.getString(2));
+				rowCount++;
+			}
+				
+			vars.setRowCount(rowCount);
+			logger.debug("# 테이블 대소문자 구분 : " + vars.toString());
+			ds.destroy();
+		} catch (Exception e) {
+			logger.debug("######### DB lower_case_table_names ERROR!!!! Please Contact to MySQL DB Admin!!! ########");
+			logger.error("::message ==== " + e.getMessage());
+			result = "0";
+		} finally {
+			ds.destroy();
+		}
+	
+		return vars;
 	}
 	
 	
