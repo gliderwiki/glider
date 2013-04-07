@@ -29,7 +29,7 @@ public class GliderTagPaserUtil {
 	 */
 	public static String HTMLBREncode(String str)
 	{
-	    return str.replaceAll("\r\n", "\r\n<br class=\"br\"/>\r\n");
+	    return str.replaceAll("\r\n", "\n<br class=\"br\"/>\n");
 	}
 	 
 	/**

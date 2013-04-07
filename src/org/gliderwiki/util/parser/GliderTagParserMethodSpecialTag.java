@@ -99,6 +99,7 @@ public class GliderTagParserMethodSpecialTag {
 				syntax = GliderTagPaserUtil.getFirstReturnTag(syntax, patternTxt, "$2");
 				syntax = syntax.replaceAll("<", "&lt;");
 				syntax = syntax.replaceAll(">", "&gt;");
+				syntax = GliderTagPaserUtil.ReplaceHTMLSpecialCharsDollar(syntax);
 				syntaxList.add(syntax);
 				
 				// 처리한 syntax을 초기화 시킨다. 

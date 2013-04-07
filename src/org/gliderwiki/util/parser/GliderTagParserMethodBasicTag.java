@@ -111,16 +111,16 @@ public class GliderTagParserMethodBasicTag {
 			
 			String html = null;
 			if( "".equals(width) &&  "".equals(height) ){
-				html = "<img alt=\""+title+"\" src=\""+url+"\" style=\"display:block; margin: 0 auto; clear: both;\" >";
+				html = "<img alt=\""+title+"\" src=\""+url+"\" >";
 				
 			}else if( !"".equals(width) &&  "".equals(height) ){
-				html = "<img alt=\""+title+"\" src=\""+url+"\" width=\""+width+"\" style=\"display:block; margin: 0 auto; clear: both;\" >";
+				html = "<img alt=\""+title+"\" src=\""+url+"\" width=\""+width+"\" >";
 				
 			}else if( "".equals(width) &&  !"".equals(height) ){
-				html = "<img alt=\""+title+"\" src=\""+url+"\" height=\""+height+"\" style=\"display:block; margin: 0 auto; clear: both;\" >";
+				html = "<img alt=\""+title+"\" src=\""+url+"\" height=\""+height+"\" >";
 				
 			}else{
-				html = "<img alt=\""+title+"\" src=\""+url+"\" width=\""+width+"\" height=\""+height+"\" style=\"display:block; margin: 0 auto; clear: both;\" >";
+				html = "<img alt=\""+title+"\" src=\""+url+"\" width=\""+width+"\" height=\""+height+"\" >";
 			}
 			
 			str = GliderTagPaserUtil.replaceFirstTag(str, patternTxt, html);
@@ -220,7 +220,7 @@ public class GliderTagParserMethodBasicTag {
 			}
 		}
 		str = str + "\r\n";*/
-		str = GliderTagPaserUtil.HTMLBREncode(str);
+		str = GliderTagPaserUtil.HTMLBREncode(str);		
 		return str;
 	}
 	
