@@ -119,9 +119,9 @@ td { vertical-align: top; padding:10px;}
 
 .clearfix { *zoom: 1; }
 
-.num { display: block; font-family: Helvetica; font-size: 20px; font-weight: bold;}
+.num { display: block; font-family: Helvetica; font-size: 18px; font-weight: bold;}
 .info-text { display: block; font-family: Helvetica; font-size: 16px; font-weight: bold;}
-.wide { width:400px; height:32px; ;font-size: 16px;}
+.wide { width:360px; height:28px; ;font-size: 13px;}
 
 @media print { * { background: transparent !important; color: black !important; box-shadow: none !important; text-shadow: none !important; filter: none !important; -ms-filter: none !important; }
   a, a:visited { text-decoration: underline; }
