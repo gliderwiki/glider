@@ -296,17 +296,19 @@
 							<br/><div style="padding-top:2px"><li>일반목록 : ##목록 </li> </div>
 							<br/><div style="padding-top:2px"><li>순서목록 : --목록 </li> </div>
 							<br/><div style="padding-top:2px">- 고급활용 </div>
-							<br/><div style="padding-top:2px">[@|링크주소|링크명] </div>
-							<br/><div style="padding-top:2px">[!|URL경로|이미지] </div>
-							<br/><div style="padding-top:2px">[align:l]왼쪽정렬[align] </div>
-							<br/><div style="padding-top:2px">[align:c]센터정렬[align] </div>
-							<br/><div style="padding-top:2px">[align:r]오른쪽정렬[align] </div>
+							<br/><div style="padding-top:2px">[@:링크주소|링크타이틀]</div>
+							<br/><div style="padding-top:2px">[!|이미지주소|타이틀][!s|넓이|높이][!]</div>
+							<br/><div style="padding-top:2px">[align:left]왼쪽정렬[align] </div>
+							<br/><div style="padding-top:2px">[align:center]센터정렬[align] </div>
+							<br/><div style="padding-top:2px">[align:right]오른쪽정렬[align] </div>
+							<br/><div style="padding-top:2px">[align:justify]균등정렬[align] </div>
 							<br/><div style="padding-top:2px">[info]정보[info] </div>
 							<br/><div style="padding-top:2px">[field|타이틀]필드테두리[field] </div>
 							<br/><div style="padding-top:2px">[alert]경고[alert] </div>
 							<br/><div style="padding-top:2px">[note|각주#각주의 설명] </div>
 							<br/><div style="padding-top:2px">|| 표 제목 1 || 표 제목 2 ||</div>
 							<br/>| 표 내용 1 &nbsp;| 표 내용 2 &nbsp;&nbsp;|
+							<br/><div style="padding-top:2px">[syntax]하이라이트[syntax]</div>
 						</div>
 					</div>
 				</div>
