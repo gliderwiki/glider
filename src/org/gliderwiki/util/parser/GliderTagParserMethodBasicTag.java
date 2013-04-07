@@ -60,7 +60,7 @@ public class GliderTagParserMethodBasicTag {
 	}
 	
 	public String getINDENT(String str){
-		str = GliderTagPaserUtil.replaceAllTag(str, "\\[it\\]([\\w\\W]+?)\\[it\\]", "<blockquote>$1</blockquote>");
+		str = GliderTagPaserUtil.replaceAllTag(str, "\\[t\\]([\\w\\W]+?)\\[t\\]", "<blockquote>$1</blockquote>");
 		return str;
 	}
 
@@ -104,26 +104,23 @@ public class GliderTagParserMethodBasicTag {
 			String url = GliderTagPaserUtil.getFirstReturnTag(parserTag, patternTxt, "$1");
 			String title = GliderTagPaserUtil.getFirstReturnTag(parserTag, patternTxt, "$3");
 			
-			// 정렬
-			String patternSub = "\\[!a\\|(.*?)\\]";
-			String align = GliderTagPaserUtil.getFirstReturnTag(parserTag, patternSub, "$1");
 			// 넓이
-			patternSub = "\\[!s\\|(.*?)(\\|(.*?))?\\]";
+			String patternSub = "\\[!s\\|(.*?)(\\|(.*?))?\\]";
 			String width = GliderTagPaserUtil.getFirstReturnTag(parserTag, patternSub, "$1");
 			String height = GliderTagPaserUtil.getFirstReturnTag(parserTag, patternSub, "$3");
 			
 			String html = null;
 			if( "".equals(width) &&  "".equals(height) ){
-				html = "<img alt=\""+title+"\" src=\""+url+"\" style=\"display:block; float:"+align+"; margin: 0 auto; clear: both;\" >";
+				html = "<img alt=\""+title+"\" src=\""+url+"\" >";
 				
 			}else if( !"".equals(width) &&  "".equals(height) ){
-				html = "<img alt=\""+title+"\" src=\""+url+"\" width=\""+width+"\" style=\"display:block; float:"+align+"; margin: 0 auto; clear: both;\" >";
+				html = "<img alt=\""+title+"\" src=\""+url+"\" width=\""+width+"\" >";
 				
 			}else if( "".equals(width) &&  !"".equals(height) ){
-				html = "<img alt=\""+title+"\" src=\""+url+"\" height=\""+height+"\" style=\"display:block; float:"+align+"; margin: 0 auto; clear: both;\" >";
+				html = "<img alt=\""+title+"\" src=\""+url+"\" height=\""+height+"\" >";
 				
 			}else{
-				html = "<img alt=\""+title+"\" src=\""+url+"\" width=\""+width+"\" height=\""+height+"\" style=\"display:block; float:"+align+"; margin: 0 auto; clear: both;\" >";
+				html = "<img alt=\""+title+"\" src=\""+url+"\" width=\""+width+"\" height=\""+height+"\" >";
 			}
 			
 			str = GliderTagPaserUtil.replaceFirstTag(str, patternTxt, html);
@@ -223,7 +220,7 @@ public class GliderTagParserMethodBasicTag {
 			}
 		}
 		str = str + "\r\n";*/
-		str = GliderTagPaserUtil.HTMLBREncode(str);
+		str = GliderTagPaserUtil.HTMLBREncode(str);		
 		return str;
 	}
 	

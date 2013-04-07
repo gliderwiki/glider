@@ -20,17 +20,22 @@
 		
         var sel = $.textLocation(textEditor);
         var val = textEditor.value;
+    	var startIndex = sel.start;							// 블럭 시작 지점 
+        var endIndex = startIndex + sel.text.length;		// 블럭 종료 지점 
         console.info(sel);
-        console.info(val);
-        console.info($("#richHidden").val());
+        console.info("val ::"+val);
+        console.info("#richHidden1 ::"+$("#richHidden").val());
         
-        if( !(sel.start == 0 && sel.end == 0) && (data.type == 'copy'||data.type == 'cut')  ) {
+        if( !(sel.start == 0 && sel.end == 0) && data.type == 'outdent' ) {
+        	sel.text = sel.text.replaceAll("[t]", "");
+        	textEditor.value = val.slice(0, sel.start) + sel.text + val.slice(sel.end);
+            $.rangeTag(textEditor, startIndex, endIndex);
+            
+        }else if( !(sel.start == 0 && sel.end == 0) && (data.type == 'copy'||data.type == 'cut')  ) {
         	$("#richHidden").val(sel.text);
         	if( data.type == 'cut' ){
         		sel.text = '';
         		textEditor.value = val.slice(0, sel.start) + sel.text + val.slice(sel.end);
-        		var startIndex = sel.start;							// 블럭 시작 지점 
-                var endIndex = startIndex + sel.text.length;		// 블럭 종료 지점 
                 $.rangeTag(textEditor, startIndex, endIndex);
         	}
          
@@ -41,13 +46,12 @@
         }else if( !(sel.start == 0 && sel.end == 0) && data.type == 'paste' ) {
         	sel.text = $("#richHidden").val();
         	textEditor.value = val.slice(0, sel.start) + sel.text + val.slice(sel.end);
-            
-            var startIndex = sel.start;								// 블럭 시작 지점 
-            var endIndex = startIndex + sel.text.length;			// 블럭 종료 지점 
             $.rangeTag(textEditor, startIndex, endIndex);
+            
         }
+        
 
-        console.info($("#richHidden").val());
+        console.info("#richHidden2 ::"+$("#richHidden").val());
     };
     
 	

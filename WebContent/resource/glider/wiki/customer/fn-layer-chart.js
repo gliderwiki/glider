@@ -34,7 +34,7 @@
 		        			'			<div class="body">                                                                                      '  +
 		        			'				<h4>차트 선택</h4>                                                                                    '  +
 		        			'				<div class="row">                                                                                   '  +
-		        			'					<input type="radio" name="chart" value="pie" checked /><label style="padding-left:7px;">원형</label>  '  +
+		        			'					<input type="radio" name="chart" value="pie" checked/><label style="padding-left:7px;">원형</label>  '  +
 		        			'					<input type="radio" name="chart" value="bar"  style="margin-left:20px" /><label style="padding-left:7px;">막대</label> '  +
 		        			'					<button type="button" class="btn-table '+ G_CHART.add +'">추가</button>                   '  +
 		        			'				</div>                                                                                              '  +
@@ -76,6 +76,10 @@
 			},
 			
 			eventChart : function () {
+				
+				if(  $.clientBrowser() == "IE" ){
+					alert("브라우저가 IE일 경우 정상적으로 보이지 않을 수 있습니다.");
+				}
 				
 				var addChart = ''+
 				'<div class="row">                                              ' +
@@ -153,6 +157,13 @@
 					$("#" + G_CHART.tempLayer ).empty();
 					return false;
 				});
+
+				$("input:radio[name=chart]").on("click", function () {
+					if(  $.clientBrowser() == "IE" && this.value == "pie" ){
+						alert("브라우저가 IE일 경우 정상적으로 보이지 않을 수 있습니다.");
+					}
+				});
+				
 			}
 	};
 	
