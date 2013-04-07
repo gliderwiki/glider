@@ -121,14 +121,20 @@
 				   	var status = rtnObj.status;
 				   	if (status == '1') {
 				   		isConnect = true;
-				    	alert("JDBC 연결 테스트가 정상적으로 처리 되었습니다.\n다음 버튼을 클릭하세요.");
+				    	alert("JDBC 연결 테스트가 정상적으로 처리 되었습니다.\n- DB 계정 정보 생성 완료\n- 테이블 대소문자 구분 정상 동작 확인 완료.\n\n다음 버튼을 클릭하여 데이터를 생성합니다.");
 				    } else if(status == '-1') {
 				    	//Properties 생성 에러
 				    	isConnect = false;
-				    	alert("에러가 발생하였습니다. 지정된 경로가 변경 되었거나 권한이 없습니다.\n다시 시도 해도 문제가 계속되면 글라이더 위키팀에 문의 바랍니다.");
+				    	alert("에러가 발생하였습니다. 지정된 경로에 DB정보를 저장할 수 없습니다.\n- 해당 디렉토리의 접근 권한이 없거나 수정 권한이 없습니다.\n- 다시 시도 해도 문제가 계속되면 글라이더 위키 공식 홈페이지에 문의 바랍니다.");
 				    } else if(status == '-2') {
 				    	isConnect = false;
-				    	alert('JDBC 커넥션 정보가 올바르지 않습니다. DB계정이 잘못 되었거나 DB연결이 이뤄지지 않았습니다.\n정보를 다시 확인해 주세요.');
+				    	alert('JDBC 커넥션 정보가 올바르지 않습니다. \n- DB계정이 잘못 되었거나 DB연결이 이뤄지지 않았습니다.\n- JDBC정보를 다시 확인해 주세요.');
+				    } else if(status == '-3') {
+				    	isConnect = false;
+				    	alert('MySQL 서버 설정에 문제가 있어 설치를 계속 할 수 없습니다.\n- 테이블의 대소문자 인식 오류가 발생했습니다. \n- 해당 문제를 수정하지 않으면 설치를 계속 할 수 없습니다.\n- DB 관리자에게 서버의 대소문자 Variables 세팅을 요청하세요.');
+				    } else {
+				    	isConnect = false;
+				    	alert('알수 없는 에러가 발생 했습니다. 서버 관리자에게 문의 하세요.');
 				    }
 			    }
 			});
@@ -151,15 +157,26 @@
 				,data:{"charType":charType,"strKor":strKor}
 			    ,dataType:"json"
 			    ,success:function(rtnObj){	
-				   	var state = rtnObj.result;
+				   	var result = rtnObj.result;
 				    var tableSize = rtnObj.tableSize;
 				    var resultStr =  rtnObj.resultStr;
+				    var rtnMsg = rtnObj.rtnMsg;
 				    
-				   	if (state > 0) {
-				   		$.loadingBar.fadeOut();
-				    	alert("테이블이 정상적으로 설치 되었습니다. 아래 구문에 한글이 제대로 출력되는지 확인하세요.한글이 깨지면 테이블 리셋 후 다른 캐릭터셋을 선택하여 재시도 하세요. \n\n [" + resultStr + "]");
-				    	//정상적으로 테이블이 생성이 되었다면 기존에 입력 화면을 활성화 되도록 변경합니다.
-				    	createTablesActiveForm();
+				   	if (result > 0) {
+				   		console.log("resultStr : " + resultStr);
+				   		if(rtnMsg == '1') {
+				   			$.loadingBar.fadeOut();
+					    	alert("테이블이 정상적으로 설치 되었습니다. 한글이 제대로 출력되는지 확인하세요.\n[" + resultStr + "] \n\n- 한글이 깨지면 테이블 리셋 후 다른 캐릭터셋을 선택하여 재시도 하세요.");
+					    		//정상적으로 테이블이 생성이 되었다면 기존에 입력 화면을 활성화 되도록 변경합니다.
+					    	createTablesActiveForm();
+				   		} else if(rtnMsg == '-1'){
+				   			// 익셉션일 경우
+				   			$.loadingBar.fadeOut();
+					    	alert("테이블 생성시 에러가 발생하였습니다.\n- 테이블 스크립트 파일을 읽어올 수 없습니다.\n- 해당 디렉토리의 접근 권한이 없거나 파일이 존재하지 않습니다.\n- 다시 시도 해도 문제가 계속되면 글라이더 위키 공식 홈페이지에 문의 바랍니다.");
+				   		} else if(rtnMsg == '-2'){
+				   			$.loadingBar.fadeOut();
+					    	alert("이미 테이블이 존재 합니다. 테이블 리셋 후 다시 시도하세요.");
+				   		}
 				    } else {
 				    	$.loadingBar.fadeOut();
 				    	alert("테이블 생성 중 에러가 발생하였습니다. 다시 시도하세요");
@@ -346,26 +363,31 @@
 		inHtml += "	<h2 class=\"tit-next\" >DB정보 입력</h2>";
 		inHtml += "	<div class=\"body-cont\" style=\"height:410px;\">";		
 		inHtml += " <div class=\"num\" >Step2. DB 접속 정보</div><br/>";
-		inHtml += "	GLiDERWiki™ 를 이용하기 위해서는 MySQL DB에 연결되어야 합니다. MySQL의 버전은 5.x 이상을 권장합니다. <br/>";
+		inHtml += "	GLiDERWiki™ 를 이용하기 위해서는 MySQL DB에 연결되어야 합니다. MySQL의 버전은 5.x 이상을 권장합니다.";
 		inHtml += "	아래의 DB 연동 정보를 입력한 후 연동 테스트 버튼을 클릭하세요.<br/>";
 		inHtml += " <table>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> JDBC URL </span></td>";
-		inHtml += "     	<td><input type=\"text\" name=\"jdbc_url\" id=\"jdbc_url\"  class=\"wide\" value=\"\" ></td>"; 
+		inHtml += "     	<td><input type=\"text\" name=\"jdbc_url\" id=\"jdbc_url\" class=\"wide\" value=\"\" ></td>";
+		inHtml += "     	<td>* 예 - jdbc:mysql://127.0.0.1:3306/DB명</td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td><span class=\"num\"> User ID </span></td>";
 		inHtml += "     	<td><input type=\"text\" name=\"jdbc_id\" id=\"jdbc_id\" class=\"wide\" value=\"\" ></td>";
+		inHtml += "     	<td>* MySQL DB의 JDBC 유저 아이디</td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
-		inHtml += "     	<td><span class=\"num\"> User Password </span></td>";
+		inHtml += "     	<td><span class=\"num\"> Password </span></td>";
 		inHtml += "     	<td><input type=\"password\" name=\"jdbc_pw\" id=\"jdbc_pw\"  class=\"wide\" value=\"\" ></td>";
+		inHtml += "     	<td>* MySQL DB의 JDBC 유저 패스워드</td>";
 		inHtml += " 	</tr>";
 		inHtml += " </table>";
-		inHtml += "<br>JDBC 정보가 올바로 입력되었다면 아래 연동 테스트 버튼을 클릭하여 JDBC 연동이 정상적으로 수행되는지 확인해 주세요. <br/>";
-		inHtml += "JDBC의 연결정보가 올바로 되었다면  <b><font color=\"red\">'[JDBC 연결 테스트가 정상적으로 처리 되었습니다]'</font></b> 라는  메세지가 출력이 됩니다. <br/>";
-		inHtml += "	만약, 오류 메세지가 나타나면  MySQL JDBC 연동이 제대로 되지 않은 경우 입니다.<br/>";
-		inHtml += "	이런 경우 계정 및 주소, 사용자 정보등을 다시 확인하여 시도해보시고, 그래도 되지 않으면 서버의(호스팅) 관리자를 통하여 방화벽이나 다른 조치사항이 있어야 하는지 확인 한 후 다시 인스톨 하셔야 합니다. <BR>아래 연동 테스트 버튼을 클릭한 후  다음을 진행하세요.<br/>";
+		inHtml += "<br>JDBC 정보를 입력한 후 아래 연동 테스트 버튼을 클릭하여 JDBC 연동이 정상적으로 수행되는지 확인해 주세요. <br/>";
+		inHtml += "JDBC의 연결정보가 올바로 되었다면  <b><font color=\"red\" style=\"font-weight:bold;font-size:18px\">'[JDBC 연결 테스트가 정상적으로 처리 되었습니다]'</font></b> 라는  메세지가 출력이 됩니다. <br/>";
+		inHtml += "	만약, 오류 메세지가 나타나면  MySQL JDBC 연동이 제대로 되지 않은 경우 입니다. 아래 사항을 확인해주세요.<br/>";
+		inHtml += "	1. 테이블의 대소문자 인식 오류 : MySQL 설정 파일에 lower_case_table_names 세팅이 안되어 있으므로 관리자에게 관련 variables 세팅을 요청하세요.<br/>";arguments
+		inHtml += "	2. JDBC 통신 에러인 경우 : MySQL Client 툴로 해당 DB에 접근되는지 확인하세요. 안될 경우 DB 관리자에게 방화벽 및 Port 확인을 요청하세요. <br/>";
+		inHtml += "	아래 연동 테스트 버튼을 클릭한 후  다음을 진행하세요.<br/>";
 		inHtml += " <div style=\"text-align: center; padding-top:10px\"><button type=\"button\" id=\"linkTest\" name=\"linkTest\" class=\"btn-wide\">연동테스트</button></div>";
 		inHtml += "</div>";
 		inHtml += "<div class=\"foot-cont\">";
