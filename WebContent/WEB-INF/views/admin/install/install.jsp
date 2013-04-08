@@ -21,11 +21,12 @@
 		<div class="body-cont">
 		<div class="num">Step1. Installer 설명 및 동의 </div> <br/><br/>
 		<input type="hidden" name="domain" id="domain" value="${domain }" />
-		GLiDERWiki™ 는 기업 환경에 적합한 지식·정보 공유 및 축적을 위한 오픈소스 협업 툴입니다.<br/>
+		GLiDERWiki™ 는 기업 환경에 적합한 지식·정보 공유 및 축적을 위한 오픈소스 Wiki 협업 툴입니다.<br/>
+		GLiDERWiki™ Wiki 는 마크업 태그(예약된 문자)를 바탕으로 빠르게 HTML 문서 포맷을 생성, 공유할 수 있습니다. <br/>
 		GLiDERWiki™ 는 손쉽게 사용자들이  설치 할 수 있도록 Web 기반의 Installer 를 제공합니다.<br />
-		자세한 설치 방법은 <a href="http://www.gliderwiki.org/space/main/2" target="_blank">GLiDERWiki™의 사용안내 페이지</a>를 참고하시기 바랍니다. 
+		자세한 설치 방법은 <a href="http://www.gliderwiki.org/space/main/2" target="_blank">GLiDERWiki™의 사용안내 페이지</a> 를 참고하시거나  gliderwiki@gliderwiki.org 으로 문의해 주세요. 
 		사용자의 DB 연동 정보·어드민 정보·메일 전송 정보 등을 토대로 서비스 운영에  필요한 항목들을 순서대로 설정하게 됩니다.	<br />
-		아래의 항목을 반드시 읽어보신 후 <b>[다음]</b>을 클릭하여 설치하기 바랍니다.
+		아래의 항목을 반드시 읽어보신 후 <b>[다음]</b>을 클릭하여 설치 단계로 넘어갑니다.
 		<br/>
 		<ul>
 			<li>
@@ -166,7 +167,7 @@
 				   		console.log("resultStr : " + resultStr);
 				   		if(rtnMsg == '1') {
 				   			$.loadingBar.fadeOut();
-					    	alert("테이블이 정상적으로 설치 되었습니다. 한글이 제대로 출력되는지 확인하세요.\n[" + resultStr + "] \n\n- 한글이 깨지면 테이블 리셋 후 다른 캐릭터셋을 선택하여 재시도 하세요.");
+					    	alert("테이블이 정상적으로 설치 되었습니다. 한글이 제대로 출력되는지 확인하세요.\한글처리결과:[" + resultStr + "] \n\n- 한글이 깨지면 테이블 리셋 후 다른 캐릭터셋을 선택하여 재시도 하세요.\n\n한글이 정상적으로 처리 되었다면 아래 항목을 입력 후 데이터 저장을 클릭하세요.");
 					    		//정상적으로 테이블이 생성이 되었다면 기존에 입력 화면을 활성화 되도록 변경합니다.
 					    	createTablesActiveForm();
 				   		} else if(rtnMsg == '-1'){
@@ -178,8 +179,14 @@
 					    	alert("이미 테이블이 존재 합니다. 테이블 리셋 후 다시 시도하세요.");
 				   		}
 				    } else {
-				    	$.loadingBar.fadeOut();
-				    	alert("테이블 생성 중 에러가 발생하였습니다. 다시 시도하세요");
+				    	if(rtnMsg == '-1'){
+				    		$.loadingBar.fadeOut();
+					    	alert("MySQL 서버 설정에 문제가 있어 설치를 계속 할 수 없습니다.\n- 테이블의 한글 캐릭터 셋  인식 오류가 발생했습니다. \n- 해당 문제를 수정하지 않으면 설치를 계속 할 수 없습니다.\n- DB관리자에게 MySQL 서버의 한글처리(euckr 혹은 utf8) 세팅을 요청하세요.");
+				    	} else {
+				    		$.loadingBar.fadeOut();
+					    	alert("테이블 생성 중 에러가 발생하였습니다. 다시 시도하세요");	
+				    	}
+				    	
 				    }
 			    }
 			});
@@ -408,12 +415,12 @@
 
 		inHtml += "<div class=\"wrap-cont\" id=\""+id+"\" >";
 		inHtml += "	<h2 class=\"tit-next\">Table 생성 및 Data 저장 </h2>";
-		inHtml += "	<div class=\"body-cont\" style=\"height:430px;\">";
+		inHtml += "	<div class=\"body-cont\" style=\"height:460px;padding:36px 65px\">";
 		inHtml += " <div class=\"num\">Step3. Table 및 기본 데이터 설정 저장 </div><br/>"; 
 		inHtml += "	GLiDERWiki™를 이용하기 위한 테이블 및 기본 데이터를 생성합니다. 캐릭터 셋 정보를 선택 한 후 테이블 생성 버튼을 클릭하세요.";
-		inHtml += "	<u>관리자 계정은 어드민 모드에 접속하기 위한 Login ID이며, Active Key와 이메일 정보는 GLiDERWiki™ 다운로드 할 때 입력한 메일 정보와 해당 메일로 전송된 Active Key를 입력</u>하시면 됩니다.<br/>";	
+		inHtml += "	<u>관리자 계정은 어드민 모드에 접속하기 위한 Login ID이며, <font color='red'>Active Key와 사용자 등록 이메일</font>은  GLiDERWiki™ 다운로드 할 때 입력한 메일 정보와 해당 메일로 전송된 Active Key를 입력</u>하시면 됩니다.<br/>";	
 		inHtml += " <ul>";
-		inHtml += "		<li>캐릭터 셋을 선택 한 후 테이블 생성 버튼을 통하여 테이블이 정상적으로 생성되면 화면에 <b><font color='red'>[한글 데이터 정상]</font></b>이 출력이 됩니다.</li>";
+		inHtml += "		<li>캐릭터 셋을 선택  후 테이블 생성 버튼을 통하여 테이블이 정상적으로 생성되면 화면에 <b><font color='red'>한글처리결과:[한글 데이터 정상]</font></b>이 출력이 됩니다.</li>";
 		inHtml += "		<li>한글이 정상적으로 보이지 않는다면 리셋 버튼을 클릭한 후 다시 캐릭터 셋 정보를 변경하세요 (예: utf-8  > euc-kr 캐릭터셋 변경)</li>";
 		inHtml += " 	<li>GLiDERWiki™ 은 기본 캐릭터(utf-8) 셋과 utf8_unicode_ci , euc-kr 타입의 캐릭터 셋을 지원합니다.</li>";
 		inHtml += " 	<li>캐릭터셋 변경 후 테스트를 수행하였음에도 한글이 깨지면 서버의 관리자에게 UTF-8이나 EUC-KR 타입의 DB 설정을 요청하셔야 합니다.<br> 이 경우 테이블을 리셋한 후 Step1 단계부터 다시 진행하셔야 합니다. </li>";
@@ -434,22 +441,26 @@
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td width=\"180\"><b>관리자 Login 이메일</b></td>";
-		inHtml += "     	<td width=\"270\"><input type=\"text\" id=\"adminMailId\" name=\"adminMailId\" size=\"20\" style=\"\" value=\"\" disabled></td>";
+		inHtml += "     	<td width=\"270\"><input type=\"text\" id=\"adminMailId\" name=\"adminMailId\" size=\"25\" style=\"\" value=\"\" disabled></td>";
 		inHtml += "     	<td width=\"150\"><b>관리자 Login Password</b></td>";
-		inHtml += "     	<td width=\"210\"><input type=\"password\" id=\"adminpass\" name=\"adminpass\" size=\"20\" style=\"\" disabled></td>";
+		inHtml += "     	<td width=\"210\"><input type=\"password\" id=\"adminpass\" name=\"adminpass\" size=\"25\" style=\"\" disabled></td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
-		inHtml += "     	<td><b>사이트 도메인 명</b></td>";
-		inHtml += "     	<td><input type=\"text\" size=\"20\" id=\"adminSite\" name=\"adminSite\" style=\"\" disabled></td>";
-		inHtml += "     	<td><b>사용자 등록 이메일</b></td>";
-		inHtml += "     	<td><input type=\"text\" size=\"20\" id=\"userMail\" name=\"userMail\" style=\"\" disabled></td>";
+		inHtml += "     	<td colspan=\"4\"><hr></td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
-		inHtml += "     	<td><b>Active Key</b></td>";
-		inHtml += "     	<td colspan=\"3\"><input type=\"text\" id=\"activeKey\" name=\"activeKey\" size=\"90\" style=\"\" value=\"\"disabled></td>";
+		inHtml += "     	<td><b><font color='red'>사이트 도메인 명</font></b></td>";
+		inHtml += "     	<td><input type=\"text\" size=\"25\" id=\"adminSite\" name=\"adminSite\" style=\"\" disabled></td>";
+		inHtml += "     	<td><b><font color='red'>사용자 등록 이메일</font></b></td>";
+		inHtml += "     	<td><input type=\"text\" size=\"25\" id=\"userMail\" name=\"userMail\" style=\"\" disabled></td>";
+		inHtml += " 	</tr>";
+		inHtml += " 	<tr>";
+		inHtml += "     	<td><b><font color='red'>Active Key</font></b></td>";
+		inHtml += "     	<td colspan=\"2\"><input type=\"text\" id=\"activeKey\" name=\"activeKey\" size=\"70\" style=\"\" value=\"\" disabled></td>";
+		inHtml += "     	<td><div style=\"text-align: center\"><button type=\"button\" id=\"dataSave\" name=\"dataSave\" class=\"btn-down\">데이터저장</button></div></td>";
 		inHtml += " 	</tr>";
 		inHtml += " </table>";
-		inHtml += " <div style=\"text-align: center\"><button type=\"button\" id=\"dataSave\" name=\"dataSave\" class=\"btn-wide\">데이터저장</button></div>";
+		inHtml += " ";
 		inHtml += "	</div>";
 		inHtml += "	<div class=\"foot-cont\">";
 		inHtml += "		<div name=\"prev\" id=\"prev_step_1\" onclick=\"clearPrevious('"+id+"', 'step_1')\" title=\"step_1\" role=\"button\" class=\"btn\" style=\"cursor:pointer\">이전</div>";
