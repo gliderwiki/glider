@@ -10,7 +10,7 @@ pageContext.setAttribute("cr", "\r");
 		<h2 class="tit-cont">게시판 글보기</h2>
 		<div class="body-cont board">
 			<div class="view-board">
-				<h2 class="title">${bbs.we_bbs_title}</h2>
+				<h2 class="title" style="word-wrap :break-word">${bbs.we_bbs_title}</h2>
 				<div class="meta">
 					<span class="item">작성일 : ${gf:articleDate(bbs.we_ins_date,'yyyy.MM.dd')}</span>
 					<span class="item">조회수 : ${bbs.we_hit_count}</span>
