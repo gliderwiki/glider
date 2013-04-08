@@ -224,7 +224,7 @@
 		function createTablesActiveForm()
 		{
 			$("#adminMailId").attr('disabled',false);
-			$("#adminpass").attr('disabled',false);
+			$("#adminPass").attr('disabled',false);
 			$("#adminSite").attr('disabled',false);
 			$("#userMail").attr('disabled',false);
 			$("#activeKey").attr('disabled',false);
@@ -234,7 +234,7 @@
 		function dropTableDisableForm()
 		{
 			$("#adminMailId").attr('disabled',true);
-			$("#adminpass").attr('disabled',true);
+			$("#adminPass").attr('disabled',true);
 			$("#adminSite").attr('disabled',true);
 			$("#userMail").attr('disabled',true);
 			$("#activeKey").attr('disabled',true);
@@ -245,7 +245,7 @@
 		$("#dataSave").live("click", function() {
 			var charType = $(':radio[name="charType"]:checked').val();
 			var adminMailId = $("#adminMailId").val();
-			var adminpass = $("#adminpass").val();
+			var adminPass = $("#adminPass").val();
 			var adminSite = $("#adminSite").val();
 			var userMail = $("#userMail").val();
 			var activeKey = $("#activeKey").val();
@@ -255,9 +255,9 @@
 				$('#adminMailId').focus();
 				return;
 				
-			} else if(adminpass == "" || adminpass == null) {
+			} else if(adminPass == "" || adminPass == null) {
 				alert("관리자용 로그인 비밀번호를 입력해주세요.");
-				$('#adminpass').focus();
+				$('#adminPass').focus();
 				return;
 				
 			} else if(adminSite == "" || adminSite == null) {
@@ -280,7 +280,7 @@
 			$.ajax({
 				type:"POST"
 				,url:"/admin/install/loadData"
-				,data:{"adminMailId":adminMailId,"adminpass":adminpass,
+				,data:{"adminMailId":adminMailId,"adminPass":adminPass,
 					   "adminSite":adminSite,"userMail":userMail,
 					   "activeKey":activeKey, "charType":charType}
 			    ,dataType:"json"
@@ -443,7 +443,7 @@
 		inHtml += "     	<td width=\"180\"><b>관리자 Login 이메일</b></td>";
 		inHtml += "     	<td width=\"270\"><input type=\"text\" id=\"adminMailId\" name=\"adminMailId\" size=\"25\" style=\"\" value=\"\" disabled></td>";
 		inHtml += "     	<td width=\"150\"><b>관리자 Login Password</b></td>";
-		inHtml += "     	<td width=\"210\"><input type=\"password\" id=\"adminpass\" name=\"adminpass\" size=\"25\" style=\"\" disabled></td>";
+		inHtml += "     	<td width=\"210\"><input type=\"password\" id=\"adminPass\" name=\"adminPass\" size=\"25\" style=\"\" disabled></td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td colspan=\"4\"><hr></td>";
@@ -525,12 +525,12 @@
 		inHtml += " <div class=\"num\">Step5. 메일 전송 계정 설정 </div><br/>";
 
 		inHtml += " GLiDERWiki™ 은 회원 가입시, 스팸 유저를 필터링하기 위해서 메일로 회원 인증 절차를 거치도록 지원합니다. <br/>";
-		inHtml += " 메일 전송 기능은 알람 시스템과 연동되므로 반드시 설정되어야 합니다. <a href='https://accounts.google.com/' target='_blank'>구글 gmail 계정</a>으로 전송 계정을 설정 하신 후 관리자 모드에서 추후 자체 SMTP 서버로 변경 할 수 있습니다. <br>전송 메일이 도착하지 않았을 경우 해당 메일서비스의 스팸 분류를 확인해보시기 바랍니다. <b>gmail 전송 테스트</b> 후 다음단계를 진행하세요.<br/>";
+		inHtml += " <a href='https://accounts.google.com/' target='_blank'>구글 gmail 계정</a>으로 전송 계정을 설정 하신 후 관리자 모드에서 추후 자체 SMTP 서버로 변경 할 수 있습니다. <font color='red'><b>전송 테스트 메일 주소로 이전 단계에서 입력한 관리자 로그인 아이디/패스워드가 전송되므로 반드시 본인이 확인 할 수 있는 메일 주소</b></font>를 입력하세요. 전송 메일이 도착하지 않았을 경우 해당 메일서비스의 스팸 분류를 확인해보시기 바랍니다. <b>gmail 전송 테스트</b> 후 다음단계를 진행하세요.<br/>";
 
 		inHtml += " <table>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td>Mail UserID </td>";
-		inHtml += "     	<td><input type=\"text\" size=\"30\" id=\"mailUserId\" name=\"mailUserId\" value=\"glider.wiki@gmail.com\"></td>";
+		inHtml += "     	<td><input type=\"text\" size=\"30\" id=\"mailUserId\" name=\"mailUserId\" value=\"\"></td>";
 		inHtml += "     	<td>전송 계정으로 사용할 gmail 주소 입력</td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
@@ -783,7 +783,7 @@
 	function completeWiki() {
 		var domain = $("#domain").val();
 		var urls = domain + "admin/wikiadminlogin";
-		alert('GLiDERWiki™ 가 정상적으로 설치 되었습니다.\n서버 restart 후 '+urls+'으로 이동 하여 관리자 모드에 접속하세요.');
+		alert('GLiDERWiki™ 가 정상적으로 설치 되었습니다.\n\n- 서버를 restart 해주세요. \n- '+urls+'으로 이동 하여 관리자 모드에 접속하세요.\n- 전송 테스트 메일 주소로 어드민 아이디와 패스워드가 전송되었습니다.\n- 서버 리스타트 후 본 화면은 접근이 불가합니다. 감사합니다.');
 		//TODOLIST  글라이더 위키에 개인정보 전송 후, 어드민 주소를 사용자 메일로 전송해야 함 
 	}
 //]]>
