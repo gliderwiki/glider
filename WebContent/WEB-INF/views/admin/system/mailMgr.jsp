@@ -33,7 +33,7 @@
 							<tr>
 								<th>Mail Password</th>
 								<td>
-									<input type="password" style="width:440px" name="mailUserPassword" id="mailUserPassword" value="${mailUserPassword }" />
+									<input type="password" style="width:440px" name="mailUserPassword" id="mailUserPassword" value="" />
 								</td>
 							</tr>
 							<tr>

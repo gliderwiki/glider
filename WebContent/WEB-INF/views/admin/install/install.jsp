@@ -122,7 +122,7 @@
 				   	var status = rtnObj.status;
 				   	if (status == '1') {
 				   		isConnect = true;
-				    	alert("JDBC 연결 테스트가 정상적으로 처리 되었습니다.\n- DB 계정 정보 생성 완료\n- 테이블 대소문자 구분 정상 동작 확인 완료.\n\n다음 버튼을 클릭하여 데이터를 생성합니다.");
+				    	alert("JDBC 연결 테스트가 정상적으로 처리 되었습니다.\n- DB 계정 정보 생성 완료\n- 테이블 대소문자 구분 정상 동작 확인 완료.\n\n다음 버튼을 클릭하여 데이터 생성 화면으로 이동합니다.");
 				    } else if(status == '-1') {
 				    	//Properties 생성 에러
 				    	isConnect = false;
@@ -167,7 +167,7 @@
 				   		console.log("resultStr : " + resultStr);
 				   		if(rtnMsg == '1') {
 				   			$.loadingBar.fadeOut();
-					    	alert("테이블이 정상적으로 설치 되었습니다. 한글이 제대로 출력되는지 확인하세요.\한글처리결과:[" + resultStr + "] \n\n- 한글이 깨지면 테이블 리셋 후 다른 캐릭터셋을 선택하여 재시도 하세요.\n\n한글이 정상적으로 처리 되었다면 아래 항목을 입력 후 데이터 저장을 클릭하세요.");
+					    	alert("테이블이 정상적으로 설치 되었습니다. 한글이 제대로 출력되는지 확인하세요.\n\n한글처리결과:[" + resultStr + "] \n\n- 한글이 깨지면 테이블 리셋 후 다른 캐릭터셋을 선택하여 재시도 하세요.\n\n한글이 정상적으로 처리 되었다면 아래 항목을 입력 후 데이터 저장을 클릭하세요.");
 					    		//정상적으로 테이블이 생성이 되었다면 기존에 입력 화면을 활성화 되도록 변경합니다.
 					    	createTablesActiveForm();
 				   		} else if(rtnMsg == '-1'){
@@ -485,7 +485,7 @@
 		inHtml += " <div class=\"num\">Step4. Image preview 테스트 </div><br/>"; 
 		inHtml += "	GLiDERWiki™ 의 파일 업로드 및 이미지 미리보기 기능을 지원하기 위하여 디렉토리 권한(퍼미션) 변경 작업을 수행합니다.<br/>";
 		inHtml += "	파일 업로드와 이미지 미리보기 및 섬네일 기능을 지원하는지 여부를 확인 하기 위해서  아래 파일 첨부 폼에 이미지 파일(png, jpg, gif등)<br/>"; 
-		inHtml += "	을 선택 하여 업로드 버튼을 클릭하시기 바랍니다. 만약, 업로드 실패 메세지가 출력된다면 다시 한번 시도 해주세요.<br/><br/>";
+		inHtml += "	을 선택 하여 업로드 버튼을 클릭하시기 바랍니다. <font color='red'>만약, 업로드 후 아무 반응이 없거나 업로드 실패 메세지가 출력된다면 다시 한번 시도 해주세요.</font><br/><br/>";
 		inHtml += " <span class=\"box-img\">";
 		inHtml += " 	<img id=\"preImg\" src=\"\" alt=\"\" />";
 		inHtml += " </span>";
@@ -525,7 +525,7 @@
 		inHtml += " <div class=\"num\">Step5. 메일 전송 계정 설정 </div><br/>";
 
 		inHtml += " GLiDERWiki™ 은 회원 가입시, 스팸 유저를 필터링하기 위해서 메일로 회원 인증 절차를 거치도록 지원합니다. <br/>";
-		inHtml += " 메일 전송 기능은 알람 시스템과 연동되므로 반드시 설정되어야 합니다. SMTP 전송 서버가 없을 경우 우선 구글 gmail 계정으로 설정 하신 후 관리자 모드에서 SMTP 서버로 변경 할 수 있습니다. <b>gmail 전송 테스트</b> 후 다음단계를 진행하세요.<br/>";
+		inHtml += " 메일 전송 기능은 알람 시스템과 연동되므로 반드시 설정되어야 합니다. <a href='https://accounts.google.com/' target='_blank'>구글 gmail 계정</a>으로 전송 계정을 설정 하신 후 관리자 모드에서 추후 자체 SMTP 서버로 변경 할 수 있습니다. <br>전송 메일이 도착하지 않았을 경우 해당 메일서비스의 스팸 분류를 확인해보시기 바랍니다. <b>gmail 전송 테스트</b> 후 다음단계를 진행하세요.<br/>";
 
 		inHtml += " <table>";
 		inHtml += " 	<tr>";
@@ -565,7 +565,7 @@
 		inHtml += "            <option value=\"euc-kr\" selected>euc-kr</option>";
 		inHtml += "            <option value=\"utf-8\">utf-8</option>";
 		inHtml += "     	</td>";
-		inHtml += "     	<td>메일 전송 캐릭터 셋 지정</td>";
+		inHtml += "     	<td>메일 전송 캐릭터 셋 지정(euc-kr 권장)</td>";
 		inHtml += " 	</tr>";
 		inHtml += " 	<tr>";
 		inHtml += "     	<td>전송 테스트용 메일주소 </td>";
@@ -722,9 +722,23 @@
 				return;
 			} else {
 				isSendMail = false;	// 간혹 전송 테스트가 되지 않는 경우 재시도 한다. 
-				$.loadingBar.fadeOut();
-				alert('전송중 에러가 발생하였습니다. 정보를 다시 확인 한 후 시도해주세요.');
-				return;
+				if(jsonStr.rtnResult == '-1') {
+					$.loadingBar.fadeOut();				
+					alert("메일 전송 중 에러가 발생하였습니다.\n- 메일 전송 통신이 막혀있습니다.\n- 방화벽 혹은 보안 프로그램(백신등)을 확인하여 주시기 바랍니다.\n- 다시 시도 해도 문제가 계속되면 글라이더 위키 공식 홈페이지에 문의 바랍니다.");
+					return;
+				} else if(jsonStr.rtnResult == '-3') {
+					$.loadingBar.fadeOut();				
+					alert("메일 정보 저장중 에러가 발생하였습니다.\n- 해당 디렉토리의 접근 권한이 없거나 파일이 존재하지 않습니다.\n- 다시 시도 해도 문제가 계속되면 글라이더 위키 공식 홈페이지에 문의 바랍니다.");
+					return;
+				} else if(jsonStr.rtnResult == '-4') {
+					$.loadingBar.fadeOut();				
+					alert("메일 전송시 통신 에러가 발생했습니다.\n- 다시 시도 해도 문제가 계속되면 글라이더 위키 공식 홈페이지에 문의 바랍니다.");
+					return;
+				} else {
+					$.loadingBar.fadeOut();				
+					alert("메일 정보 전송 중 알수 없는 에러가 발생했습니다. 관련 항목을 점검 하신 후 다시 시도하세요.");
+					return;
+				}
 			}
 		});
 	}
