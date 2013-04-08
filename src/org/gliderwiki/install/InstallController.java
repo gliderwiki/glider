@@ -77,6 +77,9 @@ public class InstallController {
 	
 	private String jdbcSchema;	//DB명 
 	
+	private String adminMailId;  // 어드민 아이디 
+	
+	private String adminPass;    // 어드민 비밀번호 
 	
 	public String getJdbcUrl() {
 		return jdbcUrl;
@@ -111,7 +114,22 @@ public class InstallController {
 		this.jdbcSchema = jdbcSchema;
 	}
 
-	
+	public String getAdminMailId() {
+		return adminMailId;
+	}
+
+	public void setAdminMailId(String adminMailId) {
+		this.adminMailId = adminMailId;
+	}
+
+	public String getAdminPass() {
+		return adminPass;
+	}
+
+	public void setAdminPass(String adminPass) {
+		this.adminPass = adminPass;
+	}
+
 	/**
 	 * install.status = N 일 경우 인스톨러 접근을 허용한다.   
 	 * @param request
@@ -488,6 +506,8 @@ public class InstallController {
 		logger.debug("adminSite : " + adminSite);
 		logger.debug("userMail : " + userMail);
 		logger.debug("activeKey :" + activeKey);
+		this.setAdminMailId(adminMailId);
+		this.setAdminPass(adminpass);
 		
 		String tableInitPath = request.getSession().getServletContext().getRealPath(SystemConst.MYSQL_DB_PATH);
 		
@@ -581,7 +601,17 @@ public class InstallController {
 		double maxSize = 10d;
 
 		// 파일 객체, 사용자 아이디, 오늘날짜, 파일 업로드 사이즈
-		TempUploadVo tempFile = FileUploader.uploadTempFile(fileVo.getFile(), svcPath, "1", today, maxSize);
+		TempUploadVo tempFile = new TempUploadVo();
+		String msg = "";
+		try {
+			tempFile = FileUploader.uploadTempFile(fileVo.getFile(), svcPath, "1", today, maxSize);
+			msg = "성공";
+		} catch(Exception e) {
+			logger.debug("### upload error!! ###");
+			msg = e.getMessage();
+			e.printStackTrace();
+		}
+		
 
 		logger.debug("tempFile : " + tempFile.toString());
 
@@ -590,7 +620,7 @@ public class InstallController {
 		if(tempFile.isUploaded()) {
 			// 임시 파일이기 때문에 DB 인서트는 하지 않음 
 			param.put("result", "1");
-	    	param.put("msg", "성공");
+	    	param.put("msg", msg);
 	    	param.put("realFileName", tempFile.getFileRealName());
 	    	param.put("saveFileName", tempFile.getFileSaveName());
 	    	param.put("thumbPath", tempFile.getThumbPath());
@@ -600,7 +630,7 @@ public class InstallController {
 	    	param.put("tmpsrc", svcPath);
 		} else {
 			param.put("result", "-1");
-	    	param.put("msg", "파일 업로드에 실패 하였습니다.");
+	    	param.put("msg", msg);
 	    	param.put("realFileName", tempFile.getFileRealName());
 		}
 
@@ -650,7 +680,7 @@ public class InstallController {
 		
 		String adminUrl =  domain+"admin/wikiadminlogin";
 		
-		// 결과에 상관없이 properties는 생성되어야 한다. 
+		// 결과에 상관없이 암호화 모듈때문에 properties는 생성되어야 한다. 
 		property.CreateCionfigProperties(mailUserId, mailUserKey, siteDomain, configPath);
 		
 		
@@ -659,7 +689,10 @@ public class InstallController {
 			// 메일을 전송한다. 
 			String emailMsgTxt = "안녕하세요. " + siteOwner +" 입니다. <br><br>" +
 					"관리자 모드에서 보내는 테스트 메일 입니다.<br><br>" +
-					"어드민 모드는 " + adminUrl + "을 통해서 입력한 계정으로 로그인 할 수 있습니다.";
+					"어드민 모드는 " + adminUrl + "을 통해서 입력한 계정으로 로그인 할 수 있습니다.<br><br>" + 
+					"계정 정보는 아래와 같습니다.<br><br>" +
+					"ID : " + this.getAdminMailId() + "  /   Password : " + this.getAdminPass() + 
+					"<br><br> 비밀번호 분실시 초기화 할 수 없으므로 반드시 기억하시기 바랍니다.";
 			
 
 			String emailTitle = siteOwner + " Wiki 안내 메일입니다.";		// 제목
@@ -670,7 +703,15 @@ public class InstallController {
 
 				logger.debug("###result : " + result);
 				if(result > 0) {
-					// config 프로퍼티를 생성한다. 
+					// init.properties 파일의 인스톨 상태값을 Y로 변경한다. 
+					String initPath = request.getSession().getServletContext().getRealPath(SystemConst.PROPERTY_FULL_PATH + "config");
+					Properties props = PropertyUtil.getPropertyInfo(initPath, SystemConst.INIT_NAME);
+					
+					String installYn 		= "Y";
+					String version 			= props.getProperty("install.version");
+					
+					property.createInitProperties(installYn, version, initPath);
+					
 					param.put("result", "SUCCESS");
 					param.put("status", SystemConst.CALL_SUCCESS);
 					param.put("rtnResult", result);
@@ -683,7 +724,7 @@ public class InstallController {
 			} catch (UnsupportedEncodingException e) {
 				param.put("result", "FAIL");
 				param.put("status", SystemConst.CALL_FAIL);
-				param.put("rtnResult", -2);
+				param.put("rtnResult", -4);
 			}
 
 		} else { 

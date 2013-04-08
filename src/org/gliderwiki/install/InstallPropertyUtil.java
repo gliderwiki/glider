@@ -211,4 +211,48 @@ public class InstallPropertyUtil {
 		return result;
 
 	}
+
+
+	/**
+	 * init.properties 파일을 생성 한다. 
+	 * @param installYn
+	 * @param version
+	 */
+	public void createInitProperties(String installYn, String version, String initPath) {
+		Properties prop = null;
+		try {
+			prop = new Properties();
+
+			prop.setProperty("install.status", installYn);
+			prop.setProperty("install.version", version);
+			
+
+			File file = new File(initPath);
+
+			// File file = new File(svcPath);
+			logger.debug("file : " + file.toString());
+
+			logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+			logger.info("✚ System create init properties in " + initPath + " Start !");
+			logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
+			// 파일을 생성한다.
+			prop.store(new FileOutputStream(initPath + "/init.properties"), null);
+
+			Set<Object> keySet = prop.keySet();
+			Iterator<Object> iterator = keySet.iterator();
+
+			while (iterator.hasNext()) {
+				String key = (String) iterator.next();
+				logger.info("##Property Key, Values : " + key + "=" + prop.getProperty((String) key));
+			}
+
+			logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+			logger.info("✚ System create init properties in " + initPath	+ " Finish !");
+			logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
 }
