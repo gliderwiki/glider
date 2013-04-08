@@ -23,7 +23,7 @@ public class FtpConstant {
 	 */
 	public static final String[] PERMITTED_EXTS = new String[] {
 		"DOC", "XLS", "XLSX", "PPT", "HWP", "TXT", "PDF", "DOCX", "PPTX", "PPS" ,
-		"ZIP", "ALZ", "JAR",  "AI", "PSD",
+		"ZIP", "ALZ", "JAR",  "AI", "PSD", "XMIND",
 		"AVI", "MOV", "MPG", "MPEG", "RM", "ASF", "WMV", "MP3", "MP4",
 		"BMP", "JPG", "JPEG", "GIF", "PNG", "FLA", "SWF", "HTM", "HTML" , "HTML", 
 		"JAVA", "JS","JSP", "XML", "WAR", "JAR", "TAR.GZ", "GZ", "DMG", "GDOC", "GSHEET", "GSLIDES"
