@@ -496,18 +496,18 @@ public class InstallController {
 		}
 		
 		String adminMailId  = request.getParameter("adminMailId"); // 관리자 로그인 메일주소(ID)
-		String adminpass 	= request.getParameter("adminpass");   // 관리자 로그인 비밀번
+		String adminPass 	= request.getParameter("adminPass");   // 관리자 로그인 비밀번
 		String adminSite 	= request.getParameter("adminSite");   // 시스템 도메인 주소
 		String userMail 	= request.getParameter("userMail");    // 등록  메일주소 
 		String activeKey 	= request.getParameter("activeKey");   // 활성화를 위한 액티브 키  
 		
 		logger.debug("adminMailId : " + adminMailId);
-		logger.debug("adminpass : " + adminpass);
+		logger.debug("adminPass : " + adminPass);
 		logger.debug("adminSite : " + adminSite);
 		logger.debug("userMail : " + userMail);
 		logger.debug("activeKey :" + activeKey);
 		this.setAdminMailId(adminMailId);
-		this.setAdminPass(adminpass);
+		this.setAdminPass(adminPass);
 		
 		String tableInitPath = request.getSession().getServletContext().getRealPath(SystemConst.MYSQL_DB_PATH);
 		
@@ -517,7 +517,7 @@ public class InstallController {
 		
 		
 		// 액티브 키로 어드민 암호화 한다.
-		String passwd = SecretKeyPBECipher.setUserPassword(adminpass, activeKey);
+		String passwd = SecretKeyPBECipher.setUserPassword(adminPass, activeKey);
 		
 		WeUser weUser = new WeUser();
 		weUser.setWe_user_id(adminMailId);
@@ -692,7 +692,7 @@ public class InstallController {
 					"어드민 모드는 " + adminUrl + "을 통해서 입력한 계정으로 로그인 할 수 있습니다.<br><br>" + 
 					"계정 정보는 아래와 같습니다.<br><br>" +
 					"ID : " + this.getAdminMailId() + "  /   Password : " + this.getAdminPass() + 
-					"<br><br> 비밀번호 분실시 초기화 할 수 없으므로 반드시 기억하시기 바랍니다.";
+					"<br><br> 비밀번호 분실시 초기화 할 수 없으므로 반드시 기억하시기 바랍니다. 회원 프로필 정보에서 추후 비밀번호는 변경이 가능합니다.";
 			
 
 			String emailTitle = siteOwner + " Wiki 안내 메일입니다.";		// 제목
