@@ -10,8 +10,10 @@
 package org.gliderwiki.install;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -130,7 +132,7 @@ public class InstallController {
 		String installYn = status.getProperty("install.status");
 		
 		logger.info("#### installYn : "  +installYn);
-		if(installYn.equals("Y")) {
+		if(installYn.trim().equals("Y")) {
 			logger.info("글라이더 시스템에 접근할 수 없습니다.\n" +
 					"이미 GLiDER™ Wiki가 설치 되었습니다. " +
 					"설정 변경 및 재설치는 GLiDER™ Wiki의 공식 웹 사이트(http://www.gliderwiki.org)에 문의 하여 주시기 바랍니다");
@@ -236,7 +238,7 @@ public class InstallController {
     			}
     			
     			
-    			if(StringUtil.nullToDate(variables.getValue()).equals("1")) {
+    			if(StringUtil.strNull(variables.getValue()).equals("1")) {
     				param.put("result", "SUCCESS"); 
         			param.put("status", "1");
     			} else {
@@ -291,54 +293,112 @@ public class InstallController {
 		
 		int result = 0;
 		
-		String tableInitPath = request.getSession().getServletContext().getRealPath(SystemConst.MYSQL_DB_PATH);
-
-		// 테이블 이름 로드 - 드랍할 경우 대비   
-		LoadTableData crateTable = new LoadTableData();
+		// DB 캐릭터 셋 조회	
+		List dbCharList = new ArrayList<MySQLVariable>();
+		boolean isCharacterSet = false;	// euckr 이나 utf8 일 경우 true 
 		
-		String encoding = crateTable.LoadTableData(tableInitPath, enc);
-		logger.debug("###### 테이블 가져온다 : " + crateTable.getAllTables());
-		logger.debug("###encoding : "  +encoding);
-		
-		SingleDatasourceDao singleDao = new SingleDatasourceDao();
-		
-		String rtnMsg = "";
-		try {
-			// 캐릭터 셋 타입에 따라 다른 테이블형태를 create 한다.  
-			rtnMsg = singleDao.createTables(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), 
-											this.getJdbcSchema(), charType, crateTable.getAllTables(), tableInitPath, enc);
-			result = 1;
-		} catch (Exception e) {
-			result = -1;
-			rtnMsg = e.getMessage();
-		}
-		
-		logger.debug("###테이블생성 result : " + result);
-		logger.debug("###테이블생성 rtnMsg : " + rtnMsg);
-		
-		String resultStr = "";
-		if(StringUtil.strNull(rtnMsg).equals("1")) {
-			// 테이블에 테스트 데이터를 인서트 한 후 정상적으로 출력되는지 확인한다.
-			singleDao.insertLogToKor(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), this.getJdbcSchema(), strKor);
-			resultStr = singleDao.selectKorLog(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword());			
-		}
-		
-		int tableSize = 0;
-		
-		tableSize = crateTable.getAllTables().size();
+		isCharacterSet = this.getMySQLCharacterSet(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword());
 		
 		Map<String, Object> param = new HashMap<String, Object>();
+		if(isCharacterSet) {	// MySQL 서버 Variable이 utf8 이거나 euckr 일 경우 한글 처리 가능
+			String tableInitPath = request.getSession().getServletContext().getRealPath(SystemConst.MYSQL_DB_PATH);
+
+			// 테이블 이름 로드 - 드랍할 경우 대비   
+			LoadTableData crateTable = new LoadTableData();
+			
+			String encoding = crateTable.LoadTableData(tableInitPath, enc);
+			logger.debug("###### 테이블 가져온다 : " + crateTable.getAllTables());
+			logger.debug("###encoding : "  +encoding);
+			
+			SingleDatasourceDao singleDao = new SingleDatasourceDao();
+			
+			String rtnMsg = "";
+			try {
+				// 캐릭터 셋 타입에 따라 다른 테이블형태를 create 한다.  
+				rtnMsg = singleDao.createTables(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), 
+												this.getJdbcSchema(), charType, crateTable.getAllTables(), tableInitPath, enc);
+				result = 1;
+			} catch (Exception e) {
+				result = -1;
+				rtnMsg = e.getMessage();
+			}
+			
+			logger.debug("###테이블생성 result : " + result);
+			logger.debug("###테이블생성 rtnMsg : " + rtnMsg);
+			
+			String resultStr = "";
+			if(StringUtil.strNull(rtnMsg).equals("1")) {
+				// 테이블에 테스트 데이터를 인서트 한 후 정상적으로 출력되는지 확인한다.
+				singleDao.insertLogToKor(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), this.getJdbcSchema(), strKor);
+				resultStr = singleDao.selectKorLog(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword());			
+			}
+			
+			int tableSize = 0;
+			
+			tableSize = crateTable.getAllTables().size();
+			
+			param.put("resultStr", resultStr);
+			param.put("rtnMsg", rtnMsg);
+			param.put("result", result);
+			param.put("tableSize", tableSize);
+			param.put("encoding", encoding);
+		} else {
+			// 한글 캐릭터 셋이 아닐 경우 설치를 지원하지 않는다.
+			param.put("resultStr", "");
+			param.put("rtnMsg", -1);
+			param.put("result", -1);
+			param.put("tableSize", "");
+			param.put("encoding", enc);
+		}
 		
-		param.put("resultStr", resultStr);
-		param.put("rtnMsg", rtnMsg);
-		param.put("result", result);
-		param.put("tableSize", tableSize);
-		param.put("encoding", encoding);
 		
 		modelAndView.setViewName("admin/install/install");
 		return new ModelAndView("json_").addObject("param", param);
 	}
 	
+	/**
+	 * 한글 처리가 가능한 서버인가 판단함.
+	 * @param jdbcUrl
+	 * @param jdbcId
+	 * @param jdbcPassword
+	 * @return
+	 * @throws Throwable 
+	 */
+	private boolean getMySQLCharacterSet(String jdbcUrl, String jdbcId, String jdbcPassword) throws Throwable {
+		List<MySQLVariable> charList = new ArrayList<MySQLVariable>();
+		
+		SingleDatasourceDao singleDao = new SingleDatasourceDao();
+		boolean isResult = false;
+		try {
+			charList = singleDao.getMySQLCharset(jdbcUrl, jdbcId, jdbcPassword);
+			logger.debug("##### charList : "  + charList.size());
+			logger.debug("##### charList.toString() : "  + charList.toString());
+			if(charList != null) {
+				for(int i = 0; i < charList.size(); i++) {
+					logger.debug("Cols 1 : " + charList.get(i).getVariable_name());
+					logger.debug("Cols 2 : " + charList.get(i).getValue());
+					String variable = charList.get(i).getVariable_name();
+					String value = charList.get(i).getValue();
+					// value 가 utf 로 시작되거나 euckr 일 경우 true 아니면 false 
+					if(variable.trim().equalsIgnoreCase("character_set_client") 
+							|| variable.trim().equalsIgnoreCase("character_set_connection") 
+							|| variable.trim().equalsIgnoreCase("character_set_database")) {
+						if(value.trim().startsWith("utf8") || value.trim().startsWith("UTF8")
+								|| value.trim().startsWith("euckr") || value.trim().startsWith("euckr")) {
+							isResult = true;
+						} else {
+							isResult = false;
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			isResult = false;
+			e.getMessage();
+		}
+		return isResult;
+	}
+
 	/**
 	 * 테이블 정보를 초기화 한다. 
 	 * @param request
@@ -431,30 +491,33 @@ public class InstallController {
 		
 		String tableInitPath = request.getSession().getServletContext().getRealPath(SystemConst.MYSQL_DB_PATH);
 		
+		Map<String, Object> param = new HashMap<String, Object>();
+		
 		int result = 0;
 		
-		try {
-			// 액티브 키로 어드민 암호화 한다.
-			String passwd = SecretKeyPBECipher.setUserPassword(adminpass, activeKey);
-			
-			WeUser weUser = new WeUser();
-			weUser.setWe_user_id(adminMailId);
-			weUser.setWe_user_pwd(passwd);
-			weUser.setWe_user_nick("ADMIN");
-			weUser.setWe_user_name("어드민");
-			weUser.setWe_user_key(activeKey);
-			
-			WeProfile weProfile = new WeProfile();
-			weProfile.setWe_user_email(adminMailId);
-			weProfile.setWe_user_site(adminSite);
-			
-						
-			SingleDatasourceDao singleDao = new SingleDatasourceDao();
-			
-			// 어드민 사용자와 기본 데이터들을 저장한다. 
-			result = singleDao.insertInitTableData(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), weUser, weProfile, tableInitPath, enc); 
-			
-			//TODOLIST : restClient를 이용하여 글라이더 서버에 관련 데이터를 전송해야 한다. 
+		
+		// 액티브 키로 어드민 암호화 한다.
+		String passwd = SecretKeyPBECipher.setUserPassword(adminpass, activeKey);
+		
+		WeUser weUser = new WeUser();
+		weUser.setWe_user_id(adminMailId);
+		weUser.setWe_user_pwd(passwd);
+		weUser.setWe_user_nick("ADMIN");
+		weUser.setWe_user_name("어드민");
+		weUser.setWe_user_key(activeKey);
+		
+		WeProfile weProfile = new WeProfile();
+		weProfile.setWe_user_email(adminMailId);
+		weProfile.setWe_user_site(adminSite);
+		
+					
+		SingleDatasourceDao singleDao = new SingleDatasourceDao();
+		
+		// 어드민 사용자와 기본 데이터들을 저장한다. 
+		result = singleDao.insertInitTableData(this.getJdbcUrl(), this.getJdbcId(), this.getJdbcPassword(), weUser, weProfile, tableInitPath, enc); 
+		
+		if(result == 1) {
+			// Rest API 콜 
 			WeInstallUser installUserVo = new WeInstallUser();
 			
 			installUserVo.setWe_active_key(activeKey);	// 액티브 키
@@ -463,23 +526,21 @@ public class InstallController {
 			installUserVo.setWe_domain(adminSite);		// 사이트명 
 			installUserVo.setWe_email(userMail);		// 이메일 
 			
-			HttpEntity<WeInstallUser> entity = new HttpEntity<WeInstallUser>(installUserVo);
-			String restUrl = REST_SERVER_URL + "/service/installAuthUser";
-			ResponseEntity<WeInstallUser> entityResponse = restTemplate.postForEntity(restUrl, entity, WeInstallUser.class);
-			
-			WeInstallUser restVo = entityResponse.getBody();
-			logger.debug("###restVo : " + restVo.toString());
-			
-		} catch(Exception e) {
-			result = -1;
-			e.getMessage();
-			e.printStackTrace();
+			try {
+				HttpEntity<WeInstallUser> entity = new HttpEntity<WeInstallUser>(installUserVo);
+				String restUrl = REST_SERVER_URL + "/service/installAuthUser";
+				ResponseEntity<WeInstallUser> entityResponse = restTemplate.postForEntity(restUrl, entity, WeInstallUser.class);
+				
+				WeInstallUser restVo = entityResponse.getBody();
+				logger.debug("###restVo : " + restVo.toString());
+			} catch(Exception e) {
+				result = -4;		// Rest Error 일 경우 pass 
+				e.getMessage();
+			}		
 		}
-		
-
-		Map<String, Object> param = new HashMap<String, Object>();
+		// -3 일 경우 관리자 회원 계정 저장 중 에러발생 
+		// -2 일 경우 기본 데이터 로드중 에러 발생 
 		param.put("result", result+"");
-
 		
 		modelAndView.setViewName("admin/install/install");
 		return new ModelAndView("json_").addObject("param", param);
@@ -588,7 +649,11 @@ public class InstallController {
 		String domain = CommonUtil.getClientDomain(request);
 		
 		String adminUrl =  domain+"admin/wikiadminlogin";
-				
+		
+		// 결과에 상관없이 properties는 생성되어야 한다. 
+		property.CreateCionfigProperties(mailUserId, mailUserKey, siteDomain, configPath);
+		
+		
 		if(result == 1 ) {
 			
 			// 메일을 전송한다. 
@@ -598,18 +663,14 @@ public class InstallController {
 			
 
 			String emailTitle = siteOwner + " Wiki 안내 메일입니다.";		// 제목
-						
+			
 			try {
 				SendMailSMTP sender = new SendMailSMTP();
 				result = sender.sendSimpleMail(testUserMail, emailTitle, emailMsgTxt, request);
 
 				logger.debug("###result : " + result);
-				
 				if(result > 0) {
-					
 					// config 프로퍼티를 생성한다. 
-					property.CreateCionfigProperties(mailUserId, mailUserKey, siteDomain, configPath);
-					
 					param.put("result", "SUCCESS");
 					param.put("status", SystemConst.CALL_SUCCESS);
 					param.put("rtnResult", result);
@@ -619,8 +680,6 @@ public class InstallController {
 					param.put("status", SystemConst.CALL_FAIL);
 					param.put("rtnResult", -1);
 				}
-				
-				
 			} catch (UnsupportedEncodingException e) {
 				param.put("result", "FAIL");
 				param.put("status", SystemConst.CALL_FAIL);

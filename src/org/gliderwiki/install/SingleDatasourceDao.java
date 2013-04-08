@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.gliderwiki.web.domain.WeProfile;
@@ -180,7 +182,6 @@ public class SingleDatasourceDao {
 	                	// SQL 문장 종료인 경우 맨 뒤에 라인을 덧붙여서 문장을 완성한다. 
 	                    command.append(line.substring(0, line.lastIndexOf(";")));
 	                    command.append(" ");
-	                    
 	                    logger.debug("### SQL 구문 command : " + command.toString());
 	                    JdbcTemplate jt = null;
 	            		
@@ -190,8 +191,6 @@ public class SingleDatasourceDao {
 		                	jt.update(command.toString());
 		                	result++;
 		                }
-		                
-		                
 		                logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@result : " + result);
 	            		command = null;
 	            		//Thread.yield();
@@ -209,7 +208,7 @@ public class SingleDatasourceDao {
 	    	if(reader != null) {
 				reader.close();
 			}
-	    	this.dropTables(ds, allTables, schema);
+	    	//this.dropTables(ds, allTables, schema);
 	        logger.error("Error executing IOException: " + command);
 	        resultMsg =  "-1";	// IOE
 	        e.printStackTrace();
@@ -217,7 +216,7 @@ public class SingleDatasourceDao {
 	    	if(reader != null) {
 				reader.close();
 			}
-	    	this.dropTables(ds, allTables, schema);
+	    	//this.dropTables(ds, allTables, schema);
 	    	resultMsg = "-2";	// SQLE
 	        logger.error("Error executing Exception: " + command);
 	        e.printStackTrace();
@@ -372,14 +371,13 @@ public class SingleDatasourceDao {
 			if(result == 1) {
 				jt.update(insertProfileSQL);
 			} else {
-				result = -2;
+				result = -3;
 			}
 			
 			logger.debug("##어드민 유저 커밋!");
 		} catch (Exception e) { 
-			result = -1;
-			logger.debug("익셉션 롤백 ");
-			e.printStackTrace();
+			result = -3;
+			logger.debug("익셉션 롤백  : " + e.getMessage());
 		} 
 		return result;
 	}
@@ -621,6 +619,49 @@ public class SingleDatasourceDao {
 		}
 	
 		return vars;
+	}
+
+
+	/**
+	 * MySQL 한글 캐릭터 설정 결과 조회 
+	 * @param jdbcUrl
+	 * @param jdbcId
+	 * @param jdbcPassword
+	 * @return
+	 */
+	public List<MySQLVariable> getMySQLCharset(String jdbcUrl, String jdbcId, String jdbcPassword) throws Throwable {
+
+		String result = "";
+		SingleConnectionDataSource ds = this.singleConnectionDS(jdbcUrl, jdbcId, jdbcPassword);
+		
+		logger.debug("Datasource Connection : " + ds.toString());
+		logger.debug("################# DB 연결 ##################");
+		
+		List<MySQLVariable> varList = new ArrayList<MySQLVariable>();
+		try {
+			java.sql.Statement stat = ds.getConnection().createStatement(); 
+			
+			// 시스템 변수를 조회한다. 
+			String sql  = "SHOW VARIABLES LIKE 'character_set_%'";
+			stat.execute(sql);
+			java.sql.ResultSet rs = stat.getResultSet();
+			while(rs.next()) {
+				MySQLVariable vars = new MySQLVariable();
+				vars.setVariable_name(rs.getString(1));
+				vars.setValue(rs.getString(2));
+				varList.add(vars);
+		        logger.debug("### MySQL Variables : " + rs.getString(1) + " - " + rs.getString(2));
+			}
+			ds.destroy();
+		} catch (Exception e) {
+			logger.debug("######### DB character_set ERROR!!!! Please Contact to MySQL DB Admin!!! ########");
+			logger.error("::message ==== " + e.getMessage());
+			result = "0";
+		} finally {
+			ds.destroy();
+		}
+	
+		return varList;
 	}
 	
 	
