@@ -9,9 +9,6 @@
  */
 package org.gliderwiki.web.login.service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
@@ -29,12 +26,10 @@ import org.gliderwiki.framework.exception.DBHandleException;
 import org.gliderwiki.framework.exception.GliderwikiException;
 import org.gliderwiki.framework.exception.UserNotFoundException;
 import org.gliderwiki.framework.util.Base64Coder;
-import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.SecretKeyPBECipher;
 import org.gliderwiki.util.PropertyUtil;
 import org.gliderwiki.util.SendMailSMTP;
 import org.gliderwiki.web.common.service.EntityService;
-import org.gliderwiki.web.domain.WeGroupInfo;
 import org.gliderwiki.web.domain.WeGroupUser;
 import org.gliderwiki.web.domain.WeProfile;
 import org.gliderwiki.web.domain.WeSendMail;
@@ -47,12 +42,9 @@ import org.gliderwiki.web.wiki.common.service.CommonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 
