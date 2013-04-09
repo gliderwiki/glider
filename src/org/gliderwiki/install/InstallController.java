@@ -693,7 +693,6 @@ public class InstallController {
 					"계정 정보는 아래와 같습니다.<br><br>" +
 					"ID : " + this.getAdminMailId() + "  /   Password : " + this.getAdminPass() + 
 					"<br><br> 비밀번호 분실시 초기화 할 수 없으므로 반드시 기억하시기 바랍니다. 회원 프로필 정보에서 추후 비밀번호는 변경이 가능합니다.";
-			
 
 			String emailTitle = siteOwner + " Wiki 안내 메일입니다.";		// 제목
 			
