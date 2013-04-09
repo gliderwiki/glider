@@ -51,32 +51,33 @@ public class SecretKeyPBECipher {
 	}
 
 	
+	/*
 	public static void main(String[] args) {
-		/*
+		
 		try {
 			byte[] data;
 			String genkey = stringBuffersChars(128);
-			SecretKeyPBECipher.initiate("APvmoMKGaEHHaNfiHEleajPBmVZUlEOeRuRNZlXvHWWBpJNGwwpnpRaCIqHZMIvlpEvtoTEhEcjvOkCBvJeVqwvrFyvFKufxDtdTjvyWsCciSZfDqTSxoazMDfTIqsLm");
-			data = SecretKeyPBECipher.encrypt("skagml");
+			SecretKeyPBECipher.initiate("DFtzHGKKiFbdVlVktfrAaCFTNypBvKPOqTinLgyjCIHfJPgWwIaYuvEhxrnKkZiPaFvorJeLXUcQjrsdFDuTsIRxwzTkQQkkRGjvcjtghEIczyZZrAbihhPPChFSoQAE");
+			data = SecretKeyPBECipher.encrypt("1111");
 			String password = Base64Coder.encodeString(data);
 			System.out.println("1 : " + password);		
 			
 			data = SecretKeyPBECipher.decrypt(data);
 			System.out.println("2 : " + new String(data, "euc-kr"));
 			
-			data = Base64Coder.decode("D6QIwc00+4s=");
+			data = Base64Coder.decode("SEqmXoZFGdk=");
 			data = SecretKeyPBECipher.decrypt(data);
 			System.out.println("3 : " + new String(data, "euc-kr"));
 			
 			data = SecretKeyPBECipher.decrypt("7qXgar1JEeE3LjrWBBelwA==");
-			String password = Base64Coder.decodeString(new String(data, "euc-kr"));
-			System.out.println("2 : " + password);
+			String password1 = Base64Coder.decodeString(new String(data, "euc-kr"));
+			System.out.println("2 : " + password1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		*/
+		
 	}
-
+	*/
 
 	public static String stringBuffersChars(int len) {
 		StringBuffer buffer = new StringBuffer();
