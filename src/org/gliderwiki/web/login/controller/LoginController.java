@@ -188,7 +188,7 @@ public class LoginController {
 		weUser.setWe_user_auth(randomKey);				// 인증전송 값 
 		weUser.setWe_user_id(we_user_id);
 		weUser.setWe_user_name(we_user_name);
-		weUser.setWe_user_pwd(we_user_pwd);
+		weUser.setWe_user_pwd(password);
 		weUser.setWe_user_nick(we_user_nick);
 		
 		int rtnResult = 0;
