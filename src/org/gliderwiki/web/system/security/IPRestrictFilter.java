@@ -58,7 +58,6 @@ public class IPRestrictFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
-
 		// 사용자의 역할을 가져온다.
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
