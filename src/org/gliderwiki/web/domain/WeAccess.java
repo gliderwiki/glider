@@ -36,6 +36,11 @@ public class WeAccess extends BaseObjectBean {
 	@Column(name="we_ins_date")
 	private Date we_ins_date;
 
+	@Column(name="we_use_yn")
+	private String we_use_yn;
+
+	
+
 	public WeAccess() {}
 
 	public WeAccess(Integer we_access_idx) {
@@ -102,5 +107,20 @@ public class WeAccess extends BaseObjectBean {
 	 */
 	public void setWe_ins_date(Date we_ins_date) {
 		this.we_ins_date = we_ins_date;
+	}
+	
+
+	/**
+	 * @return the we_use_yn
+	 */
+	public String getWe_use_yn() {
+		return we_use_yn;
+	}
+
+	/**
+	 * @param we_use_yn the we_use_yn to set
+	 */
+	public void setWe_use_yn(String we_use_yn) {
+		this.we_use_yn = we_use_yn;
 	}
 }
