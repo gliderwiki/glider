@@ -27,7 +27,9 @@ import org.gliderwiki.web.domain.WeBbs;
 import org.gliderwiki.web.domain.WeSpace;
 import org.gliderwiki.web.domain.WeWiki;
 import org.gliderwiki.web.system.SystemConst;
+import org.gliderwiki.web.system.argumentresolver.LoginUser;
 import org.gliderwiki.web.vo.KeywordVo;
+import org.gliderwiki.web.vo.MemberSessionVo;
 import org.gliderwiki.web.wiki.common.service.CommonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +78,8 @@ public class ContentController {
 	 * @throws Throwable
 	 */
 	@RequestMapping(value="/admin/space", method = { RequestMethod.POST, RequestMethod.GET } )
-	public ModelAndView spaceManage(@ModelAttribute("weSpace") WeSpace weSpace, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+	public ModelAndView spaceManage(@LoginUser MemberSessionVo loginUser, @ModelAttribute("weSpace") WeSpace weSpace, 
+			HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		logger.debug("### 공간관리 ");
 		logger.debug("### weSpace :  " + weSpace.toString());
 	
@@ -108,13 +111,15 @@ public class ContentController {
 		modelAndView.addObject("spaceSearchList" , spaceSearchList);
 		modelAndView.addObject("spaceSize" , spaceSize);
 		modelAndView.addObject("weSpace" , weSpace);
+		modelAndView.addObject("weUserIdx" , loginUser.getWeUserIdx());
+		
 		modelAndView.setViewName("admin/contents/spaceMgr");
 		return modelAndView;
 	}
 	
 
 	@RequestMapping(value="/admin/wiki", method = { RequestMethod.POST, RequestMethod.GET } )
-	public ModelAndView wikiManage(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+	public ModelAndView wikiManage(@LoginUser MemberSessionVo loginUser,HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		logger.debug("### 위키 ");
 		String weUserNick = StringUtil.strNull(request.getParameter("we_user_nick"));
 		String weWikiTitle = StringUtil.strNull(request.getParameter("we_wiki_title"));
@@ -140,6 +145,7 @@ public class ContentController {
 		modelAndView.addObject("weWikiTitle" , weWikiTitle);
 		modelAndView.addObject("weWikiText" , weWikiText);
 		modelAndView.addObject("weSpaceName" , weSpaceName);
+		modelAndView.addObject("weUserIdx" , loginUser.getWeUserIdx());
 	
 		modelAndView.setViewName("admin/contents/wikiMgr");
 		return modelAndView;
@@ -198,7 +204,7 @@ public class ContentController {
 	 * @throws Throwable
 	 */
 	@RequestMapping(value="/admin/keyword", method = RequestMethod.GET)
-	public ModelAndView adminKeyword(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+	public ModelAndView adminKeyword(@LoginUser MemberSessionVo loginUser, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		String startRow = StringUtil.strNullToSpace(request.getParameter("startRow"), "0");
 		
 		KeywordVo keyword = new KeywordVo();
@@ -217,6 +223,7 @@ public class ContentController {
 		modelAndView.addObject("menuCode", "5");
 		modelAndView.addObject("keywordSize", keywordSize);
 		modelAndView.addObject("keywordList", keywordList);
+		modelAndView.addObject("weUserIdx", loginUser.getWeUserIdx());
 		modelAndView.addObject("startRow", startRow);
 		modelAndView.addObject("limit", SystemConst.FETCH_LIMIT_ROW -1);		//21개 
 		modelAndView.addObject("fetch_limit_row", SystemConst.FETCH_LIMIT_ROW);		//20개 
@@ -274,7 +281,7 @@ public class ContentController {
 		
 		param.put("result", "SUCCESS");
 		param.put("status", SystemConst.CALL_SUCCESS);
-		param.put("markup", rntObj.getWe_bbs_text());
+		param.put("markup", rntObj.getWe_bbs_text().replaceAll("\r\n", "<BR>"));
 		param.put("title", rntObj.getWe_bbs_title());
 		
 		return new ModelAndView("json_").addObject("param", param);

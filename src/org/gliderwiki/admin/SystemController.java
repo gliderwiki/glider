@@ -265,6 +265,7 @@ public class SystemController {
 	@RequestMapping(value="/admin/filter/create", method = RequestMethod.POST)
 	public String createFilter(@LoginUser MemberSessionVo loginUser, @RequestParam("targetIp") String targetIp) throws Throwable {
 		WeAccess weAccess = new WeAccess(targetIp, loginUser.getWeUserIdx());
+		weAccess.setWe_use_yn("Y");
 		entityService.insertEntity(weAccess);
 
 		return "redirect:/admin/filter";
