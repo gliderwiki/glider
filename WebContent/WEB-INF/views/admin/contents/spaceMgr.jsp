@@ -140,7 +140,7 @@ $(document).ready(function() {
 		var spaceDesc	  = $("#space_desc").val();
 		var spaceAdminIdx = $("#space_admin_idx").val();
 		var spaceExposed  = $("#space_exposed option:selected").val();
-		var weUserIdx     = 9;
+		var weUserIdx     = "${weUserIdx}";
 		
 		AdminSpaceService.updateSpaceByAdmin(spaceIdx, spaceName, spaceDesc, spaceAdminIdx, spaceExposed, weUserIdx, callBackUpdateSpaceAdmin);
 	});
@@ -149,12 +149,15 @@ $(document).ready(function() {
 	 * 05. 공간정보 삭제 
 	 */
 	$('button[name]="deleteSpace"').each(function(index){
+		
 		$(this).click(function(){
-			var attrId     = $(this).attr("id");
-			var weSpaceIdx  = $(this).attr("title");
-			var weUserIdx = 9;
-			AdminSpaceService.deleteSpaceInfo(weSpaceIdx,  weUserIdx, callBackDeleteSpace);
-		});
+			if(confirm('선택한 공간을 삭제하겠습니까?')) {
+				var attrId     = $(this).attr("id");
+				var weSpaceIdx  = $(this).attr("title");
+				var weUserIdx = "${weUserIdx}";
+				AdminSpaceService.deleteSpaceInfo(weSpaceIdx,  weUserIdx, callBackDeleteSpace);
+			}
+		});	
 	});
 
 	
@@ -260,7 +263,7 @@ function callBackSpaceDetail(obj) {
 		inHtml += "<table class=\"tbl-info\">";
 		inHtml += "	   <tr>";
 		inHtml += "        <th>공간명</th>";
-		inHtml += "        <td><input type=\"text\" name=\"space_name\" id=\"space_name\" value=\""+weSpace.we_space_name+"\"/></td>";
+		inHtml += "        <td><input type=\"text\" size=\"81\" name=\"space_name\" id=\"space_name\" value=\""+weSpace.we_space_name+"\"/></td>";
 		inHtml += "        <input type=\"hidden\" name=\"space_idx\" id=\"space_idx\" value=\""+weSpace.we_space_idx+"\"/>";
 		inHtml += "    </tr>";
 		inHtml += "	   <tr>";

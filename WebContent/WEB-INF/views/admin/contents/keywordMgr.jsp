@@ -75,7 +75,7 @@ $(document).ready(function() {
 			if(confirm('등록된 키워드를 삭제하시겠습니까?')) {
 				var attrId     = $(this).attr("id");
 				var weWikiTagIdx  = $(this).attr("title");
-				var weUserIdx = 9;
+				var weUserIdx = "${weUserIdx}";
 				AdminKeywordService.deleteKeyword(weWikiTagIdx, weUserIdx, callBackDeleteKeyword);
 			} else {
 				return;

@@ -147,7 +147,7 @@ function getContent(we_bbs_idx) {
 		if(data.result == 'SUCCESS'){
 			$.preview_layer({
 				'markup' : data.markup,
-				'title'  : data.markup, 
+				'title'  : data.title, 
 				'revision' : 0,
 				'wikiIdx' : we_bbs_idx
 			});

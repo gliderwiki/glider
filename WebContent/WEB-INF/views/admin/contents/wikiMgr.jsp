@@ -152,7 +152,7 @@ $(document).ready(function() {
 		var wikiIndexs = $('input[name=chkWiki]:checked').map(function() {
 		    return this.value;			
 		}).get().join(',');	
-		var weUserIdx = 9;
+		var weUserIdx = "${weUserIdx}";
 		AdminWikiService.arrayDeleteWiki(wikiIndexs, weUserIdx, callBackDeleteWiki);
 	});
 
@@ -160,7 +160,7 @@ $(document).ready(function() {
 	 * 03.위키 상태 변경 
 	 */
 	$("#memBtn").live("click", function() {	
-		 var weUserIdx = 9;
+		 var weUserIdx = "${weUserIdx}";
 		 var status = $("#we_wiki_protect option:selected").val();
 		 var weWikiIdx = $("#wikiIdx").val();
 		 AdminWikiService.updateWikiStatus(weWikiIdx, weUserIdx, status, callBackUpdateWiki);
@@ -214,7 +214,7 @@ function callBackWikiDetail(obj) {
 		inHtml += "    </tr>";
 		inHtml += "	   <tr>";
 		inHtml += "        <th>개설자</th>";
-		inHtml += "        <td>"+weWiki.we_uesr_nick+"</td>";
+		inHtml += "        <td>"+weWiki.we_user_nick+"</td>";
 		inHtml += "    </tr>";
 		inHtml += "	   <tr>";
 		inHtml += "        <th>개설일</th>";
