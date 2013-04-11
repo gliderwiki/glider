@@ -378,7 +378,7 @@
 		AND 	we_wiki_text  LIKE CONCAT('%', #{weWikiText}, '%')
 		</if>
 		<if test="weSpaceName != null and weSpaceName != '' ">
-		AND 	we_space_idx IN (SELECT we_space_idx FROM we_space d WHERE d.we_space_name LIKE CONCAT('%', #{weSpaceName}, '%'))
+		AND 	we_space_idx IN (SELECT we_space_idx FROM we_space d WHERE d.we_use_yn = 'Y' and d.we_space_name LIKE CONCAT('%', #{weSpaceName}, '%'))
 		</if>
 		AND     we_use_yn = 'Y'
 	</select>
