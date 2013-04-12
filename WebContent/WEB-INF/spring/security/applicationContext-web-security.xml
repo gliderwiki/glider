@@ -52,6 +52,7 @@
 		<!-- 어드민 -->
 		<intercept-url pattern="/admin/wikiadminlogin" method="GET" access="permitAll" />
 		<intercept-url pattern="/service/patchList/**" method="POST" access="permitAll" />
+		<intercept-url pattern="/service/installAuthUser" method="POST" access="permitAll" />
 
 		<intercept-url pattern="/admin/index" method="GET" access="hasRole('ROLE_USER') and leastLevel(9)" />
 		<intercept-url pattern="/admin/space" method="GET" access="hasRole('ROLE_USER') and leastLevel(9)" />
