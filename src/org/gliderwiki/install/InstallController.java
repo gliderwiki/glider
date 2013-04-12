@@ -256,12 +256,13 @@ public class InstallController {
     			}
     			
     			
-    			if(StringUtil.strNull(variables.getValue()).equals("1")) {
-    				param.put("result", "SUCCESS"); 
-        			param.put("status", "1");
+    			if(StringUtil.strNull(variables.getValue()).equals("0")) {
+    				param.put("result", "SUCCESS"); 	// 대소문자 구분함으로 에러 메시지 처리함
+        			param.put("status", "-3");
     			} else {
     				param.put("result", "SUCCESS"); 
-        			param.put("status", "-3");   				
+        			param.put("status", "1");
+    				   				
     			}
     		} else {
     				// 프로퍼티 에러 -1 
@@ -549,11 +550,14 @@ public class InstallController {
 			try {
 				HttpEntity<WeInstallUser> entity = new HttpEntity<WeInstallUser>(installUserVo);
 				String restUrl = REST_SERVER_URL + "/service/installAuthUser";
+				
+				logger.debug("restUrl : " +restUrl);
 				ResponseEntity<WeInstallUser> entityResponse = restTemplate.postForEntity(restUrl, entity, WeInstallUser.class);
 				
 				WeInstallUser restVo = entityResponse.getBody();
 				logger.debug("###restVo : " + restVo.toString());
 			} catch(Exception e) {
+				logger.debug("레스트 에러 들어옴");
 				result = -4;		// Rest Error 일 경우 pass 
 				e.getMessage();
 			}		
