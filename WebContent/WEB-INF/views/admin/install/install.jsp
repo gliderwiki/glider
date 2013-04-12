@@ -285,7 +285,7 @@
 			    ,dataType:"json"
 			    ,success:function(rtnObj){	
 			   		var state = rtnObj.result;
-				   	if (state == 1) {
+				   	if (state == 1 || state == -4) {
 				    	alert("기본 데이터가 저장 되었습니다. 다음 단계를 진행하세요.");
 				    	// TODOLIST 생성된 액티브키와 사용자 등록 이메일을 잠궈야 한다. 추후 테스트 메일 전송 후 서버에 전송한다. 
 				    	isDataSave = true;
