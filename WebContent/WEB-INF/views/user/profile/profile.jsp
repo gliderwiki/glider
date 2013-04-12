@@ -127,8 +127,8 @@ $(document).ready(function() {
 		var userName = $("#userName").val();
 		var weUserName = $("#weUserName").val();
 		
-		console.log("userName : "  +userName);
-		console.log("weUserName : "  +weUserName);
+		//console.log("userName : "  +userName);
+		//console.log("weUserName : "  +weUserName);
 		$("#frmFile").unbind();
 		$("#isUpload").val(isUpload);
 		$("#frmFile").ajaxForm(UpdateUserCallback);

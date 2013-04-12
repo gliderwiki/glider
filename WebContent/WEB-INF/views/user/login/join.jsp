@@ -207,7 +207,7 @@
 					   we_user_pwd:$("#we_user_pwd").val()}
 				,dataType:"json"
 				,success:function(rtnObj){
-					console.log("success : " + rtnObj);
+					//console.log("success : " + rtnObj);
 					if(rtnObj.result == 'SUCCESS') {
 						if (rtnObj.rtnResult == 1) {
 							$.loadingBar.fadeOut();
@@ -233,7 +233,7 @@
 					}
 				},
 				error:function(rtnObj){
-					console.log("error : " + rtnObj);
+					//console.log("error : " + rtnObj);
 					$.loadingBar.fadeOut();
 					GliderWiki.alert("에러","통신에러가 발생했습니다. 메일 전송이 제대로 이뤄지지 않았습니다.");
 					return;
