@@ -49,23 +49,16 @@
 	</div>
 	<div class="foot-cont">
 		<div class="wrap_btn">
-			<a href="/template/new" class="btn">신규템플릿등록</a>
+			<a href="/template" class="btn">신규템플릿등록</a>
 		</div>
 	</div>
 </section>
 
-<script type='text/javascript' src='/dwr/engine.js'></script>
-<script type='text/javascript' src='/dwr/interface/AdminWikiService.js'></script>
+<script type="text/javascript" src="/resource/libs/jquery/jquery-1.7.2.js"></script>
 <script type="text/javascript" src="/resource/libs/jquery/jquery.form.js"></script>
-<script type="text/javascript" src="/resource/libs/jquery/jquery.dateFormat-1.0.js"></script>
-<script type="text/javascript" src="/resource/libs/plugin/jquery-preview-layer.js"></script>
+<script type="text/javascript" src="/resource/libs/jquery/jquery.validate.js"></script>
 <script type="text/javascript">
 //<![CDATA[
-
-$(document).ready(function() {
-
-});
-
 /**
  * 01.템플릿 삭제 
  */
@@ -85,7 +78,5 @@ function deleteTemp(idx) {
 		});	
 	});
 }
-
-
 //]]>
 </script>	
