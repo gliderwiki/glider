@@ -164,7 +164,6 @@
 				    var rtnMsg = rtnObj.rtnMsg;
 				    
 				   	if (result > 0) {
-				   		console.log("resultStr : " + resultStr);
 				   		if(rtnMsg == '1') {
 				   			$.loadingBar.fadeOut();
 					    	alert("테이블이 정상적으로 설치 되었습니다. 한글이 제대로 출력되는지 확인하세요.\n\n한글처리결과:[" + resultStr + "] \n\n- 한글이 깨지면 테이블 리셋 후 다른 캐릭터셋을 선택하여 재시도 하세요.\n\n한글이 정상적으로 처리 되었다면 아래 항목을 입력 후 데이터 저장을 클릭하세요.");
@@ -647,7 +646,6 @@
 
 	// 파일 업로드 콜백 
 	function FileuploadCallback(data,state){
-		console.log("data : " + data);
 		var jsonStr = eval("("+data+")");
 
 	
