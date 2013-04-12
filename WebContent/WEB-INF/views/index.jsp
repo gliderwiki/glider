@@ -15,9 +15,9 @@ taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 		<div class="body-cont">
 			<div class="box-top">
 				<div class="about">
-					<h2>About GLiDER Wiki</h2>
+					<h2>About GLiDER™ Wiki</h2>
 					<p>- <a href="http://www.gliderwiki.org" target="_blank">GLiDER™ Wiki</a>는 글(Contents)을 작성하는 사람(Writer), 즉 컨텐츠 혹은 지식을 생성하는 이를 뜻하는 협업 기반의 기업형 Enterprise <a href="http://terms.co.kr/wiki.htm" target="_blank">Wiki</a> 입니다.</p>
-					<p>- <a href="http://www.gliderwiki.org" target="_blank">GLiDER™ Wiki</a>는 손쉬운 태그 생성 기반의 마크업 에디터를 제공합니다. 설치 및 사용법은 <a href="#">사용메뉴얼</a> 페이지를 통해 GLiDER Wiki의 사용법을 확인할 수 있습니다.  </p>
+					<p>- <a href="http://www.gliderwiki.org" target="_blank">GLiDER™ Wiki</a>는 손쉬운 태그 생성 기반의 마크업 에디터를 제공합니다. 설치 및 사용법은 <a href="http://www.gliderwiki.org/space/main/2" target="_blank">사용메뉴얼</a> 페이지를 통해 GLiDER Wiki의 사용법을 확인할 수 있습니다.  </p>
 					<p>- <a href="http://www.gliderwiki.org" target="_blank">GLiDER™ Wiki</a>는 빠르게 HTML 문서를 작성하여 특정 (혹은 회원 전체) 그룹, 특정 사용자에게 공유하는  지식공유관리  <a href="http://terms.co.kr/KMS.htm" target="_blank">KMS플랫폼</a>입니다.</p>
 					<p>- <a href="http://www.gliderwiki.org" target="_blank">GLiDER™ Wiki</a>는 오픈소스이므로 커뮤니티 버전은 무료로 이용할 수 있습니다. 단, 하단의 Copyright 를 삭제하거나 변경할 수 없습니다. <a href="javascript:licensePolicy();">라이센스 정책</a>을 참고해주세요.</p>
 					<p>- <a href="http://www.gliderwiki.org" target="_blank">GLiDER™ Wiki</a>의 설치 및 사용이 어려우시면  <a href="javascript:supportTech();">기술지원 및 교육안내</a>를  참고하세요.</p>
@@ -120,11 +120,11 @@ taglib prefix="common" tagdir="/WEB-INF/tags/common" %>
 					<div class="wrap-btn">
 						<a href="/dashboard" class="btn-main preview">둘러보기</a>
 						<c:choose>
-						<c:when test="${downYn eq 'Y'}">
+						<c:when test="${linkYn eq 'Y'}">
 						<a href="/download/v1.0.0" class="btn-main apply">다운로드</a>
 						</c:when>
 						<c:otherwise>
-						<a href="/download/v1.0.0"  target="_blank" class="btn-main apply">다운로드</a>
+						<a href="http://www.gliderwiki.org/download/v1.0.0"  target="_blank" class="btn-main apply">다운로드</a>
 						</c:otherwise>
 						</c:choose>
 						
