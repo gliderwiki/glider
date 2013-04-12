@@ -22,9 +22,9 @@
         var val = textEditor.value;
     	var startIndex = sel.start;							// 블럭 시작 지점 
         var endIndex = startIndex + sel.text.length;		// 블럭 종료 지점 
-        console.info(sel);
-        console.info("val ::"+val);
-        console.info("#richHidden1 ::"+$("#richHidden").val());
+        //console.info(sel);
+        //console.info("val ::"+val);
+        //console.info("#richHidden1 ::"+$("#richHidden").val());
         
         if( !(sel.start == 0 && sel.end == 0) && data.type == 'outdent' ) {
         	sel.text = sel.text.replaceAll("[t]", "");
@@ -49,9 +49,7 @@
             $.rangeTag(textEditor, startIndex, endIndex);
             
         }
-        
-
-        console.info("#richHidden2 ::"+$("#richHidden").val());
+        //console.info("#richHidden2 ::"+$("#richHidden").val());
     };
     
 	
