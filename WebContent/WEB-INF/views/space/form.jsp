@@ -103,7 +103,6 @@
 		<c:otherwise>수정하기</c:otherwise>
 		</c:choose>
 	</button>
-	<a href="/space/main/${WeSpace.we_space_idx}" class="btn">공간메인목록</a>
 </div>
 <iframe name="hiddenImgForm" id="hiddenImgForm" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" height="0" width="0"  ></iframe>
 </div>
