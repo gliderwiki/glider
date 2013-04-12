@@ -66,9 +66,6 @@ var funcFileDownload = function(url, idx, extName){
 			var status = response.status;
 			var result = response.result;
 			
-			console.log("status : " + status);
-			console.log("result : " + result);
-			
 			if(status == 'SUCCESS'){
 				alert(extName + ' 확장기능이 정상적으로 설치 되었습니다. 시스템을 재시작 하세요.');
 				$("#patchRow").hide();
