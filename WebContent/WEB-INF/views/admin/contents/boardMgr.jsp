@@ -141,9 +141,7 @@ $(document).ready(function() {
 });
 
 function getContent(we_bbs_idx) {
-	console.log(we_bbs_idx);
 	$.post("/admin/board/preview", {we_bbs_idx:we_bbs_idx}, function(data){
-		console.log(data);
 		if(data.result == 'SUCCESS'){
 			$.preview_layer({
 				'markup' : data.markup,
