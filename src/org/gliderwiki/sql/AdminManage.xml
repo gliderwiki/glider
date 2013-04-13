@@ -568,6 +568,7 @@
 		    	AND WE_WIKI_REVISION = #{we_wiki_revision}
 	</update>
 	
+
 	<select id="AdminManage.getWePatchInfo" resultType="wePatch">
 		SELECT 	WE_PATCH_IDX, 
 				WE_FUNCTION_IDX, 
@@ -650,5 +651,16 @@
 		AND 	we_active_key = #{we_active_key}
 	</select>
 	
+	<update id="AdminManage.updateWikiUseYn" parameterType="java.util.HashMap">
+		/*  AdminManage.updateWikiUseYn : 공간 삭제 후 해당 공간의 위키 삭제 */
+		UPDATE 
+				WE_WIKI
+		SET 
+				WE_UPD_DATE = NOW()
+			,   WE_UPD_USER = #{weUserIdx}
+			,   WE_USE_YN = 'N'
+		WHERE 
+				WE_SPACE_IDX = #{weSpaceIdx}
+	</update>
 	
 </mapper>

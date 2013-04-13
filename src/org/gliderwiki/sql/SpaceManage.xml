@@ -96,6 +96,7 @@
 		INNER JOIN we_user d
 		ON a.we_ins_user=d.we_user_idx
 		WHERE a.we_ins_user = #{userIdx}
+		AND   a.we_use_yn = 'Y'
 		order by we_ins_date desc
 	</select>
 
