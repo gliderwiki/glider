@@ -13,7 +13,7 @@
 			</li>
 			<li class="bar"> | </li>
 			<li>
-				<a href="javascript:alert('준비중입니다.');"  id="menual">사용메뉴얼</a>
+				<a href="http://gliderwiki.org/space/main/2" target="_blank" id="menual">사용메뉴얼</a>
 			</li>
 			<li class="bar"> | </li>
 			<li>
