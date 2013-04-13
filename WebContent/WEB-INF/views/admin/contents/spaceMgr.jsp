@@ -69,7 +69,7 @@
 								<td style="text-align:left"> <a href="javascript:spaceDetailData('userId_${spaceSearchList.we_space_idx }', '${spaceSearchList.we_space_idx }' );" name="spaceDetail" id="userId_${spaceSearchList.we_space_idx }" title="${spaceSearchList.we_space_idx }">${spaceSearchList.we_space_name}</a></td>
 								<td>${spaceSearchList.we_space_admin_nick  }</td>
 								<td>${gf:articleDate(spaceSearchList.we_ins_date,'yyyy.MM.dd hh:mm:ss')}</td>
-								<td><button type="button" class="btn-down" name="deleteSpace" id="deleteSpace_${spaceSearchList.we_space_idx }" title="${spaceSearchList.we_space_idx }">공간삭제</button></td>
+								<td><button type="button" class="btn-down" onclick="javascript:deleteSpace('${spaceSearchList.we_space_idx }')" title="${spaceSearchList.we_space_name }">공간삭제</button></td>
 							</tr>
 							</c:forEach>
 							</c:otherwise>
@@ -145,21 +145,7 @@ $(document).ready(function() {
 		AdminSpaceService.updateSpaceByAdmin(spaceIdx, spaceName, spaceDesc, spaceAdminIdx, spaceExposed, weUserIdx, callBackUpdateSpaceAdmin);
 	});
 	
-	/**
-	 * 05. 공간정보 삭제 
-	 */
-	$('button[name]="deleteSpace"').each(function(index){
-		
-		$(this).click(function(){
-			if(confirm('선택한 공간을 삭제하겠습니까?')) {
-				var attrId     = $(this).attr("id");
-				var weSpaceIdx  = $(this).attr("title");
-				var weUserIdx = "${weUserIdx}";
-				AdminSpaceService.deleteSpaceInfo(weSpaceIdx,  weUserIdx, callBackDeleteSpace);
-			}
-		});	
-	});
-
+	
 	
 });
 
@@ -184,7 +170,7 @@ function callBackSpaceInfo(obj) {
 		inHtml += "	   <td style=\"text-align:left\"> <a href=\"javascript:spaceDetailData('userId_"+weSpace.we_space_idx+ "', "+weSpace.we_space_idx+")\" name=\"spaceDetail\"  id=\"userId_"+weSpace.we_space_idx+"\" title=\""+weSpace.we_space_idx+"\">"+weSpace.we_space_name+"</a></td>"; 
 		inHtml += "	   <td>"+weSpace.we_space_admin_nick+"</td>";
 		inHtml += "	   <td>"+$.format.date(weSpace.we_ins_date, "yyyy.MM.dd hh:mm:ss")+"</td>";
-		inHtml += "	   <td><button type=\"button\" class=\"btn-down\" id=\"weUserAway\">공간삭제</button></td>";
+		inHtml += "	   <td><button type=\"button\" class=\"btn-down\" onclick=\"javascript:deleteSpace('"+weSpace.we_space_idx+"')\">공간삭제</button></td>";
 		inHtml += "</tr>";
 		
 		$("#space_body").html(inHtml);
@@ -341,9 +327,19 @@ function callBackUpdateSpaceAdmin(obj){
 	}
 }
 
+/**
+ * 05. 공간정보 삭제 
+ */
+ function deleteSpace(spaceIdx) {
+	console.log('deleteSpace : ' + spaceIdx);
+	if(confirm('선택한 공간을 삭제하겠습니까?\n공간에 속한 하위 위키들도 모두 삭제 됩니다.')) {
+		var weUserIdx = "${weUserIdx}";
+		AdminSpaceService.deleteSpaceInfo(spaceIdx,  weUserIdx, callBackDeleteSpace);
+	}	
+}
+
 function callBackDeleteSpace(obj) {
 	if(obj != '' && obj != null) {
-		var inHtml = "";
 		var result	    = obj[0];
 		var spaceIdx    = obj[1];
 		
