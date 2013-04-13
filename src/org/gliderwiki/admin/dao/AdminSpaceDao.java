@@ -60,5 +60,11 @@ public interface AdminSpaceDao {
 	 */
 	List<WeBbs> getBbsSearchList(WeBbs weBbs) throws Throwable;
 
+	/**
+	 * @param weSpaceIdx
+	 * @param weUserIdx
+	 */
+	int updateWikiUseYn(Integer weSpaceIdx, Integer weUserIdx) throws Throwable;
+
 
 }

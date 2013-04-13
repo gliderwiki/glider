@@ -78,4 +78,17 @@ public class AdminSpaceDaoImpl extends SqlSessionDaoSupport implements AdminSpac
 		return list;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.gliderwiki.admin.dao.AdminSpaceDao#updateWikiUseYn(java.lang.Integer, java.lang.Integer)
+	 */
+	@Override
+	public int updateWikiUseYn(Integer weSpaceIdx, Integer weUserIdx)
+			throws Throwable {
+		Map<String, Integer> mapper = new HashMap<String, Integer>();
+		mapper.put("weSpaceIdx", weSpaceIdx);
+		mapper.put("weUserIdx", weUserIdx);
+		
+		return getSqlSession().update("AdminManage.updateWikiUseYn", mapper);
+	}
+
 }

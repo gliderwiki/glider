@@ -87,6 +87,7 @@ public class AdminSpaceServiceImpl implements AdminSpaceService {
 	@RemoteMethod
 	public int updateSpaceByAdmin(Integer spaceIdx, String spaceName, String spaceDesc,
 			Integer spaceAdminIdx, String spaceExposed, Integer weUserIdx) throws Throwable {
+		
 		WeSpace space = new WeSpace();
 		space.setWe_space_name(spaceName);
 		space.setWe_space_idx(spaceIdx);		
@@ -108,6 +109,10 @@ public class AdminSpaceServiceImpl implements AdminSpaceService {
 		space.setWe_upd_date(new Date());
 		
 		int result = entityService.updateEntity(space);
+		
+	 	if(result > 0) { 
+	 		adminSpaceDao.updateWikiUseYn(weSpaceIdx, weUserIdx);
+	 	}
 		
 		Object[] returnArrayObject = new Object[2];
 		
