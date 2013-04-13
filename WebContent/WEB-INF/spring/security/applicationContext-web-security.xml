@@ -15,6 +15,7 @@
 		<intercept-url pattern="/admin/install/*" filters="none" />
 		<intercept-url pattern="/admin/installUpload" filters="none" />
 		<intercept-url pattern="/resource/**" filters="none" />
+		<intercept-url pattern="/download/**" filters="none" />
 
 		<!-- 모든 사용자 접근허용 -->
 		<intercept-url pattern="/" access="permitAll" />
@@ -53,6 +54,8 @@
 		<intercept-url pattern="/admin/wikiadminlogin" method="GET" access="permitAll" />
 		<intercept-url pattern="/service/patchList/**" method="POST" access="permitAll" />
 		<intercept-url pattern="/service/installAuthUser" method="POST" access="permitAll" />
+		<intercept-url pattern="/service/extentionList/*" method="GET" access="permitAll" />
+		<intercept-url pattern="/service/patchService" method="POST" access="permitAll" />
 
 		<intercept-url pattern="/admin/index" method="GET" access="hasRole('ROLE_USER') and leastLevel(9)" />
 		<intercept-url pattern="/admin/space" method="GET" access="hasRole('ROLE_USER') and leastLevel(9)" />
