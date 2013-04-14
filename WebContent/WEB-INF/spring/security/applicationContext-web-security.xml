@@ -16,6 +16,8 @@
 		<intercept-url pattern="/admin/installUpload" filters="none" />
 		<intercept-url pattern="/resource/**" filters="none" />
 		<intercept-url pattern="/download/**" filters="none" />
+		<intercept-url pattern="/downloadComplete" filters="none" />
+		<intercept-url pattern="/downloadWiki" filters="none" />
 
 		<!-- 모든 사용자 접근허용 -->
 		<intercept-url pattern="/" access="permitAll" />
