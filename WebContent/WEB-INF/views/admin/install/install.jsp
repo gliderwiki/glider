@@ -62,6 +62,7 @@
 </section>
 
 <script type="text/javascript" src="/resource/libs/jquery/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="/resource/libs/jquery/json2.js"></script>
 <script type="text/javascript" src="/resource/libs/jquery/jquery.form.js"></script>
 <script type="text/javascript" src="/resource/glider/common/wiki.common.util.js"></script>
 <script type="text/javascript" src="/resource/libs/plugin/jquery-loadingbar.js"></script>
@@ -72,7 +73,7 @@
     var isUpload = false;
     var isSendMail = false;
 	$(document).ready(function() {
-		CheckOS();
+		//CheckOS();
 		/**
 		 * 01. 인스톨 동의 
 		 */ 
@@ -239,8 +240,6 @@
 			$("#activeKey").attr('disabled',true);
 		}
 		
-		
-
 		$("#dataSave").live("click", function() {
 			var charType = $(':radio[name="charType"]:checked').val();
 			var adminMailId = $("#adminMailId").val();
@@ -331,7 +330,7 @@
 	});
 
 		
-	// 지원되는 운영체를 체크 합니다.
+	/* 지원되는 운영체를 체크 합니다.
 	function CheckOS() {
 		var sysinfo = '${rtnCode}';
 		
@@ -353,6 +352,8 @@
 			//location = "/"; //추후 위키사이트로 링크를 합니다.
 		}
 	}
+	*/
+	
 	/*
 	 * anchor 변화 이동 
 	 */
@@ -646,10 +647,12 @@
 
 	// 파일 업로드 콜백 
 	function FileuploadCallback(data,state){
-		var jsonStr = eval("("+data+")");
-
-	
-		if(jsonStr != null) {
+		console.log("data : " + data);
+		console.log("state : " + state);
+		
+		var jsonStr = JSON.parse(data);
+		
+		if(state == 'success') {
 			if(jsonStr.result == 1 ) {		
 				alert('파일 업로드가 완료되었습니다.');
 				isUpload = true;
@@ -709,10 +712,8 @@
 				
 		$.loadingBar();
 		$.post("/admin/install/mailSend", {mailUserId:mailUserId,mailUserPassword:mailUserPassword,siteDomain:siteDomain,siteOwner:siteOwner,mailCharset:mailCharset,testUserMail:testUserMail,mailUserKey:mailUserKey,smtpHostName:smtpHostName,smtpServerPort:smtpServerPort }, function(data){
-
-			var jsonStr = eval("("+data+")");
-
-			
+			var jsonStr = JSON.parse(data);
+		
 			if(jsonStr.result == 'SUCCESS'){
 				$.loadingBar.fadeOut();
 				isSendMail = true;
