@@ -625,17 +625,13 @@ public class InstallController {
 			// 임시 파일이기 때문에 DB 인서트는 하지 않음 
 			param.put("result", "1");
 	    	param.put("msg", msg);
-	    	param.put("realFileName", tempFile.getFileRealName());
-	    	param.put("saveFileName", tempFile.getFileSaveName());
 	    	param.put("thumbPath", tempFile.getThumbPath());
 	    	param.put("thumbName", tempFile.getThumbName());
-	    	param.put("filePath", tempFile.getFilePath());
-	    	param.put("fileSize", tempFile.getFileSize()+"");
-	    	param.put("tmpsrc", svcPath);
 		} else {
 			param.put("result", "-1");
 	    	param.put("msg", msg);
-	    	param.put("realFileName", tempFile.getFileRealName());
+	    	param.put("thumbPath", "");
+	    	param.put("thumbName", "");
 		}
 
 		logger.debug("param : "  + param.toString());
@@ -689,7 +685,6 @@ public class InstallController {
 		
 		
 		if(result == 1 ) {
-			
 			// 메일을 전송한다. 
 			String emailMsgTxt = "안녕하세요. " + siteOwner +" 입니다. <br><br>" +
 					"관리자 모드에서 보내는 테스트 메일 입니다.<br><br>" +
