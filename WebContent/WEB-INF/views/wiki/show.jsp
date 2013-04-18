@@ -117,6 +117,7 @@ pageContext.setAttribute("cr", "\r");
 						<a href="javascript:addQuota();" class="btn-wiki" id="addQuota">신고하기</a>
 						<a href="javascript:addFriend();" class="btn-wiki" id="addFriend">관심인맥추가</a>
 						<a href="javascript:printView();" class="btn-wiki" id="printView">인쇄하기</a>
+						<a href="javascript:htmlDownload('${weWiki.we_wiki_idx}');" class="btn-wiki" id="htmlDownload">HTML로 저장</a>
 					</div>
 					<div class="info">
 						<table>
@@ -241,6 +242,7 @@ pageContext.setAttribute("cr", "\r");
 
 <form id="downloadForm" name="downloadForm" method="post" action="">
 <input type="hidden" id="we_file_idx" name="we_file_idx" value="" />
+<input type="hidden" id="we_wiki_idx" name="we_wiki_idx" value="" />
 </form>
 
 
@@ -491,13 +493,12 @@ pageContext.setAttribute("cr", "\r");
             popX     : 1,
             popY     : 1,
             hiddenId : "utilArea",
-			popTitle:"Enterprise OpenSource Wiki ? GLiDER™"
+			popTitle:"Enterprise OpenSource Wiki GLiDER™"
 		});
 	}
 
 
 	function downloadFileServer(we_file_idx, real_name){
-
 		GliderWiki.confirm("확인", real_name + " 파일을 다운로드 하겠습니까?", function () {
 			$('#downloadForm input[name=we_file_idx]').val(we_file_idx);
 			$("#downloadForm").attr("target", "fileDownload");
@@ -505,6 +506,13 @@ pageContext.setAttribute("cr", "\r");
 		});
 	}
 
+	function htmlDownload(we_wiki_idx) {
+		GliderWiki.confirm("확인", "현재 문서를 HTML 파일로 다운로드 하겠습니까?", function () {
+			$('#downloadForm input[name=we_wiki_idx]').val(we_wiki_idx);
+			$("#downloadForm").attr("target", "fileDownload");
+			$("#downloadForm").attr("action", "/wiki/htmlDownload").submit();
+		});
+	}
 	
 	function protectWiki(wikiIdx) {
 		var grade = '${loginUser.weGrade}';
@@ -576,28 +584,22 @@ pageContext.setAttribute("cr", "\r");
 		}
 	}
 
-	
-	
 	/**
 	 * 댓글 체크 
 	 */
 	function checkValid(isGuest, text, noSpam, randomKey) {
-
 		if(isGuest == "true") {
 			GliderWiki.alert("에러","권한이 없습니다.로그인 후 이용하세요.");
 			return false;
 		}
-		
 		if(GliderWiki.Utils.isEmpty(text)) {
 			GliderWiki.alert("에러","내용을  입력하셔야 합니다.");
 			return false;
 		}
-		
 		if(GliderWiki.Utils.isEmpty(noSpam) || noSpam != randomKey) {
 			GliderWiki.alert("에러","보안 문자가 올바르지 않습니다.");
 			return false;
 		}
-		
 		return true;
 	}
 
