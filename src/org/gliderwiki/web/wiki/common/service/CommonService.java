@@ -274,5 +274,13 @@ public interface CommonService {
 	 * @return
 	 */
 	public WeWikiComment getWeWikiComment(String weWikiCommentIdx) throws Throwable;
+
+
+	/**
+	 * HTML 다운로드 서비스 
+	 * @param we_wiki_idx
+	 * @return
+	 */
+	public StringBuffer getHtmlSourceByWikiIdx(Integer we_wiki_idx) throws Throwable;
 	
 }

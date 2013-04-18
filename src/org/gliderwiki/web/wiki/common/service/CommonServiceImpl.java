@@ -564,4 +564,45 @@ public class CommonServiceImpl implements CommonService {
 		return (WeWikiComment) entityService.getRowEntity(domain);
 	}
 
+
+	
+	@Override
+	public StringBuffer getHtmlSourceByWikiIdx(Integer we_wiki_idx) throws Throwable {
+		WeWiki domain = new WeWiki();
+		domain.setWe_wiki_idx(we_wiki_idx);
+		domain.setWe_use_yn("Y");
+		// wiki body 조회 
+		WeWiki wikiHtml = (WeWiki) entityService.getRowEntity(domain);
+		
+		logger.debug("### wikiHtml : "  +wikiHtml.getWe_wiki_markup());
+		
+		StringBuffer html = new StringBuffer();
+
+		html.append("<!DOCTYPE html>");
+		html.append("<html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"ko\">");
+		html.append("<head>");
+		html.append("<title>::Enterprise OpenSource Wiki – GLiDER™ </title>");
+		html.append("<link rel=\"stylesheet\" href=\"/resource/glider/front/css/wiki.css\" />");
+		html.append("<script type=\"text/javascript\" src=\"/resource/glider/code/js/shCore.js\"></script>");
+		html.append("<script type=\"text/javascript\" src=\"/resource/glider/code/js/shBrushJScript.js\"></script>");
+		html.append("<link href=\"/resource/glider/code/css/shCore.css\" rel=\"stylesheet\" type=\"text/css\" />");
+		html.append("<link href=\"/resource/glider/code/css/shThemeDefault.css\" rel=\"stylesheet\" type=\"text/css\" />");
+		html.append("</head>");
+		html.append("<body>");
+		html.append("	 <section class=\"contents\" role=\"main\">");
+		html.append("    <div class=\"wrap-cont\">");
+		html.append("	 <h2 class=\"tit-cont\">"+wikiHtml.getWe_wiki_title()+"</h2>");
+		html.append("	 <div class=\"body-cont wiki\" id=\"wikiViewArea\">");
+		html.append("	 <article class=\"viewer\" style=\"word-wrap :break-word\">");
+		html.append(wikiHtml.getWe_wiki_markup());
+		html.append("	 </article>");
+		html.append("	 </div>");
+		html.append("	 </div>");
+		html.append("	 </section>");
+		html.append("</body>");
+		html.append("</html>");
+		
+		return html;
+	}
+
 }

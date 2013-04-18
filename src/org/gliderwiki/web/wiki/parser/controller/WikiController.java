@@ -9,12 +9,18 @@
  */
 package org.gliderwiki.web.wiki.parser.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,6 +28,7 @@ import javax.validation.Valid;
 
 import net.sf.json.JSONArray;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.gliderwiki.framework.exception.DBHandleException;
 import org.gliderwiki.framework.exception.FilePermitMsgException;
@@ -67,6 +74,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -1352,4 +1360,67 @@ public class WikiController {
 
 		return result;
 	}
+	
+	
+	
+	@RequestMapping("/htmlDownload")
+	public ModelAndView htmlDownload(@LoginUser MemberSessionVo loginUser, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView)
+			throws Throwable {
+		String we_wiki_idx = request.getParameter("we_wiki_idx");
+
+		if (we_wiki_idx == null) {
+			throw new FilePermitMsgException("Wiki is not available!!");
+		}
+
+		logger.debug("*************** 파일 다운로드 합니다 *******************");
+		StringBuffer htmlSource = new StringBuffer();
+		
+		htmlSource = commonService.getHtmlSourceByWikiIdx(Integer.parseInt(we_wiki_idx));
+		
+		logger.debug("### htmlSource ; " + htmlSource.toString());
+		
+
+		PrintWriter writer = null;
+
+		String filePath = request.getSession().getServletContext().getRealPath("/resource/temp/"+loginUser.getWeUserIdx()+"/html/");
+		String fileName = "테스트.html";
+		File file = new File(filePath+fileName);
+		try {
+			writer = new PrintWriter(new FileOutputStream(file));
+			writer.println(htmlSource.toString());
+			writer.close();
+		} catch (IOException e) {
+			throw new GliderwikiException("방문자 캐시파일 만드는 도중 오류 발생!", e);
+		} finally {
+			IOUtils.closeQuietly(writer);
+		}
+		
+	    response.setContentLength((int)file.length());
+	    response.setHeader("Content-Disposition", "attachment; fileName=\""+file.getName()+"\";");
+	    response.setHeader("Content-Transfer-Encoding", "binary");
+	    ServletOutputStream out = response.getOutputStream();
+	
+	    FileInputStream fls = null;
+	
+	    try {
+	        fls = new FileInputStream(file);
+	        FileCopyUtils.copy(fls, out);
+	
+	    } finally {
+	        if(fls != null) {
+	            try {
+	                fls.close();
+	            } catch(IOException ex) {
+	
+	            }
+	        }
+	    }
+	    out.flush();
+	    
+		return null;
+
+	}
+
+	
+	
 }
