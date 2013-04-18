@@ -78,7 +78,7 @@
 
 .wiki .viewer .util .wrap-btn { float: left; }
 
-.wiki .viewer .util .wrap-btn .btn-wiki { display: block; width: 150px; height: 30px; margin-bottom: 15px; border: 0 none; -webkit-border-radius: 6px; -moz-border-radius: 6px; -ms-border-radius: 6px; -o-border-radius: 6px; border-radius: 6px; font-weight: bold; line-height: 30px; text-align: center; text-decoration: none; color: #fff !important; background-color: #787878; }
+.wiki .viewer .util .wrap-btn .btn-wiki { display: block; width: 120px; height: 26px; margin-bottom: 10px; border: 0 none; -webkit-border-radius: 6px; -moz-border-radius: 6px; -ms-border-radius: 6px; -o-border-radius: 6px; border-radius: 6px; font-weight: bold; line-height: 26px; text-align: center; text-decoration: none; color: #fff !important; background-color: #787878; }
 
 .wiki .viewer .util .wrap-btn .btn-wiki:hover { background-color: #8c8c8c; }
 
