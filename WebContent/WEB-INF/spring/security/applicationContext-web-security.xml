@@ -18,6 +18,8 @@
 		<intercept-url pattern="/download/**" filters="none" />
 		<intercept-url pattern="/downloadComplete" filters="none" />
 		<intercept-url pattern="/downloadWiki" filters="none" />
+		<intercept-url pattern="/wiki/htmlDownload" filters="none" />
+		<intercept-url pattern="/wiki/downloadHtmlFile" filters="none" />
 
 		<!-- 모든 사용자 접근허용 -->
 		<intercept-url pattern="/" access="permitAll" />
