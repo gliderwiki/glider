@@ -67,6 +67,8 @@ public class SystemConst {
 	public static final String SYSTEM_FILE_DOWNLOAD_PATH = "/resource/data/";
 	
 	public static final String WIKI_FILE_DOWNLOAD_PATH = "/resource/real/";
+	
+	public static final String WIKI_HTML_DOWNLOAD_PATH = "resource/temp/";
 		
 	public static final String PROPERTY_FULL_PATH = "/WEB-INF/spring/properties/";
 	
