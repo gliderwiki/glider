@@ -9,9 +9,11 @@
  */
 package org.gliderwiki.web.wiki.parser.controller;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ import org.gliderwiki.framework.util.DateUtil;
 import org.gliderwiki.framework.util.FileUploader;
 import org.gliderwiki.framework.util.GliderFileUtils;
 import org.gliderwiki.framework.util.StringUtil;
+import org.gliderwiki.util.CommonUtil;
 import org.gliderwiki.util.GliderTagPaserUtil;
 import org.gliderwiki.util.RequestManager;
 import org.gliderwiki.util.WikiProdectStatus;
@@ -1362,65 +1365,114 @@ public class WikiController {
 	}
 	
 	
-	
-	@RequestMapping("/htmlDownload")
+
+	@RequestMapping(value = "/htmlDownload", method = RequestMethod.POST) 
 	public ModelAndView htmlDownload(@LoginUser MemberSessionVo loginUser, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView)
 			throws Throwable {
 		String we_wiki_idx = request.getParameter("we_wiki_idx");
-
+		String we_wiki_title = request.getParameter("we_wiki_title");
 		if (we_wiki_idx == null) {
 			throw new FilePermitMsgException("Wiki is not available!!");
 		}
 
 		logger.debug("*************** 파일 다운로드 합니다 *******************");
 		StringBuffer htmlSource = new StringBuffer();
-		
+		String domain = CommonUtil.getClientDomain(request);
 		htmlSource = commonService.getHtmlSourceByWikiIdx(Integer.parseInt(we_wiki_idx));
 		
-		logger.debug("### htmlSource ; " + htmlSource.toString());
 		
-
-		PrintWriter writer = null;
-
-		String filePath = request.getSession().getServletContext().getRealPath("/resource/temp/"+loginUser.getWeUserIdx()+"/html/");
-		String fileName = "테스트.html";
-		File file = new File(filePath+fileName);
-		try {
-			writer = new PrintWriter(new FileOutputStream(file));
-			writer.println(htmlSource.toString());
-			writer.close();
-		} catch (IOException e) {
-			throw new GliderwikiException("방문자 캐시파일 만드는 도중 오류 발생!", e);
-		} finally {
-			IOUtils.closeQuietly(writer);
+		String html = "";
+		String href = "/resource/";
+		String destHref = domain+href;
+		if(htmlSource.indexOf(href) != -1) {
+			html = htmlSource.toString().replaceAll(href, destHref);
+		} else {
+			html = htmlSource.toString();
 		}
 		
-	    response.setContentLength((int)file.length());
-	    response.setHeader("Content-Disposition", "attachment; fileName=\""+file.getName()+"\";");
-	    response.setHeader("Content-Transfer-Encoding", "binary");
-	    ServletOutputStream out = response.getOutputStream();
-	
-	    FileInputStream fls = null;
-	
-	    try {
-	        fls = new FileInputStream(file);
-	        FileCopyUtils.copy(fls, out);
-	
-	    } finally {
-	        if(fls != null) {
-	            try {
-	                fls.close();
-	            } catch(IOException ex) {
-	
-	            }
-	        }
-	    }
-	    out.flush();
+		String realPath = request.getSession().getServletContext().getRealPath("/");
+		
+		logger.debug("#realPath : " + realPath);
+		logger.debug("*************** 파일 다운로드 합니다 *******************");
+		
+		//다운로드 기본 경로 
+		String filePath = realPath+SystemConst.WIKI_HTML_DOWNLOAD_PATH;
+		
+		logger.debug("## filePath : " + filePath);
+		String fileName = we_wiki_title+".html";
+		
+		File file = new File(filePath+"/"+fileName);
+		logger.debug("## filePath : " + filePath+"/"+fileName);
+		logger.debug("## file.getName() : " + file.getName());
+		
+		BufferedWriter bufferedWriter = null;
+		Map<String, String> param = new HashMap<String, String>();
+		try {
+			FileWriter fileWriter = new FileWriter(file);
+	        bufferedWriter = new BufferedWriter(fileWriter);
+	        bufferedWriter.write(html);
+	        bufferedWriter.close();
+			logger.debug("### bufferedWriter 완료");
+			
+			param.put("result", "SUCCESS");
+					
+		} catch (IOException e) {
+			param.put("result", "FAIL");
+			throw new GliderwikiException("HTML 파일 생성중 도중 오류 발생!", e);
+		} finally {
+			try {
+				if (bufferedWriter != null) {
+					bufferedWriter.close();
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		return new ModelAndView("json_").addObject("param", param);
+	}
+
+	@RequestMapping(value = "/downloadHtmlFile", method = RequestMethod.POST) 
+	public ModelAndView downloadHtmlFile(@LoginUser MemberSessionVo loginUser, 
+			HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+		String realPath = request.getSession().getServletContext().getRealPath("/");
+
+		logger.debug("#realPath : " + realPath);
+
+		String we_wiki_idx = request.getParameter("we_wiki_idx");
+		String we_wiki_title = request.getParameter("we_wiki_title");
+		
+		if (we_wiki_idx == null) {
+			throw new FilePermitMsgException("HTML Resource is not exsist!!");
+		}
+
+		logger.debug("*************** 파일 다운로드 합니다 *******************");
+
+		// 다운로드 기본 경로
+		String filePath = realPath+SystemConst.WIKI_HTML_DOWNLOAD_PATH;
+		String fileName = we_wiki_title+".html";
+		// 다운로드 할 파일 정보 취득
+
+		// 절대 경로 구하기
+		HttpSession session = request.getSession();
+		
+	    String doc_root = filePath + "/" + fileName;
 	    
+	    logger.debug("### doc_root : " + doc_root);
+	    
+	    
+		String type = session.getServletContext().getMimeType(doc_root);
+		
+		logger.debug("## type :" + type);
+		
+		DownLoadAction download = new DownLoadAction();
+		
+		// 인자값 (절대경로, 파일이름, response, type)
+		download.getFileDownload(doc_root, fileName, response, type);	
+		
+
 		return null;
 
 	}
-
-	
 	
 }
