@@ -117,7 +117,7 @@ pageContext.setAttribute("cr", "\r");
 						<a href="javascript:addQuota();" class="btn-wiki" id="addQuota">신고하기</a>
 						<a href="javascript:addFriend();" class="btn-wiki" id="addFriend">관심인맥추가</a>
 						<a href="javascript:printView();" class="btn-wiki" id="printView">인쇄하기</a>
-						<a href="javascript:htmlDownload('${weWiki.we_wiki_idx}');" class="btn-wiki" id="htmlDownload">HTML로 저장</a>
+						<a href="javascript:htmlDownload('${weWiki.we_wiki_idx}', '${weWiki.we_wiki_title }');" class="btn-wiki" id="htmlDownload">HTML로 저장</a>
 					</div>
 					<div class="info">
 						<table>
@@ -243,6 +243,7 @@ pageContext.setAttribute("cr", "\r");
 <form id="downloadForm" name="downloadForm" method="post" action="">
 <input type="hidden" id="we_file_idx" name="we_file_idx" value="" />
 <input type="hidden" id="we_wiki_idx" name="we_wiki_idx" value="" />
+<input type="hidden" id="we_wiki_title" name="we_wiki_title" value="" />
 </form>
 
 
@@ -506,13 +507,29 @@ pageContext.setAttribute("cr", "\r");
 		});
 	}
 
-	function htmlDownload(we_wiki_idx) {
+	function htmlDownload(we_wiki_idx, we_wiki_title) {
 		GliderWiki.confirm("확인", "현재 문서를 HTML 파일로 다운로드 하겠습니까?", function () {
 			$('#downloadForm input[name=we_wiki_idx]').val(we_wiki_idx);
-			$("#downloadForm").attr("target", "fileDownload");
-			$("#downloadForm").attr("action", "/wiki/htmlDownload").submit();
+			$('#downloadForm input[name=we_wiki_title]').val(we_wiki_title);
+			$.post("/wiki/htmlDownload", {"we_wiki_idx":we_wiki_idx,"we_wiki_title":we_wiki_title}, function(data){
+				console.log("## data : " + data);
+				if(data.result == 'SUCCESS'){
+		 			console.log("파일다운로드 시작!");
+		 			downloadHtmlFile();
+				} else {
+					console.log("ERRER 발생!");
+					GliderWiki.alert('경고','HTML 생성중 에러가 발생했습니다. 다시 시도하세요.');
+					return;
+				}
+			})
 		});
 	}
+	
+	function downloadHtmlFile() {
+		$("#downloadForm").attr("target", "fileDownload");
+		$("#downloadForm").attr("action", "/wiki/downloadHtmlFile").submit();
+	}
+	
 	
 	function protectWiki(wikiIdx) {
 		var grade = '${loginUser.weGrade}';
