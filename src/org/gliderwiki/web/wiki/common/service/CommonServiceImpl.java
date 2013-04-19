@@ -578,29 +578,33 @@ public class CommonServiceImpl implements CommonService {
 		
 		StringBuffer html = new StringBuffer();
 
-		html.append("<!DOCTYPE html>");
-		html.append("<html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"ko\">");
-		html.append("<head>");
-		html.append("<title>::Enterprise OpenSource Wiki – GLiDER™ </title>");
-		html.append("<link rel=\"stylesheet\" href=\"/resource/glider/front/css/wiki.css\" />");
-		html.append("<script type=\"text/javascript\" src=\"/resource/glider/code/js/shCore.js\"></script>");
-		html.append("<script type=\"text/javascript\" src=\"/resource/glider/code/js/shBrushJScript.js\"></script>");
-		html.append("<link href=\"/resource/glider/code/css/shCore.css\" rel=\"stylesheet\" type=\"text/css\" />");
-		html.append("<link href=\"/resource/glider/code/css/shThemeDefault.css\" rel=\"stylesheet\" type=\"text/css\" />");
-		html.append("</head>");
-		html.append("<body>");
-		html.append("	 <section class=\"contents\" role=\"main\">");
-		html.append("    <div class=\"wrap-cont\">");
-		html.append("	 <h2 class=\"tit-cont\">"+wikiHtml.getWe_wiki_title()+"</h2>");
-		html.append("	 <div class=\"body-cont wiki\" id=\"wikiViewArea\">");
-		html.append("	 <article class=\"viewer\" style=\"word-wrap :break-word\">");
+		html.append("<!DOCTYPE html>\n");
+		html.append("<html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"ko\">\n");
+		html.append("<head>\n");
+		html.append("<title>::Enterprise OpenSource Wiki – GLiDER™ </title>\n");
+		html.append("<meta charset=\"utf-8\">\n");
+		html.append("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n");
+		html.append("<meta http-equiv=\"Expires\" content=\"0\"/>\n");
+		html.append("<meta http-equiv=\"Pragma\" content=\"no-cache\"/>\n");
+		html.append("<link rel=\"stylesheet\" href=\"/resource/glider/front/css/wiki.css\" />\n");
+		html.append("<script type=\"text/javascript\" src=\"/resource/glider/code/js/shCore.js\"></script>\n");
+		html.append("<script type=\"text/javascript\" src=\"/resource/glider/code/js/shBrushJScript.js\"></script>\n");
+		html.append("<link href=\"/resource/glider/code/css/shCore.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
+		html.append("<link href=\"/resource/glider/code/css/shThemeDefault.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
+		html.append("</head>\n");
+		html.append("<body>\n");
+		html.append("<section class=\"contents\" role=\"main\">\n");
+		html.append("    <div class=\"wrap-cont\">\n");
+		html.append("	 <h2 class=\"tit-cont\">"+wikiHtml.getWe_wiki_title()+"</h2>\n");
+		html.append("	 <div class=\"body-cont wiki\" id=\"wikiViewArea\">\n");
+		html.append("	 <article class=\"viewer\" style=\"word-wrap :break-word\">\n");
 		html.append(wikiHtml.getWe_wiki_markup());
-		html.append("	 </article>");
-		html.append("	 </div>");
-		html.append("	 </div>");
-		html.append("	 </section>");
-		html.append("</body>");
-		html.append("</html>");
+		html.append("	 </article>\n");
+		html.append("	 </div>\n");
+		html.append("	 </div>\n");
+		html.append("</section>\n");
+		html.append("</body>\n");
+		html.append("</html>\n");
 		
 		return html;
 	}
