@@ -241,7 +241,7 @@ pageContext.setAttribute("cr", "\r");
 
 <iframe name="fileDownload" width="0" height="0" frameborder="0"  style="display:hidden"></iframe>
 
-<form id="downloadForm" name="downloadForm" method="post" action="">
+<form id="downloadForm" name="downloadForm" method="POST" action="">
 <input type="hidden" id="we_file_idx" name="we_file_idx" value="" />
 <input type="hidden" id="we_wiki_idx" name="we_wiki_idx" value="" />
 <input type="hidden" id="we_wiki_title" name="we_wiki_title" value="" />
