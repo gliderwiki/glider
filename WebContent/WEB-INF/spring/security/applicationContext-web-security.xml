@@ -19,7 +19,8 @@
 		<intercept-url pattern="/downloadComplete" filters="none" />
 		<intercept-url pattern="/downloadWiki" filters="none" />
 		<intercept-url pattern="/wiki/htmlDownload" filters="none" />
-		<intercept-url pattern="/wiki/downloadHtmlFile" filters="none" />
+		<intercept-url pattern="/wiki/getHtmlFile" filters="none" />
+		
 
 		<!-- 모든 사용자 접근허용 -->
 		<intercept-url pattern="/" access="permitAll" />
@@ -43,6 +44,7 @@
 		<intercept-url pattern="/wiki/new/*/*" method="GET" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/wiki/edit/*" method="GET" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/wiki/edit/*" method="POST" access="hasRole('ROLE_USER')" />
+
 
 
 		<!-- 공간 -->
