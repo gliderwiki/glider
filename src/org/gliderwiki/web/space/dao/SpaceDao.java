@@ -86,9 +86,15 @@ public class SpaceDao extends SqlSessionDaoSupport {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Map<String, String>> getAllSpaceList(int userIdx) {
+	public List<Map<String, String>> getAllSpaceList(int userIdx, int weGrade) {
 		List<Map<String, String>> userList = null;
-		userList = getSqlSession().selectList("SpaceManage.getAllSpaceList", userIdx);
+		
+		if(weGrade < 9) {
+			userList = getSqlSession().selectList("SpaceManage.getAllSpaceList", userIdx);
+		} else {
+			userList = getSqlSession().selectList("SpaceManage.getAllSpaceListByAdmin", userIdx);
+		}
+		
 
 		return userList;
 	}
