@@ -73,7 +73,7 @@ public class SpaceController {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView list(@LoginUser MemberSessionVo loginUser,  HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
-		List<Map<String, String>> list = spaceService.getAllSpaceList(loginUser.getWeUserIdx());
+		List<Map<String, String>> list = spaceService.getAllSpaceList(loginUser.getWeUserIdx(), loginUser.getWeGrade());
 		logger.debug("생성된 리스트 객체 사이즈 : {}", list.size());
 
 		modelAndView.addObject("list", list);
@@ -402,10 +402,18 @@ public class SpaceController {
 		return WebConstant.FAIL;
 	}
 
+	/**
+	 * 조회 권한 체크
+	 * @param loginUser
+	 * @param type
+	 * @param spaceIdx
+	 * @return
+	 * @throws Throwable 
+	 */
 	@RequestMapping(value = "/checkSearchSpaceInfo", method = RequestMethod.POST)
 	@ResponseBody
 	public WebConstant nameDuplicateCheck(@LoginUser MemberSessionVo loginUser,
-			@RequestParam(value = "authorityType") AuthorityType type, @RequestParam(value = "spaceIdx") int spaceIdx) {
+			@RequestParam(value = "authorityType") AuthorityType type, @RequestParam(value = "spaceIdx") int spaceIdx) throws Throwable {
 		WebConstant result = spaceService.checkSearchSpaceInfo(type, spaceIdx, loginUser.getWeUserIdx(), "view");
 
 		return result;
