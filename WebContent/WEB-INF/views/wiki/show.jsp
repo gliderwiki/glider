@@ -118,6 +118,7 @@ pageContext.setAttribute("cr", "\r");
 						<a href="javascript:addFriend();" class="btn-wiki" id="addFriend">관심인맥추가</a>
 						<a href="javascript:printView();" class="btn-wiki" id="printView">인쇄하기</a>
 						<a href="javascript:htmlDownload('${weWiki.we_wiki_idx}', '${weWiki.we_wiki_title }');" class="btn-wiki" id="htmlDownload">HTML로 저장</a>
+						<a href="javascript:fullscreen('${weWiki.we_wiki_idx}');" class="btn-wiki" id="fullscreen">전체화면 보기</a>
 					</div>
 					<div class="info">
 						<table>
@@ -244,6 +245,7 @@ pageContext.setAttribute("cr", "\r");
 <input type="hidden" id="we_file_idx" name="we_file_idx" value="" />
 <input type="hidden" id="we_wiki_idx" name="we_wiki_idx" value="" />
 <input type="hidden" id="we_wiki_title" name="we_wiki_title" value="" />
+<input type="hidden" id="file_name" name="file_name" value="" />
 </form>
 
 
@@ -254,7 +256,6 @@ pageContext.setAttribute("cr", "\r");
 <script type="text/javascript" src="/resource/libs/jquery/jquery.form.js"></script>
 <script type="text/javascript" src="/resource/libs/jquery/jquery.printArea.js"></script>
 <script type="text/javascript" src="/resource/libs/plugin/jquery.poshytip.js"></script>
-
 <script type="text/javascript">
 
 //<![CDATA[
@@ -507,17 +508,21 @@ pageContext.setAttribute("cr", "\r");
 		});
 	}
 
+	/**
+	 * HTML 파일 생성하기 
+	 */
 	function htmlDownload(we_wiki_idx, we_wiki_title) {
 		GliderWiki.confirm("확인", "현재 문서를 HTML 파일로 다운로드 하겠습니까?", function () {
 			$('#downloadForm input[name=we_wiki_idx]').val(we_wiki_idx);
 			$('#downloadForm input[name=we_wiki_title]').val(we_wiki_title);
 			$.post("/wiki/htmlDownload", {"we_wiki_idx":we_wiki_idx,"we_wiki_title":we_wiki_title}, function(data){
-				console.log("## data : " + data);
+				console.log("## data : " + data.filename);
 				if(data.result == 'SUCCESS'){
 		 			console.log("파일다운로드 시작!");
-		 			downloadHtmlFile();
+		 			downloadHtmlFile(data.filename);
 				} else {
 					console.log("ERRER 발생!");
+					$.loadingBar.fadeOut();
 					GliderWiki.alert('경고','HTML 생성중 에러가 발생했습니다. 다시 시도하세요.');
 					return;
 				}
@@ -525,11 +530,51 @@ pageContext.setAttribute("cr", "\r");
 		});
 	}
 	
-	function downloadHtmlFile() {
+	/**
+	 * HTML 파일 다운로드 받기 
+	 */
+	function downloadHtmlFile(filename) {
+		$('#downloadForm input[name=file_name]').val(filename);
 		$("#downloadForm").attr("target", "fileDownload");
-		$("#downloadForm").attr("action", "/wiki/downloadHtmlFile").submit();
+		$("#downloadForm").attr("action", "/wiki/getHtmlFile").submit();
 	}
 	
+	/**
+	 * fullscreen 모드 
+	 */
+	function fullscreen(we_wiki_idx) {
+		var url = "${domain}wiki/fullscreen/"+we_wiki_idx;
+		console.log("#url : " + url);
+		openFullWindow(false, url);
+	}
+	
+	function openFullWindow(Option, url) {
+		var screenSizeWidth, screenSizeHeight;
+		if (self.screen) {
+			screenSizeWidth = screen.width;
+			screenSizeHeight = screen.height;
+		}
+
+		documentURL = url;
+		windowname = "wmname";
+		intWidth = screenSizeWidth;
+		intHeight = screenSizeHeight;
+		intXOffset = 0;
+		intYOffset = 0;
+		if (Option) {
+			obwindow = window.open(
+							documentURL,
+							windowname,
+							"fullscreen=yes, toolbar=no, location=no, directories=no, status=no, menubar=no,scrollbars=no,resizable=no");
+		} else {
+			obwindow = window.open(
+							documentURL,
+							windowname,
+							"fullscreen=yes,toolbar=no, location=no, directories=no, status=no, menubar=no,scrollbars=auto,resizable=no");
+			obwindow.resizeTo(intWidth, intHeight);
+			obwindow.moveTo(intXOffset, intYOffset);
+		}
+	}
 	
 	function protectWiki(wikiIdx) {
 		var grade = '${loginUser.weGrade}';
