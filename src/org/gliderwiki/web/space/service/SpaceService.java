@@ -31,6 +31,7 @@ import org.gliderwiki.web.domain.JoinStatus;
 import org.gliderwiki.web.domain.JoinType;
 import org.gliderwiki.web.domain.WeFavorite;
 import org.gliderwiki.web.domain.WeGroupInfo;
+import org.gliderwiki.web.domain.WeProfile;
 import org.gliderwiki.web.domain.WeSpace;
 import org.gliderwiki.web.domain.WeSpaceGroup;
 import org.gliderwiki.web.domain.WeSpaceImage;
@@ -86,8 +87,8 @@ public class SpaceService {
 	@Resource(name = "apacheFileUtilService")
 	private FileService fileService;
 
-	public List<Map<String, String>> getAllSpaceList(Integer weUserIdx) throws Throwable {
-		return spaceDao.getAllSpaceList(weUserIdx);
+	public List<Map<String, String>> getAllSpaceList(Integer weUserIdx, Integer weGrade) throws Throwable {
+		return spaceDao.getAllSpaceList(weUserIdx, weGrade);
 	}
 
 	public List<Map<String, String>> getRecentSpaceList(Integer weUserIdx, Integer startRow, Integer endRow) throws Throwable {
@@ -622,25 +623,36 @@ public class SpaceService {
 		return weSpaceImage.getRealImagePath();
 	}
 
-	public WebConstant checkSearchSpaceInfo(AuthorityType type, int spaceIdx, int userIdx, String authorityType) {
+	public WebConstant checkSearchSpaceInfo(AuthorityType type, int spaceIdx, int userIdx, String authorityType) throws Throwable {
+		WeProfile userInfo = commonService.getUserProfileInfo(userIdx);
+		
+		
 		if (StringUtils.equals("GROUP", type.name())) {
-			List<Map<String, Object>> result = spaceDao.checkGroupIntoMe(spaceIdx, userIdx, authorityType);
+			
+			// 관리자는 권한 검사를 하지 않는다. 
+			if(userInfo.getWe_grade() != 9) {
+				List<Map<String, Object>> result = spaceDao.checkGroupIntoMe(spaceIdx, userIdx, authorityType);
 
-			if (CollectionUtils.isEmpty(result)) {
-				return WebConstant.FAIL;
+				if (CollectionUtils.isEmpty(result)) {
+					return WebConstant.FAIL;
+				}
 			}
+			
 
 			return WebConstant.SUCCESS;
 		}
 
 		if (StringUtils.equals("USER", type.name())) {
 			logger.debug("loglog : {}{}", spaceIdx, userIdx);
-			Integer result = spaceDao.checkUserIntoMe(spaceIdx, userIdx, authorityType);
+			
+			if(userInfo.getWe_grade() != 9) {
+				Integer result = spaceDao.checkUserIntoMe(spaceIdx, userIdx, authorityType);
 
-			if (result == 0) {
-				return WebConstant.FAIL;
+				if (result == 0) {
+					return WebConstant.FAIL;
+				}
 			}
-
+			
 			return WebConstant.SUCCESS;
 		}
 
