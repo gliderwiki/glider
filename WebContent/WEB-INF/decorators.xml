@@ -10,6 +10,7 @@
 		<pattern>/service/*/*</pattern>
 		<pattern>/service/*</pattern>
 		<pattern>/wiki/fullscreen/*</pattern>
+		<pattern>/wiki/getHtmlFile</pattern>
 	</excludes>
 
 	<decorator name="guest" page="guest.jsp">
