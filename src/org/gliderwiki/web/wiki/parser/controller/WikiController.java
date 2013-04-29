@@ -15,7 +15,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,6 +47,7 @@ import org.gliderwiki.util.RequestManager;
 import org.gliderwiki.util.WikiProdectStatus;
 import org.gliderwiki.web.common.DownLoadAction;
 import org.gliderwiki.web.common.service.EntityService;
+import org.gliderwiki.web.domain.AttachmentType;
 import org.gliderwiki.web.domain.WeBbsComment;
 import org.gliderwiki.web.domain.WeFile;
 import org.gliderwiki.web.domain.WePoint;
@@ -1412,12 +1415,23 @@ public class WikiController {
 		
 		BufferedWriter bufferedWriter = null;
 		Map<String, String> param = new HashMap<String, String>();
+		Writer out = null;
+		
 		try {
+			
+			/*
 			FileWriter fileWriter = new FileWriter(file);
 	        bufferedWriter = new BufferedWriter(fileWriter);
 	        bufferedWriter.write(html);
 	        bufferedWriter.close();
 			logger.debug("### bufferedWriter 완료");
+			//BufeferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("jedis.txt),"UTF-8")))
+			*/
+			out = new BufferedWriter(new OutputStreamWriter(
+				    new FileOutputStream(file), "UTF-8"));
+			out.write(html);
+			out.close();
+			
 			
 			param.put("result", "SUCCESS");
 			param.put("filename", fileName);
@@ -1427,8 +1441,8 @@ public class WikiController {
 			throw new GliderwikiException("HTML 파일 생성중 도중 오류 발생!", e);
 		} finally {
 			try {
-				if (bufferedWriter != null) {
-					bufferedWriter.close();
+				if (out != null) {
+					out.close();
 				}
 			} catch (IOException ex) {
 				ex.printStackTrace();
@@ -1438,8 +1452,8 @@ public class WikiController {
 		return new ModelAndView("json_").addObject("param", param);
 	}
 
-	@RequestMapping(value = "/getHtmlFile", method = RequestMethod.POST) 
-	public ModelAndView getHtmlFile(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+	@RequestMapping("/getHtmlFile") 
+	public void getHtmlFile(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		String realPath = request.getSession().getServletContext().getRealPath("/");
 		logger.debug("#realPath : " + realPath);
 
@@ -1457,29 +1471,37 @@ public class WikiController {
 		logger.debug("##fullPath : " + fullPath);
 	    
 	    File file = new File(fullPath);
-	    response.setContentLength((int)file.length());
-	    response.setHeader("Content-Disposition", "attachment; fileName=\""+file.getName()+"\";");
-	    response.setHeader("Content-Transfer-Encoding", "binary");
+	    
+	    String mimetype = request.getSession().getServletContext().getMimeType(file.getName());
+		
+		if (mimetype == null || mimetype.length() == 0) {
+			mimetype = "application/octet-stream;";
+		}
+
+		response.setContentType(mimetype + "; charset=UTF-8");
+		response.setContentLength((int)file.length());
+	    //response.setHeader("Content-Disposition", "attachment; fileName=\""+file.getName()+"\";");
+	    response.setHeader("Content-Disposition", "attachment; filename=\"" + new String(file.getName().getBytes("UTF-8"), "ISO-8859-1") + "\"");
+	    //response.setHeader("Content-Transfer-Encoding", "binary");
 	    ServletOutputStream out = response.getOutputStream();
-	
+	    
 	    FileInputStream fls = null;
 	
 	    try {
 	        fls = new FileInputStream(file);
 	        FileCopyUtils.copy(fls, out);
-	
+	        fls.close();
+	        out.flush();
+	        out.close();
 	    } finally {
 	        if(fls != null) {
 	            try {
 	                fls.close();
 	            } catch(IOException ex) {
-	
+	            	ex.printStackTrace();
 	            }
 	        }
 	    }
-	    out.flush();
-	    
-		return null;
 	}
 	
 	
