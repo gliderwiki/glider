@@ -242,7 +242,7 @@ public class WikiController {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = { "/{weWikiIdx}", "/pdf/{weWikiIdx}" }, method = RequestMethod.GET)
-	public String view(@LoginUser MemberSessionVo loginUser, @PathVariable("weWikiIdx") Integer weWikiIdx,
+	public String view(HttpServletRequest request, @LoginUser MemberSessionVo loginUser, @PathVariable("weWikiIdx") Integer weWikiIdx,
 			ModelMap model, @RequestParam(value = "pdfView", required = false) String pdfView) throws Throwable {
 
 		logger.debug("###loginUser : " + loginUser.toString());
@@ -327,6 +327,9 @@ public class WikiController {
 			e.printStackTrace();
 		}
 		
+		String domain = CommonUtil.getClientDomain(request);
+		
+		
 		// TODO 조회 사용자 insert 해야 함
 		model.addAttribute("weWiki", weWiki);
 		model.addAttribute("tagList", tagList);
@@ -343,6 +346,7 @@ public class WikiController {
 		model.addAttribute("WeWikiComment", comment);
 		model.addAttribute("randomKey", randomKey);		// 인증키 생성
 		model.addAttribute("commentList", commentList);
+		model.addAttribute("domain", domain);
 
 		if (StringUtils.equals("ok", pdfView)) {
 			return "wiki/pdf/show";
@@ -1380,6 +1384,7 @@ public class WikiController {
 		String domain = CommonUtil.getClientDomain(request);
 		htmlSource = commonService.getHtmlSourceByWikiIdx(Integer.parseInt(we_wiki_idx));
 		
+		long millSec = System.currentTimeMillis();
 		
 		String html = "";
 		String href = "/resource/";
@@ -1399,7 +1404,7 @@ public class WikiController {
 		String filePath = realPath+SystemConst.WIKI_HTML_DOWNLOAD_PATH;
 		
 		logger.debug("## filePath : " + filePath);
-		String fileName = we_wiki_title+".html";
+		String fileName = millSec+".html";
 		
 		File file = new File(filePath+"/"+fileName);
 		logger.debug("## filePath : " + filePath+"/"+fileName);
@@ -1415,6 +1420,7 @@ public class WikiController {
 			logger.debug("### bufferedWriter 완료");
 			
 			param.put("result", "SUCCESS");
+			param.put("filename", fileName);
 					
 		} catch (IOException e) {
 			param.put("result", "FAIL");
@@ -1432,47 +1438,78 @@ public class WikiController {
 		return new ModelAndView("json_").addObject("param", param);
 	}
 
-	@RequestMapping(value = "/downloadHtmlFile", method = RequestMethod.POST) 
-	public ModelAndView downloadHtmlFile(@LoginUser MemberSessionVo loginUser, 
-			HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+	@RequestMapping(value = "/getHtmlFile", method = RequestMethod.POST) 
+	public ModelAndView getHtmlFile(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 		String realPath = request.getSession().getServletContext().getRealPath("/");
-
 		logger.debug("#realPath : " + realPath);
 
-		String we_wiki_idx = request.getParameter("we_wiki_idx");
-		String we_wiki_title = request.getParameter("we_wiki_title");
-		
-		if (we_wiki_idx == null) {
-			throw new FilePermitMsgException("HTML Resource is not exsist!!");
-		}
+		String file_name = request.getParameter("file_name");
 
 		logger.debug("*************** 파일 다운로드 합니다 *******************");
-
+		logger.debug("file_name : " + file_name);
+		logger.debug("*************** 파일 다운로드 합니다 *******************");
+		
 		// 다운로드 기본 경로
 		String filePath = realPath+SystemConst.WIKI_HTML_DOWNLOAD_PATH;
-		String fileName = we_wiki_title+".html";
-		// 다운로드 할 파일 정보 취득
 
-		// 절대 경로 구하기
-		HttpSession session = request.getSession();
-		
-	    String doc_root = filePath + "/" + fileName;
+		String fileName = file_name;
+		String fullPath = filePath + "/" + fileName;
+		logger.debug("##fullPath : " + fullPath);
 	    
-	    logger.debug("### doc_root : " + doc_root);
+	    File file = new File(fullPath);
+	    response.setContentLength((int)file.length());
+	    response.setHeader("Content-Disposition", "attachment; fileName=\""+file.getName()+"\";");
+	    response.setHeader("Content-Transfer-Encoding", "binary");
+	    ServletOutputStream out = response.getOutputStream();
+	
+	    FileInputStream fls = null;
+	
+	    try {
+	        fls = new FileInputStream(file);
+	        FileCopyUtils.copy(fls, out);
+	
+	    } finally {
+	        if(fls != null) {
+	            try {
+	                fls.close();
+	            } catch(IOException ex) {
+	
+	            }
+	        }
+	    }
+	    out.flush();
 	    
-	    
-		String type = session.getServletContext().getMimeType(doc_root);
-		
-		logger.debug("## type :" + type);
-		
-		DownLoadAction download = new DownLoadAction();
-		
-		// 인자값 (절대경로, 파일이름, response, type)
-		download.getFileDownload(doc_root, fileName, response, type);	
-		
-
 		return null;
-
 	}
 	
+	
+	@RequestMapping(value = "/fullscreen/{wikiIdx}", method = RequestMethod.GET)
+	public ModelAndView getFullScreenView(@PathVariable("wikiIdx") Integer wikiIdx, HttpServletRequest request, 
+			HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+		
+		WeWiki wikiVo = new WeWiki();
+		wikiVo.setWe_wiki_idx(wikiIdx);
+		wikiVo.setWe_use_yn("Y");
+		// wiki body 조회 
+		WeWiki wikiHtml = (WeWiki) entityService.getRowEntity(wikiVo);
+		
+		logger.debug("*************** 파일 다운로드 합니다 *******************");
+		String domain = CommonUtil.getClientDomain(request);
+		
+		
+		String htmlSource = "";
+		String href = "/resource/";
+		String destHref = domain+href;
+		if(wikiHtml.getWe_wiki_markup().indexOf(href) != -1) {
+			htmlSource = wikiHtml.getWe_wiki_markup().replaceAll(href, destHref);
+		} else {
+			htmlSource = wikiHtml.getWe_wiki_markup();
+		}
+		
+		modelAndView.addObject("wikiHtml", wikiHtml); 
+		modelAndView.addObject("htmlSource", htmlSource); 
+		modelAndView.setViewName("/wiki/fullscreen");
+		
+		return modelAndView;
+	}
 }
