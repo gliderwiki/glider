@@ -9,6 +9,7 @@
 		<pattern>/wiki/pdf/*</pattern>
 		<pattern>/service/*/*</pattern>
 		<pattern>/service/*</pattern>
+		<pattern>/wiki/fullscreen/*</pattern>
 	</excludes>
 
 	<decorator name="guest" page="guest.jsp">
