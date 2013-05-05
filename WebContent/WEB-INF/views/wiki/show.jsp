@@ -318,8 +318,6 @@ pageContext.setAttribute("cr", "\r");
 			var randomKey = $("#randomKey").val();
 			var text = $("#we_bbs_text").val();
 			
-			//console.log("#isGuest : " + isGuest);
-			
 			if(checkValid(isGuest, text, noSpam, randomKey)) {
 				GliderWiki.confirm('확인 ', '작성한 글을 저장하겠습니까?',  function() { 
 					$("#WeWikiComment").submit();	
@@ -330,7 +328,6 @@ pageContext.setAttribute("cr", "\r");
 		
 		// 댓글 수정 
 		$("#commentUpdate").live("click", function(){
-			//console.log("update");
 			var isGuest = "${loginUser.guest}";
 			var noSpam = $("#noSpam").val();
 			var randomKey = $("#randomKey").val();
@@ -341,7 +338,6 @@ pageContext.setAttribute("cr", "\r");
 			if(checkValid(isGuest, text, noSpam, randomKey)) {
 				GliderWiki.confirm('확인 ', '해당글을 수정하겠습니까?',  function() {
 					$.post("/wiki/"+weWikiIdx+"/updateComment", {weWikiCommentIdx:weWikiCommentIdx,weBbsText:text}, function(data){
-						//console.log("data : " + data);
 						if(data.result == 'SUCCESS'){
 							$(location).attr('href', "/wiki/"+weWikiIdx);	
 						} else {
@@ -390,7 +386,6 @@ pageContext.setAttribute("cr", "\r");
 		var spaceIdx = $(this).data("spaceIdx");
 		var wikiIdx = $(this).data("wikiIdx");
 
-		//console.log(spaceIdx + " : " + wikiIdx);
 		//WikiFunctionService.addWikiFavorite("${loginUser.weUserIdx}","${weWiki.we_wiki_idx}", "${weWiki.we_space_idx}", callBackWikiCommand);
 	}
 
@@ -516,12 +511,9 @@ pageContext.setAttribute("cr", "\r");
 			$('#downloadForm input[name=we_wiki_idx]').val(we_wiki_idx);
 			$('#downloadForm input[name=we_wiki_title]').val(we_wiki_title);
 			$.post("/wiki/htmlDownload", {"we_wiki_idx":we_wiki_idx,"we_wiki_title":we_wiki_title}, function(data){
-				console.log("## data : " + data.filename);
 				if(data.result == 'SUCCESS'){
-		 			console.log("파일다운로드 시작!");
 		 			downloadHtmlFile(data.filename);
 				} else {
-					console.log("ERRER 발생!");
 					$.loadingBar.fadeOut();
 					GliderWiki.alert('경고','HTML 생성중 에러가 발생했습니다. 다시 시도하세요.');
 					return;
@@ -544,7 +536,6 @@ pageContext.setAttribute("cr", "\r");
 	 */
 	function fullscreen(we_wiki_idx) {
 		var url = "${domain}wiki/fullscreen/"+we_wiki_idx;
-		console.log("#url : " + url);
 		openFullWindow(false, url);
 	}
 	
@@ -591,7 +582,6 @@ pageContext.setAttribute("cr", "\r");
 	 * 댓글 수정 
 	 */
 	function callModify(weWikiCommentIdx, weWikiIdx, userIdx){
-		//console.log("#commentIdx : " + weWikiCommentIdx);
 		location.href = "#_comment";
 		var weUserIdx = '${loginUser.weUserIdx}';
 		var isGuest = "${loginUser.guest}";
@@ -632,7 +622,6 @@ pageContext.setAttribute("cr", "\r");
 		if(userIdx == weUserIdx || weGrade == '9') {
 			GliderWiki.confirm('확인 ', '해당글을 삭제 하겠습니까?',  function() {
 				$.post("/wiki/"+weWikiIdx+"/deleteComment", {weWikiCommentIdx:weWikiCommentIdx,weUserIdx:weUserIdx}, function(data){
-					//console.log("data : " + data);
 					if(data.result == 'SUCCESS'){
 						$(location).attr('href', "/wiki/"+weWikiIdx);	
 					} else {

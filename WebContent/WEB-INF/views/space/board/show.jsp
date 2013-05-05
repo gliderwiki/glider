@@ -137,9 +137,6 @@ $(document).ready(function() {
 		var isGuest = "${loginUser.guest}";
 		var weUserIdx = '${loginUser.weUserIdx}';
 		
-		//console.log("isGuest : " + isGuest);
-		//console.log("weUserIdx : " + weUserIdx);
-		
 		if(isGuest == "true" || (userIdx != weUserIdx)) {
 			GliderWiki.alert("에러","권한이 없습니다.");
 			return;
@@ -157,8 +154,6 @@ $(document).ready(function() {
 		var randomKey = $("#randomKey").val();
 		var text = $("#we_bbs_text").val();
 		
-		//console.log("#isGuest : " + isGuest);
-		
 		if(checkValid(isGuest, text, noSpam, randomKey)) {
 			$("#WeBbsComment").submit();	
 		}
@@ -166,7 +161,6 @@ $(document).ready(function() {
 	});
 	
 	$("#commentUpdate").live("click", function(){
-		//console.log("update");
 		var isGuest = "${loginUser.guest}";
 		var noSpam = $("#noSpam").val();
 		var randomKey = $("#randomKey").val();
@@ -176,7 +170,6 @@ $(document).ready(function() {
 		if(checkValid(isGuest, text, noSpam, randomKey)) {
 			GliderWiki.confirm('확인 ', '해당글을 수정하겠습니까?',  function() {
 				$.post("/space/${spaceIdx}/board/${boardIdx}/updateComment", {weBbsCommentIdx:weBbsCommentIdx,weBbsText:text}, function(data){
-					//console.log("data : " + data);
 					if(data.result == 'SUCCESS'){
 						$(location).attr('href', "/space/${spaceIdx}/board/${boardIdx}");	
 					} else {
@@ -192,7 +185,6 @@ $(document).ready(function() {
  * 댓글 수정 
  */
 function callModify(weBbsCommentIdx, weBbsIdx, userIdx){
-	//console.log("#commentIdx : " + weBbsCommentIdx);
 	location.href = "#_comment";
 	var weUserIdx = '${loginUser.weUserIdx}';
 	var isGuest = "${loginUser.guest}";
@@ -232,7 +224,6 @@ function callDelete(weBbsCommentIdx,  userIdx){
 	if(userIdx == weUserIdx || weGrade == '9') {
 		GliderWiki.confirm('확인 ', '해당글을 삭제 하겠습니까?',  function() {
 			$.post("/space/${spaceIdx}/board/${boardIdx}/deleteComment", {weBbsCommentIdx:weBbsCommentIdx,weUserIdx:weUserIdx}, function(data){
-				//console.log("data : " + data);
 				if(data.result == 'SUCCESS'){
 					$(location).attr('href', "/space/${spaceIdx}/board/${boardIdx}");	
 				} else {

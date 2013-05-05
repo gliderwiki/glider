@@ -5,7 +5,6 @@
 <section class="contents " role="main">
 <form id="installForm" name="installForm" method="post" action="">
 <input type="hidden" id="we_active_key" name="we_active_key" value="${activeKey }" />
-<input type="hidden" id="we_auth_yn" name="we_auth_yn" value="N" />
 	<div class="wrap-cont">
 		<h2 class="tit-cont">GLiDER Wiki™ 다운로드</h2>
 			<div class="body-cont space">
@@ -61,7 +60,7 @@
 						<input type="radio" name="we_new_yn" value="N" />
 						<label for="read3">아니오</label>
 						</div>
-					</div>		
+					</div>
 				</div>
 		
 			</div>
@@ -83,29 +82,50 @@
 //<![CDATA[
 $(document).ready(function() {
 	$("#wikiDownload").bind("click", function() {
-		var checkVal = $(':radio[name="we_use_purpose"]:checked').val();
-		var newsVal = $(':radio[name="we_new_yn"]:checked').val();
-		if(GliderWiki.Utils.isEmpty($("#we_email").val())) {
+		var we_email = $("#we_email").val();
+		var we_domain = $("#we_domain").val();
+		var we_company = $("#we_company").val();
+		var we_active_key = $("#we_active_key").val();
+		var we_use_purpose = $(':radio[name="we_use_purpose"]:checked').val();
+		var we_new_yn = $(':radio[name="we_new_yn"]:checked').val();
+		
+		if(GliderWiki.Utils.isEmpty(we_email)) {
 			GliderWiki.alert("알림","이메일 주소를 입력하세요.");
 			return;
 		}
-		if(!emailCheck($("#we_email").val())) { 
+		if(!emailCheck(we_email)) { 
 			GliderWiki.alert("알림","올바른 이메일 주소가 아닙니다.");
 			return;
 		}
-
-		if(GliderWiki.Utils.isEmpty(checkVal)) {
+		if(GliderWiki.Utils.isEmpty(we_use_purpose)) {
 			GliderWiki.alert("알림","글라이더 위키의 사용 목적을 선택하세요.");
 			return;
 		}
 		
-		$("#installForm").attr("action", "/downloadWiki").submit();
+		$.loadingBar();
 		
-		GliderWiki.alert('파일 다운로드 중', '메일주소로 Active Key를 전송 중입니다. \n다소 시간이 걸릴 수 있으니 다운로드가 실행될 때 까지 기다려 주세요.\n다운로드가 완료 된 후 확인 버튼을 클릭하시면 메인 화면으로 이동 합니다.');
-		$("#okBtn").on("click", function() {
-
-			$(location).attr('href',"/index");
-		});		
+		$.ajax({
+			type:"POST"
+			,url:"/downloadWiki"
+			,data:{"we_email":we_email,"we_active_key":we_active_key,"we_domain":we_domain,"we_company":we_company,"we_use_purpose":we_use_purpose,"we_new_yn":we_new_yn}
+			,success:function(response){
+				var status = response.status;
+				var result = response.result;
+				if(status == 'SUCCESS'){
+					$.loadingBar.fadeOut();
+					// Result 에 상관없이 TODO List 다운로드 걸게 함 
+					GliderWiki.confirm("확인", "글라이더 위키 베타버전을 다운로드 합니다.", function () {
+						$("#installForm").attr("target", "fileDownload");
+						$("#installForm").attr("action", "/downloadComplete").submit();
+					});
+					
+				}else{
+					$.loadingBar.fadeOut();
+					GliderWiki.alert('에러', '에러가 발생했습니다. 다시 시도하세요.\n문제가 계속되면 performizer@gmail.com으로 문의하시기 바랍니다.');
+					return; 
+				}
+			}
+		});
 		
 	});
 });

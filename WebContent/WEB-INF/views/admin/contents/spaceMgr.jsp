@@ -331,7 +331,6 @@ function callBackUpdateSpaceAdmin(obj){
  * 05. 공간정보 삭제 
  */
  function deleteSpace(spaceIdx) {
-	console.log('deleteSpace : ' + spaceIdx);
 	if(confirm('선택한 공간을 삭제하겠습니까?\n공간에 속한 하위 위키들도 모두 삭제 됩니다.')) {
 		var weUserIdx = "${weUserIdx}";
 		AdminSpaceService.deleteSpaceInfo(spaceIdx,  weUserIdx, callBackDeleteSpace);

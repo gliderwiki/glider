@@ -574,9 +574,6 @@ function FileUpload(){
 
 //파일 업로드 콜백 
 function FileuploadCallback(data,state){
-	//console.log('data : ' + data);
-	//console.log('state : ' + state);
-	
 	$("#file").val("");
 
 	var jsonStr = eval(data);
@@ -585,9 +582,6 @@ function FileuploadCallback(data,state){
 			
 			alert('파일 업로드가 완료되었습니다.');
 			var appendPreview = "";
-			//console.log("jsonStr.filePath : " + jsonStr.filePath);
-			//console.log("jsonStr.thumbPath : " + jsonStr.thumbPath);
-			//console.log("jsonStr.thumbName : " + jsonStr.thumbName);
 			var fileSrc = jsonStr.filePath+jsonStr.saveFileName;
 			appendPreview += "<li id='"+jsonStr.saveFileName+"'>"; 
 			appendPreview += jsonStr.realFileName;
@@ -607,10 +601,6 @@ function FileuploadCallback(data,state){
 }
 
 function delItem(fileIndex, fileName) {
-	//console.log("fileIndex : " + fileIndex);
-	//console.log("fileName : " + fileName);
-	// DB에서 이미지 삭제 처리함. 
-	
 	// 아이 프레임에서 이미지 삭제 
 	hiddenItem();	
 }

@@ -492,9 +492,6 @@ function FileUpload(){
 
 //파일 업로드 콜백 
 function FileuploadCallback(data,state){
-	//console.log('data : ' + data);
-	//console.log('state : ' + state);
-	
 	$("#file").val("");
 	
 	var jsonStr = eval(data);

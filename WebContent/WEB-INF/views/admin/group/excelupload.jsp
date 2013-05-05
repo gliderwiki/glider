@@ -29,7 +29,6 @@ $(document).ready(function() {
 	
 	//사진 변경시
 	$("#file").change(function(){
-		//console.log("upload....");
 		$("#frmFile").submit();
 		return false;
 	});
@@ -61,9 +60,6 @@ function FileuploadCallback(data,state){
 		if(jsonStr.result == 1 ) {
 			alert('파일 업로드가 완료되었습니다.');
 			var appendPreview = "";
-			//console.log("jsonStr.filePath : " + jsonStr.filePath);
-			//console.log("jsonStr.thumbPath : " + jsonStr.thumbPath);
-			//console.log("jsonStr.thumbName : " + jsonStr.thumbName);
 			var fileSrc = jsonStr.filePath+jsonStr.saveFileName;
 			appendPreview += "<li id='"+jsonStr.saveFileName+"'>"; 
 			appendPreview += "<a href=\"javascript:viewItem('"+fileSrc+"');\" title='미리보기'>"+jsonStr.realFileName+"</a>";

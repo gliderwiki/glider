@@ -515,18 +515,12 @@
 	
 	// 파일 업로드 콜백
 	function FileuploadCallback(data,state){
-
-		//console.log("FileuploadCallback data :" + data);
-		//console.log("FileuploadCallback data :" + data.result);
-
 		if(data.result < 1) {
 			GliderWiki.alert('경고', data.msg);
 			return;
 		}
 		
 		var jsonStr = eval(data);
-		
-		//console.log("jsonStr data :" + jsonStr);
 		
 		var resourceHtml = "";
 		
@@ -604,8 +598,6 @@
 			,success:function(response){
 				var status = response.status;
 				var result = response.result;
-				//console.log("status : " + status);
-				//console.log("result : " + result);
 				
 				if(status == 'SUCCESS'){
 					$("#wikiEditor").val(result);

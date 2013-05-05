@@ -54,8 +54,6 @@ $(document).ready(function() {
 		var bigTextSize = $("h2,h3,h4").css('font-size');
 		var iconTop =  $("#box-expand").css('top');
 		
-		console.log("iconTop : " + iconTop);
-		
 		if (this.id == "fontPlus") {
 			// 컨텐츠 폰트 크기 증가 
 			var newSize = parseInt(fontSize.replace(/px/, "")) + 2;
@@ -89,7 +87,6 @@ $(document).ready(function() {
 		var wide = $viewWidth.width();
 		var iconRight =  $("#box-expand").css('right');
 		
-		console.log(wide);
 		if (this.id == "widthPlus") {
 			var newSize = parseInt(wide + 20);
 			$viewWidth.css("width", newSize + "px");
