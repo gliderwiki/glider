@@ -26,6 +26,7 @@
 				if (exceptions != null) {
 					if (exceptions instanceof ServletException) {			
 						ServletException servletErr = (ServletException) exceptions;
+						
 						Throwable rootCause = servletErr.getRootCause();
 						if (rootCause == null) {
 							rootCause = servletErr;

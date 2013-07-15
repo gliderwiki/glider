@@ -42,7 +42,8 @@
 								Throwable exceptions = (Throwable) request.getAttribute("javax.servlet.error.exception");
 				
 								if (exceptions != null) {
-									if (exceptions instanceof ServletException) {			
+									if (exceptions instanceof ServletException) {	
+										
 										ServletException servletErr = (ServletException) exceptions;
 										Throwable rootCause = servletErr.getRootCause();
 										if (rootCause == null) {
