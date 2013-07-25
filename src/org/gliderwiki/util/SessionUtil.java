@@ -24,7 +24,7 @@ public class SessionUtil {
 
 	HttpSession session = null;
 
-	private static final int MAXSESSIONTIME = 60 * 60 * 3;
+	private static final int MAXSESSIONTIME = 60 * 60 * 5;
 
 	public SessionUtil() {
 
