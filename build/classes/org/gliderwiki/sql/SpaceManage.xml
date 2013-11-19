@@ -96,6 +96,7 @@
 		INNER JOIN we_user d
 		ON a.we_ins_user=d.we_user_idx
 		WHERE a.we_ins_user = #{userIdx}
+		AND   a.we_use_yn = 'Y'
 		order by we_ins_date desc
 	</select>
 
@@ -247,6 +248,31 @@
         WHERE t.WE_SPACE_IDX = T2.WE_SPACE_IDX         
 	    AND t.we_use_yn = 'Y'
 	) a
+	LEFT JOIN (SELECT we_space_idx FROM we_favorite WHERE we_user_idx=#{userIdx,jdbcType=NUMERIC} AND we_favorite_type='SPACE' AND we_use_yn='Y') c
+		 ON a.we_space_idx = c.we_space_idx
+		 INNER JOIN we_user d
+		 ON a.we_admin_idx=d.we_user_idx
+	ORDER BY we_ins_date DESC
+	</select>
+	
+		
+
+	<select id="SpaceManage.getAllSpaceListByAdmin" parameterType="int" resultType="java.util.HashMap">
+	SELECT /* SpaceManage.getAllSpaceListByAdmin - 관리자가 전체 공간을 조회한다.  */
+		   a.we_space_idx
+         , a.we_space_name
+         , a.we_ins_date
+         , a.we_view_privacy
+         , IFNULL(c.we_space_idx, 0) AS favorited
+         , d.we_user_nick
+         , a.we_ins_user
+         , (select IFNULL(count(t.we_wiki_idx), 0) from we_wiki t where t.we_space_idx = a.we_space_idx and t.we_use_yn ='Y') AS wikiCnt
+      FROM
+	  (
+       SELECT t.* 
+	    FROM we_space t 
+        WHERE t.we_use_yn = 'Y'        
+	   ) a
 	LEFT JOIN (SELECT we_space_idx FROM we_favorite WHERE we_user_idx=#{userIdx,jdbcType=NUMERIC} AND we_favorite_type='SPACE' AND we_use_yn='Y') c
 		 ON a.we_space_idx = c.we_space_idx
 		 INNER JOIN we_user d

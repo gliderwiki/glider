@@ -47,7 +47,6 @@ public class EmployeeController {
 	private static final String XML_VIEW_NAME = "employees";
 	
 	
-	
 	@RequestMapping(method=RequestMethod.GET, value="/employee/{id}")
 	@ResponseBody
 	public Employee getEmployee(@PathVariable String id) {
